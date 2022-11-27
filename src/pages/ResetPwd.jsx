@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../shared/API";
 import { useTranslation } from "react-i18next";
-import { Navbar } from "../common/Navbar";
-import styles from "./styles/Login.module.scss";
 
 export const ResetPwd = () => {
   const { t } = useTranslation();
@@ -84,59 +82,56 @@ export const ResetPwd = () => {
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="container">
-        <div className={styles.common_cont}>
-          <div className={styles.login_title}>
-            <h2>{t(`resetpwd.reset_btn`)}</h2>
-          </div>
-          <form className={styles.login_form} onSubmit={handlePwdReset}>
-            <div action="">
-              <input
-                type="password"
-                placeholder={t(`resetpwd.new_password`)}
-                name="password"
-                id="password"
-                value={input.password}
-                onChange={onInputChange}
-                onBlur={validateInput}
-              ></input>
-              {error.password && <div className={styles.err}>{error.password}</div>}
-            </div>
-            <div action="">
-              <input
-                type="password"
-                placeholder={t(`resetpwd.confirm_password`)}
-                name="confirmPassword"
-                id="confirmPassword"
-                value={input.confirmPassword}
-                onChange={onInputChange}
-                onBlur={validateInput}
-                required
-              ></input>
-              {error.confirmPassword && (
-                <div className={styles.err}>{error.confirmPassword}</div>
-              )}
-            </div>
-            <div className={styles.login_form_button}>
-              {loading ? (
-                <button disabled>
-                  <span className={styles.small_loader}></span>
-                </button>
-              ) : (
-                <button>{t(`resetpwd.reset_btn`)}</button>
-              )}
-            </div>
-            {pwd && (
-              <div>
-                Password changed successfuly you will be redirected to the login
-                page...
-              </div>
-            )}
-          </form>
+    <div className="container">
+      <div className="common_cont">
+        <div className="login_title">
+          <h2>{t(`resetpwd.reset_btn`)}</h2>
         </div>
+        <form className="login_form" onSubmit={handlePwdReset}>
+          <div action="">
+            <input
+              type="password"
+              placeholder={t(`resetpwd.new_password`)}
+              name="password"
+              id="password"
+              value={input.password}
+              onChange={onInputChange}
+              onBlur={validateInput}
+            ></input>
+            {error.password && <div className="err">{error.password}</div>}
+          </div>
+          <div action="">
+            <input
+              type="password"
+              placeholder={t(`resetpwd.confirm_password`)}
+              name="confirmPassword"
+              id="confirmPassword"
+              value={input.confirmPassword}
+              onChange={onInputChange}
+              onBlur={validateInput}
+              required
+            ></input>
+            {error.confirmPassword && (
+              <div className="err">{error.confirmPassword}</div>
+            )}
+          </div>
+          <div className="login_form_button">
+            {loading ? (
+              <button disabled>
+                <span className="small_loader"></span>
+              </button>
+            ) : (
+              <button>{t(`resetpwd.reset_btn`)}</button>
+            )}
+          </div>
+          {pwd && (
+            <div>
+              Password changed successfuly you will be redirected to the login
+              page...
+            </div>
+          )}
+        </form>
       </div>
-    </>
+    </div>
   );
 };

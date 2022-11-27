@@ -1,6 +1,6 @@
 {
   "common": {
-    "app_title": "First Version",
+    "app_title": "Admin Version",
     "unauthorized_main": "Unauthorized!",
     "unauthorized_secondary": "You are being redirected to another page...",
     "redirecting_main": "Please Hold On!",

@@ -13,15 +13,7 @@
     "religion_muslim": "Muslim",
     "login": "Sign In"
   },
-  "home": {},
-  "header": {
-    "title": "EN",
-    "search_placeholder": "Search",
-    "registeration": "Registeration",
-    "home": "Home",
-    "about": "About University",
-    "academic": "Academic Programs"
-  },
+
   "login": {
     "email": "E-mail",
     "password": "Password",
@@ -33,21 +25,6 @@
     "reset_btn": "Reset Password",
     "matching": "Password and Confirm Password does not match",
     "typing": "Please enter the Password"
-  },
-  "admission": {
-    "header": "Admission and Registeration Form",
-    "sub-header": "Personal Data",
-    "arabic-name": "Full Name in Arabic",
-    "english-name": "Full Name in English",
-    "birthdate": "Date of Birth",
-    "birthplace": "Place of Birth",
-    "birthplace_placeholder": "ismailia",
-    "nationality": "Nationality",
-    "nationality_placeholder": "Egypt",
-    "nationalId": "National ID or Passport ID",
-    "gender_male": "Male",
-    "gender_female": "Female",
-    "button": "Submit Form"
   },
   "forgetpwd": {
     "title": "Forget Password!",

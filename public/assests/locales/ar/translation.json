@@ -13,15 +13,6 @@
     "religion_muslim": "مسلم",
     "login": "تسجيل دخول"
   },
-  "home": {},
-  "header": {
-    "title": "العربية",
-    "search_placeholder": "بحث",
-    "registeration": "التقديم",
-    "home": "الرئيسية",
-    "about": "عن الجامعة",
-    "academic": "البرامج الاكاديمية"
-  },
   "login": {
     "email": "اسم المستخدم",
     "password": "كلمة المرور",
@@ -33,22 +24,6 @@
     "reset_btn": "تغيير كلمة المرور",
     "matching": "كلمة المرور و تاكيد كلمة المرور غير متطابقين",
     "typing": "ادخل كلة المرور"
-  },
-  "admission": {
-    "header": "نموذج التسجيل و القبول",
-    "sub-header": "بيانات شخصية",
-    "arabic-name": "الاسم كامل باللغة العربية",
-    "english-name": "الاسم باللغة الانجليزية",
-    "birthdate": "تاريخ الميلاد",
-    "birthplace": "محل الميلاد",
-    "birthplace_placeholder": "الاسماعيلية",
-    "nationality": "بلد الجنسية",
-    "nationality_placeholder": "مصر",
-    "nationalId": "الرقم القومي/جواز السفر",
-    "gender": "النوع",
-    "gender_male": "ذكر",
-    "gender_female": "انثى",
-    "button": "حفظ الاستمارة"
   },
   "forgetpwd": {
     "title": "نسيت كلمة المرور!",

@@ -1,0 +1,71 @@
+.login {
+  &_title {
+    & h2 {
+      border: 0px solid black;
+      width: 300px;
+      padding: 0px 0px 20px 0px;
+      text-align: center;
+      color: #3d7dca;
+      font-weight: 700;
+    }
+  }
+
+  &_form {
+    & div {
+      border: 0px solid rgb(130, 117, 117);
+      padding: 10px 0px;
+      color: rgb(129, 117, 117);
+      font-size: 18px;
+    }
+
+    & input {
+      width: 400px;
+      padding: 10px;
+      margin-top: 20px;
+      background: transparent;
+      border-radius: 3px;
+      border: 0.5px solid #bdc0c9;
+      outline: none;
+    }
+
+    &_button {
+      & button {
+        font-size: 18px;
+        margin-top: 5px;
+        background: #3d7dca;
+        width: 400px;
+        height: 45px;
+        border: none;
+        border-radius: 3px;
+        color: whitesmoke;
+        cursor: pointer;
+
+        &:hover {
+          background: #5c8bc5;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .login_form {
+    & input {
+      width: 250px;
+    }
+
+    &-button {
+      padding: 90px 0 0 0;
+
+      & button {
+        width: 252px;
+      }
+    }
+  }
+
+  .login_title h2 {
+    text-align: center;
+    width: 250px;
+    padding: 0px 0px 30px 0px;
+  }
+}

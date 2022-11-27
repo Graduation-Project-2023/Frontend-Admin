@@ -1,0 +1,102 @@
+.header {
+  background-color: white;
+
+  &-logo {
+    width: 30%;
+  }
+
+  &-items {
+    color: #3d7dca;
+    font: normal 400 1.2rem/1.4rem "Inter";
+  }
+
+  &-login {
+    margin: 0 3rem 0 3rem;
+
+    &-title {
+      font: normal 400 1.1rem/1.2rem "Inter";
+      color: #3d7dca;
+      text-decoration: none;
+    }
+  }
+
+  &-search {
+    // bootstrap class edit
+    .dropdown-toggle::after {
+      content: none;
+    }
+
+    & button {
+      border: none;
+      background-color: white;
+    }
+  }
+
+  &-language {
+    // bootstrap class edit
+    .dropdown-toggle::after {
+      content: none;
+    }
+    &-button {
+      font: normal 400 0.8rem/1rem "Inter";
+      border: 1px solid #3d7dca;
+      height: 1.5rem;
+      background-color: white;
+      color: #3d7dca;
+    }
+  }
+}
+
+// bootstrap class edit
+.navpage {
+  .navbar {
+    padding: 0;
+
+    &-brand {
+      margin: 0 0 0 3rem;
+    }
+  }
+
+  .container-fluid {
+    padding: 0;
+  }
+}
+
+// for tablet
+@media (max-width: 992px) {
+  .header {
+    &-logo {
+      width: 20%;
+    }
+
+    &-login,
+    &-language,
+    &-search {
+      margin: 0 0 0 1rem;
+    }
+  }
+  .navbar {
+    &-brand,
+    &-nav {
+      margin: 0 0 0 1rem;
+    }
+  }
+  .container-fluid {
+    padding: 0.2rem 0 0 0;
+  }
+}
+
+.boooootstrap {
+  color: black;
+  background-color: red;
+
+  &:active {
+    background-color: green;
+  }
+  &:visited {
+    background-color: green;
+  }
+  &:focus {
+    background-color: green;
+  }
+}

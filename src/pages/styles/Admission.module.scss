@@ -1,0 +1,69 @@
+.admissionPage {
+  background-color: #ffffff;
+  margin-top: 50px;
+
+  &_header {
+    justify-content: center;
+    color: #3d7dca;
+    font: normal 500 30px/36.31px "Inter";
+    margin-bottom: 5rem;
+
+    &_eng {
+      justify-content: center;
+      padding-top: 0.7rem;
+    }
+  }
+
+  &_subheader {
+    justify-content: center;
+    color: #3d7dca;
+    font: normal 500 30px/36.31px "Inter";
+  }
+
+  &_line {
+    margin: 0.7rem 17rem 0.9rem 17rem;
+    border-bottom: 1px solid #bdc0c9;
+  }
+
+  &_form {
+    &_rows {
+      justify-content: space-around;
+
+      &_cols {
+        &_label {
+          margin-top: 30px;
+          font: normal 400 1.25rem/19px "Inter";
+          color: #7f8187;
+        }
+
+        &_btn {
+          margin: 5.5rem 0;
+          font: normal 400 1.25rem/19px "Inter";
+          color: #ffffff;
+          background-color: #3d7dca;
+          border: 1px solid #3d7dca;
+          border-radius: 5px;
+          height: 9vh;
+        }
+      }
+    }
+  }
+}
+
+// for tablet
+@media (min-width: 768px) and (max-width: 992px) {
+  .admissionPage {
+    &_line {
+      margin: 0.7rem 2rem 0.9rem 2rem;
+    }
+  }
+}
+
+// for mobile
+@media screen and (max-width: 768px) {
+  .admissionPage {
+    &_line {
+      margin: 0.7rem 2rem 0.9rem 2rem;
+    }
+  }
+}

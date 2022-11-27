@@ -1,0 +1,60 @@
+{
+  "common": {
+    "app_title": "اول نسخة",
+    "unauthorized_main": "غير مصرح!",
+    "unauthorized_secondary": "سيتم تحويلك لصفحة اخرى",
+    "redirecting_main": "انتظر من فضلك!",
+    "notfound_main": "أُووبس!",
+    "notfound_secondary": "خطأ 404 - لم يتم العثور على الصفحة",
+    "notfound_button": "العودة إلى الصفحة الرئيسية",
+    "language": "اللغة",
+    "religion": "الديانة",
+    "religion_christian": "مسيحي",
+    "religion_muslim": "مسلم",
+    "login": "تسجيل دخول"
+  },
+  "home": {},
+  "header": {
+    "title": "العربية",
+    "search_placeholder": "بحث",
+    "registeration": "التقديم",
+    "home": "الرئيسية",
+    "about": "عن الجامعة",
+    "academic": "البرامج الاكاديمية"
+  },
+  "login": {
+    "email": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "forget": "نسيت كلمة المرور؟"
+  },
+  "resetpwd": {
+    "new_password": "كلمة المرور الجديدة",
+    "confirm_password": "تأكيد كلمة المرور الجديدة",
+    "reset_btn": "تغيير كلمة المرور",
+    "matching": "كلمة المرور و تاكيد كلمة المرور غير متطابقين",
+    "typing": "ادخل كلة المرور"
+  },
+  "admission": {
+    "header": "نموذج التسجيل و القبول",
+    "sub-header": "بيانات شخصية",
+    "arabic-name": "الاسم كامل باللغة العربية",
+    "english-name": "الاسم باللغة الانجليزية",
+    "birthdate": "تاريخ الميلاد",
+    "birthplace": "محل الميلاد",
+    "birthplace_placeholder": "الاسماعيلية",
+    "nationality": "بلد الجنسية",
+    "nationality_placeholder": "مصر",
+    "nationalId": "الرقم القومي/جواز السفر",
+    "gender": "النوع",
+    "gender_male": "ذكر",
+    "gender_female": "انثى",
+    "button": "حفظ الاستمارة"
+  },
+  "forgetpwd": {
+    "title": "نسيت كلمة المرور!",
+    "instruction": "أدخل البريد الإلكتروني الخاص بحسابك وسيصلك رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
+    "email": "البريد الالكترونى",
+    "done": "متابعه",
+    "back": "العودة لتسجيل الدخول"
+  }
+}

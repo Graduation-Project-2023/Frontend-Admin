@@ -1,0 +1,59 @@
+{
+  "common": {
+    "app_title": "First Version",
+    "unauthorized_main": "Unauthorized!",
+    "unauthorized_secondary": "You are being redirected to another page...",
+    "redirecting_main": "Please Hold On!",
+    "notfound_main": "Oops!",
+    "notfound_secondary": "Error 404: Page Not Found",
+    "notfound_button": "Back To Home",
+    "language": "Language",
+    "religion": "Religion",
+    "religion_christian": "Christian",
+    "religion_muslim": "Muslim",
+    "login": "Sign In"
+  },
+  "home": {},
+  "header": {
+    "title": "EN",
+    "search_placeholder": "Search",
+    "registeration": "Registeration",
+    "home": "Home",
+    "about": "About University",
+    "academic": "Academic Programs"
+  },
+  "login": {
+    "email": "E-mail",
+    "password": "Password",
+    "forget": "Forget Password?"
+  },
+  "resetpwd": {
+    "new_password": "New Password",
+    "confirm_password": "Confirm New Password",
+    "reset_btn": "Reset Password",
+    "matching": "Password and Confirm Password does not match",
+    "typing": "Please enter the Password"
+  },
+  "admission": {
+    "header": "Admission and Registeration Form",
+    "sub-header": "Personal Data",
+    "arabic-name": "Full Name in Arabic",
+    "english-name": "Full Name in English",
+    "birthdate": "Date of Birth",
+    "birthplace": "Place of Birth",
+    "birthplace_placeholder": "ismailia",
+    "nationality": "Nationality",
+    "nationality_placeholder": "Egypt",
+    "nationalId": "National ID or Passport ID",
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "button": "Submit Form"
+  },
+  "forgetpwd": {
+    "title": "Forget Password!",
+    "instruction": "Enter the E-mail associated with your account and we'll send you a link to reset your password.",
+    "email": "E-mail",
+    "done": "Send Link",
+    "back": "Back to Login"
+  }
+}

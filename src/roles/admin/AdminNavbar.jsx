@@ -1,3 +1,4 @@
+import { Header } from "../../components/Header";
 import { HeaderNavbar } from "../../components/HeaderNavbar";
 
 const AdminNavbarData = [
@@ -59,5 +60,10 @@ const AdminNavbarData = [
 ];
 
 export const AdminNavbar = () => {
-  return <HeaderNavbar data={AdminNavbarData} />;
+  return (
+    <>
+      <Header />
+      <HeaderNavbar data={AdminNavbarData} />
+    </>
+  );
 };

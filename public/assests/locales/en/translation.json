@@ -32,5 +32,6 @@
     "done": "Send Link",
     "back": "Back to Login"
   },
-  "adminNavbar": { "academic": "Academic Programs" }
+  "adminNavbar": { "academic": "Academic Programs" },
+  "academicSidebar": {"main": "Main Information"}
 }

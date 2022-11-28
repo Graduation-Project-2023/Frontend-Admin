@@ -32,5 +32,6 @@
     "done": "متابعه",
     "back": "العودة لتسجيل الدخول"
   },
-  "adminNavbar": { "academic": "البرامج الدراسية" }
+  "adminNavbar": { "academic": "البرامج الدراسية" },
+  "academicSidebar": { "main": "البيانات الأساسية" }
 }

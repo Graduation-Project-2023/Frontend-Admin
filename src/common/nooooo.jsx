@@ -19,7 +19,7 @@ const languages = [
   },
 ];
 
-export const Navbar = () => {
+export const NOOOOOO = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
   const currentLanguage = languages.find(
     (lang) => lang.code === currentLanguageCode

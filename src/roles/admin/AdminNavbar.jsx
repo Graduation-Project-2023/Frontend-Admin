@@ -1,17 +1,14 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { NavLink } from "react-router-dom";
+import { HeaderNavbar } from "../../components/HeaderNavbar";
 
 const AdminNavbarData = [
   {
     id: "1",
-    title: "Academic Programs",
+    title: "adminNavbar.academic",
     path: "academic_programs",
   },
   {
     id: "2",
-    title: "Study Schedules",
+    title: "adminNavbar.schedules",
     path: "study_schedules",
   },
   {
@@ -29,25 +26,38 @@ const AdminNavbarData = [
     title: "Control System",
     path: "control_system",
   },
+  {
+    id: "6",
+    title: "Control System",
+    path: "control_system",
+  },
+  {
+    id: "7",
+    title: "Control System",
+    path: "control_system",
+  },
+  {
+    id: "8",
+    title: "Control System",
+    path: "control_system",
+  },
+  {
+    id: "9",
+    title: "Control System",
+    path: "control_system",
+  },
+  {
+    id: "10",
+    title: "Control System",
+    path: "control_system",
+  },
+  {
+    id: "11",
+    title: "Control System",
+    path: "control_system",
+  },
 ];
 
 export const AdminNavbar = () => {
-  return (
-    <>
-      <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand>Navbar</Navbar.Brand>
-          <Nav className="me-auto">
-            {AdminNavbarData.map((item) => {
-              return (
-                <li key={item.id}>
-                  <NavLink to={item.path}>{item.title}</NavLink>
-                </li>
-              );
-            })}
-          </Nav>
-        </Container>
-      </Navbar>
-    </>
-  );
+  return <HeaderNavbar data={AdminNavbarData} />;
 };

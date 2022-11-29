@@ -1,0 +1,33 @@
+.header{
+    background-color: white;
+    &-items{
+        font: normal 400 1.2rem/1.4rem "Inter";
+        margin: 1.8rem;
+        & a{
+        text-decoration: none !important;}
+        
+       
+
+        &-active{
+           padding: 0.4rem;
+           color: white !important;
+           border: 1px solid #3d7dca;
+           background-color:  #6892C5;
+           ;
+        }
+        &-notactive{
+            color: #3d7dca !important;
+        }
+    
+    }
+}
+.headerpage{
+    color: white;
+    font: normal 400 1.2rem/1.4rem "Inter";
+    background-color:  #76A6E0;
+    text-align: center;
+    padding: 1rem;
+
+    
+
+}

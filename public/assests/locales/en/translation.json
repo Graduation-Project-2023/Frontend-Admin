@@ -32,5 +32,35 @@
     "done": "Send Link",
     "back": "Back to Login"
   },
-  "adminNavbar": { "academic": "Academic Programs" }
+  "adminNavbar": { 
+    "student":"Students Data",
+    "academic": "Academic Programs", 
+    "schedule": "Academic Schedule",
+    "registeration":"Academic Registeration",
+    "exams":"Education and Exams",
+    "results":"Control and Results",
+    "finance":"Financial Data",
+    "absence":"Students Absence",
+    "mail":"System Mail",
+    "supervision":"System Supervision",
+    "control":" Control System"
+
+  
+  },
+  "adminNavbarkeys": { 
+    "student":"Students ",
+    "academic": " Programs", 
+    "schedule": " Schedule",
+    "registeration":" Registeration",
+    "exams":"  Exams",
+    "results":"  Results",
+    "finance":"Financial ",
+    "absence":" Absence",
+    "mail":" Mail",
+    "supervision":" Supervision",
+    "control":" Control ",
+    "text":"Faculty of Engineering-Suez Canal University"
+
+  
+  }
 }

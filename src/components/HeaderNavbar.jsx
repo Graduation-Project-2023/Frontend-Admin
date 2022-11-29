@@ -8,23 +8,26 @@ export const HeaderNavbar = (props) => {
   const navData = props.data;
   const { t } = useTranslation();
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" className="header">
       <Container>
-        <Navbar.Brand>Navbar</Navbar.Brand>
-        <Nav className="me-auto">
+       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+      <Nav className="me-auto ">
           {navData.map((item) => {
             return (
-              <li key={item.id}>
+              <li key={item.id} className='header-items'>
                 <NavLink
-                  className={({ isActive }) => (isActive ? "activeClass" : "")}
+                  className={({ isActive }) => (isActive ? "header-items-active" : "header-items-notactive")}
                   to={item.path}
                 >
-                  {t(`${item.title}`)}
+                  {t(`${item.keyword}`)}
+                  {({ isActive }) => (isActive ? '{t(`${item.keyword}`)}' : '{t(`${item.title}`)}')}
                 </NavLink>
               </li>
             );
           })}
         </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

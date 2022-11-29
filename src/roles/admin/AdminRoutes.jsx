@@ -8,6 +8,7 @@ import { Courses } from "./courses/Courses";
 import { StudentData } from "./student_data/StudentData";
 import { ControlSystem } from "./control/ControlSystem";
 import { NotFound } from "../../pages/NotFound";
+import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
 
 export function AdminRoutes() {
   return (
@@ -23,6 +24,13 @@ export function AdminRoutes() {
         <Route path="study_schedules" element={<StudySchedules />} />
         <Route path="student_data" element={<StudentData />} />
         <Route path="courses" element={<Courses />} />
+        <Route path="registeration" element={<ControlSystem />} />
+        <Route path="exams" element={<ControlSystem />} />
+        <Route path="results" element={<ControlSystem />} />
+        <Route path="finance" element={<LevelHours />} />
+        <Route path="absence" element={<ControlSystem />} />
+        <Route path="mail" element={<ControlSystem />} />
+        <Route path="supervision" element={<ControlSystem />} />
         <Route path="control_system" element={<ControlSystem />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

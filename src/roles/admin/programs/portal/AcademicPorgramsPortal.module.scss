@@ -1,44 +1,44 @@
-.portal{
-    &_body{
-        background-color: white;
-        margin-top: 40px;
-        width: 100%;
-        border-radius: 10px;
-    }
-    &_title{
-        padding-right: 20%;
-        padding-top: 50px;
-        padding-bottom: 20px;
-        font-size: 25px;
-        font-weight: 500;
-        color:  #3d7dca;
-    }
-    &_search{
-        padding-right: 20%;
-        padding-bottom: 50px;
-        &_rec{
-            width: 800px;
-            height: 45px;
-            padding-right: 15px;
-        }
-    }
-
-    &_list{
-        list-style: none;
-        li {  
-            padding: 1.5rem 15rem;
-            border-top: solid rgb(208, 206, 206) 1px;
-        }
-        li:hover{
-           background-color:  #3d7dca ;
-           color: white;
-        }
-    }
-}
-.portal_btn{
-    margin-right: 8px;
+.portal {
+  &_body {
     background-color: white;
-    border-radius: 50px;
-    padding:0px 5px 0px 5px;
-    color: grey;
+    margin-top: 40px;
+    width: 100%;
+    border-radius: 10px;
+  }
+  &_title {
+    padding-right: 20%;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-size: 25px;
+    font-weight: 500;
+    color: #3d7dca;
+  }
+  &_search {
+    padding-right: 20%;
+    padding-bottom: 50px;
+    &_rec {
+      width: 800px;
+      height: 45px;
+      padding-right: 15px;
+    }
+  }
+
+  &_list {
+    list-style: none;
+    li {
+      padding: 1.5rem 15rem;
+      border-top: solid rgb(208, 206, 206) 1px;
+    }
+    li:hover {
+      background-color: #3d7dca;
+      color: white;
+    }
+  }
+}
+.portal_btn {
+  margin-right: 8px;
+  background-color: white;
+  border-radius: 50px;
+  padding: 0px 5px 0px 5px;
+  color: grey;
 }

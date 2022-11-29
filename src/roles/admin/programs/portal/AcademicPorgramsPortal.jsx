@@ -1,6 +1,8 @@
 import styles from "./AcademicPorgramsPortal.module.scss";
+import { useTranslation } from "react-i18next";
 
 export const AcademicPorgramsPortal = () => {
+  const { t } = useTranslation();
   return (
  <div className="container">
   <div className={styles.portal_body}>
@@ -8,6 +10,7 @@ export const AcademicPorgramsPortal = () => {
 
           <div class={styles.portal_search}>
                     <input type="text" class={styles.portal_search_rec} placeholder="اسم البرنامج.."/> 
+                    <button className={styles.portal_search_btn}></button>
           </div>
 
        <div className={styles.portal_list}>

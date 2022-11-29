@@ -4,6 +4,7 @@ const AuthContext = createContext({
   token: "",
   isLoggedIn: false,
   role: "",
+  college: [],
   login: (token) => {},
   logout: () => {},
 });
@@ -13,6 +14,7 @@ export const AuthContextProvider = (props) => {
   const storageRole = localStorage.getItem("role");
   const [token, setToken] = useState(storageToken);
   const [role, setRole] = useState(storageRole);
+  const [college, setCollege] = useState([]);
 
   const userIsLoggedIn = !!token;
 

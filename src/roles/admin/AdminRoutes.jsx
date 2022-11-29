@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { AdminPortal } from "./AdminPortal";
 import { AdminNavbar } from "./AdminNavbar";
 import { AcademicProgramsRoutes } from "./programs/AcademicProgramsRoutes";
+import { AcademicPorgramsPortal } from "./programs/portal/AcademicPorgramsPortal";
 import { StudySchedules } from "./schedules/StudySchedules";
 import { Courses } from "./courses/Courses";
 import { StudentData } from "./student_data/StudentData";
@@ -14,8 +15,9 @@ export function AdminRoutes() {
       <AdminNavbar />
       <Routes>
         <Route path="" element={<AdminPortal />} />
+        <Route path="academic_programs" element={<AcademicPorgramsPortal />} />
         <Route
-          path="academic_programs/*"
+          path="academic_programs/:programId/*"
           element={<AcademicProgramsRoutes />}
         />
         <Route path="study_schedules" element={<StudySchedules />} />

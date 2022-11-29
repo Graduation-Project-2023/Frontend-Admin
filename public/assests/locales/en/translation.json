@@ -44,8 +44,6 @@
     "mail":"System Mail",
     "supervision":"System Supervision",
     "control":" Control System"
-
-  
   },
   "adminNavbarkeys": { 
     "student":"Students ",
@@ -60,7 +58,5 @@
     "supervision":" Supervision",
     "control":" Control ",
     "text":"Faculty of Engineering-Suez Canal University"
-
-  
   }
 }

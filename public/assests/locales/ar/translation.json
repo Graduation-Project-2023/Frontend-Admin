@@ -32,6 +32,31 @@
     "done": "متابعه",
     "back": "العودة لتسجيل الدخول"
   },
-  "adminNavbar": { "academic": "البرامج الدراسية" },
-  "academicSidebar": { "main": "البيانات الأساسية" }
+  "adminNavbar": { 
+    "student":"بيانات الطلاب",
+    "academic": "البرامج الاكاديمية", 
+    "schedule": "الجداول الدراسية",
+    "registeration":"التسجيل الاكاديمي",
+    "exams":"تعليم و امتحانات",
+    "results":"الكنترول و النتايج",
+    "finance":"البيانات المالية",
+    "absence":"غياب الطلاب",
+    "mail":"البريد الداخلي للنظام",
+    "supervision":"الاشراف على النظام",
+    "control":"نظام التحكم"
+   },
+   "adminNavbarkeys": { 
+    "student":"بيانات ",
+    "academic": "البرامج ", 
+    "schedule": "الجداول ",
+    "registeration":"التسجيل ",
+    "exams":"  امتحانات",
+    "results":"  النتايج",
+    "finance":" المالية",
+    "absence":"غياب ",
+    "mail":"البريد  ",
+    "supervision":"الاشراف  ",
+    "control":" التحكم",
+    "text":"جامعة قناة السويس -كلية الهندسة"
+   }
 }

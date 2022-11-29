@@ -32,7 +32,6 @@ const ProgramsSidebarData = [
     title: "graduation",
     path: "graduation",
   },
-  ,
   {
     id: "7",
     title: "graduation",

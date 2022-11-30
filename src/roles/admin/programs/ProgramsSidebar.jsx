@@ -4,7 +4,7 @@ import { Sidebar } from "../../../components/Sidebar";
 const ProgramsSidebarData = [
   {
     id: "1",
-    title: "academicSidebar.main",
+    title: "academicSidebar.level",
     path: "main",
   },
   {

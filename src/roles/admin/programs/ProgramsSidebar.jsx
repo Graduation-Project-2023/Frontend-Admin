@@ -9,47 +9,42 @@ const ProgramsSidebarData = [
   },
   {
     id: "2",
-    title: "levels",
+    title: "academicSidebar.level",
     path: "levels",
   },
   {
     id: "3",
-    title: "grades",
+    title: "academicSidebar.grades",
     path: "grades",
   },
   {
     id: "4",
-    title: "courses",
+    title: "academicSidebar.main",
     path: "courses",
   },
   {
     id: "5",
-    title: "control",
+    title: "academicSidebar.main",
     path: "control",
   },
   {
     id: "6",
-    title: "graduation",
+    title: "academicSidebar.main",
     path: "graduation",
   },
   {
     id: "7",
-    title: "graduation",
+    title: "academicSidebar.main",
     path: "graduation",
   },
   {
     id: "8",
-    title: "graduation",
+    title: "academicSidebar.main",
     path: "graduation",
   },
   {
     id: "9",
-    title: "graduation",
-    path: "graduation",
-  },
-  {
-    id: "10",
-    title: "graduation",
+    title: "academicSidebar.main",
     path: "graduation",
   },
 ];

@@ -1,4 +1,4 @@
-import { Table } from "../../../../components/Table/Table";
+import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
 import { FormCard } from "../../../../components/FormCard";
 

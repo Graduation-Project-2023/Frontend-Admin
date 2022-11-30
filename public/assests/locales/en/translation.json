@@ -11,7 +11,12 @@
     "religion": "Religion",
     "religion_christian": "Christian",
     "religion_muslim": "Muslim",
-    "login": "Sign In"
+    "login": "Sign In",
+    "edit":"Edit",
+    "delete":"Delete",
+    "save":"Save",
+    "cancel":"Cancel",
+    "level1":"Level 1"
   },
   "login": {
     "email": "E-mail",
@@ -58,5 +63,15 @@
     "supervision": "Supervision",
     "control": "Control",
     "text": "Faculty of Engineering-Suez Canal University"
+  },
+  "levelHours":{
+    "tablehead":"Allowed Hours Table",
+    "term":"Semester",
+    "level":"Academic Year",
+    "max":"Maximum Hours",
+    "min":"Minimum Hours",
+    "formhead":"Allowed hours according to academic level"
+    
+    
   }
 }

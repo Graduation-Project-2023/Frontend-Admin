@@ -1,0 +1,81 @@
+.tablecard, .formcard{
+   background-color: white;
+   border-radius: 10px;
+   padding: 2rem;
+   margin: 2rem;
+   & h3{
+    color: #858D97;
+    font:  normal 400 2.5rem/3rem "Inter";
+    padding: 0rem 0 3rem 0;
+    
+    
+   }
+}
+.formcard{
+    & h3{
+        padding: 0;
+    }
+    & a{
+        text-decoration: none;
+        font:  normal 400 1rem/1.3rem "Inter";
+        color: #858D97;
+    } 
+    & form{
+
+        border-top: 1px solid #D9D9D9;
+        border-bottom: 1px solid #D9D9D9;
+        padding: 2rem;
+        margin: 2rem;
+
+        & label{
+            font:  normal 400 1rem/1.3rem "Inter";
+            color: #858D97;
+           
+
+        }
+        & select{
+            color: #444444;
+            font:  normal 400 1rem/1.3rem "Inter";
+            
+            
+        }
+
+
+    }
+    & button{
+        margin: 1rem;
+        padding: 0.5rem;
+        border-radius: 2px;
+        width: 5rem;
+        font:  normal 400 1rem/1.3rem "Inter";
+        transition-duration: 0.4s;
+        
+    }
+    
+    
+        &_cancel{
+          color:#444444;
+          
+          background-color: #F8F8F9;
+          border:1px solid #A2AAB4;
+         
+          
+        }
+        &_cancel:hover {
+            background-color: #A2AAB4;;
+            color: white;
+          }
+        &_save{
+            color:white;
+            
+            background-color:#6892C5;
+            border:1px solid#6892C5;
+           
+            
+          }
+          &_save:hover {
+            background-color: rgba(66, 66, 197, 0.753);;
+            color: black;
+          }
+    
+}

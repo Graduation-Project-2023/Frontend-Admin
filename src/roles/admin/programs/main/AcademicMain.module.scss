@@ -1,0 +1,15 @@
+.collapseBtn{
+    background-color:#6892C5;
+    color: #EBEEF4;
+    padding: 0.3rem;
+    width: 100%;
+    border: 1px solid #6892C5;
+    border-radius: 15px;
+    outline: none;
+    font: normal 400 1.9rem/2.3rem "Inter";
+    margin: 1rem;
+    &:hover {
+        background-color:#EBEEF4;
+        color: white;
+      }
+}

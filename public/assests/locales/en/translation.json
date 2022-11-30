@@ -87,5 +87,34 @@
     "gpa": "GPA",
     "control": "Control",
     "graduation": "Graduation"
+  },
+  "academicMain":{
+    "formhead":"Program Data",
+    "section1":"Program main data",
+    "section2":"Program hours",
+    "section3":"Program fees",
+    "section4":"Control",
+    "ar_name":"Program name in arabic",
+    "eng_name":"Program name in english",
+    "code":"Program code ",
+    "faculty":"Faculty",
+    "edu_degree":"Degree of education",
+    "sys_type":"System type",
+    "credit":"Credit hours",
+    "mandatory":"Mandatory hours",
+    "option":"Optional hours",
+    "project":"Project qualified hours",
+    "compute":"Computing allowed hours  ",
+    "c_gpa":"Accumlative GPA",
+    "gpa":"Term GPA",
+    "s_gpa":"Term & summer GPA ",
+    "prerequest":"Prerequest programs",
+    "fees":"Computing fees ",
+    "summer_fees":"Computing summer fees according to",
+    "rate":"Reduction rate",
+    "trial":"Number of trials"
+
+
   }
+
 }

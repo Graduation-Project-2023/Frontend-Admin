@@ -1,14 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { ReadOnlyRow } from "./ReadOnlyRow";
 import { EditableRow } from "./EditableRow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Table = (props) => {
   const headerItems = props.headerItems;
   const editableItems = props.editableItems;
   const deletableItems = props.deletableItems;
   const { t } = useTranslation();
-
   const [data, setData] = useState(props.rowItems);
 
   const [editRowData, setEditRowData] = useState({
@@ -16,6 +15,10 @@ export const Table = (props) => {
   });
 
   const [editRowId, setEditRowId] = useState(null);
+  
+  useEffect(() => {
+    setData(props.rowItems);
+  }, [props.rowItems]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -34,10 +37,7 @@ export const Table = (props) => {
 
     const editedRow = {
       id: editRowId,
-      title: editRowData.title,
-      level: editRowData.level,
-      minHours: editRowData.minHours,
-      maxHours: editRowData.maxHours,
+      ...editRowData,
     };
 
     const newData = [...data];
@@ -55,10 +55,7 @@ export const Table = (props) => {
     setEditRowId(rowData.id);
 
     const formValues = {
-      title: rowData.title,
-      level: rowData.level,
-      minHours: rowData.minHours,
-      maxHours: rowData.maxHours,
+      ...rowData,
     };
 
     setEditRowData(formValues);

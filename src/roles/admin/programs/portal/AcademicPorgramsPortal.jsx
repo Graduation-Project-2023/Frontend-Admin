@@ -1,6 +1,5 @@
 import styles from "./AcademicPorgramsPortal.module.scss";
 import { useTranslation } from "react-i18next";
-import { BiSearchAlt } from "react-icons/bs";
 
 export const AcademicPorgramsPortal = () => {
   const { t } = useTranslation();

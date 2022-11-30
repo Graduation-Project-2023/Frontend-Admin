@@ -1,13 +1,5 @@
-.student-container {
+.sidebar-container {
   display: grid;
   grid-template-columns: 370px auto;
   gap: 10px;
-
-  &-main {
-    display: grid;
-    grid-template-rows: 50px auto;
-    background-color: rgb(200, 228, 228);
-    margin: 0 20px;
-    padding: 30px;
-  }
 }

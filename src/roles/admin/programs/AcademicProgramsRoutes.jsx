@@ -7,6 +7,7 @@ import { AcademicLevels } from "./levels/AcademicLevels";
 import { AcademicMain } from "./main/AcademicMain";
 import { ProgramsSidebar } from "./ProgramsSidebar";
 import { AcademicControl } from "./control/AcademicControl";
+import { LevelHours } from "./level-allowed-hours/LevelHours";
 
 export function AcademicProgramsRoutes() {
   return (
@@ -19,6 +20,7 @@ export function AcademicProgramsRoutes() {
         <Route path="grades" element={<AcademicGrades />} />
         <Route path="graduation" element={<AcademicGraduation />} />
         <Route path="control" element={<AcademicControl />} />
+        <Route path="level-hours" element={<LevelHours />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

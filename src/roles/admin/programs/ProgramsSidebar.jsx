@@ -19,32 +19,32 @@ const ProgramsSidebarData = [
   },
   {
     id: "4",
-    title: "academicSidebar.main",
-    path: "courses",
+    title: "academicSidebar.levelHours",
+    path: "level-hours",
   },
   {
     id: "5",
-    title: "academicSidebar.main",
-    path: "control",
+    title: "academicSidebar.gpaHours",
+    path: "gpa-hours",
   },
   {
     id: "6",
-    title: "academicSidebar.main",
-    path: "graduation",
+    title: "academicSidebar.courses",
+    path: "courses",
   },
   {
     id: "7",
-    title: "academicSidebar.main",
-    path: "graduation",
+    title: "academicSidebar.gpa",
+    path: "gpa",
   },
   {
     id: "8",
-    title: "academicSidebar.main",
-    path: "graduation",
+    title: "academicSidebar.control",
+    path: "control",
   },
   {
     id: "9",
-    title: "academicSidebar.main",
+    title: "academicSidebar.graduation",
     path: "graduation",
   },
 ];
@@ -52,5 +52,17 @@ const ProgramsSidebarData = [
 export const ProgramsSidebar = () => {
   const { programId } = useParams();
 
-  return <Sidebar sideData={ProgramsSidebarData} routerParams={programId} />;
+  return (
+    <Sidebar
+      sideData={ProgramsSidebarData}
+      routerParams={programId}
+      sidebarTitle={"portal.programs"}
+      options={
+        <select className="form-select">
+          <option>Hello</option>
+          <option>One</option>
+        </select>
+      }
+    />
+  );
 };

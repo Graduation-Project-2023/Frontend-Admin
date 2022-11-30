@@ -1,8 +1,8 @@
 export const SidebarContainer = (props) => {
   return (
-    <div className="student-container">
+    <div className="sidebar-container">
       <div></div>
-      <div className="student-container-main">{props.children}</div>
+      <div className="sidebar-container-main">{props.children}</div>
     </div>
   );
 };

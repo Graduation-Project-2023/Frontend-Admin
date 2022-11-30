@@ -1,56 +1,48 @@
+import React from "react";
+import { FaCheck } from "react-icons/fa";
+import { GiCancel } from "react-icons/gi";
+import { useTranslation } from "react-i18next";
+
 export const EditableRow = ({
-  editFormData,
-  handleEditFormChange,
+  editRowData,
   handleCancelClick,
+  handleEditFormChange,
 }) => {
+  
+  const { t } = useTranslation();
+
   return (
-    <tr>
-      <td>
-        <input
-          type="text"
-          required="required"
-          placeholder="Enter a name..."
-          name="fullName"
-          value={editFormData.fullName}
-          onChange={handleEditFormChange}
-        ></input>
-      </td>
-      <td>
-        <input
-          type="text"
-          required="required"
-          placeholder="Enter an address..."
-          name="address"
-          value={editFormData.address}
-          onChange={handleEditFormChange}
-        ></input>
-      </td>
-      <td>
-        <input
-          type="text"
-          required="required"
-          placeholder="Enter a phone number..."
-          name="phoneNumber"
-          value={editFormData.phoneNumber}
-          onChange={handleEditFormChange}
-        ></input>
-      </td>
-      <td>
-        <input
-          type="email"
-          required="required"
-          placeholder="Enter an email..."
-          name="email"
-          value={editFormData.email}
-          onChange={handleEditFormChange}
-        ></input>
-      </td>
-      <td>
-        <button type="submit">Save</button>
-        <button type="button" onClick={handleCancelClick}>
-          Cancel
+    <>
+      {Object.keys(editRowData)?.map((key) => {
+        if (key === "id") return null;
+        const type = typeof editRowData[key] === "number" ? "number" : "text";
+        return (
+          <td className="table-container-items" key={key}>
+            <input
+              type={type}
+              required
+              placeholder="Enter a new value..."
+              name={key}
+              value={editRowData[key]}
+              onChange={handleEditFormChange}
+            />
+          </td>
+        );
+      })}
+
+      <td className="table-container-items">
+        <button type="submit">
+          <FaCheck color="#858D97" className="table-container-items-icon" />
         </button>
       </td>
-    </tr>
+
+      <td className="table-container-items">
+        <GiCancel
+          color="#D65050"
+          className="table-container-items-icon"
+          onClick={handleCancelClick}
+        />
+      </td>
+    </>
   );
 };

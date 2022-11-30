@@ -1,12 +1,13 @@
 import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
 import { FormCard } from "../../../../components/FormCard";
+import { SidebarContainer } from "../../../../components/SidebarContainer";
 
 export const LevelHours = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="container">
+    <SidebarContainer>
       <FormCard cardTitle={"levelHours.formhead"}>
         <form>
           <div className="row mb-4">
@@ -15,7 +16,7 @@ export const LevelHours = () => {
             </label>
             <div className="col-sm-4 ">
               <select className="form-select">
-                <option selected>{t(`levelHours.term`)}</option>
+                <option>{t(`levelHours.term`)}</option>
                 <option>One</option>
               </select>
             </div>
@@ -26,7 +27,7 @@ export const LevelHours = () => {
             </label>
             <div className="col-sm-4 ">
               <select className="form-select ">
-                <option selected>{t(`levelHours.level`)}</option>
+                <option>{t(`levelHours.level`)}</option>
                 <option>One</option>
               </select>
             </div>
@@ -37,7 +38,7 @@ export const LevelHours = () => {
             </label>
             <div className="col-sm-4">
               <select className="form-select">
-                <option selected>{t(`levelHours.min`)}</option>
+                <option>{t(`levelHours.min`)}</option>
                 <option>One</option>
               </select>
             </div>
@@ -48,7 +49,7 @@ export const LevelHours = () => {
             </label>
             <div className="col-sm-4">
               <select className="form-select">
-                <option selected>{t(`levelHours.max`)}</option>
+                <option>{t(`levelHours.max`)}</option>
                 <option>One</option>
               </select>
             </div>
@@ -59,7 +60,7 @@ export const LevelHours = () => {
             </label>
             <div className="col-sm-4">
               <select className="form-select">
-                <option selected>{t(`levelHours.max`)}</option>
+                <option>{t(`levelHours.max`)}</option>
                 <option>One</option>
               </select>
             </div>
@@ -70,7 +71,7 @@ export const LevelHours = () => {
             </label>
             <div className="col-sm-4">
               <select className="form-select">
-                <option selected>{t(`levelHours.max`)}</option>
+                <option>{t(`levelHours.max`)}</option>
                 <option>One</option>
               </select>
             </div>
@@ -94,6 +95,6 @@ export const LevelHours = () => {
         editableItems={true}
         deletableItems={true}
       />
-    </div>
+    </SidebarContainer>
   );
 };

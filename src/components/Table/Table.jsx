@@ -12,10 +12,7 @@ export const Table = (props) => {
   const [data, setData] = useState(props.rowItems);
 
   const [editRowData, setEditRowData] = useState({
-    title: "",
-    level: "",
-    minHours: "",
-    maxHours: ""
+    ...data[0],
   });
 
   const [editRowId, setEditRowId] = useState(null);

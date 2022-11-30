@@ -8,7 +8,6 @@ export const EditableRow = ({
   handleCancelClick,
   handleEditFormChange,
 }) => {
-  
   const { t } = useTranslation();
 
   return (

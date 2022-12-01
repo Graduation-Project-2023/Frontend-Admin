@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
-import useAuth from "../../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 import styles from "./AdminPortal.module.scss";
 
 export const AdminPortal = () => {
@@ -12,7 +12,7 @@ export const AdminPortal = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authContext.college.id !== null) {
+    if (authContext.college?.id !== null) {
       navigate("academic_programs");
     }
     // eslint-disable-next-line

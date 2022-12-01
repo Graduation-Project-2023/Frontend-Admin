@@ -1,7 +1,6 @@
 import { FormCard } from "../../../../components/FormCard";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
 import { useTranslation } from "react-i18next";
-import styles from "./AcademicMain.module.scss";
 import { Accordion } from "react-bootstrap";
 
 export const AcademicMain = () => {
@@ -14,7 +13,7 @@ export const AcademicMain = () => {
           <Accordion
             defaultActiveKey={["0"]}
             alwaysOpen
-            className={styles.collapseSection}
+            className="collapseSection"
           >
             <Accordion.Item eventKey="0">
               <Accordion.Header>{t(`academicMain.section1`)}</Accordion.Header>

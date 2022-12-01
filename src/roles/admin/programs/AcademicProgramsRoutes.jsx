@@ -8,6 +8,8 @@ import { AcademicMain } from "./main/AcademicMain";
 import { ProgramsSidebar } from "./ProgramsSidebar";
 import { AcademicControl } from "./control/AcademicControl";
 import { LevelHours } from "./level-allowed-hours/LevelHours";
+import { AcademicGPA } from "./gpa/AcademicGPA";
+import { GPAHours } from "./gpa-allowed-hours/GPAHours";
 
 export function AcademicProgramsRoutes() {
   return (
@@ -18,6 +20,8 @@ export function AcademicProgramsRoutes() {
         <Route path="levels" element={<AcademicLevels />} />
         <Route path="courses" element={<AcademicCourses />} />
         <Route path="grades" element={<AcademicGrades />} />
+        <Route path="gpa" element={<AcademicGPA />} />
+        <Route path="gpa-hours" element={<GPAHours />} />
         <Route path="graduation" element={<AcademicGraduation />} />
         <Route path="control" element={<AcademicControl />} />
         <Route path="level-hours" element={<LevelHours />} />

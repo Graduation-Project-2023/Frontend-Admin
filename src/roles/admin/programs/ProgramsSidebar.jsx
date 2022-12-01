@@ -54,8 +54,9 @@ export const ProgramsSidebar = () => {
 
   return (
     <Sidebar
+      activeNav={true}
+      backendData={false}
       sideData={ProgramsSidebarData}
-      routerParams={programId}
       sidebarTitle={"portal.programs"}
       options={
         <select className="form-select">

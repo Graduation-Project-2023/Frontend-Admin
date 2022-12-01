@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import cookies from "js-cookie";
 
 export const Sidebar = (props) => {
   const sidebarData = props.sideData;
+  const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
   return (
     <nav className="sidebar">
@@ -15,14 +17,32 @@ export const Sidebar = (props) => {
           {sidebarData.map((item) => {
             return (
               <li key={item.id}>
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    isActive ? "sidebar-list-active" : ""
-                  }
-                >
-                  {t(item.title)}
-                </NavLink>
+                {props.activeNav ? (
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) =>
+                      isActive ? "sidebar-list-active" : ""
+                    }
+                  >
+                    {props.backendData
+                      ? `${
+                          currentLanguageCode === "en"
+                            ? item.englishName
+                            : item.arabicName
+                        }`
+                      : `${t(item.title)}`}
+                  </NavLink>
+                ) : (
+                  <Link to={item.path}>
+                    {props.backendData
+                      ? `${
+                          currentLanguageCode === "en"
+                            ? item.englishName
+                            : item.arabicName
+                        }`
+                      : `${t(item.title)}`}
+                  </Link>
+                )}
               </li>
             );
           })}

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import i18next from "i18next";
 import cookies from "js-cookie";
 import classNames from "classnames";
@@ -41,8 +41,8 @@ export const Header = () => {
       <div className="main-header-item">
         {t("header.uni")} {t("header.college")}
         {currentLanguageCode === "en"
-          ? authContext.college.englishName
-          : authContext.college.arabicName}
+          ? authContext.college?.englishName
+          : authContext.college?.arabicName}
       </div>
       <div className="main-header-item">
         <Dropdown>

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import axios from "axios";
 // import { BASE_URL } from "../shared/API";
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
@@ -17,7 +17,11 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
-    authContext.login("ssss", "ADMIN");
+    authContext.login("ssss", "ADMIN", {
+      id: 12,
+      arabicName: "الهندسة",
+      englishName: "Engineering",
+    });
     navigate("/admin_portal");
     // axios
     //   .post(BASE_URL + "api/login", {

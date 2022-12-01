@@ -1,8 +1,6 @@
-import React, { useState } from "react";
 import { FormCard } from "../../../../components/FormCard";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
 import { useTranslation } from "react-i18next";
-import Collapse from "react-bootstrap/Collapse";
 import styles from "./AcademicMain.module.scss";
 import { Accordion } from "react-bootstrap";
 
@@ -13,11 +11,13 @@ export const AcademicMain = () => {
     <SidebarContainer>
       <FormCard cardTitle={"academicMain.formhead"}>
         <form>
-          <Accordion defaultActiveKey={['0']} alwaysOpen className={styles.collapseSection}>
-            <Accordion.Item  eventKey="0">
-              <Accordion.Header >
-                {t(`academicMain.section1`)}
-              </Accordion.Header>
+          <Accordion
+            defaultActiveKey={["0"]}
+            alwaysOpen
+            className={styles.collapseSection}
+          >
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>{t(`academicMain.section1`)}</Accordion.Header>
               <Accordion.Body>
                 <div className="row mb-4">
                   <label className=" col-sm-2 col-form-label">

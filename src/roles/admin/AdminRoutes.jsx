@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { AdminPortal } from "./AdminPortal";
+import { AdminPortal } from "./portal/AdminPortal";
 import { AdminNavbar } from "./AdminNavbar";
 import { AcademicProgramsRoutes } from "./programs/AcademicProgramsRoutes";
 import { AcademicPorgramsPortal } from "./programs/portal/AcademicPorgramsPortal";
@@ -9,6 +9,7 @@ import { StudentData } from "./student_data/StudentData";
 import { ControlSystem } from "./control/ControlSystem";
 import { NotFound } from "../../pages/NotFound";
 import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
+import { AddAcademicProgram } from "./programs/add/AddAcademicProgram";
 
 export function AdminRoutes() {
   return (
@@ -17,6 +18,7 @@ export function AdminRoutes() {
       <Routes>
         <Route path="" element={<AdminPortal />} />
         <Route path="academic_programs" element={<AcademicPorgramsPortal />} />
+        <Route path="academic_programs/add" element={<AddAcademicProgram />} />
         <Route
           path="academic_programs/:programId/*"
           element={<AcademicProgramsRoutes />}

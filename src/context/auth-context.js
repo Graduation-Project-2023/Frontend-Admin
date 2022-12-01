@@ -5,7 +5,7 @@ const AuthContext = createContext({
   token: "",
   isLoggedIn: false,
   role: "",
-  college: [],
+  college: {},
   login: (token, role, college) => {},
   logout: () => {},
   changeCollege: (college) => {},

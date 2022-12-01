@@ -1,0 +1,49 @@
+.popup{
+    padding: 5rem;
+
+   &_list{
+    list-style: none;
+    color:  #686D72;
+
+    font: normal 400 1rem/1.3rem "Inter";
+   
+      & li{border-bottom: solid#EDE7E7 0.5px;
+      padding:2rem ;}
+    
+      & :hover{
+      background-color: #3d7dca;
+      color: white;}
+    
+
+    }
+    &_title{
+        color: #3D7DCA;
+       font: normal 400 2.5rem/3rem "Inter";
+       padding: 2rem 2rem 0 ;
+    }
+    & button{
+        position: absolute;
+        top: -0.5rem;
+        left: -0.5rem;
+        border-radius: 50%;
+        width:2rem;
+        height: 2rem;
+        background-color: #76A6E0;
+        border: 1px solid  #76A6E0;
+        font: normal 400 1.2rem/1.4rem "Inter";
+        color: #FFFFFF;
+        padding: 0;
+
+    }
+    &_header{
+     flex-direction: column !important;
+     align-items: flex-start !important;
+    }
+    & input{
+        width: 90%;
+        padding: 0.3rem;
+        margin: 1rem;
+        border: 1px solid #D9D9D9;
+        
+    }
+}

@@ -13,9 +13,9 @@ export const AcademicMain = () => {
     <SidebarContainer>
       <FormCard cardTitle={"academicMain.formhead"}>
         <form>
-          <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header className={styles.collapseSection}>
+          <Accordion defaultActiveKey={['0']} alwaysOpen className={styles.collapseSection}>
+            <Accordion.Item  eventKey="0">
+              <Accordion.Header >
                 {t(`academicMain.section1`)}
               </Accordion.Header>
               <Accordion.Body>

@@ -1,17 +1,11 @@
 .collapseSection {
-  & button {
-    background-color: #6892c5;
-    color: #ebeef4;
-    padding: 0.3rem;
-    width: 100%;
-    border: 1px solid #6892c5;
-    border-radius: 15px;
-    outline: none;
-    font: normal 400 1.9rem/2.3rem "Inter";
-    margin: 1rem;
-    &:hover {
-      background-color: #ebeef4;
-      color: white;
-    }
-  }
+  & h2{
+    
+    & button {
+      color: #858d97;
+      font: normal 400 1.9rem/2.3rem "Inter";
+      text-align: center;
+      display: inline;
+   }
+ }
 }

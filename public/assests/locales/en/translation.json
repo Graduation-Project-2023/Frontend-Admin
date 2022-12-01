@@ -97,7 +97,7 @@
     "ar_name":"Program name in arabic",
     "eng_name":"Program name in english",
     "code":"Program code ",
-    "faculty":"Faculty",
+    "faculty":"Select faculty",
     "edu_degree":"Degree of education",
     "sys_type":"System type",
     "credit":"Credit hours",
@@ -112,7 +112,8 @@
     "fees":"Computing fees ",
     "summer_fees":"Computing summer fees according to",
     "rate":"Reduction rate",
-    "trial":"Number of trials"
+    "trial":"Number of trials" ,
+    "search": "Faculty name ..."
 
 
   }

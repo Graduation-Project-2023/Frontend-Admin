@@ -139,6 +139,22 @@
     "tablehead": "Grades Table",
     "gpa": "from gpa .."
   },
+  "courses":{
+    "code":"Course code",
+    "pre_code":"Prerequest code",
+    "hours":"Course Hours",
+    "min":"Minimum Hours",
+    "type":"Course Type",
+    "class":"Classwork",
+    "final":"Final Exams",
+    "oral":"Oral and Practical",
+    "mid":"Midterm Exams",
+    "attendance":"Attendance",
+    "option":"Optional",
+    "mandatory":"Mandatory",
+    "tabletitle":"Courses Table"
+
+  },
   "levels": {
     "ar_level": "Name of level in arabic",
     "eng_level": "Name of level in english",

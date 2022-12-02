@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table } from "../../../../components/Table/Table";
+import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
 import { FormCard } from "../../../../components/FormCard";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
@@ -152,6 +152,18 @@ export const LevelHours = () => {
               </div>
             );
           })}
+          <button
+            type="submit"
+            className="form-card-button form-card-button-save"
+          >
+            {t(`common.save`)}
+          </button>
+          <button
+            type="reset"
+            className="form-card-button form-card-button-cancel"
+          >
+            {t(`common.cancel`)}
+          </button>
         </form>
       </FormCard>
       <Table

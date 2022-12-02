@@ -1,196 +1,171 @@
-import { FormCard } from "../../../../components/FormCard";
+import { useState, useEffect } from "react";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
+import { FormCard } from "../../../../components/FormCard";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../../hooks/useAuth";
 import { Accordion } from "react-bootstrap";
+import { AcademicFormData } from "./AcademicFormData";
+// import {useParams } from "react-router-dom";
+// import axios from "axios";
+// import { BASE_URL } from "../../../../shared/API";
 
 export const AcademicMain = () => {
+  const [programData, setProgramData] = useState([]);
+  const [creditHours, setCreditHours] = useState();
+  const authContext = useAuth();
   const { t } = useTranslation();
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const { programId } = useParams();
+
+  useEffect(() => {
+    // // Get request to get all programs to display it in the sidebar
+    // axios
+    //   .get(BASE_URL + `/programs/${programId}/levels`)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setProrgramData(res);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //     console.log(error);
+    //   });
+    const program = {
+      arabicName: "sadasd",
+      englishName: "asdasdas",
+      programCode: "asdasdas",
+      degree: "DEGREE2",
+      system: "LEVEL",
+      creditHours: "123",
+      mandatoryHours: "413",
+      optionalHours: "536",
+      projectQualifyingHours: "78",
+      compute: "GPA",
+      prerequisiteProgramId: "PRE2",
+      feesType: "LEVEL",
+      summerFeesType: "LEVEL",
+      gradeLowering: "123",
+      attemptsToLowerGrade: "435",
+    };
+    setProgramData(program);
+
+    program.system === "CREDIT" ? setCreditHours(true) : setCreditHours(false);
+  }, []);
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+    if (fieldName === "system") {
+      if (fieldValue === "CREDIT") {
+        setCreditHours(true);
+      } else {
+        setCreditHours(false);
+      }
+    }
+    const program = { ...programData };
+    program[fieldName] = fieldValue;
+    setProgramData(program);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const program = { ...programData };
+    program["collegeId"] = authContext.college.id;
+    console.log(program);
+    // // Post request to create a new program
+    // setLoading(true);
+    // axios
+    //   .post(BASE_URL + `/programs`)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setLoading(false);
+    //     navigate("/admin_portal/academic_programs")
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //     console.log(error);
+    //   });
+  };
 
   return (
     <SidebarContainer>
       <FormCard cardTitle={"academicMain.formhead"}>
-        <form>
+        <form
+          onSubmit={(event) => {
+            handleFormSubmit(event);
+          }}
+        >
           <Accordion
             defaultActiveKey={["0"]}
             alwaysOpen
             className="collapseSection"
           >
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>{t(`academicMain.section1`)}</Accordion.Header>
-              <Accordion.Body>
-                <div className="row mb-4">
-                  <label className=" col-sm-2 col-form-label">
-                    {t(`academicMain.ar_name`)}
-                  </label>
-                  <div className="col-sm-4 ">
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.eng_name`)}
-                  </label>
-                  <div className="col-sm-4 ">
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.code`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.faculty`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <select className="form-select">
-                      <option>{t(`adminNavbarkeys.text`)}</option>
-                      <option>{t(`adminNavbarkeys.text`)}</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.edu_degree`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <select className="form-select">
-                      <option>{t(`academicMain.edu_degree`)}</option>
-                      <option>{t(`academicMain.edu_degree`)}</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.sys_type`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <select className="form-select">
-                      <option>{t(`academicMain.credit`)}</option>
-                      <option>{t(`levelHours.term`)}</option>
-                      <option>{t(`levelHours.level`)}</option>
-                    </select>
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-              <Accordion.Header> {t(`academicMain.section2`)}</Accordion.Header>
-              <Accordion.Body>
-                <div className="row mb-4">
-                  <label className=" col-sm-2 col-form-label">
-                    {t(`academicMain.credit`)}
-                  </label>
-                  <div className="col-sm-4 ">
-                    <input type="number" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.mandatory`)}
-                  </label>
-                  <div className="col-sm-4 ">
-                    <input type="number" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.option`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <input type="number" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.project`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <input type="number" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.compute`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <select className="form-select">
-                      <option>{t(`academicMain.c_gpa`)}</option>
-                      <option>{t(`academicMain.gpa`)}</option>
-                      <option>{t(`academicMain.s_gpa`)}</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.prerequest`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <select className="form-select">
-                      <option>{t(`academicMain.prerequest`)}</option>
-                      <option>{t(`academicMain.prerequest`)}</option>
-                    </select>
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-              <Accordion.Header> {t(`academicMain.section3`)}</Accordion.Header>
-              <Accordion.Body>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.fees`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <select className="form-select">
-                      <option>{t(`academicMain.credit`)}</option>
-                      <option>{t(`levelHours.term`)}</option>
-                      <option>{t(`levelHours.level`)}</option>
-                      <option>{t(`portal.programs`)}</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.summer_fees`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <select className="form-select">
-                      <option>{t(`academicMain.credit`)}</option>
-                      <option>{t(`levelHours.term`)}</option>
-                      <option>{t(`levelHours.level`)}</option>
-                      <option>{t(`portal.programs`)}</option>
-                    </select>
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="3">
-              <Accordion.Header> {t(`academicMain.section4`)}</Accordion.Header>
-              <Accordion.Body>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.rate`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="row mb-4">
-                  <label className="col-sm-2 col-form-label">
-                    {t(`academicMain.trial`)}
-                  </label>
-                  <div className="col-sm-4">
-                    <input type="number" className="form-control" />
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
+            {AcademicFormData.map((item) => {
+              return (
+                <Accordion.Item eventKey={item.id} key={item.id}>
+                  <Accordion.Header>{t(item.title)}</Accordion.Header>
+                  <Accordion.Body>
+                    {item.formData.map((data) => {
+                      if (!creditHours && data.credit) {
+                        return null;
+                      }
+                      return (
+                        <div className="row mb-4" key={data.id}>
+                          <label className="col-sm-2 col-form-label">
+                            {t(data.title)}
+                          </label>
+                          <div className="col-sm-5">
+                            {data.options ? (
+                              <select
+                                className="form-select"
+                                name={data.name}
+                                onChange={handleEditFormChange}
+                                value={programData[data.name] || ""}
+                              >
+                                {data.options.map((option) => {
+                                  return (
+                                    <option
+                                      key={option.id}
+                                      value={option.value}
+                                    >
+                                      {t(option.title)}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                            ) : (
+                              <input
+                                name={data.name}
+                                type={data.type}
+                                required={data.req}
+                                className="form-control"
+                                onChange={handleEditFormChange}
+                                value={programData[data.name] || ""}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </Accordion.Body>
+                </Accordion.Item>
+              );
+            })}
           </Accordion>
+          <button
+            type="submit"
+            className="form-card-button form-card-button-save"
+          >
+            {t(`common.save`)}
+          </button>
+          <button
+            type="reset"
+            className="form-card-button form-card-button-cancel"
+          >
+            {t(`common.cancel`)}
+          </button>
         </form>
       </FormCard>
     </SidebarContainer>

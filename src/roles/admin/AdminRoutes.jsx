@@ -9,7 +9,7 @@ import { StudentData } from "./student_data/StudentData";
 import { ControlSystem } from "./control/ControlSystem";
 import { NotFound } from "../../pages/NotFound";
 import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
-import { AddAcademicProgram } from "./programs/add/AddAcademicProgram";
+import { AddAcademicProgram } from "./programs/main/AddAcademicProgram";
 
 export function AdminRoutes() {
   return (

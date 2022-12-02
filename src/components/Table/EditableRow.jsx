@@ -22,7 +22,7 @@ export const EditableRow = ({
               required
               placeholder="Enter a new value..."
               name={key}
-              value={editRowData[key]}
+              value={editRowData[key] || ""}
               onChange={handleEditFormChange}
             />
           </td>

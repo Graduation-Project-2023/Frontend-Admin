@@ -64,7 +64,7 @@ export const LevelHours = () => {
     {
       id: 0,
       title: "levelHours.term",
-      name: "semester",
+      name: "level",
       req: true,
       options: [
         { id: 1, title: "academicMain.first", value: "FIRST" },
@@ -75,11 +75,11 @@ export const LevelHours = () => {
     {
       id: 1,
       title: "levelHours.level",
-      name: "englishName",
+      name: "semester",
       req: true,
       options: [
-        { id: 1, title: "academicMain.degree_bachelor", value: "BACHELOR" },
-        { id: 2, title: "academicMain.degree_diploma", value: "DIPLOMA" },
+        { id: 1, title: "academicMain.degree_bachelor", value: "CREDIT" },
+        { id: 2, title: "academicMain.degree_diploma", value: "SCHOOLYEAR" },
       ],
     },
     {

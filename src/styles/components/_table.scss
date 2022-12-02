@@ -20,8 +20,10 @@
         color: #444444;
         font: normal 400 1rem/1.3rem "Inter";
         padding: 1.5rem !important;
-
-        &-icon {
+        &-button{
+          border: none;
+           background-color: white;}
+         &-icon {
           font-size: 1.5rem;
           cursor: pointer;
         }

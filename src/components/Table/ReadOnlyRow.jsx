@@ -10,10 +10,15 @@ export const ReadOnlyRow = ({
 }) => {
   return (
     <>
-      <td className="table-container-items">{rowData.title}</td>
-      <td className="table-container-items">{rowData.level}</td>
-      <td className="table-container-items">{rowData.minHours}</td>
-      <td className="table-container-items">{rowData.maxHours}</td>
+      {Object.keys(rowData)?.map((key) => {
+        if (key === "id") return null;
+        if (key === "maxCourses") return null;
+        return (
+          <td className="table-container-items" key={key}>
+            {rowData[key] || ""}
+          </td>
+        );
+      })}
 
       {editableRow && (
         <td className="table-container-items">

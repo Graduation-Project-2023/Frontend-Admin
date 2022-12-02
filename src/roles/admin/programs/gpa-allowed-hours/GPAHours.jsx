@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
 import { useState, useEffect } from "react";
-import { Table } from "../../../../components/Table/Table";
+import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
 import { FormCard } from "../../../../components/FormCard";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
 import { useAuth } from "../../../../hooks/useAuth";
-
 
 export const GPAHours = () => {
   const [gpaHoursData, setGPAHoursData] = useState([]);
@@ -14,10 +13,36 @@ export const GPAHours = () => {
   const { t } = useTranslation();
 
   const [backendData, setBackendData] = useState([
-    { id: 1, title: "summer", level: 300, minHours: 30, maxHours: 60 },
-    { id: 2, title: "first", level: 400, minHours: 20, maxHours: 90 },
-    { id: 3, title: "summer", level: 200, minHours: 10, maxHours: 80 },
-    { id: 4, title: "second", level: 500, minHours: 30, maxHours: 70 },
+    {
+      id: 1,
+      fromGpa: 1.7,
+      toGpa: 4,
+      minHours: 15,
+      maxHours: 21,
+      maxCourses: 6,
+    },
+    {
+      id: 2,
+      fromGpa: 2.3,
+      toGpa: 4,
+      minHours: 12,
+      maxHours: 25,
+      maxCourses: 2,
+    },
+    {
+      id: 3,
+      fromGpa: 2,
+      toGpa: 4,
+      minHours: 16,
+      maxHours: 18,
+    },
+    {
+      id: 4,
+      fromGpa: 1.2,
+      toGpa: 4,
+      minHours: 18,
+      maxHours: 21,
+    },
   ]);
 
   useEffect(() => {
@@ -64,7 +89,7 @@ export const GPAHours = () => {
     {
       id: 0,
       title: "gpaHours.from",
-      name: "from",
+      name: "fromGpa",
       req: true,
       options: false,
       type: "number",
@@ -72,7 +97,7 @@ export const GPAHours = () => {
     {
       id: 1,
       title: "gpaHours.to",
-      name: "to",
+      name: "toGpa",
       req: true,
       options: false,
       type: "number",
@@ -146,6 +171,18 @@ export const GPAHours = () => {
               </div>
             );
           })}
+          <button
+            type="submit"
+            className="form-card-button form-card-button-save"
+          >
+            {t(`common.save`)}
+          </button>
+          <button
+            type="reset"
+            className="form-card-button form-card-button-cancel"
+          >
+            {t(`common.cancel`)}
+          </button>
         </form>
       </FormCard>
       <Table
@@ -161,5 +198,5 @@ export const GPAHours = () => {
         deletableItems={true}
       />
     </SidebarContainer>
-  )
-}
+  );
+};

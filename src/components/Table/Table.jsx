@@ -9,13 +9,12 @@ export const Table = (props) => {
   const deletableItems = props.deletableItems;
   const { t } = useTranslation();
   const [data, setData] = useState(props.rowItems);
-
   const [editRowData, setEditRowData] = useState({
     ...data[0],
   });
 
   const [editRowId, setEditRowId] = useState(null);
-  
+
   useEffect(() => {
     setData(props.rowItems);
   }, [props.rowItems]);

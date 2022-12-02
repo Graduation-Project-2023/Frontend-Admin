@@ -127,5 +127,22 @@
     "trial": "Number of Trials",
     "failure": "Failure Grade",
     "search": "Faculty Name..."
-  }
+  },
+  "grades":{
+    "grade":"Grade name ",
+    "from":"From presentage ..",
+    "to":" To presentage ..",
+    "equivalent":"Equivalent grade",
+    "formhead":"Grades",
+    "tablehead":"Grades Table",
+    "gpa":"from gpa .."
+    
+   },
+   "levels":{
+    "ar_level":"Name of level in arabic",
+    "eng_level":"Name of level in english",
+    "level":"Level",
+    "qualify":"Qualified hours",
+    "tabletitle":"Levels table"
+   }
 }

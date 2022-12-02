@@ -24,13 +24,14 @@ export const EditableRow = ({
               name={key}
               value={editRowData[key] || ""}
               onChange={handleEditFormChange}
+              className="form-control"
             />
           </td>
         );
       })}
 
       <td className="table-container-items">
-        <button type="submit">
+        <button type="submit" className="table-container-items-button">
           <FaCheck color="#858D97" className="table-container-items-icon" />
         </button>
       </td>

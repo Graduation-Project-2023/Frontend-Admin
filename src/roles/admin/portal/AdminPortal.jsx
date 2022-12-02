@@ -1,30 +1,35 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import styles from "./AdminPortal.module.scss";
+import axios from "axios";
+import { BASE_URL } from "../../../shared/API";
+import cookies from "js-cookie";
 
 export const AdminPortal = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
+  const [colleges, setColleges] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
   const authContext = useAuth();
-  const navigate = useNavigate();
+  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
-    if (authContext.college?.id !== null) {
-      navigate("academic_programs");
-    }
-    // eslint-disable-next-line
+    setLoading(true);
+    axios
+      .get(BASE_URL + "/colleges")
+      .then((res) => {
+        setColleges(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   }, []);
-
-  //Mocking data
-  const colleges = [
-    { id: 1, englishName: "Engineering", arabicName: "الهندسة" },
-    { id: 2, englishName: "Arts", arabicName: "الفنون" },
-    { id: 3, englishName: "Pharmacy", arabicName: "الصيدلة" },
-    { id: 4, englishName: "Business", arabicName: "التجارة" },
-  ];
 
   return (
     <>
@@ -67,7 +72,10 @@ export const AdminPortal = () => {
                   }}
                   to="academic_programs"
                 >
-                  {item.englishName}
+                  {t(`header.college`)}
+                  {currentLanguageCode === "en"
+                    ? item.englishName
+                    : item.arabicName}
                 </Link>
               );
             })}

@@ -17,11 +17,7 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
-    authContext.login("ssss", "ADMIN", {
-      id: 12,
-      arabicName: "الهندسة",
-      englishName: "Engineering",
-    });
+    authContext.login("ssss", "ADMIN");
     navigate("/admin_portal");
     // axios
     //   .post(BASE_URL + "api/login", {

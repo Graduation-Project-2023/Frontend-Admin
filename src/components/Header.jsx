@@ -39,12 +39,20 @@ export const Header = () => {
         <FaRegUserCircle />
       </div>
       <div className="main-header-item">
-        {t("header.uni")} {t("header.college")}
+        {t("header.uni")}
+        {authContext.college.id && ` - ${t("header.college")}`}
         {currentLanguageCode === "en"
           ? authContext.college?.englishName
           : authContext.college?.arabicName}
       </div>
       <div className="main-header-item">
+        <button
+          onClick={() => {
+            authContext.logout();
+          }}
+        >
+          LOG OUT
+        </button>
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             {t("header.title")}

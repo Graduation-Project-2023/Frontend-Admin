@@ -1,39 +1,35 @@
-import styles from "./AcademicPorgramsPortal.module.scss";
-import { useTranslation } from "react-i18next";
-import { FaPlusCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cookies from "js-cookie";
+import { useAuth } from "../../../../hooks/useAuth";
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
+import { useTranslation } from "react-i18next";
+import { FaPlusCircle } from "react-icons/fa";
+import styles from "./AcademicPorgramsPortal.module.scss";
 
 export const AcademicPorgramsPortal = () => {
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
+  const authContext = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const currentLanguageCode = cookies.get("i18next") || "en";
 
-  //Mocking backend data
-  const programs = [
-    { id: 1, arabicName: "المستوى الاول", englishName: "First Level" },
-    {
-      id: 2,
-      arabicName: "المستوى الاول لائحة",
-      englishName: "First Level Slate",
-    },
-    {
-      id: 3,
-      arabicName: "الهندسة الكهربية",
-      englishName: "Electrical Engineering",
-    },
-    {
-      id: 4,
-      arabicName: "الهندسة المعمارية ",
-      englishName: "Architectural Engineering",
-    },
-    {
-      id: 5,
-      arabicName: "الهندسة الميكانيكية",
-      englishName: "Mechanical Engineering",
-    },
-    { id: 6, arabicName: "الهندسة المدنية", englishName: "Civil Engineering" },
-  ];
+  useEffect(() => {
+    axios
+      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+      .then((res) => {
+        setPrograms(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className="container">
       <div className={styles.portal_body}>

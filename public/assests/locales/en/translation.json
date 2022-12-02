@@ -20,7 +20,7 @@
   },
   "header": {
     "title": "English",
-    "uni": "Suez Canal University - ",
+    "uni": "Suez Canal University",
     "college": "Faculty of "
   },
   "login": {
@@ -74,13 +74,12 @@
     "level": "Academic Year",
     "max": "Maximum Hours",
     "min": "Minimum Hours",
-    "maxCourses":"Maximum Courses  ",
+    "maxCourses": "Maximum Courses  ",
     "formhead": "Allowed hours according to academic level"
-
   },
   "gpaHours": {
     "from": "From GPA",
-    "to":"To GPA",
+    "to": "To GPA",
     "formhead": "GPA allowed hours"
   },
   "portal": {

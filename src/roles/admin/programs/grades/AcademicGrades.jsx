@@ -1,54 +1,44 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Table } from "../../../../components/Table/Table";
+import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
 import { FormCard } from "../../../../components/FormCard";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
 import { useAuth } from "../../../../hooks/useAuth";
-
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
+import { useParams } from "react-router-dom";
 
 export const AcademicGrades = () => {
   const [academicGradesData, setAcademicGradesData] = useState([]);
   const [grades, setGrades] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
-  const [backendData, setBackendData] = useState([
-    { id: 1, name: "very good", startsFrom: 80 ,endsAt: 90, equivalent: "b", gpa: 70 },
-    { id: 2, name: "good",  startsFrom: 70 ,endsAt: 80, equivalent: "c", gpa: 60 },
-    { id: 3, name: "weak", startsFrom: 60 ,endsAt: 70, equivalent: "d", gpa: 60 },
-    { id: 4, name: "failed", startsFrom: 60 ,endsAt: 50, equivalent: "f", gpa: 60 },
-    
-    
-  ]);
+  const { programId } = useParams();
 
   useEffect(() => {
-    // // Get request to get all programs to display it in the sidebar
-    // axios
-    //   .get(BASE_URL + `/programs/${programId}/levels`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setProrgramData(res);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
-    const academicGrade = {
-      name: "excellent",
-      startsFrom: 90,
-      endsAt: 100,
-      equivalent: "A+",
-      gpa: 4,
-    
-    };
-
-    setAcademicGradesData(academicGrade);
+    // GET request to get all GPA allowed hours to display it in the table
+    axios
+      .get(BASE_URL + `/programs/${programId}/grades`)
+      .then((res) => {
+        setGrades(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   }, []);
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    let fieldValue = event.target.value;
+    if (event.target.type === "number") {
+      fieldValue = +fieldValue;
+    }
     const academicGrades = { ...academicGradesData };
     academicGrades[fieldName] = fieldValue;
     setAcademicGradesData(academicGrades);
@@ -56,10 +46,25 @@ export const AcademicGrades = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const rows = [...backendData];
-    console.log(academicGradesData);
-    rows.push(academicGradesData);
-    setBackendData(rows);
+    const rows = [...grades];
+    const gpaAllowedHour = { ...academicGradesData };
+    gpaAllowedHour["collegeId"] = authContext.college.id;
+    rows.push(gpaAllowedHour);
+
+    // POST request to create a new academic grade
+    axios
+      .post(BASE_URL + `/programs/${programId}/gpa_allowed_hours`, {
+        gpaAllowedHour,
+      })
+      .then((res) => {
+        console.log(res);
+        setGrades(rows);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   };
   const AcademicGradesData = [
     {
@@ -67,7 +72,7 @@ export const AcademicGrades = () => {
       title: "grades.grade",
       name: "name",
       req: true,
-      options:false,
+      options: false,
       type: "text",
     },
     {
@@ -75,7 +80,7 @@ export const AcademicGrades = () => {
       title: "grades.from",
       name: "startsFrom",
       req: true,
-      options:false,
+      options: false,
       type: "number",
     },
     {
@@ -104,76 +109,77 @@ export const AcademicGrades = () => {
     },
   ];
 
-
-  return (<SidebarContainer>
-    <FormCard cardTitle={"grades.formhead"}>
-      <form
-        onSubmit={(event) => {
-          handleFormSubmit(event);
-        }}
-      >
-        {AcademicGradesData.map((data) => {
-          return (
-            <div className="row mb-4" key={data.id}>
-              <label className="col-sm-2 col-form-label">
-                {t(data.title)}
-              </label>
-              <div className="col-sm-5">
-                {data.options ? (
-                  <select
-                    className="form-select"
-                    name={data.name}
-                    onChange={handleEditFormChange}
-                    value={academicGradesData[data.name] || ""}
-                  >
-                    {data.options.map((option) => {
-                      return (
-                        <option key={option.id} value={option.value}>
-                          {t(option.title)}
-                        </option>
-                      );
-                    })}
-                  </select>
-                ) : (
-                  <input
-                    name={data.name}
-                    type={data.type}
-                    required={data.req}
-                    className="form-control"
-                    onChange={handleEditFormChange}
-                    value={academicGradesData[data.name] || ""}
-                  />
-                )}
+  return (
+    <SidebarContainer>
+      <FormCard cardTitle={"grades.formhead"}>
+        <form
+          onSubmit={(event) => {
+            handleFormSubmit(event);
+          }}
+        >
+          {AcademicGradesData.map((data) => {
+            return (
+              <div className="row mb-4" key={data.id}>
+                <label className="col-sm-2 col-form-label">
+                  {t(data.title)}
+                </label>
+                <div className="col-sm-5">
+                  {data.options ? (
+                    <select
+                      className="form-select"
+                      name={data.name}
+                      onChange={handleEditFormChange}
+                      value={academicGradesData[data.name] || ""}
+                    >
+                      {data.options.map((option) => {
+                        return (
+                          <option key={option.id} value={option.value}>
+                            {t(option.title)}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  ) : (
+                    <input
+                      name={data.name}
+                      type={data.type}
+                      required={data.req}
+                      className="form-control"
+                      onChange={handleEditFormChange}
+                      value={academicGradesData[data.name] || ""}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-        <button
-          type="submit"
-          className="form-card-button form-card-button-save"
-        >
-          {t(`common.save`)}
-        </button>
-        <button
-          type="reset"
-          className="form-card-button form-card-button-cancel"
-        >
-          {t(`common.cancel`)}
-        </button>
-      </form>
-    </FormCard>
-    <Table
-      tableTitle={"grades.tablehead"}
-      headerItems={[
-        { id: 1, title: t(`grades.grade`) },
-        { id: 2, title: t(`grades.from`) },
-        { id: 3, title: t(`grades.to`) },
-        { id: 4, title: t(`grades.equivalent`) },
-        { id: 5, title: t(`grades.gpa`) },
-      ]}
-      rowItems={backendData}
-      editableItems={true}
-      deletableItems={true}
-    />
-  </SidebarContainer>);
+            );
+          })}
+          <button
+            type="submit"
+            className="form-card-button form-card-button-save"
+          >
+            {t(`common.save`)}
+          </button>
+          <button
+            type="reset"
+            className="form-card-button form-card-button-cancel"
+          >
+            {t(`common.cancel`)}
+          </button>
+        </form>
+      </FormCard>
+      <Table
+        tableTitle={"grades.tablehead"}
+        headerItems={[
+          { id: 1, title: t(`grades.grade`) },
+          { id: 2, title: t(`grades.from`) },
+          { id: 3, title: t(`grades.to`) },
+          { id: 4, title: t(`grades.equivalent`) },
+          { id: 5, title: t(`grades.gpa`) },
+        ]}
+        rowItems={grades}
+        editableItems={true}
+        deletableItems={true}
+      />
+    </SidebarContainer>
+  );
 };

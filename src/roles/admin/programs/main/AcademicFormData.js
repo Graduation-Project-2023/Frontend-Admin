@@ -32,7 +32,7 @@ export const AcademicFormData = [
         title: "academicMain.edu_degree",
         name: "degree",
         options: [
-          { id: 0, title: "select a program", value: null },
+          { id: 0, title: "common.select", value: null },
           { id: 1, title: "academicMain.degree_bachelor", value: "BACHELOR" },
           { id: 2, title: "academicMain.degree_diploma", value: "DIPLOMA" },
         ],
@@ -43,7 +43,7 @@ export const AcademicFormData = [
         name: "system",
         req: true,
         options: [
-          { id: 0, title: "select a program", value: null },
+          { id: 0, title: "common.select", value: null },
           { id: 1, title: "academicMain.credit", value: "CREDIT" },
           { id: 2, title: "levelHours.level", value: "SCHOOLYEAR" },
         ],
@@ -86,7 +86,7 @@ export const AcademicFormData = [
         title: "academicMain.compute",
         name: "allowedHours",
         options: [
-          { id: 0, title: "select a program", value: null },
+          { id: 0, title: "common.select", value: null },
           { id: 1, title: "academicMain.c_gpa", value: "SEMESTER" },
           { id: 2, title: "academicMain.gpa", value: "CUMULATIVE" },
           { id: 3, title: "academicMain.s_gpa", value: "INCLUDESUMMER" },
@@ -97,7 +97,7 @@ export const AcademicFormData = [
         title: "academicMain.prerequest",
         name: "prerequisiteProgramId",
         options: [
-          { id: 0, title: "select a program", value: null },
+          { id: 0, title: "common.select", value: null },
           { id: 1, title: "academicMain.prerequest", value: "PRE1" },
           { id: 2, title: "academicMain.prerequest", value: "PRE2" },
         ],
@@ -114,7 +114,7 @@ export const AcademicFormData = [
         name: "feesType",
         req: true,
         options: [
-          { id: 0, title: "select a program", value: null },
+          { id: 0, title: "common.select", value: null },
           { id: 1, title: "levelHours.level", value: "YEARFIXED" },
           { id: 2, title: "levelHours.term", value: "SEMESTERFIXED" },
           { id: 3, title: "academicMain.credit", value: "CREDITHOURS" },
@@ -127,7 +127,7 @@ export const AcademicFormData = [
         name: "summerFeesType",
         req: true,
         options: [
-          { id: 0, title: "select a program", value: null },
+          { id: 0, title: "common.select", value: null },
           { id: 1, title: "levelHours.level", value: "YEARFIXED" },
           { id: 2, title: "levelHours.term", value: "SEMESTERFIXED" },
           { id: 3, title: "academicMain.credit", value: "CREDITHOURS" },

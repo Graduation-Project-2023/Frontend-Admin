@@ -25,7 +25,9 @@ export const AcademicMain = () => {
       .then((res) => {
         console.log(res);
         setProgramData(res.data);
-        res.data.system === "CREDIT" ? setCreditHours(true) : setCreditHours(false);
+        res.data.system === "CREDIT"
+          ? setCreditHours(true)
+          : setCreditHours(false);
         setLoading(false);
       })
       .catch((error) => {
@@ -37,7 +39,10 @@ export const AcademicMain = () => {
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    let fieldValue = event.target.value;
+    if (event.target.type === "number") {
+      fieldValue = +fieldValue;
+    }
     if (fieldName === "system") {
       if (fieldValue === "CREDIT") {
         setCreditHours(true);

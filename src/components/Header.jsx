@@ -51,7 +51,7 @@ export const Header = () => {
             authContext.logout();
           }}
         >
-          LOG OUT
+          {t("common.logout")}
         </button>
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">

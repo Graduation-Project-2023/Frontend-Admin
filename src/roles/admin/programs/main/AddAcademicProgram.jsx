@@ -21,7 +21,7 @@ export const AddAcademicProgram = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get request to get all programs to display it in the sidebar
+    // GET request to get all programs to display it in the sidebar
     axios
       .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
@@ -58,11 +58,11 @@ export const AddAcademicProgram = () => {
     e.preventDefault();
     const program = { ...newProgram };
     program["collegeId"] = authContext.college.id;
-    console.log(program);
-    // Post request to create a new program
+    
+    // POST request to create a new program
     setLoading(true);
     axios
-      .post(BASE_URL + `/programs`)
+      .post(BASE_URL + `/programs`, { program })
       .then((res) => {
         console.log(res);
         setLoading(false);

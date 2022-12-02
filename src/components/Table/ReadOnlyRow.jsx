@@ -12,6 +12,7 @@ export const ReadOnlyRow = ({
     <>
       {Object.keys(rowData)?.map((key) => {
         if (key === "id") return null;
+        if (key === "programId") return null;
         if (key === "maxCourses") return null;
         return (
           <td className="table-container-items" key={key}>

@@ -1,52 +1,42 @@
-import React from 'react';
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Table } from "../../../../components/Table/Table";
+import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
 import { FormCard } from "../../../../components/FormCard";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { useAuth } from "../../../../hooks/useAuth";
-
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
 
 export const AcademicLevels = () => {
   const [academicLevelsData, setAcademicLevelsData] = useState([]);
-  const [grades, setGrades] = useState([]);
-  const authContext = useAuth();
+  const [levels, setLevels] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const { t } = useTranslation();
+  const { programId } = useParams();
 
-  const [backendData, setBackendData] = useState([
-    { id: 1, englishName: "one", arabicName:"اول" ,level: 100, qualifyingHrs: 2 },
-    { id: 2, englishName: "two", arabicName:"ثاني" ,level: 200, qualifyingHrs: 50 },
-    { id: 3, englishName: "three", arabicName:"ثالث" ,level: 300, qualifyingHrs: 100 },
-    { id: 4, englishName: "four", arabicName:"رابع" ,level: 400, qualifyingHrs: 150 },
-  ]);
   useEffect(() => {
-    // // Get request to get all programs to display it in the sidebar
-    // axios
-    //   .get(BASE_URL + `/programs/${programId}/levels`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setProrgramData(res);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
-    const academicLevel = {
-      englishName: "four",
-      arabicName:" رابع",
-      level: 300,
-      qualifyingHrs: 135,
-      
-    
-    };
-
-    setAcademicLevelsData(academicLevel);
+    // GET request to get all levels of a specific program
+    axios
+      .get(BASE_URL + `/programs/${programId}/levels`)
+      .then((res) => {
+        setLevels(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+        console.log(error);
+      });
   }, []);
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    let fieldValue = event.target.value;
+    if (event.target.type === "number") {
+      fieldValue = +fieldValue;
+    }
     const academicLevels = { ...academicLevelsData };
     academicLevels[fieldName] = fieldValue;
     setAcademicLevelsData(academicLevels);
@@ -54,18 +44,31 @@ export const AcademicLevels = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const rows = [...backendData];
-    console.log(academicLevelsData);
+    const rows = [...levels];
     rows.push(academicLevelsData);
-    setBackendData(rows);
+
+    // POST request to add a new academic level to the database
+    axios
+      .get(BASE_URL + `/programs/${programId}/levels`, { academicLevelsData })
+      .then((res) => {
+        console.log(res);
+        setLevels(rows);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+        console.log(error);
+      });
   };
+
   const AcademicLevelsData = [
     {
       id: 0,
       title: "levels.eng_level",
       name: "englishName",
       req: true,
-      options:false,
+      options: false,
       type: "text",
     },
     {
@@ -73,7 +76,7 @@ export const AcademicLevels = () => {
       title: "levels.ar_level",
       name: "arabicName",
       req: true,
-      options:false,
+      options: false,
       type: "text",
     },
     {
@@ -81,7 +84,6 @@ export const AcademicLevels = () => {
       title: "levels.level",
       name: "level",
       req: true,
-      options: false,
       type: "number",
     },
     {
@@ -95,73 +97,74 @@ export const AcademicLevels = () => {
   ];
   return (
     <SidebarContainer>
-    <FormCard cardTitle={"levels.level"}>
-      <form
-        onSubmit={(event) => {
-          handleFormSubmit(event);
-        }}
-      >
-        {AcademicLevelsData.map((data) => {
-          return (
-            <div className="row mb-4" key={data.id}>
-              <label className="col-sm-2 col-form-label">
-                {t(data.title)}
-              </label>
-              <div className="col-sm-5">
-                {data.options ? (
-                  <select
-                    className="form-select"
-                    name={data.name}
-                    onChange={handleEditFormChange}
-                    value={academicLevelsData[data.name] || ""}
-                  >
-                    {data.options.map((option) => {
-                      return (
-                        <option key={option.id} value={option.value}>
-                          {t(option.title)}
-                        </option>
-                      );
-                    })}
-                  </select>
-                ) : (
-                  <input
-                    name={data.name}
-                    type={data.type}
-                    required={data.req}
-                    className="form-control"
-                    onChange={handleEditFormChange}
-                    value={academicLevelsData[data.name] || ""}
-                  />
-                )}
+      <FormCard cardTitle={"levels.level"}>
+        <form
+          onSubmit={(event) => {
+            handleFormSubmit(event);
+          }}
+        >
+          {AcademicLevelsData.map((data) => {
+            return (
+              <div className="row mb-4" key={data.id}>
+                <label className="col-sm-2 col-form-label">
+                  {t(data.title)}
+                </label>
+                <div className="col-sm-5">
+                  {data.options ? (
+                    <select
+                      className="form-select"
+                      name={data.name}
+                      onChange={handleEditFormChange}
+                      value={academicLevelsData[data.name] || ""}
+                    >
+                      {data.options.map((option) => {
+                        return (
+                          <option key={option.id} value={option.value}>
+                            {t(option.title)}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  ) : (
+                    <input
+                      name={data.name}
+                      type={data.type}
+                      required={data.req}
+                      className="form-control"
+                      onChange={handleEditFormChange}
+                      value={academicLevelsData[data.name] || ""}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-        <button
-          type="submit"
-          className="form-card-button form-card-button-save"
-        >
-          {t(`common.save`)}
-        </button>
-        <button
-          type="reset"
-          className="form-card-button form-card-button-cancel"
-        >
-          {t(`common.cancel`)}
-        </button>
-      </form>
-    </FormCard>
-    <Table
-      tableTitle={"levels.tabletitle"}
-      headerItems={[
-        { id: 1, title: t(`levels.eng_level`) },
-        { id: 2, title: t(`levels.ar_level`) },
-        { id: 3, title: t(`levels.level`) },
-        { id: 4, title: t(`levels.qualify`) },
-      ]}
-      rowItems={backendData}
-      editableItems={true}
-      deletableItems={true}
-    />
-  </SidebarContainer>);
-}
+            );
+          })}
+          <button
+            type="submit"
+            className="form-card-button form-card-button-save"
+          >
+            {t(`common.save`)}
+          </button>
+          <button
+            type="reset"
+            className="form-card-button form-card-button-cancel"
+          >
+            {t(`common.cancel`)}
+          </button>
+        </form>
+      </FormCard>
+      <Table
+        tableTitle={"levels.tabletitle"}
+        headerItems={[
+          { id: 1, title: t(`levels.eng_level`) },
+          { id: 2, title: t(`levels.ar_level`) },
+          { id: 3, title: t(`levels.level`) },
+          { id: 4, title: t(`levels.qualify`) },
+        ]}
+        rowItems={levels}
+        editableItems={true}
+        deletableItems={true}
+      />
+    </SidebarContainer>
+  );
+};

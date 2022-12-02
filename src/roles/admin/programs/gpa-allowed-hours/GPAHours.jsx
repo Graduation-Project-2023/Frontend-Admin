@@ -1,78 +1,43 @@
-import React from "react";
 import { useState, useEffect } from "react";
-import { Table } from "../../../../components/Table/Table";
+import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
 import { FormCard } from "../../../../components/FormCard";
 import { SidebarContainer } from "../../../../components/SidebarContainer";
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 
 export const GPAHours = () => {
   const [gpaHoursData, setGPAHoursData] = useState([]);
-  const [gpa, setGPA] = useState([]);
-  const authContext = useAuth();
+  const [allGPAData, setAllGPAData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const { t } = useTranslation();
-
-  const [backendData, setBackendData] = useState([
-    {
-      id: 1,
-      fromGpa: 1.7,
-      toGpa: 4,
-      minHours: 15,
-      maxHours: 21,
-      maxCourses: 6,
-    },
-    {
-      id: 2,
-      fromGpa: 2.3,
-      toGpa: 4,
-      minHours: 12,
-      maxHours: 25,
-      maxCourses: 2,
-    },
-    {
-      id: 3,
-      fromGpa: 2,
-      toGpa: 4,
-      minHours: 16,
-      maxHours: 18,
-    },
-    {
-      id: 4,
-      fromGpa: 1.2,
-      toGpa: 4,
-      minHours: 18,
-      maxHours: 21,
-    },
-  ]);
+  const { programId } = useParams();
+  const authContext = useAuth();
 
   useEffect(() => {
-    // // Get request to get all programs to display it in the sidebar
-    // axios
-    //   .get(BASE_URL + `/programs/${programId}/levels`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setProrgramData(res);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
-    const gpaHour = {
-      fromGpa: 1.7,
-      toGpa: 4,
-      minHours: 12,
-      maxHours: 21,
-      maxCourses: 6,
-    };
-
-    setGPAHoursData(gpaHour);
+    // GET request to get all GPA allowed hours to display it in the table
+    axios
+      .get(BASE_URL + `/programs/${programId}/gpa_allowed_hours`)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   }, []);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    let fieldValue = event.target.value;
+    if (event.target.type === "number") {
+      fieldValue = +fieldValue;
+    }
     const gpaHours = { ...gpaHoursData };
     gpaHours[fieldName] = fieldValue;
     setGPAHoursData(gpaHours);
@@ -80,11 +45,27 @@ export const GPAHours = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const rows = [...backendData];
-    console.log(gpaHoursData);
-    rows.push(gpaHoursData);
-    setBackendData(rows);
+    const rows = [...allGPAData];
+    const gpaAllowedHour = { ...gpaHoursData };
+    gpaAllowedHour["collegeId"] = authContext.college.id;
+    rows.push(gpaAllowedHour);
+
+    // POST request to create a new level allowed hours
+    axios
+      .post(BASE_URL + `/programs/${programId}/gpa_allowed_hours`, {
+        gpaAllowedHour,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setAllGPAData(rows);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   };
+
   const GPAHoursData = [
     {
       id: 0,
@@ -193,7 +174,7 @@ export const GPAHours = () => {
           { id: 3, title: t(`levelHours.min`) },
           { id: 4, title: t(`levelHours.max`) },
         ]}
-        rowItems={backendData}
+        rowItems={allGPAData}
         editableItems={true}
         deletableItems={true}
       />

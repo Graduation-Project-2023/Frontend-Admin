@@ -12,11 +12,13 @@
     "religion_christian": "Christian",
     "religion_muslim": "Muslim",
     "login": "Sign In",
+    "logout": "Sign Out",
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel",
-    "level1": "Level 1"
+    "level1": "Level 1",
+    "select": "Select from this menu.."
   },
   "header": {
     "title": "English",
@@ -128,21 +130,20 @@
     "failure": "Failure Grade",
     "search": "Faculty Name..."
   },
-  "grades":{
-    "grade":"Grade name ",
-    "from":"From presentage ..",
-    "to":" To presentage ..",
-    "equivalent":"Equivalent grade",
-    "formhead":"Grades",
-    "tablehead":"Grades Table",
-    "gpa":"from gpa .."
-    
-   },
-   "levels":{
-    "ar_level":"Name of level in arabic",
-    "eng_level":"Name of level in english",
-    "level":"Level",
-    "qualify":"Qualified hours",
-    "tabletitle":"Levels table"
-   }
+  "grades": {
+    "grade": "Grade name ",
+    "from": "From presentage ..",
+    "to": " To presentage ..",
+    "equivalent": "Equivalent grade",
+    "formhead": "Grades",
+    "tablehead": "Grades Table",
+    "gpa": "from gpa .."
+  },
+  "levels": {
+    "ar_level": "Name of level in arabic",
+    "eng_level": "Name of level in english",
+    "level": "Level",
+    "qualify": "Qualified hours",
+    "tabletitle": "Levels table"
+  }
 }

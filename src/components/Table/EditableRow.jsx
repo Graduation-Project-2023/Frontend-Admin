@@ -14,6 +14,8 @@ export const EditableRow = ({
     <>
       {Object.keys(editRowData)?.map((key) => {
         if (key === "id") return null;
+        if (key === "programId") return null;
+        if (key === "maxCourses") return null;
         const type = typeof editRowData[key] === "number" ? "number" : "text";
         return (
           <td className="table-container-items" key={key}>

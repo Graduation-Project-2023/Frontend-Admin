@@ -68,7 +68,6 @@ export const ProgramsSidebar = () => {
       .then((res) => {
         setPrograms(res.data);
         setLoading(false);
-        console.log("programs here");
       })
       .catch((error) => {
         setLoading(false);

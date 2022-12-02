@@ -18,6 +18,7 @@ export const AcademicPorgramsPortal = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
+    // Get request to get all programs to display it in the menu
     axios
       .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
@@ -26,6 +27,7 @@ export const AcademicPorgramsPortal = () => {
       })
       .catch((error) => {
         setLoading(false);
+        setError(error);
         console.log(error);
       });
   }, []);

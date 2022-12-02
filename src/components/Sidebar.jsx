@@ -1,11 +1,17 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
 import cookies from "js-cookie";
 
 export const Sidebar = (props) => {
-  const sidebarData = props.sideData;
+  const [sidebarData, setSidebarData] = useState(props.sideData);
   const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSidebarData(props.sideData);
+  }, [props.sideData]);
+
   return (
     <nav className="sidebar">
       <div className="sidebar-title">

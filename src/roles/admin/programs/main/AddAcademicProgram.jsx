@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { Accordion } from "react-bootstrap";
 import { AcademicFormData } from "./AcademicFormData";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import { BASE_URL } from "../../../../shared/API";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
 
 export const AddAcademicProgram = () => {
   const [programsData, setProrgramsData] = useState([]);
@@ -16,59 +16,32 @@ export const AddAcademicProgram = () => {
   const [creditHours, setCreditHours] = useState(false);
   const authContext = useAuth();
   const { t } = useTranslation();
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // // Get request to get all programs to display it in the sidebar
-    // axios
-    //   .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setProrgramsData(res);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
-
-    const programs = [
-      { id: 1, arabicName: "المستوى الاول", englishName: "First Level" },
-      {
-        id: 2,
-        arabicName: "المستوى الاول لائحة",
-        englishName: "First Level Slate",
-      },
-      {
-        id: 3,
-        arabicName: "الهندسة الكهربية",
-        englishName: "Electrical Engineering",
-      },
-      {
-        id: 4,
-        arabicName: "الهندسة المعمارية ",
-        englishName: "Architectural Engineering",
-      },
-      {
-        id: 5,
-        arabicName: "الهندسة الميكانيكية",
-        englishName: "Mechanical Engineering",
-      },
-      {
-        id: 6,
-        arabicName: "الهندسة المدنية",
-        englishName: "Civil Engineering",
-      },
-    ];
-    setProrgramsData(programs);
+    // Get request to get all programs to display it in the sidebar
+    axios
+      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+      .then((res) => {
+        setProrgramsData(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   }, []);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    console.log(event.target.type);
+    let fieldValue = event.target.value;
+    if (event.target.type === "number") {
+      fieldValue = +fieldValue;
+    }
     if (fieldName === "system") {
       if (fieldValue === "CREDIT") {
         setCreditHours(true);
@@ -86,19 +59,20 @@ export const AddAcademicProgram = () => {
     const program = { ...newProgram };
     program["collegeId"] = authContext.college.id;
     console.log(program);
-    // // Post request to create a new program
-    // setLoading(true);
-    // axios
-    //   .post(BASE_URL + `/programs`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setLoading(false);
-    //     navigate("/admin_portal/academic_programs")
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
+    // Post request to create a new program
+    setLoading(true);
+    axios
+      .post(BASE_URL + `/programs`)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        navigate("/admin_portal/academic_programs");
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+        console.log(error);
+      });
   };
 
   return (

@@ -14,7 +14,7 @@ const AuthContext = createContext({
 export const AuthContextProvider = (props) => {
   const storageToken = cookies.get("token");
   const storageRole = cookies.get("role");
-  const storageCollege = cookies.get("college");
+  const storageCollege = JSON.stringify(cookies.get("college"));
   const [token, setToken] = useState(storageToken);
   const [role, setRole] = useState(storageRole);
   const [college, setCollege] = useState(storageCollege);

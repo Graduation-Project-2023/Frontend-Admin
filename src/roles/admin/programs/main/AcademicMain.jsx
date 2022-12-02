@@ -5,52 +5,33 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { Accordion } from "react-bootstrap";
 import { AcademicFormData } from "./AcademicFormData";
-// import {useParams } from "react-router-dom";
-// import axios from "axios";
-// import { BASE_URL } from "../../../../shared/API";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
 
 export const AcademicMain = () => {
   const [programData, setProgramData] = useState([]);
   const [creditHours, setCreditHours] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const { programId } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { programId } = useParams();
 
   useEffect(() => {
-    // // Get request to get all programs to display it in the sidebar
-    // axios
-    //   .get(BASE_URL + `/programs/${programId}/levels`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setProrgramData(res);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
-    const program = {
-      arabicName: "sadasd",
-      englishName: "asdasdas",
-      programCode: "asdasdas",
-      degree: "DEGREE2",
-      system: "LEVEL",
-      creditHours: "123",
-      mandatoryHours: "413",
-      optionalHours: "536",
-      projectQualifyingHours: "78",
-      compute: "GPA",
-      prerequisiteProgramId: "PRE2",
-      feesType: "LEVEL",
-      summerFeesType: "LEVEL",
-      gradeLowering: "123",
-      attemptsToLowerGrade: "435",
-    };
-    setProgramData(program);
-
-    program.system === "CREDIT" ? setCreditHours(true) : setCreditHours(false);
+    // Get request to get a program by it's id
+    axios
+      .get(BASE_URL + `/programs/${programId}`)
+      .then((res) => {
+        console.log(res);
+        setProgramData(res.data);
+        res.data.system === "CREDIT" ? setCreditHours(true) : setCreditHours(false);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   }, []);
 
   const handleEditFormChange = (event) => {

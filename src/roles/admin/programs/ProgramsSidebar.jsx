@@ -1,5 +1,11 @@
-import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Sidebar } from "../../../components/Sidebar";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../../shared/API";
+import { useAuth } from "../../../hooks/useAuth";
+import cookies from "js-cookie";
+import { Dropdown } from "react-bootstrap";
 
 const ProgramsSidebarData = [
   {
@@ -50,7 +56,26 @@ const ProgramsSidebarData = [
 ];
 
 export const ProgramsSidebar = () => {
-  const { programId } = useParams();
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
+  const authContext = useAuth();
+  const currentLanguageCode = cookies.get("i18next") || "en";
+
+  useEffect(() => {
+    axios
+      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+      .then((res) => {
+        setPrograms(res.data);
+        setLoading(false);
+        console.log("programs here");
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+        console.log(error);
+      });
+  }, []);
 
   return (
     <Sidebar
@@ -59,10 +84,26 @@ export const ProgramsSidebar = () => {
       sideData={ProgramsSidebarData}
       sidebarTitle={"portal.programs"}
       options={
-        <select className="form-select">
-          <option>Hello</option>
-          <option>One</option>
-        </select>
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Select Program
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            {programs.map((item) => {
+              return (
+                <Link
+                  to={`/admin_portal/academic_programs/${item.id}/main`}
+                  key={item.id}
+                >
+                  {currentLanguageCode === "en"
+                    ? item.englishName
+                    : item.arabicName}
+                </Link>
+              );
+            })}
+          </Dropdown.Menu>
+        </Dropdown>
       }
     />
   );

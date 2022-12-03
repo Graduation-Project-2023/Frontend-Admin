@@ -30,7 +30,7 @@ export const AcademicGrades = () => {
         setLoading(false);
         console.log(error);
       });
-  }, []);
+  });
 
   const handleEditFormChange = (event) => {
     event.preventDefault();

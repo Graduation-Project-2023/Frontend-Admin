@@ -30,7 +30,7 @@ export const AcademicPorgramsPortal = () => {
         setError(error);
         console.log(error);
       });
-  }, []);
+  });
 
   return (
     <div className="container">

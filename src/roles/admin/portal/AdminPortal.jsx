@@ -29,7 +29,7 @@ export const AdminPortal = () => {
         setLoading(false);
         console.log(error);
       });
-  }, []);
+  });
 
   return (
     <>

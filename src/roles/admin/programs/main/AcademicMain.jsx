@@ -35,7 +35,7 @@ export const AcademicMain = () => {
         setLoading(false);
         console.log(error);
       });
-  }, []);
+  });
 
   const handleEditFormChange = (event) => {
     event.preventDefault();

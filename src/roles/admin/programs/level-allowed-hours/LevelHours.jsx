@@ -29,7 +29,7 @@ export const LevelHours = () => {
         setLoading(false);
         console.log(error);
       });
-  }, []);
+  });
 
   const handleEditFormChange = (event) => {
     event.preventDefault();

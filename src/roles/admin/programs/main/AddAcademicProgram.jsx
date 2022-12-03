@@ -32,7 +32,7 @@ export const AddAcademicProgram = () => {
         setLoading(false);
         console.log(error);
       });
-  }, []);
+  });
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -58,7 +58,7 @@ export const AddAcademicProgram = () => {
     e.preventDefault();
     const program = { ...newProgram };
     program["collegeId"] = authContext.college.id;
-    
+
     // POST request to create a new program
     setLoading(true);
     axios

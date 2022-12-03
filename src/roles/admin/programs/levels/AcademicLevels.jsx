@@ -28,7 +28,7 @@ export const AcademicLevels = () => {
         setError(error);
         console.log(error);
       });
-  }, []);
+  });
 
   const handleEditFormChange = (event) => {
     event.preventDefault();

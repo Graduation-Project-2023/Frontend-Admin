@@ -74,7 +74,7 @@ export const ProgramsSidebar = () => {
         setError(error);
         console.log(error);
       });
-  }, []);
+  });
 
   return (
     <Sidebar

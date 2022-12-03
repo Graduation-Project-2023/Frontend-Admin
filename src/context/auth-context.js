@@ -29,7 +29,7 @@ export const AuthContextProvider = (props) => {
   const loginHandler = (token, role, college) => {
     cookies.set("token", token);
     cookies.set("role", role);
-    // cookies.set("college", JSON.stringify(college));
+    cookies.set("college", JSON.stringify(college));
     setRole(role);
     setToken(token);
     setCollege(college);

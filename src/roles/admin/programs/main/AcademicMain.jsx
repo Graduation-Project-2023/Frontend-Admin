@@ -1,20 +1,25 @@
 import { useState, useEffect } from "react";
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { FormCard } from "../../../../components/FormCard";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-import { Accordion } from "react-bootstrap";
-import { AcademicFormData } from "./AcademicFormData";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { BASE_URL } from "../../../../shared/API";
+import axios from "axios";
+import { AcademicFormData } from "./AcademicFormData";
+
+// Reusable Components
+import { SidebarContainer } from "../../../../components/SidebarContainer";
+import { FormCard } from "../../../../components/FormCard";
+import { FormInput } from "../../../../components/FormInput";
+import { Accordion } from "react-bootstrap";
 
 export const AcademicMain = () => {
   const [programData, setProgramData] = useState([]);
   const [creditHours, setCreditHours] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line
   const [error, setError] = useState(null);
   const { programId } = useParams();
   const navigate = useNavigate();
@@ -35,7 +40,8 @@ export const AcademicMain = () => {
         setLoading(false);
         console.log(error);
       });
-  });
+    // eslint-disable-next-line
+  }, []);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -99,41 +105,12 @@ export const AcademicMain = () => {
                         return null;
                       }
                       return (
-                        <div className="row mb-4" key={data.id}>
-                          <label className="col-sm-2 col-form-label">
-                            {t(data.title)}
-                          </label>
-                          <div className="col-sm-5">
-                            {data.options ? (
-                              <select
-                                className="form-select"
-                                name={data.name}
-                                onChange={handleEditFormChange}
-                                value={programData[data.name] || ""}
-                              >
-                                {data.options.map((option) => {
-                                  return (
-                                    <option
-                                      key={option.id}
-                                      value={option.value}
-                                    >
-                                      {t(option.title)}
-                                    </option>
-                                  );
-                                })}
-                              </select>
-                            ) : (
-                              <input
-                                name={data.name}
-                                type={data.type}
-                                required={data.req}
-                                className="form-control"
-                                onChange={handleEditFormChange}
-                                value={programData[data.name] || ""}
-                              />
-                            )}
-                          </div>
-                        </div>
+                        <FormInput
+                          inputData={data}
+                          handleEditFormChange={handleEditFormChange}
+                          valueData={programData}
+                          key={data.id}
+                        />
                       );
                     })}
                   </Accordion.Body>

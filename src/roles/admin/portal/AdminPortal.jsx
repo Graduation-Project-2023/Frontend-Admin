@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
-import styles from "./AdminPortal.module.scss";
-import axios from "axios";
 import { BASE_URL } from "../../../shared/API";
+import axios from "axios";
 import cookies from "js-cookie";
+import styles from "./AdminPortal.module.scss";
+import Modal from "react-bootstrap/Modal";
 
 export const AdminPortal = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [colleges, setColleges] = useState([]);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line
   const [error, setError] = useState();
   const authContext = useAuth();
   const currentLanguageCode = cookies.get("i18next") || "en";
@@ -29,7 +31,8 @@ export const AdminPortal = () => {
         setLoading(false);
         console.log(error);
       });
-  });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

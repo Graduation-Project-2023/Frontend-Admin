@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import cookies from "js-cookie";
-import { useAuth } from "../../../../hooks/useAuth";
-import axios from "axios";
-import { BASE_URL } from "../../../../shared/API";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../../hooks/useAuth";
+import { BASE_URL } from "../../../../shared/API";
+import cookies from "js-cookie";
+import axios from "axios";
 import { FaPlusCircle } from "react-icons/fa";
 import styles from "./AcademicPorgramsPortal.module.scss";
 
 export const AcademicPorgramsPortal = () => {
   const [programs, setPrograms] = useState([]);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line
   const [error, setError] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
@@ -30,7 +32,8 @@ export const AcademicPorgramsPortal = () => {
         setError(error);
         console.log(error);
       });
-  });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="container">

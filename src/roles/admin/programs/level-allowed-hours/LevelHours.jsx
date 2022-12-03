@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
-import { Table } from "../../../../components/table/Table";
-import { useTranslation } from "react-i18next";
-import { FormCard } from "../../../../components/FormCard";
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import axios from "axios";
-import { BASE_URL } from "../../../../shared/API";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
+import { BASE_URL } from "../../../../shared/API";
+import axios from "axios";
+
+// Reusable Components
+import { SidebarContainer } from "../../../../components/SidebarContainer";
+import { FormCard } from "../../../../components/FormCard";
+import { FormInput } from "../../../../components/FormInput";
+import { Table } from "../../../../components/table/Table";
 
 export const LevelHours = () => {
   const [levelHoursData, setLevelHoursData] = useState([]);
   const [levels, setLevels] = useState([]);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line
   const [error, setError] = useState();
   const { t } = useTranslation();
   const { programId } = useParams();
@@ -29,7 +34,8 @@ export const LevelHours = () => {
         setLoading(false);
         console.log(error);
       });
-  });
+    // eslint-disable-next-line
+  }, []);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -126,38 +132,12 @@ export const LevelHours = () => {
         >
           {LevelHoursData.map((data) => {
             return (
-              <div className="row mb-4" key={data.id}>
-                <label className="col-sm-2 col-form-label">
-                  {t(data.title)}
-                </label>
-                <div className="col-sm-5">
-                  {data.options ? (
-                    <select
-                      className="form-select"
-                      name={data.name}
-                      onChange={handleEditFormChange}
-                      value={levelHoursData[data.name] || ""}
-                    >
-                      {data.options.map((option) => {
-                        return (
-                          <option key={option.id} value={option.value}>
-                            {t(option.title)}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  ) : (
-                    <input
-                      name={data.name}
-                      type={data.type}
-                      required={data.req}
-                      className="form-control"
-                      onChange={handleEditFormChange}
-                      value={levelHoursData[data.name] || ""}
-                    />
-                  )}
-                </div>
-              </div>
+              <FormInput
+                inputData={data}
+                handleEditFormChange={handleEditFormChange}
+                valueData={levelHoursData}
+                key={data.id}
+              />
             );
           })}
           <button

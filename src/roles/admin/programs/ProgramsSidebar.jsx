@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
-import { Sidebar } from "../../../components/Sidebar";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { BASE_URL } from "../../../shared/API";
 import { useAuth } from "../../../hooks/useAuth";
+import { Link } from "react-router-dom";
+import { BASE_URL } from "../../../shared/API";
 import cookies from "js-cookie";
+import axios from "axios";
+
+import { Sidebar } from "../../../components/Sidebar";
 import { Dropdown } from "react-bootstrap";
 
 const ProgramsSidebarData = [
@@ -57,7 +58,9 @@ const ProgramsSidebarData = [
 
 export const ProgramsSidebar = () => {
   const [programs, setPrograms] = useState([]);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line
   const [error, setError] = useState();
   const authContext = useAuth();
   const currentLanguageCode = cookies.get("i18next") || "en";
@@ -74,7 +77,8 @@ export const ProgramsSidebar = () => {
         setError(error);
         console.log(error);
       });
-  });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Sidebar

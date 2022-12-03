@@ -1,18 +1,22 @@
-import React from "react";
 import { useState, useEffect } from "react";
-import { Table } from "../../../../components/table/Table";
-import { useTranslation } from "react-i18next";
-import { FormCard } from "../../../../components/FormCard";
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { useAuth } from "../../../../hooks/useAuth";
-import axios from "axios";
-import { BASE_URL } from "../../../../shared/API";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../../hooks/useAuth";
+import { BASE_URL } from "../../../../shared/API";
+import axios from "axios";
+
+// Reusable Components
+import { SidebarContainer } from "../../../../components/SidebarContainer";
+import { FormCard } from "../../../../components/FormCard";
+import { FormInput } from "../../../../components/FormInput";
+import { Table } from "../../../../components/table/Table";
 
 export const AcademicGrades = () => {
   const [academicGradesData, setAcademicGradesData] = useState([]);
   const [grades, setGrades] = useState([]);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line
   const [error, setError] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
@@ -30,7 +34,8 @@ export const AcademicGrades = () => {
         setLoading(false);
         console.log(error);
       });
-  });
+    // eslint-disable-next-line
+  }, []);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -66,6 +71,7 @@ export const AcademicGrades = () => {
         console.log(error);
       });
   };
+  
   const AcademicGradesData = [
     {
       id: 0,
@@ -119,38 +125,12 @@ export const AcademicGrades = () => {
         >
           {AcademicGradesData.map((data) => {
             return (
-              <div className="row mb-4" key={data.id}>
-                <label className="col-sm-2 col-form-label">
-                  {t(data.title)}
-                </label>
-                <div className="col-sm-5">
-                  {data.options ? (
-                    <select
-                      className="form-select"
-                      name={data.name}
-                      onChange={handleEditFormChange}
-                      value={academicGradesData[data.name] || ""}
-                    >
-                      {data.options.map((option) => {
-                        return (
-                          <option key={option.id} value={option.value}>
-                            {t(option.title)}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  ) : (
-                    <input
-                      name={data.name}
-                      type={data.type}
-                      required={data.req}
-                      className="form-control"
-                      onChange={handleEditFormChange}
-                      value={academicGradesData[data.name] || ""}
-                    />
-                  )}
-                </div>
-              </div>
+              <FormInput
+                inputData={data}
+                handleEditFormChange={handleEditFormChange}
+                valueData={academicGradesData}
+                key={data.id}
+              />
             );
           })}
           <button

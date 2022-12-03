@@ -38,14 +38,18 @@ export const Header = () => {
   return (
     <nav className="main-header">
       <div className="main-header-item">
-        <FaRegUserCircle />
-        <button
-          onClick={() => {
-            authContext.logout();
-          }}
-        >
-          {t("common.logout")}
-        </button>
+        {authContext.isLoggedIn && (
+          <>
+            <FaRegUserCircle />
+            <button
+              onClick={() => {
+                authContext.logout();
+              }}
+            >
+              {t("common.logout")}
+            </button>
+          </>
+        )}
       </div>
       <div className="main-header-item">
         {t("header.uni")}
@@ -55,29 +59,31 @@ export const Header = () => {
           : authContext.college?.arabicName}
       </div>
       <div className="main-header-item">
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {t("header.title")}
-          </Dropdown.Toggle>
+        {authContext.isLoggedIn && (
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              {t("header.title")}
+            </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-            <Dropdown.Item>{t("common.language")}</Dropdown.Item>
-            {languages.map(({ code, name }) => (
-              <Dropdown.Item key={code}>
-                <span
-                  className={classNames("dropdown-item", {
-                    disabled: currentLanguageCode === code,
-                  })}
-                  onClick={() => {
-                    i18next.changeLanguage(code);
-                  }}
-                >
-                  {name}
-                </span>
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
+            <Dropdown.Menu>
+              <Dropdown.Item>{t("common.language")}</Dropdown.Item>
+              {languages.map(({ code, name }) => (
+                <Dropdown.Item key={code}>
+                  <span
+                    className={classNames("dropdown-item", {
+                      disabled: currentLanguageCode === code,
+                    })}
+                    onClick={() => {
+                      i18next.changeLanguage(code);
+                    }}
+                  >
+                    {name}
+                  </span>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        )}
       </div>
     </nav>
   );

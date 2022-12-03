@@ -12,6 +12,7 @@ import { Unauthorized } from "./pages/Unauthorized";
 import { NotFound } from "./pages/NotFound";
 import { ForgetPwd } from "./pages/ForgetPwd";
 import { ResetPwd } from "./pages/ResetPwd";
+import { Header } from "./components/Header";
 ////////// Private Routes //////////
 import { AdminRoutes } from "./roles/admin/AdminRoutes";
 import { StaffRoutes } from "./roles/staff/StaffRoutes";
@@ -19,6 +20,7 @@ import { StaffRoutes } from "./roles/staff/StaffRoutes";
 function App() {
   return (
     <div className="App">
+      <Header />
       <Routes>
         {/* Public Routes */}
         <Route path="" element={<Login />} exact />

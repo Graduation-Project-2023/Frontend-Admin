@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { Accordion } from "react-bootstrap";
 import { AcademicFormData } from "./AcademicFormData";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../../../shared/API";
 
@@ -17,6 +17,7 @@ export const AcademicMain = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { programId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Get request to get a program by it's id
@@ -59,20 +60,20 @@ export const AcademicMain = () => {
     e.preventDefault();
     const program = { ...programData };
     program["collegeId"] = authContext.college.id;
-    console.log(program);
-    // // Post request to create a new program
-    // setLoading(true);
-    // axios
-    //   .post(BASE_URL + `/programs`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setLoading(false);
-    //     navigate("/admin_portal/academic_programs")
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
+
+    // Post request to create a new program
+    setLoading(true);
+    axios
+      .post(BASE_URL + `/programs`)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        navigate("/admin_portal/academic_programs");
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   };
 
   return (

@@ -14,11 +14,9 @@ const AuthContext = createContext({
 export const AuthContextProvider = (props) => {
   const storageToken = cookies.get("token");
   const storageRole = cookies.get("role");
-  let storageCollege;
-  if (cookies.get("college" === undefined)) {
+  let storageCollege = {};
+  if (cookies.get("college") !== undefined) {
     storageCollege = JSON.parse(cookies.get("college"));
-  } else {
-    storageCollege = null;
   }
   const [token, setToken] = useState(storageToken);
   const [role, setRole] = useState(storageRole);
@@ -29,7 +27,9 @@ export const AuthContextProvider = (props) => {
   const loginHandler = (token, role, college) => {
     cookies.set("token", token);
     cookies.set("role", role);
-    cookies.set("college", JSON.stringify(college));
+    if (college) {
+      cookies.set("college", JSON.stringify(college));
+    }
     setRole(role);
     setToken(token);
     setCollege(college);

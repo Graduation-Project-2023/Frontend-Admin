@@ -1,10 +1,12 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../hooks/useAuth";
 import i18next from "i18next";
 import cookies from "js-cookie";
 import classNames from "classnames";
+
+// Reusable Components
 import { Dropdown } from "react-bootstrap";
-import { useEffect } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 
 const languages = [
@@ -37,6 +39,13 @@ export const Header = () => {
     <nav className="main-header">
       <div className="main-header-item">
         <FaRegUserCircle />
+        <button
+          onClick={() => {
+            authContext.logout();
+          }}
+        >
+          {t("common.logout")}
+        </button>
       </div>
       <div className="main-header-item">
         {t("header.uni")}
@@ -46,13 +55,6 @@ export const Header = () => {
           : authContext.college?.arabicName}
       </div>
       <div className="main-header-item">
-        <button
-          onClick={() => {
-            authContext.logout();
-          }}
-        >
-          {t("common.logout")}
-        </button>
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             {t("header.title")}
@@ -76,13 +78,6 @@ export const Header = () => {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-        <div className="dropdown">
-          <ul className="dropdown-menu">
-            <li>
-              <span className="dropdown-item-text"></span>
-            </li>
-          </ul>
-        </div>
       </div>
     </nav>
   );

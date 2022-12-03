@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useState, useEffect } from "react";
 import { Table } from "../../../../components/table/Table";
 import { useTranslation } from "react-i18next";
@@ -17,19 +17,21 @@ export const AcademicCourses = () => {
   const authContext = useAuth();
   const { t } = useTranslation();
   const { programId } = useParams();
-  // useEffect(() => {
-  //   // GET request to get all cousres to display it in the table
-  //   axios
-  //     .get(BASE_URL + `/programs/${programId}/courses`)
-  //     .then((res) => {
-  //       setCourses(res.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setLoading(false);
-  //       console.log(error);
-  //     });
-  // }, []);
+
+  useEffect(() => {
+    // GET request to get all cousres to display it in the table
+    axios
+      .get(BASE_URL + `/programs/${programId}/courses`)
+      .then((res) => {
+        setCourses(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }, []);
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
@@ -41,25 +43,26 @@ export const AcademicCourses = () => {
     academicCourses[fieldName] = fieldValue;
     setAcademicCoursesData(academicCourses);
   };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const rows = [...courses];
     rows.push(academicCoursesData);
-
-    // POST request to add a new academic level to the database
-    // axios
-    //   .get(BASE_URL + `/programs/${programId}/courses`, { academicCoursesData })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setCourses(rows);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     setError(error);
-    //     console.log(error);
-    //   });
+    // POST request to add a new program course to the database
+    axios
+      .get(BASE_URL + `/programs/${programId}/courses`, { academicCoursesData })
+      .then((res) => {
+        console.log(res);
+        setCourses(rows);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+        console.log(error);
+      });
   };
+
   const AcademicCoursesData = [
     {
       id: 0,
@@ -90,13 +93,12 @@ export const AcademicCourses = () => {
       title: "levelHours.term",
       name: "semester",
       req: true,
-      options:[
+      options: [
         { id: 0, title: "common.select", value: null },
         { id: 1, title: "academicMain.first", value: "FIRST" },
         { id: 2, title: "levelHours.second", value: "SECOND" },
         { id: 3, title: "levelHours.summer", value: "SUMMER" },
       ],
-      
     },
     {
       id: 4,
@@ -124,8 +126,6 @@ export const AcademicCourses = () => {
         { id: 1, title: "courses.mandatory", value: "COMPULSORY" },
         { id: 2, title: "courses.option", value: "ELECTIVE" },
       ],
-        
-      
     },
     {
       id: 7,
@@ -227,10 +227,7 @@ export const AcademicCourses = () => {
           </button>
         </form>
       </FormCard>
-      <Table
-        tableTitle={"courses.tabletitle"}
-        
-      />
+      {/* <Table tableTitle={"courses.tabletitle"} /> */}
     </SidebarContainer>
-  )
-}
+  );
+};

@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { NotFound } from "../../../pages/NotFound";
-import { AcademicCourses } from "./courses/AcademicCourses";
+import { ProgramCourses } from "./courses/ProgramCourses";
 import { AcademicGrades } from "./grades/AcademicGrades";
 import { AcademicGraduation } from "./graduation/AcademicGraduation";
 import { AcademicLevels } from "./levels/AcademicLevels";
@@ -18,7 +18,7 @@ export function AcademicProgramsRoutes() {
       <Routes>
         <Route path="main" element={<AcademicMain />} />
         <Route path="levels" element={<AcademicLevels />} />
-        <Route path="courses" element={<AcademicCourses />} />
+        <Route path="courses" element={<ProgramCourses />} />
         <Route path="grades" element={<AcademicGrades />} />
         <Route path="gpa" element={<AcademicGPA />} />
         <Route path="gpa-hours" element={<GPAHours />} />

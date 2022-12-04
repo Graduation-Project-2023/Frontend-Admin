@@ -6,9 +6,11 @@ const AuthContext = createContext({
   isLoggedIn: false,
   role: "",
   college: {},
+  program: {},
   login: (token, role, college) => {},
   logout: () => {},
   changeCollege: (college) => {},
+  changeProgram: (program) => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -18,9 +20,14 @@ export const AuthContextProvider = (props) => {
   if (cookies.get("college") !== undefined) {
     storageCollege = JSON.parse(cookies.get("college"));
   }
+  let storageProgram = {};
+  if (cookies.get("program") !== undefined) {
+    storageProgram = JSON.parse(cookies.get("program"));
+  }
   const [token, setToken] = useState(storageToken);
   const [role, setRole] = useState(storageRole);
   const [college, setCollege] = useState(storageCollege);
+  const [program, setProgram] = useState(storageProgram);
 
   const userIsLoggedIn = !!token;
 
@@ -39,9 +46,11 @@ export const AuthContextProvider = (props) => {
     cookies.remove("token");
     cookies.remove("role");
     cookies.remove("college");
+    cookies.remove("program");
     setRole(null);
     setToken(null);
     setCollege([]);
+    setProgram([]);
   };
 
   const collegeHandler = (college) => {
@@ -49,14 +58,21 @@ export const AuthContextProvider = (props) => {
     setCollege(college);
   };
 
+  const programHandler = (program) => {
+    cookies.set("program", JSON.stringify(program));
+    setProgram(program);
+  };
+
   const contextValue = {
     token: token,
     isLoggedIn: userIsLoggedIn,
     role: role,
     college: college,
+    program: program,
     login: loginHandler,
     logout: logoutHandler,
     changeCollege: collegeHandler,
+    changeProgram: programHandler,
   };
 
   return (

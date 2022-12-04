@@ -28,6 +28,7 @@
         width: 100%;
         list-style: none;
         border-bottom: solid rgb(217, 216, 216) 1px;
+        font: normal 400 1rem/1.3rem "Inter";
 
         & a {
           display: block;
@@ -50,3 +51,22 @@
     }
   }
 }
+.sidebarBtn{
+  & button{
+    background-color:#6892c5;
+    font: normal 400 1rem/1.3rem "Inter";
+  }
+  & a{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    border-bottom: 1px solid rgb(217, 216, 216) ;
+    padding: 1rem;
+    font: normal 400 1rem/1.3rem "Inter";
+    &:hover{
+      background-color: #6892c5;
+      color: white ;
+
+    }
+    }
+  }

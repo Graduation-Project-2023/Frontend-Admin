@@ -99,7 +99,8 @@
     "courses": "",
     "gpa": "GPA",
     "control": "Control",
-    "graduation": "Graduation"
+    "graduation": "Graduation",
+    "select":"Select a program"
   },
   "academicMain": {
     "formhead": "Program Data",

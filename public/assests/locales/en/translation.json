@@ -130,7 +130,8 @@
     "rate": "Reduction Rate",
     "trial": "Number of Trials",
     "failure": "Failure Grade",
-    "search": "Faculty Name..."
+    "search": "Faculty Name...",
+    "type":"Type of Requirement"
   },
   "grades": {
     "grade": "Grade name ",
@@ -139,7 +140,8 @@
     "equivalent": "Equivalent grade",
     "formhead": "Grades",
     "tablehead": "Grades Table",
-    "gpa": "from gpa .."
+    "gpa": "from gpa ..",
+    "max":"Maximum Grade"
   },
   "courses": {
     "name":"Course Name ",

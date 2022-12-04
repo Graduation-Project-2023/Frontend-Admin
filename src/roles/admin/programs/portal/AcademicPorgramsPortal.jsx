@@ -59,7 +59,6 @@ export const AcademicPorgramsPortal = () => {
     <div className="container">
       <div className={styles.portal_body}>
         <h5 className={styles.portal_title}>{t("portal.programs")}</h5>
-
         <div className={styles.portal_search}>
           <input
             type="text"
@@ -69,7 +68,6 @@ export const AcademicPorgramsPortal = () => {
             placeholder={t("portal.search")}
           />
         </div>
-
         <div className={styles.portal_list}>
           <li
             onClick={() => {

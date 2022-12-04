@@ -1,6 +1,6 @@
 {
   "common": {
-    "app_title": "Admin Version",
+    "app_title": "نسخة المشرف",
     "unauthorized_main": "غير مصرح!",
     "unauthorized_secondary": "سيتم تحويلك لصفحة اخرى",
     "redirecting_main": "انتظر من فضلك!",
@@ -19,7 +19,7 @@
     "level1":"مستوى اول"
   },
   "login": {
-    "email": "اسم المستخدم",
+    "email": "البريد الالكترونى",
     "password": "كلمة المرور",
     "forget": "نسيت كلمة المرور؟"
   },
@@ -51,12 +51,12 @@
     "control": "نظام التحكم"
   },
   "adminNavbarkeys": {
-    "student": "بيانات",
+    "student": "الطلاب",
     "academic": "البرامج",
     "schedule": "الجداول",
     "registeration": "التسجيل",
     "exams": "امتحانات",
-    "results": "النتايج",
+    "results": "النتائج",
     "finance": "المالية",
     "absence": "غياب",
     "mail": "البريد",

@@ -99,7 +99,8 @@
     "courses": "مقررات البرنامج",
     "gpa": "المعدل التراكمى",
     "control": "الكنترول",
-    "graduation": "التخرج"
+    "graduation": "التخرج",
+    "select":" اختر برنامج "
   },
   "academicMain": {
     "formhead": "بيانات البرنامج",

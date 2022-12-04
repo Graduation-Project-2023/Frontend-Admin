@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { BASE_URL } from "../../../shared/API";
 import cookies from "js-cookie";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 import { Sidebar } from "../../../components/Sidebar";
 import { Dropdown } from "react-bootstrap";
@@ -57,6 +58,7 @@ const ProgramsSidebarData = [
 ];
 
 export const ProgramsSidebar = () => {
+  const { t } = useTranslation();
   const [programs, setPrograms] = useState([]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
@@ -87,17 +89,18 @@ export const ProgramsSidebar = () => {
       sideData={ProgramsSidebarData}
       sidebarTitle={"portal.programs"}
       options={
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Select Program
+        <Dropdown className="sidebarBtn">
+          <Dropdown.Toggle >
+          {t(`academicSidebar.select`)}
           </Dropdown.Toggle>
 
-          <Dropdown.Menu>
+          <Dropdown.Menu  >
             {programs.map((item) => {
               return (
                 <Link
                   to={`/admin_portal/academic_programs/${item.id}/main`}
                   key={item.id}
+                 
                 >
                   {currentLanguageCode === "en"
                     ? item.englishName

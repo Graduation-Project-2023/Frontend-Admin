@@ -12,6 +12,8 @@ export const AdminPortal = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [colleges, setColleges] = useState([]);
+  const [filteredColleges, setFilteredColleges] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
@@ -25,6 +27,7 @@ export const AdminPortal = () => {
       .get(BASE_URL + "/colleges")
       .then((res) => {
         setColleges(res.data);
+        setFilteredColleges(res.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -33,6 +36,23 @@ export const AdminPortal = () => {
       });
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (currentLanguageCode === "en") {
+      setFilteredColleges(
+        colleges.filter((item) =>
+          item.englishName.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredColleges(
+        colleges.filter((item) =>
+          item.arabicName.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    }
+    // eslint-disable-next-line
+  }, [searchValue]);
 
   return (
     <>
@@ -62,11 +82,16 @@ export const AdminPortal = () => {
           >
             X
           </button>
-          <input type="text" placeholder={t("academicMain.search")} />
+          <input
+            type="text"
+            onChange={(e) => setSearchValue(e.target.value)}
+            value={searchValue}
+            placeholder={t("academicMain.search")}
+          />
         </Modal.Header>
         <Modal.Body>
           <div className={styles.popup_list}>
-            {colleges.map((item) => {
+            {filteredColleges.map((item) => {
               return (
                 <Link
                   key={item.id}
@@ -75,7 +100,6 @@ export const AdminPortal = () => {
                   }}
                   to="academic_programs"
                 >
-                  {t(`header.college`)}
                   {currentLanguageCode === "en"
                     ? item.englishName
                     : item.arabicName}

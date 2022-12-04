@@ -53,7 +53,7 @@ export const Header = () => {
       </div>
       <div className="main-header-item">
         {t("header.uni")}
-        {authContext.college?.id && ` - ${t("header.college")}`}
+        {authContext.college?.id && ` - `}
         {currentLanguageCode === "en"
           ? authContext.college?.englishName
           : authContext.college?.arabicName}

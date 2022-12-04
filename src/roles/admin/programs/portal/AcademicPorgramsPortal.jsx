@@ -10,6 +10,8 @@ import styles from "./AcademicPorgramsPortal.module.scss";
 
 export const AcademicPorgramsPortal = () => {
   const [programs, setPrograms] = useState([]);
+  const [filteredPrograms, setFilteredPrograms] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
@@ -25,6 +27,7 @@ export const AcademicPorgramsPortal = () => {
       .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
         setPrograms(res.data);
+        setFilteredPrograms(res.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -35,6 +38,23 @@ export const AcademicPorgramsPortal = () => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (currentLanguageCode === "en") {
+      setFilteredPrograms(
+        programs.filter((item) =>
+          item.englishName.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredPrograms(
+        programs.filter((item) =>
+          item.arabicName.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    }
+    // eslint-disable-next-line
+  }, [searchValue]);
+
   return (
     <div className="container">
       <div className={styles.portal_body}>
@@ -44,6 +64,8 @@ export const AcademicPorgramsPortal = () => {
           <input
             type="text"
             className={styles.portal_search_rec}
+            onChange={(e) => setSearchValue(e.target.value)}
+            value={searchValue}
             placeholder={t("portal.search")}
           />
         </div>
@@ -57,7 +79,7 @@ export const AcademicPorgramsPortal = () => {
             {t("portal.add")}
             <FaPlusCircle style={{ margin: "10px" }} />
           </li>
-          {programs.map((item) => {
+          {filteredPrograms.map((item) => {
             return (
               <li
                 key={item.id}

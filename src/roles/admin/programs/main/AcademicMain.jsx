@@ -31,6 +31,7 @@ export const AcademicMain = () => {
       .then((res) => {
         console.log(res);
         setProgramData(res.data);
+        authContext.changeProgram(res.data);
         res.data.system === "CREDIT"
           ? setCreditHours(true)
           : setCreditHours(false);

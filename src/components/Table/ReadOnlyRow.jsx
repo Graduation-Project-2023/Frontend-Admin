@@ -14,9 +14,10 @@ export const ReadOnlyRow = ({
         if (key === "id") return null;
         if (key === "programId") return null;
         if (key === "maxCourses") return null;
+        if (key === "levelId") return null;
         return (
           <td className="table-container-items" key={key}>
-            {rowData[key] || ""}
+            {rowData[key] === 0 ? 0 : rowData[key] || ""}
           </td>
         );
       })}

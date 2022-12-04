@@ -1,21 +1,18 @@
-import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { GiCancel } from "react-icons/gi";
-import { useTranslation } from "react-i18next";
 
 export const EditableRow = ({
   editRowData,
   handleCancelClick,
   handleEditFormChange,
 }) => {
-  const { t } = useTranslation();
-
   return (
     <>
       {Object.keys(editRowData)?.map((key) => {
         if (key === "id") return null;
         if (key === "programId") return null;
         if (key === "maxCourses") return null;
+        if (key === "levelId") return null;
         const type = typeof editRowData[key] === "number" ? "number" : "text";
         return (
           <td className="table-container-items" key={key}>
@@ -24,7 +21,7 @@ export const EditableRow = ({
               required
               placeholder="Enter a new value..."
               name={key}
-              value={editRowData[key] || ""}
+              value={editRowData[key] === 0 ? 0 : editRowData[key] || ""}
               onChange={handleEditFormChange}
               className="form-control"
             />

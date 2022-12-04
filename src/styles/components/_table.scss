@@ -9,6 +9,8 @@
     padding: 0rem 0 3rem 0;
   }
   & table {
+    table-layout: auto;
+    
     .table-container {
       &-header {
         color: #858d97;
@@ -20,10 +22,11 @@
         color: #444444;
         font: normal 400 1rem/1.3rem "Inter";
         padding: 1.5rem !important;
-        &-button{
+        &-button {
           border: none;
-           background-color: white;}
-         &-icon {
+          background-color: white;
+        }
+        &-icon {
           font-size: 1.5rem;
           cursor: pointer;
         }

@@ -27,6 +27,7 @@ export const LevelHours = () => {
     axios
       .get(BASE_URL + `/programs/${programId}/level_allowed_hours`)
       .then((res) => {
+        console.log(res.data);
         setLevels(res.data);
         setLoading(false);
       })

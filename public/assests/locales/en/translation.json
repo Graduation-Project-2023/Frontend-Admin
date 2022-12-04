@@ -54,7 +54,7 @@
     "results": "Control and Results",
     "finance": "Financial Data",
     "absence": "Students Absence",
-    "mail": "System Mail",
+    "courses": "Courses Data",
     "supervision": "System Supervision",
     "control": "Control System"
   },
@@ -67,7 +67,7 @@
     "results": "Results",
     "finance": "Financial",
     "absence": "Absence",
-    "mail": "Mail",
+    "courses": "Courses",
     "supervision": "Supervision",
     "control": "Control"
   },
@@ -100,7 +100,7 @@
     "gpa": "GPA",
     "control": "Control",
     "graduation": "Graduation",
-    "select":"Select a program"
+    "select": "Select a program"
   },
   "academicMain": {
     "formhead": "Program Data",

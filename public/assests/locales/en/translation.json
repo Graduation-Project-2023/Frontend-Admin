@@ -142,8 +142,9 @@
     "gpa": "from gpa .."
   },
   "courses": {
-    "code": "Course code",
-    "pre_code": "Prerequest code",
+    "name":"Course Name ",
+    "code": "Course Code",
+    "pre_code": "Prerequest Code",
     "hours": "Course Hours",
     "min": "Minimum Hours",
     "type": "Course Type",
@@ -154,13 +155,19 @@
     "attendance": "Attendance",
     "option": "Optional",
     "mandatory": "Mandatory",
-    "tabletitle": "Courses Table"
+    "tabletitle": "Courses Table",
+    "ar_name": "Cousre Name in Arabic",
+    "eng_name": "Course Name in English",
+    "ar_des":"Course description in Arabic",
+    "eng_des":"Course description in English",
+    "formhead": "Course Data"
   },
   "levels": {
     "ar_level": "Name of level in arabic",
     "eng_level": "Name of level in english",
     "level": "Level",
     "qualify": "Qualified hours",
-    "tabletitle": "Levels table"
+    "tabletitle": "Levels table",
+    "select":"Select Academic level"
   }
 }

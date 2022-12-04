@@ -52,6 +52,7 @@
   }
 }
 .sidebarBtn{
+
   & button{
     background-color:#6892c5;
     font: normal 400 1rem/1.3rem "Inter";
@@ -69,4 +70,17 @@
 
     }
     }
+  }
+  .coursesSidebarBtn{
+    background-color:#6892c5;
+    font: normal 400 1rem/1.3rem "Inter";
+    color: white;
+    margin: 1rem;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 5px;
+    &:hover{
+      background-color:  rgb(217, 216, 216) ;
+      color: black ;}
+
   }

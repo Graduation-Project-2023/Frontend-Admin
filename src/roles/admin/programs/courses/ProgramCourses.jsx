@@ -6,6 +6,7 @@ import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
 import cookies from "js-cookie";
 import { BsTrash } from "react-icons/bs";
+import styles from "./ProgramCourses.module.scss";
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/SidebarContainer";
@@ -156,25 +157,28 @@ export const ProgramCourses = () => {
               {t("courses.code")}
             </label>
             <div className="col-sm-5">
-              <Dropdown>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              <Dropdown className={styles.progCourses}>
+                <Dropdown.Toggle  id="dropdown-basic">
                   {course.code || t("choose a course code")}
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu>
+                <Dropdown.Menu className={styles.progCourses_menu}>
                   <input
                     type="text"
                     onChange={(e) => setSearchValue(e.target.value)}
                     value={searchValue}
                     placeholder={t("program code")}
+                    className="form-control"
                   />
-                  <ul>
+                  <ul  className={styles.progCourses_menu_searchList}>
                     {filteredCourses.map((item) => {
                       return (
                         <li
+                         
                           key={item.id}
                           onClick={() => {
                             setCourse(item);
+
                           }}
                         >
                           {item.code}
@@ -206,7 +210,7 @@ export const ProgramCourses = () => {
             </label>
             <div className="col-sm-5">
               <select
-                className="form-select"
+                className= 'form-select'
                 name="level"
                 onChange={handleEditFormChange}
                 value={programCourseData["level"] || ""}

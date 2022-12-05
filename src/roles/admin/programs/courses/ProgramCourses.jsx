@@ -13,12 +13,14 @@ import { SidebarContainer } from "../../../../components/SidebarContainer";
 import { FormCard } from "../../../../components/FormCard";
 import { DropdownSearch } from "../../../../components/DropdownSearch";
 import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTable";
+import { CollapsibleTable } from "../../../../components/table/CollapsibleTable";
 
 export const ProgramCourses = () => {
   const [programCourseData, setProgramCourseData] = useState([]);
 
   // Courses States
   const [course, setCourse] = useState({});
+  // eslint-disable-next-line
   const [courses, setCourses] = useState([
     { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
     { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
@@ -28,13 +30,14 @@ export const ProgramCourses = () => {
 
   // Prereq State
   const [preCourses, setPreCourses] = useState([]);
+  // eslint-disable-next-line
   const [programCourses, setProgramCourses] = useState([
     { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
     { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
     { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
     { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
   ]);
-
+  // eslint-disable-next-line
   const [levels, setLevels] = useState([
     { id: 0, level: 1, englishName: "Level 1", arabicName: "mostawaa awal" },
     { id: 1, level: 2, englishName: "Level 2", arabicName: "mostawaa tany" },
@@ -327,7 +330,11 @@ export const ProgramCourses = () => {
               is added to gpa
             </label>
           </div>
-
+          <div>
+            {levels.map((item) => {
+              return <CollapsibleTable />;
+            })}
+          </div>
           <button
             type="submit"
             className="form-card-button form-card-button-save"

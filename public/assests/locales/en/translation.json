@@ -131,7 +131,7 @@
     "trial": "Number of Trials",
     "failure": "Failure Grade",
     "search": "Faculty Name...",
-    "type":"Type of Requirement"
+    "type": "Type of Requirement"
   },
   "grades": {
     "grade": "Grade name ",
@@ -141,10 +141,10 @@
     "formhead": "Grades",
     "tablehead": "Grades Table",
     "gpa": "from gpa ..",
-    "max":"Maximum Grade"
+    "max": "Maximum Grade"
   },
   "courses": {
-    "name":"Course Name ",
+    "name": "Course Name ",
     "code": "Course Code",
     "pre_code": "Prerequest Code",
     "hours": "Course Hours",
@@ -160,8 +160,8 @@
     "tabletitle": "Courses Table",
     "ar_name": "Cousre Name in Arabic",
     "eng_name": "Course Name in English",
-    "ar_des":"Course description in Arabic",
-    "eng_des":"Course description in English",
+    "ar_des": "Course description in Arabic",
+    "eng_des": "Course description in English",
     "formhead": "Course Data"
   },
   "levels": {
@@ -170,6 +170,6 @@
     "level": "Level",
     "qualify": "Qualified hours",
     "tabletitle": "Levels table",
-    "select":"Select Academic level"
+    "select": "Select Academic level"
   }
 }

@@ -56,13 +56,16 @@ export const AdminPortal = () => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          setShow(true);
-        }}
-      >
-        Show Colleges Menu
-      </button>
+      <div className="d-flex justify-content-center">
+        <button
+          className="btn btn-primary align-center"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          اظهار قائمة الكليات
+        </button>
+      </div>
 
       <Modal
         show={show}

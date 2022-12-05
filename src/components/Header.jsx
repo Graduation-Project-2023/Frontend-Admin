@@ -40,8 +40,9 @@ export const Header = () => {
       <div className="main-header-item">
         {authContext.isLoggedIn && (
           <>
-            <FaRegUserCircle />
+            {/* <FaRegUserCircle /> */}
             <button
+              className="btn btn-primary"
               onClick={() => {
                 authContext.logout();
               }}
@@ -61,7 +62,7 @@ export const Header = () => {
       <div className="main-header-item">
         {authContext.isLoggedIn && (
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
               {t("header.title")}
             </Dropdown.Toggle>
 

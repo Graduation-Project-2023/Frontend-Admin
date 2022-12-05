@@ -6,3 +6,7 @@
   width: 100vw;
   background-color: #f7f8fc;
 }
+body {
+  scrollbar-gutter: stable both-edges;
+  overflow-x: hidden;
+}

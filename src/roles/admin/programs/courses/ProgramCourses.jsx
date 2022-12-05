@@ -2,40 +2,51 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
+// eslint-disable-next-line
 import { BASE_URL } from "../../../../shared/API";
+// eslint-disable-next-line
 import axios from "axios";
 import cookies from "js-cookie";
-import { BsTrash } from "react-icons/bs";
-import styles from "./ProgramCourses.module.scss";
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/SidebarContainer";
 import { FormCard } from "../../../../components/FormCard";
-import { Dropdown } from "react-bootstrap";
+import { DropdownSearch } from "../../../../components/DropdownSearch";
+import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTable";
 
 export const ProgramCourses = () => {
   const [programCourseData, setProgramCourseData] = useState([]);
 
   // Courses States
   const [course, setCourse] = useState({});
-  const [courses, setCourses] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [courses, setCourses] = useState([
+    { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
+    { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
+    { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
+    { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
+  ]);
 
   // Prereq State
   const [preCourses, setPreCourses] = useState([]);
-  const [programCourses, setProgramCourses] = useState([]);
-  const [filteredPreCourses, setFilteredPreCourses] = useState([]);
-  const [searchPreValue, setSearchPreValue] = useState("");
+  const [programCourses, setProgramCourses] = useState([
+    { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
+    { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
+    { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
+    { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
+  ]);
 
-  const [levels, setLevels] = useState([]);
+  const [levels, setLevels] = useState([
+    { id: 0, level: 1, englishName: "Level 1", arabicName: "mostawaa awal" },
+    { id: 1, level: 2, englishName: "Level 2", arabicName: "mostawaa tany" },
+    { id: 2, level: 3, englishName: "Level 3", arabicName: "mostawaa talt" },
+  ]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
   const [error, setError] = useState();
-  // eslint-disable-next-line
   const authContext = useAuth();
   const { t } = useTranslation();
+  // eslint-disable-next-line
   const { programId } = useParams();
   const currentLanguageCode = cookies.get("i18next") || "en";
 
@@ -53,60 +64,7 @@ export const ProgramCourses = () => {
     //     console.log(error);
     //   });
     // eslint-disable-next-line
-
-    setLevels([
-      { id: 0, level: 1, englishName: "Level 1", arabicName: "mostawaa awal" },
-      { id: 1, level: 2, englishName: "Level 2", arabicName: "mostawaa tany" },
-      { id: 2, level: 3, englishName: "Level 3", arabicName: "mostawaa talt" },
-    ]);
-    setCourses([
-      { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
-      { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
-      { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
-      { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
-    ]);
-    setProgramCourses([
-      { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
-      { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
-      { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
-      { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
-    ]);
-    setFilteredCourses([
-      { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
-      { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
-      { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
-      { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
-    ]);
-    setFilteredPreCourses([
-      { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
-      { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
-      { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
-      { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
-    ]);
   }, []);
-
-  useEffect(() => {
-    setFilteredCourses(
-      courses.filter((item) =>
-        item.code.toLowerCase().includes(searchValue.toLowerCase())
-      )
-    );
-    // eslint-disable-next-line
-  }, [searchValue]);
-
-  useEffect(() => {
-    setFilteredPreCourses(
-      programCourses.filter(
-        (item) =>
-          item.code.toLowerCase().includes(searchPreValue.toLowerCase()) ||
-          item.englishName
-            .toLowerCase()
-            .includes(searchPreValue.toLowerCase()) ||
-          item.arabicName.toLowerCase().includes(searchPreValue.toLowerCase())
-      )
-    );
-    // eslint-disable-next-line
-  }, [searchPreValue]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -139,9 +97,18 @@ export const ProgramCourses = () => {
     //   });
   };
 
+  const handleCourseSelection = (item) => {
+    setCourse(item);
+  };
+
   const addToPrerequisite = (item) => {
-    const newPrerequisiteCourses = preCourses.push(item);
-    setPreCourses(newPrerequisiteCourses);
+    if (preCourses.find((obj) => obj.id === item.id) === undefined) {
+      setPreCourses((current) => [...current, item]);
+    }
+  };
+
+  const removeFromPrerequisite = (item) => {
+    setPreCourses((current) => current.filter((obj) => obj.id !== item.id));
   };
 
   return (
@@ -153,42 +120,13 @@ export const ProgramCourses = () => {
           }}
         >
           <div className="row mb-4">
-            <label className="col-sm-1 col-form-label">
-              {t("courses.code")}
-            </label>
-            <div className="col-sm-5">
-              <Dropdown className={styles.progCourses}>
-                <Dropdown.Toggle  id="dropdown-basic">
-                  {course.code || t("choose a course code")}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className={styles.progCourses_menu}>
-                  <input
-                    type="text"
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    value={searchValue}
-                    placeholder={t("program code")}
-                    className="form-control"
-                  />
-                  <ul  className={styles.progCourses_menu_searchList}>
-                    {filteredCourses.map((item) => {
-                      return (
-                        <li
-                         
-                          key={item.id}
-                          onClick={() => {
-                            setCourse(item);
-
-                          }}
-                        >
-                          {item.code}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+            <DropdownSearch
+              label={"courses.code"}
+              menuData={courses}
+              specialData={course}
+              inputPlaceholder={"program code"}
+              handleListClick={handleCourseSelection}
+            />
             <label className="col-sm-1 col-form-label">
               {t("courses.name")}
             </label>
@@ -210,7 +148,7 @@ export const ProgramCourses = () => {
             </label>
             <div className="col-sm-5">
               <select
-                className= 'form-select'
+                className="form-select"
                 name="level"
                 onChange={handleEditFormChange}
                 value={programCourseData["level"] || ""}
@@ -262,7 +200,7 @@ export const ProgramCourses = () => {
             </label>
             <div className="col-sm-2">
               <input
-              className="form-control"
+                className="form-control"
                 type="number"
                 name="midTerm"
                 required
@@ -275,7 +213,7 @@ export const ProgramCourses = () => {
             </label>
             <div className="col-sm-2">
               <input
-              className="form-control"
+                className="form-control"
                 type="number"
                 name="finalExam"
                 required
@@ -288,7 +226,7 @@ export const ProgramCourses = () => {
             <label className="col-sm-1 col-form-label">{t("grades.max")}</label>
             <div className="col-sm-2">
               <input
-              className="form-control"
+                className="form-control"
                 type="number"
                 name="classWork"
                 onChange={handleEditFormChange}
@@ -301,7 +239,7 @@ export const ProgramCourses = () => {
             </label>
             <div className="col-sm-2">
               <input
-               className="form-control"
+                className="form-control"
                 type="number"
                 name="creditHours"
                 required
@@ -309,7 +247,9 @@ export const ProgramCourses = () => {
                 value={programCourseData["creditHours"] || ""}
               />
             </div>
-            <label className="col-sm-2 col-form-label">{t("academicMain.type")}</label>
+            <label className="col-sm-2 col-form-label">
+              {t("academicMain.type")}
+            </label>
             <div className="col-sm-2">
               <select
                 className="form-select"
@@ -353,63 +293,28 @@ export const ProgramCourses = () => {
               </select>
             </div>
           </div>
-          {/* <div className="row mb-4">
-            <label className="col-sm-1 col-form-label">
-              {t("pre req courses")}
-            </label>
-            <div className="col-sm-5">
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  {t("choose a pre req course code")}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <input
-                    type="text"
-                    onChange={(e) => setSearchPreValue(e.target.value)}
-                    value={searchPreValue}
-                    placeholder={t("program code")}
-                  />
-                  <ul>
-                    {filteredPreCourses.map((item) => {
-                      return (
-                        <li
-                          key={item.id}
-                          onClick={() => {
-                            addToPrerequisite(item);
-                          }}
-                        >
-                          {item.code} -
-                          {currentLanguageCode === "en"
-                            ? item.englishName || ""
-                            : item.arabicName || ""}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+          <div className="row mb-4">
+            <DropdownSearch
+              label={"pre req courses"}
+              menuData={programCourses}
+              inputPlaceholder={"program code"}
+              handleListClick={addToPrerequisite}
+            />
           </div>
-          <div>
-            this is a table
-            <ul>
-              {preCourses.length > 1 ? (
-                preCourses?.map((item) => {
-                  return (
-                    <li>
-                      {item.code} - {item.arabicName}
-                    </li>
-                  );
-                })
-              ) : (
-                <li>
-                  {preCourses.code} - {preCourses.arabicName}
-                </li>
-              )}
-            </ul>
-          </div> */}
-          {/* <div className="form-check form-check-inline">
+          {preCourses.length !== 0 && (
+            <PrerequisiteTable
+              tableTitle={"gdwl el prerequisite"}
+              headerItems={[
+                { id: 1, title: t(`courses.code`) },
+                { id: 2, title: t(`courses.name`) },
+                { id: 3, title: t(`courses.eng_name`) },
+              ]}
+              rowItems={preCourses}
+              deletableItems={true}
+              handleDelete={removeFromPrerequisite}
+            />
+          )}
+          <div className="form-check form-check-inline">
             <input
               className="form-check-input"
               type="checkbox"
@@ -420,34 +325,9 @@ export const ProgramCourses = () => {
             />
             <label className="form-check-label" htmlFor="addedToGpa">
               is added to gpa
-            </label> */}
-          {/* </div> */}
-          <div className="row mb-4 table-container">
-            <table className="table">
-            <thead>
-              <tr>
-                <th className="table-container-header">
-                {t("courses.code")}
-                </th>
-                <th className="table-container-header">
-                  {t ("courses.name")}
-                </th>
-                <th className="table-container-header">
-                  {t("common.delete")}
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="table-container-items">logic</td>
-                  <td className="table-container-items">bsm-500</td>
-                  <td className="table-container-items"><BsTrash color=" #858d97" /></td>
-                </tr>
-                
-              </tbody>
-
-            </table>
+            </label>
           </div>
+
           <button
             type="submit"
             className="form-card-button form-card-button-save"

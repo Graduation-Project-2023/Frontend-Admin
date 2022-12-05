@@ -22,6 +22,10 @@ export const AcademicPorgramsPortal = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
+    console.log(authContext.college);
+    if (Object.keys(authContext.college).length === 0) {
+      navigate("/admin_portal");
+    }
     // Get request to get all programs to display it in the menu
     axios
       .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)

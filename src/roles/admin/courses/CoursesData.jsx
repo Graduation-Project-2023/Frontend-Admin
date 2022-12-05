@@ -13,7 +13,6 @@ import { FormInput } from "../../../components/FormInput";
 import { Table } from "../../../components/table/Table";
 import { Dropdown } from "react-bootstrap";
 
-
 export const CoursesData = () => {
   const [coursesDataData, setCoursesDataData] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -27,8 +26,6 @@ export const CoursesData = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
   const [filteredcourse, setFilteredCourse] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  
-  
 
   useEffect(() => {
     // GET request to get all level allowed hours to display it in the table
@@ -81,24 +78,23 @@ export const CoursesData = () => {
       });
   };
   const CoursesDataData = [
-    
-      {
-        id: 0,
-        title: "courses.eng_name",
-        name: "englishName",
-        req: true,
-        options: false,
-        type: "text",
-      },
-      {
-        id: 1,
-        title: "courses.ar_name",
-        name: "arabicName",
-        req: true,
-        options: false,
-        type: "text",
-      },
-      {
+    {
+      id: 0,
+      title: "courses.eng_name",
+      name: "englishName",
+      req: true,
+      options: false,
+      type: "text",
+    },
+    {
+      id: 1,
+      title: "courses.ar_name",
+      name: "arabicName",
+      req: true,
+      options: false,
+      type: "text",
+    },
+    {
       id: 2,
       title: "courses.code",
       name: "code",
@@ -106,7 +102,7 @@ export const CoursesData = () => {
       options: false,
       type: "text",
     },
-   
+
     {
       id: 3,
       title: "courses.ar_des",
@@ -124,8 +120,6 @@ export const CoursesData = () => {
       type: "text",
     },
   ];
-  
-  
 
   useEffect(() => {
     if (currentLanguageCode === "en") {
@@ -143,71 +137,70 @@ export const CoursesData = () => {
     }
     // eslint-disable-next-line
   }, [searchValue]);
-  
-  
 
   return (
     <>
-      <Sidebar 
-       options=
-       {<><input
-        type="text"
-        className="form-control"
-        onChange={(e) => setSearchValue(e.target.value)}
-        value={searchValue}
-        placeholder={t("courses.name")}
-        />
-        <button className="coursesSidebarBtn">{t("portal.add")}</button>
-        </>
+      <Sidebar
+        options={
+          <>
+            <input
+              type="text"
+              className="form-control"
+              onChange={(e) => setSearchValue(e.target.value)}
+              value={searchValue}
+              placeholder={t("courses.name")}
+            />
+            <button className="coursesSidebarBtn">{t("portal.add")}</button>
+          </>
         }
-       
-       sideData={courses}
-       sidebarTitle={"courses.formhead"} />
+        sideData={courses}
+        sidebarTitle={"courses.formhead"}
+      />
 
       <SidebarContainer>
         <FormCard cardTitle={"courses.formhead"}>
-        <form
-          onSubmit={(event) => {
-            handleFormSubmit(event);
-          }}
-        >
-          {CoursesDataData.map((data) => {
-            return (
-              <FormInput
-                inputData={data}
-                handleEditFormChange={handleEditFormChange}
-                valueData={coursesDataData}
-                key={data.id}
-              />
-            );
-          })}
-          <button
-            type="submit"
-            className="form-card-button form-card-button-save"
+          <form
+            onSubmit={(event) => {
+              handleFormSubmit(event);
+            }}
           >
-            {t(`common.save`)}
-          </button>
-          <button
-            type="reset"
-            className="form-card-button form-card-button-cancel"
-          >
-            {t(`common.cancel`)}
-          </button>
-        </form>
+            {CoursesDataData.map((data) => {
+              return (
+                <FormInput
+                  inputData={data}
+                  handleEditFormChange={handleEditFormChange}
+                  valueData={coursesDataData}
+                  key={data.id}
+                />
+              );
+            })}
+            <button
+              type="submit"
+              className="form-card-button form-card-button-save"
+            >
+              {t(`common.save`)}
+            </button>
+            <button
+              type="reset"
+              className="form-card-button form-card-button-cancel"
+            >
+              {t(`common.cancel`)}
+            </button>
+          </form>
         </FormCard>
         <Table
-        tableTitle={"courses.tabletitle"}
-        headerItems={[
-          { id: 1, title: t(`courses.eng_name`) },
-          { id: 2, title: t(`courses.ar_name`) },
-          { id: 3, title: t(`courses.code`) },
-          { id: 4, title: t(`courses.ar_des`) },
-          { id: 5, title: t(`courses.eng_des`) },
-        ]}
-        rowItems={courses}
-        editableItems={true}
-        deletableItems={true}
-      />
+          tableTitle={"courses.tabletitle"}
+          headerItems={[
+            { id: 1, title: t(`courses.eng_name`) },
+            { id: 2, title: t(`courses.ar_name`) },
+            { id: 3, title: t(`courses.code`) },
+            { id: 4, title: t(`courses.ar_des`) },
+            { id: 5, title: t(`courses.eng_des`) },
+          ]}
+          rowItems={courses}
+          editableItems={true}
+          deletableItems={true}
+        />
       </SidebarContainer>
     </>
   );

@@ -330,11 +330,6 @@ export const ProgramCourses = () => {
               is added to gpa
             </label>
           </div>
-          <div>
-            {levels.map((item) => {
-              return <CollapsibleTable />;
-            })}
-          </div>
           <button
             type="submit"
             className="form-card-button form-card-button-save"
@@ -349,6 +344,20 @@ export const ProgramCourses = () => {
           </button>
         </form>
       </FormCard>
+      {levels.map((item) => {
+        return (
+          <CollapsibleTable
+            title={item}
+            key={item.id}
+            headerItems={[
+              { id: 1, title: t(`courses.code`) },
+              { id: 2, title: t(`courses.name`) },
+              { id: 3, title: t(`courses.eng_name`) },
+            ]}
+            rowItems={courses}
+          />
+        );
+      })}
     </SidebarContainer>
   );
 };

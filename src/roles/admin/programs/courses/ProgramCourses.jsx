@@ -17,54 +17,20 @@ import { CollapsibleTable } from "../../../../components/table/CollapsibleTable"
 
 // to delete
 import { DatabaseCourses } from "./DatabaseCourses";
+import { DatabaseLevels } from "./DatabaseLevels";
+import { DatabaseProgramCourses } from "./DatabaseProgramCourses";
 
 export const ProgramCourses = () => {
   const [programCourseData, setProgramCourseData] = useState([]);
-
   // Courses States
   const [course, setCourse] = useState({});
   // eslint-disable-next-line
   const [courses, setCourses] = useState(DatabaseCourses);
-
-  // Prereq State
   const [preCourses, setPreCourses] = useState([]);
   // eslint-disable-next-line
-  const [programCourses, setProgramCourses] = useState([
-    {
-      id: 0,
-      code: "bsm10",
-      englishName: "Physics",
-      arabicName: "الفيزياء",
-      level: 100,
-    },
-    {
-      id: 1,
-      code: "cce10",
-      englishName: "Math",
-      arabicName: "الرياضيات",
-      level: 200,
-    },
-    {
-      id: 2,
-      code: "ecc10",
-      englishName: "Art",
-      arabicName: "الاء",
-      level: 400,
-    },
-    {
-      id: 3,
-      code: "aet10",
-      englishName: "Volley",
-      arabicName: "الفوولي",
-      level: 300,
-    },
-  ]);
+  const [programCourses, setProgramCourses] = useState(DatabaseProgramCourses);
   // eslint-disable-next-line
-  const [levels, setLevels] = useState([
-    { id: 0, level: 100, englishName: "Level 1", arabicName: "mostawaa awal" },
-    { id: 1, level: 200, englishName: "Level 2", arabicName: "mostawaa tany" },
-    { id: 2, level: 300, englishName: "Level 3", arabicName: "mostawaa talt" },
-  ]);
+  const [levels, setLevels] = useState(DatabaseLevels);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line

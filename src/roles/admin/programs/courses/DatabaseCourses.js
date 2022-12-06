@@ -1,7 +1,7 @@
 export const DatabaseCourses = [
   { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
   { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
-  { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
+  { id: 2, code: "ecc10", englishName: "Art", arabicName: "الفنون" },
   { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
   { id: 4, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
   { id: 5, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },

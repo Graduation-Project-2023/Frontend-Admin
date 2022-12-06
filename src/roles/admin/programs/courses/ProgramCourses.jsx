@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -22,11 +22,10 @@ import { DatabaseProgramCourses } from "./DatabaseProgramCourses";
 
 export const ProgramCourses = () => {
   const [programCourseData, setProgramCourseData] = useState([]);
-  // Courses States
   const [course, setCourse] = useState({});
+  const [preCourses, setPreCourses] = useState([]);
   // eslint-disable-next-line
   const [courses, setCourses] = useState(DatabaseCourses);
-  const [preCourses, setPreCourses] = useState([]);
   // eslint-disable-next-line
   const [programCourses, setProgramCourses] = useState(DatabaseProgramCourses);
   // eslint-disable-next-line
@@ -39,7 +38,39 @@ export const ProgramCourses = () => {
   const { t } = useTranslation();
   // eslint-disable-next-line
   const { programId } = useParams();
+  const classWorkRef = useRef();
+  const midtermRef = useRef();
+  const finalExamRef = useRef();
+  const [wrongCourseGrades, setWrongCourseGrades] = useState({
+    error: false,
+    errorMessage: "",
+  });
   const currentLanguageCode = cookies.get("i18next") || "en";
+  const maxGrade = 100;
+
+  const handleCourseGrades = () => {
+    if (
+      +classWorkRef.current.value +
+        +midtermRef.current.value +
+        +finalExamRef.current.value >
+      maxGrade
+    ) {
+      setWrongCourseGrades({
+        error: true,
+        errorMessage: "sum of grades must be equal to the max grade",
+      });
+      classWorkRef.current.value = "";
+      midtermRef.current.value = "";
+      finalExamRef.current.value = "";
+    } else if (
+      +classWorkRef.current.value +
+        +midtermRef.current.value +
+        +finalExamRef.current.value ===
+      maxGrade
+    ) {
+      setWrongCourseGrades({ error: false });
+    }
+  };
 
   useEffect(() => {
     // GET request to get all cousres to display it in the table
@@ -182,8 +213,8 @@ export const ProgramCourses = () => {
                 className="form-control"
                 type="number"
                 name="classWork"
-                onChange={handleEditFormChange}
-                value={programCourseData["classWork"] || ""}
+                ref={classWorkRef}
+                onChange={handleCourseGrades}
               />
             </div>
             <label className="col-sm-2 col-form-label">
@@ -195,8 +226,8 @@ export const ProgramCourses = () => {
                 type="number"
                 name="midTerm"
                 required
-                onChange={handleEditFormChange}
-                value={programCourseData["midTerm"] || ""}
+                ref={midtermRef}
+                onChange={handleCourseGrades}
               />
             </div>
             <label className="col-sm-2 col-form-label">
@@ -208,20 +239,22 @@ export const ProgramCourses = () => {
                 type="number"
                 name="finalExam"
                 required
-                onChange={handleEditFormChange}
-                value={programCourseData["finalExam"] || ""}
+                ref={finalExamRef}
+                onChange={handleCourseGrades}
               />
             </div>
           </div>
+          {wrongCourseGrades.error && (
+            <div>{wrongCourseGrades.errorMessage}</div>
+          )}
           <div className="row mb-4">
             <label className="col-sm-1 col-form-label">{t("grades.max")}</label>
             <div className="col-sm-2">
               <input
                 className="form-control"
                 type="number"
-                name="classWork"
-                onChange={handleEditFormChange}
-                value={programCourseData["classWork"] || ""}
+                name="maxGrade"
+                value={maxGrade}
               />
             </div>
             {/* {authContext.program.credit === "CREDIT" && <></>} */}

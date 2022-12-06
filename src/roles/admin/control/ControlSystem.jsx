@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 
 export const ControlSystem = () => {
   const { t } = useTranslation();

@@ -21,6 +21,7 @@ export const CollapsibleTable = (props) => {
         </Accordion.Header>
         <Accordion.Body>
           <div className="collapsetable">
+            <h3>{t(props.title.level)}</h3>
             <table className="table">
               <thead>
                 <tr>

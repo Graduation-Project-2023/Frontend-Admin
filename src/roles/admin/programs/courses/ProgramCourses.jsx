@@ -15,33 +15,55 @@ import { DropdownSearch } from "../../../../components/DropdownSearch";
 import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTable";
 import { CollapsibleTable } from "../../../../components/table/CollapsibleTable";
 
+// to delete
+import { DatabaseCourses } from "./DatabaseCourses";
+
 export const ProgramCourses = () => {
   const [programCourseData, setProgramCourseData] = useState([]);
 
   // Courses States
   const [course, setCourse] = useState({});
   // eslint-disable-next-line
-  const [courses, setCourses] = useState([
-    { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
-    { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
-    { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
-    { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
-  ]);
+  const [courses, setCourses] = useState(DatabaseCourses);
 
   // Prereq State
   const [preCourses, setPreCourses] = useState([]);
   // eslint-disable-next-line
   const [programCourses, setProgramCourses] = useState([
-    { id: 0, code: "bsm10", englishName: "Physics", arabicName: "الفيزياء" },
-    { id: 1, code: "cce10", englishName: "Math", arabicName: "الرياضيات" },
-    { id: 2, code: "ecc10", englishName: "Art", arabicName: "الاء" },
-    { id: 3, code: "aet10", englishName: "Volley", arabicName: "الفوولي" },
+    {
+      id: 0,
+      code: "bsm10",
+      englishName: "Physics",
+      arabicName: "الفيزياء",
+      level: 100,
+    },
+    {
+      id: 1,
+      code: "cce10",
+      englishName: "Math",
+      arabicName: "الرياضيات",
+      level: 200,
+    },
+    {
+      id: 2,
+      code: "ecc10",
+      englishName: "Art",
+      arabicName: "الاء",
+      level: 400,
+    },
+    {
+      id: 3,
+      code: "aet10",
+      englishName: "Volley",
+      arabicName: "الفوولي",
+      level: 300,
+    },
   ]);
   // eslint-disable-next-line
   const [levels, setLevels] = useState([
-    { id: 0, level: 1, englishName: "Level 1", arabicName: "mostawaa awal" },
-    { id: 1, level: 2, englishName: "Level 2", arabicName: "mostawaa tany" },
-    { id: 2, level: 3, englishName: "Level 3", arabicName: "mostawaa talt" },
+    { id: 0, level: 100, englishName: "Level 1", arabicName: "mostawaa awal" },
+    { id: 1, level: 200, englishName: "Level 2", arabicName: "mostawaa tany" },
+    { id: 2, level: 300, englishName: "Level 3", arabicName: "mostawaa talt" },
   ]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);

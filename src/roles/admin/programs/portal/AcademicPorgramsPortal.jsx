@@ -22,7 +22,7 @@ export const AcademicPorgramsPortal = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
-    console.log(authContext.college);
+    console.log(authContext.program);
     if (Object.keys(authContext.college).length === 0) {
       navigate("/admin_portal");
     }

@@ -36,7 +36,7 @@ export const DatabaseProgramCourses = [
     code: "bsm10",
     englishName: "Physics",
     arabicName: "الفيزياء",
-    level: 2,
+    level: 1,
     semester: "SECOND",
   },
   {
@@ -50,7 +50,7 @@ export const DatabaseProgramCourses = [
   {
     id: 6,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art2",
     arabicName: "الفنون",
     level: 1,
     semester: "SECOND",
@@ -106,7 +106,7 @@ export const DatabaseProgramCourses = [
   {
     id: 13,
     code: "cce10",
-    englishName: "Math",
+    englishName: "Math22",
     arabicName: "الرياضيات",
     level: 2,
     semester: "FIRST",
@@ -114,7 +114,7 @@ export const DatabaseProgramCourses = [
   {
     id: 14,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art22",
     arabicName: "الفنون",
     level: 2,
     semester: "FIRST",
@@ -122,7 +122,7 @@ export const DatabaseProgramCourses = [
   {
     id: 15,
     code: "aet10",
-    englishName: "Volley",
+    englishName: "Volley22",
     arabicName: "الفوولي",
     level: 2,
     semester: "FIRST",
@@ -130,7 +130,7 @@ export const DatabaseProgramCourses = [
   {
     id: 16,
     code: "bsm10",
-    englishName: "Physics",
+    englishName: "Physics22",
     arabicName: "الفيزياء",
     level: 2,
     semester: "SECOND",
@@ -138,7 +138,7 @@ export const DatabaseProgramCourses = [
   {
     id: 17,
     code: "cce10",
-    englishName: "Math",
+    englishName: "Math22",
     arabicName: "الرياضيات",
     level: 2,
     semester: "SECOND",
@@ -146,7 +146,7 @@ export const DatabaseProgramCourses = [
   {
     id: 18,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art22",
     arabicName: "الفنون",
     level: 2,
     semester: "SECOND",
@@ -154,7 +154,7 @@ export const DatabaseProgramCourses = [
   {
     id: 19,
     code: "aet10",
-    englishName: "Volley",
+    englishName: "Volley22",
     arabicName: "الفوولي",
     level: 2,
     semester: "SECOND",
@@ -162,7 +162,7 @@ export const DatabaseProgramCourses = [
   {
     id: 20,
     code: "bsm10",
-    englishName: "Physics",
+    englishName: "Physics22",
     arabicName: "الفيزياء",
     level: 2,
     semester: "SECOND",
@@ -170,7 +170,7 @@ export const DatabaseProgramCourses = [
   {
     id: 21,
     code: "cce10",
-    englishName: "Math",
+    englishName: "Math22",
     arabicName: "الرياضيات",
     level: 2,
     semester: "SECOND",
@@ -178,7 +178,7 @@ export const DatabaseProgramCourses = [
   {
     id: 22,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art22",
     arabicName: "الفنون",
     level: 2,
     semester: "SUMMER",
@@ -186,7 +186,7 @@ export const DatabaseProgramCourses = [
   {
     id: 23,
     code: "aet10",
-    englishName: "Volley",
+    englishName: "Volley22",
     arabicName: "الفوولي",
     level: 2,
     semester: "SUMMER",
@@ -194,7 +194,7 @@ export const DatabaseProgramCourses = [
   {
     id: 24,
     code: "bsm10",
-    englishName: "Physics",
+    englishName: "Physics22",
     arabicName: "الفيزياء",
     level: 2,
     semester: "SUMMER",
@@ -202,7 +202,7 @@ export const DatabaseProgramCourses = [
   {
     id: 25,
     code: "cce10",
-    englishName: "Math",
+    englishName: "Math22",
     arabicName: "الرياضيات",
     level: 2,
     semester: "SUMMER",
@@ -210,7 +210,7 @@ export const DatabaseProgramCourses = [
   {
     id: 26,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art22",
     arabicName: "الفنون",
     level: 2,
     semester: "SUMMER",
@@ -218,7 +218,7 @@ export const DatabaseProgramCourses = [
   {
     id: 27,
     code: "aet10",
-    englishName: "Volley",
+    englishName: "Volley33",
     arabicName: "الفوولي",
     level: 3,
     semester: "FIRST",
@@ -226,7 +226,7 @@ export const DatabaseProgramCourses = [
   {
     id: 28,
     code: "bsm10",
-    englishName: "Physics",
+    englishName: "Physics33",
     arabicName: "الفيزياء",
     level: 3,
     semester: "FIRST",
@@ -234,7 +234,7 @@ export const DatabaseProgramCourses = [
   {
     id: 29,
     code: "cce10",
-    englishName: "Math",
+    englishName: "Math33",
     arabicName: "الرياضيات",
     level: 3,
     semester: "FIRST",
@@ -242,7 +242,7 @@ export const DatabaseProgramCourses = [
   {
     id: 30,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art33",
     arabicName: "الفنون",
     level: 3,
     semester: "FIRST",
@@ -250,7 +250,7 @@ export const DatabaseProgramCourses = [
   {
     id: 31,
     code: "aet10",
-    englishName: "Volley",
+    englishName: "Volley33",
     arabicName: "الفوولي",
     level: 3,
     semester: "SECOND",
@@ -258,7 +258,7 @@ export const DatabaseProgramCourses = [
   {
     id: 32,
     code: "bsm10",
-    englishName: "Physics",
+    englishName: "Physics33",
     arabicName: "الفيزياء",
     level: 3,
     semester: "SECOND",
@@ -266,7 +266,7 @@ export const DatabaseProgramCourses = [
   {
     id: 33,
     code: "cce10",
-    englishName: "Math",
+    englishName: "Math33",
     arabicName: "الرياضيات",
     level: 3,
     semester: "SECOND",
@@ -274,7 +274,7 @@ export const DatabaseProgramCourses = [
   {
     id: 34,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art33",
     arabicName: "الفنون",
     level: 3,
     semester: "SECOND",
@@ -282,7 +282,7 @@ export const DatabaseProgramCourses = [
   {
     id: 35,
     code: "aet10",
-    englishName: "Volley",
+    englishName: "Volley33",
     arabicName: "الفوولي",
     level: 3,
     semester: "SECOND",
@@ -290,7 +290,7 @@ export const DatabaseProgramCourses = [
   {
     id: 36,
     code: "bsm10",
-    englishName: "Physics",
+    englishName: "Physics33",
     arabicName: "الفيزياء",
     level: 3,
     semester: "SUMMER",
@@ -298,7 +298,7 @@ export const DatabaseProgramCourses = [
   {
     id: 37,
     code: "cce10",
-    englishName: "Math",
+    englishName: "Math33",
     arabicName: "الرياضيات",
     level: 3,
     semester: "SUMMER",
@@ -306,7 +306,7 @@ export const DatabaseProgramCourses = [
   {
     id: 38,
     code: "ecc10",
-    englishName: "Art",
+    englishName: "Art33",
     arabicName: "الفنون",
     level: 3,
     semester: "SUMMER",
@@ -314,7 +314,7 @@ export const DatabaseProgramCourses = [
   {
     id: 39,
     code: "aet10",
-    englishName: "Volley",
+    englishName: "Volley33",
     arabicName: "الفوولي",
     level: 3,
     semester: "SUMMER",

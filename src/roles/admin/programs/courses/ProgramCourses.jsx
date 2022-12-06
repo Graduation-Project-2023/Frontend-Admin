@@ -71,14 +71,14 @@ export const ProgramCourses = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const rows = [...courses];
+    const rows = [...programCourses];
     rows.push(programCourseData);
     // POST request to add a new program course to the database
     // axios
     //   .get(BASE_URL + `/programs/${programId}/courses`, { academicCoursesData })
     //   .then((res) => {
     //     console.log(res);
-    //     setCourses(rows);
+    //     setProgramCourses(rows);
     //     setLoading(false);
     //   })
     //   .catch((error) => {
@@ -342,7 +342,9 @@ export const ProgramCourses = () => {
               { id: 2, title: t(`courses.name`) },
               { id: 3, title: t(`courses.eng_name`) },
             ]}
-            rowItems={courses}
+            rowItems={programCourses.filter(
+              (course) => course.level === item.level
+            )}
           />
         );
       })}

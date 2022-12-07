@@ -1,16 +1,42 @@
 .collapsetable {
-  max-height: 20rem;
-  overflow: scroll;
+  
   text-align: center;
+  &-scroll{
+
+
+   & tbody{
+    display: block; 
+    position:relative;
+   width:100%; 
+   overflow-y:scroll;
+   max-height: 30vh;
+   }
+   & tr{
+    width: 100%;
+    display:flex;
+   }
+
+   & th ,& td{
+    flex-basis:100%;
+  flex-grow:2;
+  display: block;
+  padding: 1rem;
+   }
+
+  
+  }
   &-header {
     color: #858d97;
     font: normal 400 1.4rem/1.8rem "Inter";
     border-top: 1px solid #d9d9d9;
-    padding: 1.5rem !important;
+    padding: 1.3rem !important;
   }
+  
   &-items {
     color: #444444;
     font: normal 400 1rem/1.3rem "Inter";
-    padding: 1.5rem !important;
+    padding: 1.3rem !important;
+   
   }
+
 }

@@ -1,11 +1,10 @@
 .progCourses {
-  &_div {
-    width: 200px;
-  }
+  
   & button {
     color: white;
     background-color: #6892c5;
     border: 1px solid#6892C5;
+    width: 17rem;
 
     &:hover {
       background-color: rgba(13, 13, 80, 0.753);
@@ -13,19 +12,26 @@
     }
   }
   &_menu {
-    padding: 0 !important;
-
+    padding: 0.4rem !important;
+    width: 17rem;
     &_searchList {
       list-style: none;
       color: #686d72;
       font: normal 400 1rem/1.3rem "Inter";
-      text-align: center;
+      max-height: 10rem;
+      overflow: scroll;
+      overflow-x: hidden;
       padding: 0;
       margin: 0;
 
       & li {
         padding: 1rem;
         border-bottom: solid#EDE7E7 0.5px;
+        & div{
+          display: flex;
+          flex-direction: row;
+          gap:90px;
+        }
       }
 
       & :hover {

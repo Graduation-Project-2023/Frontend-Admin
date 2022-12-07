@@ -34,24 +34,27 @@ export const CollapsibleTable = (props) => {
             return (
               <div className="collapsetable" key={semester.id}>
                 <h3>{t(semester.title)}</h3>
-                <table className="table">
+                <table className="table collapsetable-scroll">
                   <thead>
                     <tr>
                       {headerItems.map((item) => {
                         return (
-                          <th key={item.id} className="collapsetable-header">
+                          <th key={item.id} className="collapsetable-header ">
                             {item.title}
                           </th>
                         );
                       })}
                     </tr>
                   </thead>
-                  <tbody>
+                 
+                  <tbody  >
                     {rowItems
                       .filter((course) => course.semester === semester.value)
                       .map((item) => {
                         return (
-                          <tr key={item.id}>
+                          
+                          
+                          <tr key={item.id} >
                             <td className="collapsetable-items">{item.code}</td>
                             <td className="collapsetable-items">
                               {item.arabicName}
@@ -60,6 +63,7 @@ export const CollapsibleTable = (props) => {
                               {item.englishName}
                             </td>
                           </tr>
+                          
                         );
                       })}
                   </tbody>

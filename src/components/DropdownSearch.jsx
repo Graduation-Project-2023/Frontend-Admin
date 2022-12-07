@@ -24,10 +24,10 @@ export const DropdownSearch = (props) => {
 
   return (
     <>
-      <label className="col-sm-1 col-form-label">{t(props.label)}</label>
-      <div className="col-sm-5">
-        <Dropdown className="progCourses">
-          <Dropdown.Toggle id="dropdown-basic">
+      <label className="col-sm-2 col-form-label">{t(props.label)}</label>
+      <div className="col-sm-4">
+        <Dropdown className="progCourses" autoClose={true}>
+          <Dropdown.Toggle id="dropdown-autoclose-true">
             {props.specialData?.code || t("choose a course code")}
           </Dropdown.Toggle>
 
@@ -47,11 +47,12 @@ export const DropdownSearch = (props) => {
                     onClick={(event) => {
                       props.handleListClick(item);
                     }}
-                  >
-                    {item.code} -
-                    {currentLanguageCode === "en"
+                  ><div>
+                   <span> {item.code} </span>
+                    <span>{currentLanguageCode === "en"
                       ? item.englishName
-                      : item.arabicName}
+                      : item.arabicName}</span>
+                      </div>
                   </li>
                 );
               })}

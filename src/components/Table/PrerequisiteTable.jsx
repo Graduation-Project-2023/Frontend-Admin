@@ -13,21 +13,21 @@ export const PrerequisiteTable = (props) => {
   }, [props.rowItems]);
 
   return (
-    <div className="table-container">
+    <div className="collapsetable">
       <h4>{t(props.tableTitle)}</h4>
-      <table className="table">
+      <table className="table table-striped">
         <thead>
           <tr>
             {headerItems.map((item) => {
               return (
-                <th key={item.id} className="table-container-header">
+                <th key={item.id} className="collapsetable-header">
                   {item.title}
                 </th>
               );
             })}
 
             {deletableItems && (
-              <th className="table-container-header">{t(`common.delete`)}</th>
+              <th className="collapsetable-header">{t(`common.delete`)}</th>
             )}
           </tr>
         </thead>
@@ -38,17 +38,17 @@ export const PrerequisiteTable = (props) => {
                 {Object.keys(item)?.map((key) => {
                   if (key === "id") return null;
                   return (
-                    <td className="table-container-items" key={key}>
+                    <td className="collapsetable-items" key={key}>
                       {item[key] === 0 ? 0 : item[key] || ""}
                     </td>
                   );
                 })}
                 {deletableItems && (
-                  <td className="table-container-items">
+                  <td className="collapsetable-items">
                     <BsTrash
                       color="red"
                       onClick={(event) => props.handleDelete(item)}
-                      className="table-container-items-icon"
+                      
                     />
                   </td>
                 )}

@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
+import styles from "./ProgramCourses.module.scss"
 // eslint-disable-next-line
 import { BASE_URL } from "../../../../shared/API";
 // eslint-disable-next-line
 import axios from "axios";
 import cookies from "js-cookie";
+
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/SidebarContainer";
@@ -149,10 +151,10 @@ export const ProgramCourses = () => {
               inputPlaceholder={"program code"}
               handleListClick={handleCourseSelection}
             />
-            <label className="col-sm-1 col-form-label">
+            <label className="col-sm-2 col-form-label">
               {t("courses.name")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <input
                 disabled
                 className="form-control"
@@ -165,10 +167,10 @@ export const ProgramCourses = () => {
             </div>
           </div>
           <div className="row mb-4">
-            <label className="col-sm-1 col-form-label">
+            <label className="col-sm-2 col-form-label">
               {t("levels.level")}
             </label>
-            <div className="col-sm-5">
+            <div className="col-sm-4">
               <select
                 className="form-select"
                 name="level"
@@ -187,10 +189,10 @@ export const ProgramCourses = () => {
                 })}
               </select>
             </div>
-            <label className="col-sm-1 col-form-label">
+            <label className="col-sm-2 col-form-label">
               {t("levelHours.term")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <select
                 className="form-select"
                 name="semester"
@@ -205,10 +207,10 @@ export const ProgramCourses = () => {
             </div>
           </div>
           <div className="row mb-4">
-            <label className="col-sm-1 col-form-label">
+            <label className="col-sm-2 col-form-label">
               {t("courses.class")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <input
                 className="form-control"
                 type="number"
@@ -220,7 +222,7 @@ export const ProgramCourses = () => {
             <label className="col-sm-2 col-form-label">
               {t("courses.mid")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <input
                 className="form-control"
                 type="number"
@@ -230,10 +232,12 @@ export const ProgramCourses = () => {
                 onChange={handleCourseGrades}
               />
             </div>
+            </div>
+            <div className="row mb-4">
             <label className="col-sm-2 col-form-label">
               {t("courses.final")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <input
                 className="form-control"
                 type="number"
@@ -243,13 +247,14 @@ export const ProgramCourses = () => {
                 onChange={handleCourseGrades}
               />
             </div>
-          </div>
+            
+          
           {wrongCourseGrades.error && (
             <div>{wrongCourseGrades.errorMessage}</div>
           )}
-          <div className="row mb-4">
-            <label className="col-sm-1 col-form-label">{t("grades.max")}</label>
-            <div className="col-sm-2">
+          
+            <label className="col-sm-2 col-form-label">{t("grades.max")}</label>
+            <div className="col-sm-4">
               <input
                 className="form-control"
                 type="number"
@@ -257,11 +262,13 @@ export const ProgramCourses = () => {
                 value={maxGrade}
               />
             </div>
+            </div>
             {/* {authContext.program.credit === "CREDIT" && <></>} */}
+            <div className="row mb-4">
             <label className="col-sm-2 col-form-label">
               {t("academicMain.credit")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <input
                 className="form-control"
                 type="number"
@@ -274,7 +281,7 @@ export const ProgramCourses = () => {
             <label className="col-sm-2 col-form-label">
               {t("academicMain.type")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <select
                 className="form-select"
                 name="require"
@@ -286,14 +293,15 @@ export const ProgramCourses = () => {
                 <option value="SECOND">{t("kolya")}</option>
                 <option value="SUMMER">{t("gam3a")}</option>
               </select>
+           
             </div>
           </div>
 
           <div className="row mb-4">
-            <label className="col-sm-1 col-form-label">
+            <label className="col-sm-2 col-form-label">
               {t("courses.grade")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <input
                 className="form-control"
                 type="number"
@@ -301,10 +309,10 @@ export const ProgramCourses = () => {
                 value={authContext.program.failureGrade}
               />
             </div>
-            <label className="col-sm-1 col-form-label">
+            <label className="col-sm-2 col-form-label">
               {t("courses.type")}
             </label>
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <select
                 className="form-select"
                 name="courseType"
@@ -317,6 +325,21 @@ export const ProgramCourses = () => {
               </select>
             </div>
           </div>
+          <div className="row mb-4">
+          <div className="form-check form-switch form-check-inline col-sm-4">
+          <label className="form-check-label " htmlfor="addedToGpa "> تضاف للمعدل التراكمي</label>
+         <input className={`form-check-input ${styles.preSwitch}`  }
+          type="checkbox"  
+          role="switch" 
+           name="addedToGpa"
+           id="addedToGpa"
+           onChange={handleEditFormChange}
+           value={programCourseData["addedToGpa"] || ""}/>
+           </div>
+           </div>
+         
+         
+          <div className={styles.formLine}>
           <div className="row mb-4">
             <DropdownSearch
               label={"pre req courses"}
@@ -338,18 +361,6 @@ export const ProgramCourses = () => {
               handleDelete={removeFromPrerequisite}
             />
           )}
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              name="addedToGpa"
-              id="addedToGpa"
-              onChange={handleEditFormChange}
-              value={programCourseData["addedToGpa"] || ""}
-            />
-            <label className="form-check-label" htmlFor="addedToGpa">
-              is added to gpa
-            </label>
           </div>
           <button
             type="submit"

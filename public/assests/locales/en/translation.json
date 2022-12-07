@@ -14,9 +14,10 @@
     "login": "Sign In",
     "logout": "Sign Out",
     "edit": "Edit",
+    "add": "Add",
     "delete": "Delete",
     "save": "Save",
-    "cancel": "Cancel",
+    "cancel": "Reset",
     "level1": "Level 1",
     "select": "Select from this menu..",
     "future": "Future Work"

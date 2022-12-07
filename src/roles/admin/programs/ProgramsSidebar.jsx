@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { BASE_URL } from "../../../shared/API";
 import cookies from "js-cookie";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
 
 import { Sidebar } from "../../../components/Sidebar";
 import { Dropdown } from "react-bootstrap";
@@ -58,7 +57,6 @@ const ProgramsSidebarData = [
 ];
 
 export const ProgramsSidebar = () => {
-  const { t } = useTranslation();
   const [programs, setPrograms] = useState([]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
@@ -86,21 +84,37 @@ export const ProgramsSidebar = () => {
     <Sidebar
       activeNav={true}
       backendData={false}
-      sideData={ProgramsSidebarData}
+      sideData={
+        authContext.program.system === "CREDIT"
+          ? authContext.program.allowedHrs === "CUMULATIVE" ||
+            authContext.program.allowedHrs === "INCLUDESUMMER"
+            ? ProgramsSidebarData
+            : ProgramsSidebarData.filter(
+                (object) => object.path !== "gpa-hours"
+              )
+          : ProgramsSidebarData.filter(
+              (object) =>
+                object.path !== "gpa-hours" && object.path !== "level-hours"
+            )
+      }
       sidebarTitle={"portal.programs"}
       options={
         <Dropdown className="sidebarBtn">
-          <Dropdown.Toggle >
-          {t(`academicSidebar.select`)}
+          <Dropdown.Toggle>
+            {currentLanguageCode === "en"
+              ? authContext.program.englishName
+              : authContext.program.arabicName}
           </Dropdown.Toggle>
 
-          <Dropdown.Menu  >
+          <Dropdown.Menu>
             {programs.map((item) => {
+              if (authContext.program.id === item.id) {
+                return null;
+              }
               return (
                 <Link
                   to={`/admin_portal/academic_programs/${item.id}/main`}
                   key={item.id}
-                 
                 >
                   {currentLanguageCode === "en"
                     ? item.englishName

@@ -1,5 +1,5 @@
 .sidebar {
-  position: fixed;
+  position: absolute;
   background-color: white;
   margin: 20px;
   width: 350px;
@@ -51,36 +51,34 @@
     }
   }
 }
-.sidebarBtn{
-
-  & button{
-    background-color:#6892c5;
+.sidebarBtn {
+  & button {
+    background-color: #6892c5;
     font: normal 400 1rem/1.3rem "Inter";
   }
-  & a{
+  & a {
     display: block;
     text-decoration: none;
     text-align: center;
-    border-bottom: 1px solid rgb(217, 216, 216) ;
+    border-bottom: 1px solid rgb(217, 216, 216);
     padding: 1rem;
     font: normal 400 1rem/1.3rem "Inter";
-    &:hover{
+    &:hover {
       background-color: #6892c5;
-      color: white ;
-
-    }
+      color: white;
     }
   }
-  .coursesSidebarBtn{
-    background-color:#6892c5;
-    font: normal 400 1rem/1.3rem "Inter";
-    color: white;
-    margin: 1rem;
-    padding: 0.4rem;
-    border: none;
-    border-radius: 5px;
-    &:hover{
-      background-color:  rgb(217, 216, 216) ;
-      color: black ;}
-
+}
+.coursesSidebarBtn {
+  background-color: #6892c5;
+  font: normal 400 1rem/1.3rem "Inter";
+  color: white;
+  margin: 1rem;
+  padding: 0.4rem;
+  border: none;
+  border-radius: 5px;
+  &:hover {
+    background-color: rgb(217, 216, 216);
+    color: black;
   }
+}

@@ -12,6 +12,7 @@ import { FormCard } from "../../../../components/FormCard";
 import { FormInput } from "../../../../components/FormInput";
 import { Sidebar } from "../../../../components/Sidebar";
 import { Accordion } from "react-bootstrap";
+import cookies from "js-cookie";
 
 export const AddAcademicProgram = () => {
   const [programsData, setProrgramsData] = useState([]);
@@ -24,6 +25,7 @@ export const AddAcademicProgram = () => {
   // eslint-disable-next-line
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     // GET request to get all programs to display it in the sidebar
@@ -47,6 +49,13 @@ export const AddAcademicProgram = () => {
     if (event.target.type === "number") {
       fieldValue = +fieldValue;
     }
+    if (fieldName === "hasSummerSemester") {
+      if (fieldValue === "true") {
+        fieldValue = true;
+      } else if (fieldValue === "false") {
+        fieldValue = false;
+      }
+    }
     if (fieldName === "system") {
       if (fieldValue === "CREDIT") {
         setCreditHours(true);
@@ -67,11 +76,10 @@ export const AddAcademicProgram = () => {
     // POST request to create a new program
     setLoading(true);
     axios
-      .post(BASE_URL + `/programs`, { program })
+      .post(BASE_URL + `/programs`, program)
       .then((res) => {
-        console.log(res);
         setLoading(false);
-        navigate("/admin_portal/academic_programs");
+        navigate(`/admin_portal/academic_programs/${res.data.id}/main`);
       })
       .catch((error) => {
         setLoading(false);
@@ -112,6 +120,32 @@ export const AddAcademicProgram = () => {
                         if (!creditHours && data.credit) {
                           return null;
                         }
+                        if (data.prerequisites) {
+                          const newProgramsData = programsData.map((item) => {
+                            return {
+                              id: item.id,
+                              value: item.id,
+                              title:
+                                currentLanguageCode === "en"
+                                  ? item.englishName
+                                  : item.arabicName,
+                            };
+                          });
+                          newProgramsData.unshift({
+                            id: 0,
+                            title: "common.select",
+                            value: null,
+                          });
+                          data.options = newProgramsData;
+                          return (
+                            <FormInput
+                              inputData={data}
+                              handleEditFormChange={handleEditFormChange}
+                              valueData={newProgram}
+                              key={data.id}
+                            />
+                          );
+                        }
                         return (
                           <FormInput
                             inputData={data}
@@ -130,7 +164,7 @@ export const AddAcademicProgram = () => {
               type="submit"
               className="form-card-button form-card-button-save"
             >
-              {t(`common.save`)}
+              {t(`common.add`)}
             </button>
             <button
               type="reset"

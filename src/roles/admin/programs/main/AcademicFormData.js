@@ -48,6 +48,23 @@ export const AcademicFormData = [
           { id: 2, title: "levelHours.level", value: "SCHOOLYEAR" },
         ],
       },
+      {
+        id: 6,
+        title: "academicMain.max grade",
+        name: "maxGrade",
+        req: true,
+        type: "number",
+      },
+      {
+        id: 7,
+        title: "academicMain.has summer semester",
+        name: "hasSummerSemester",
+        req: true,
+        options: [
+          { id: 0, title: "levelHours. nooo", value: false },
+          { id: 1, title: "academicMain. yesss", value: true },
+        ],
+      },
     ],
   },
   {
@@ -66,6 +83,7 @@ export const AcademicFormData = [
         id: 2,
         title: "academicMain.mandatory",
         name: "mandatoryHours",
+        credit: true,
         type: "number",
       },
       {
@@ -79,28 +97,30 @@ export const AcademicFormData = [
         id: 4,
         title: "academicMain.project",
         name: "projectQualifyingHours",
+        credit: true,
         type: "number",
       },
       {
         id: 5,
         title: "academicMain.compute",
-        name: "allowedHours",
+        name: "allowedHrs",
         options: [
           { id: 0, title: "common.select", value: null },
           { id: 1, title: "academicMain.c_gpa", value: "SEMESTER" },
           { id: 2, title: "academicMain.gpa", value: "CUMULATIVE" },
           { id: 3, title: "academicMain.s_gpa", value: "INCLUDESUMMER" },
+          {
+            id: 4,
+            title: "academicMain.semester fixed",
+            value: "SEMESTERFIXED",
+          },
         ],
       },
       {
         id: 6,
         title: "academicMain.prerequest",
         name: "prerequisiteProgramId",
-        options: [
-          { id: 0, title: "common.select", value: null },
-          { id: 1, title: "academicMain.prerequest", value: "PRE1" },
-          { id: 2, title: "academicMain.prerequest", value: "PRE2" },
-        ],
+        prerequisites: true,
       },
     ],
   },

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
+import cookies from "js-cookie";
 import { AcademicFormData } from "./AcademicFormData";
 
 // Reusable Components
@@ -14,6 +15,7 @@ import { Accordion } from "react-bootstrap";
 
 export const AcademicMain = () => {
   const [programData, setProgramData] = useState([]);
+  const [allPrograms, setAllPrograms] = useState([]);
   const [creditHours, setCreditHours] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
@@ -23,13 +25,13 @@ export const AcademicMain = () => {
   const [error, setError] = useState(null);
   const { programId } = useParams();
   const navigate = useNavigate();
+  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     // Get request to get a program by it's id
     axios
       .get(BASE_URL + `/programs/${programId}`)
       .then((res) => {
-        console.log(res);
         setProgramData(res.data);
         authContext.changeProgram(res.data);
         res.data.system === "CREDIT"
@@ -41,6 +43,20 @@ export const AcademicMain = () => {
         setLoading(false);
         console.log(error);
       });
+
+    setTimeout(() => {
+      // GET request to get all programs to display it in the sidebar
+      axios
+        .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+        .then((res) => {
+          setAllPrograms(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+        });
+    }, 2000);
     // eslint-disable-next-line
   }, []);
 
@@ -50,6 +66,13 @@ export const AcademicMain = () => {
     let fieldValue = event.target.value;
     if (event.target.type === "number") {
       fieldValue = +fieldValue;
+    }
+    if (fieldName === "hasSummerSemester") {
+      if (fieldValue === "true") {
+        fieldValue = true;
+      } else if (fieldValue === "false") {
+        fieldValue = false;
+      }
     }
     if (fieldName === "system") {
       if (fieldValue === "CREDIT") {
@@ -73,7 +96,6 @@ export const AcademicMain = () => {
     axios
       .post(BASE_URL + `/programs`)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         navigate("/admin_portal/academic_programs");
       })
@@ -104,6 +126,32 @@ export const AcademicMain = () => {
                     {item.formData.map((data) => {
                       if (!creditHours && data.credit) {
                         return null;
+                      }
+                      if (data.prerequisites) {
+                        const newProgramsData = allPrograms.map((item) => {
+                          return {
+                            id: item.id,
+                            value: item.id,
+                            title:
+                              currentLanguageCode === "en"
+                                ? item.englishName
+                                : item.arabicName,
+                          };
+                        });
+                        newProgramsData.unshift({
+                          id: 0,
+                          title: "common.select",
+                          value: null,
+                        });
+                        data.options = newProgramsData;
+                        return (
+                          <FormInput
+                            inputData={data}
+                            handleEditFormChange={handleEditFormChange}
+                            valueData={programData}
+                            key={data.id}
+                          />
+                        );
                       }
                       return (
                         <FormInput

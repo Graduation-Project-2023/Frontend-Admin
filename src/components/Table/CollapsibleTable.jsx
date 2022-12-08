@@ -46,15 +46,13 @@ export const CollapsibleTable = (props) => {
                       })}
                     </tr>
                   </thead>
-                 
-                  <tbody  >
+
+                  <tbody>
                     {rowItems
                       .filter((course) => course.semester === semester.value)
                       .map((item) => {
                         return (
-                          
-                          
-                          <tr key={item.id} >
+                          <tr key={item.id} onClick={(event) => {props.onRowClick(item)}}>
                             <td className="collapsetable-items">{item.code}</td>
                             <td className="collapsetable-items">
                               {item.arabicName}
@@ -63,7 +61,6 @@ export const CollapsibleTable = (props) => {
                               {item.englishName}
                             </td>
                           </tr>
-                          
                         );
                       })}
                   </tbody>

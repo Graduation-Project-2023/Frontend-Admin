@@ -2,10 +2,15 @@ export const DatabaseProgramCourses = [
   {
     id: 0,
     code: "bsm10",
-    englishName: "Physics",
+    englishName: "testinggggggg",
     arabicName: "الفيزياء",
     level: 1,
     semester: "FIRST",
+    // levelId: "0d60f91d-454e-428c-a4c0-8be0d5c43d2c",
+    semester: "SECOND",
+    creditHours: 3,
+    prerequisites: [1, 2],
+    courseType: "COMPULSORY",
   },
   {
     id: 1,

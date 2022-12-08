@@ -6,9 +6,9 @@ import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
 
 // Reusable Components
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { FormCard } from "../../../../components/FormCard";
-import { FormInput } from "../../../../components/FormInput";
+import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
+import { FormCard } from "../../../../components/forms/FormCard";
+import { FormInput } from "../../../../components/forms/FormInput";
 import { Table } from "../../../../components/table/Table";
 
 export const LevelHours = () => {

@@ -12,10 +12,11 @@ import { Unauthorized } from "./pages/Unauthorized";
 import { NotFound } from "./pages/NotFound";
 import { ForgetPwd } from "./pages/ForgetPwd";
 import { ResetPwd } from "./pages/ResetPwd";
-import { Header } from "./components/Header";
+import { Header } from "./components/header/Header";
 ////////// Private Routes //////////
 import { AdminRoutes } from "./roles/admin/AdminRoutes";
 import { StaffRoutes } from "./roles/staff/StaffRoutes";
+import { TestingPage } from "./common/TestingPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="redirecting" element={<Redirecting />} />
         <Route path="forgetpwd" element={<ForgetPwd />} />
         <Route path="resetpwd/:token" element={<ResetPwd />} />
+        <Route path="testing" element={<TestingPage />} />
 
         {/* Professor Routes (Private) */}
         <Route element={<LoginRoute allowedRoles={"STAFF"} />}>

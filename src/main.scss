@@ -1,8 +1,10 @@
 @import "./styles/abstract/mixins";
 @import "./styles/abstract/variables";
 @import "./styles/base/reset";
+@import "./styles/base/loaders";
 @import "./styles/layout/footer";
-@import "./styles/components/loader";
+@import "./styles/layout/admin_navbar";
+@import "./styles/layout/sidebar";
 @import "./styles/components/accordion";
 @import "./styles/components/small_loader";
 @import "./styles/components/common_page";
@@ -11,6 +13,4 @@
 @import "./styles/components/form_card";
 @import "./styles/components/dropdown_search";
 @import "./styles/pages/login";
-@import "./styles/layout/admin_navbar";
-@import "./styles/layout/sidebar";
-@import"./styles/components/collapsible_table";
+@import "./styles/components/collapsible_table";

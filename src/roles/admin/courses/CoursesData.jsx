@@ -6,10 +6,10 @@ import { BASE_URL } from "../../../shared/API";
 import axios from "axios";
 import cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { Sidebar } from "../../../components/Sidebar";
-import { SidebarContainer } from "../../../components/SidebarContainer";
-import { FormCard } from "../../../components/FormCard";
-import { FormInput } from "../../../components/FormInput";
+import { Sidebar } from "../../../components/sidebar/Sidebar";
+import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
+import { FormCard } from "../../../components/forms/FormCard";
+import { FormInput } from "../../../components/forms/FormInput";
 import { Table } from "../../../components/table/Table";
 import { Dropdown } from "react-bootstrap";
 

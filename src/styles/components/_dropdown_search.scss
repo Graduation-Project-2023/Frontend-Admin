@@ -1,5 +1,4 @@
 .progCourses {
-  
   & button {
     color: white;
     background-color: #6892c5;
@@ -27,10 +26,10 @@
       & li {
         padding: 1rem;
         border-bottom: solid#EDE7E7 0.5px;
-        & div{
+        & div {
           display: flex;
           flex-direction: row;
-          gap:90px;
+          gap: 90px;
         }
       }
 

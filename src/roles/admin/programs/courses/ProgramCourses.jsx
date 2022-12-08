@@ -2,18 +2,17 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-import styles from "./ProgramCourses.module.scss"
+import styles from "./ProgramCourses.module.scss";
 // eslint-disable-next-line
 import { BASE_URL } from "../../../../shared/API";
 // eslint-disable-next-line
 import axios from "axios";
 import cookies from "js-cookie";
 
-
 // Reusable Components
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { FormCard } from "../../../../components/FormCard";
-import { DropdownSearch } from "../../../../components/DropdownSearch";
+import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
+import { FormCard } from "../../../../components/forms/FormCard";
+import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTable";
 import { CollapsibleTable } from "../../../../components/table/CollapsibleTable";
 
@@ -34,6 +33,7 @@ export const ProgramCourses = () => {
   const [levels, setLevels] = useState(DatabaseLevels);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
+  const [editRowId, setEditRowId] = useState(null);
   // eslint-disable-next-line
   const [error, setError] = useState();
   const authContext = useAuth();
@@ -135,6 +135,24 @@ export const ProgramCourses = () => {
     setPreCourses((current) => current.filter((obj) => obj.id !== item.id));
   };
 
+  const handleFormEditSwitch = (item) => {
+    if (item.prerequisites) {
+      console.log(
+        item.prerequisites.map((prerequisite) =>
+          programCourses.filter((obj) => obj.id === prerequisite)
+        )
+      );
+      // setPreCourses(
+      //   item.prerequisites.map((prerequisite) =>
+      //     programCourses.filter((obj) => obj.id === prerequisite)
+      //   )
+      // );
+    }
+    setCourse(item);
+    setEditRowId(item.id);
+    setProgramCourseData(item);
+  };
+
   return (
     <SidebarContainer>
       <FormCard cardTitle={"academicSidebar.courses"}>
@@ -146,8 +164,8 @@ export const ProgramCourses = () => {
           <div className="row mb-4">
             <DropdownSearch
               label={"courses.code"}
-              menuData={courses}
               specialData={course}
+              menuData={courses}
               inputPlaceholder={"program code"}
               handleListClick={handleCourseSelection}
             />
@@ -180,7 +198,7 @@ export const ProgramCourses = () => {
                 <option value={null}>{t("common.select")}</option>
                 {levels.map((item) => {
                   return (
-                    <option key={item.id}>
+                    <option key={item.id} value={item.id}>
                       {currentLanguageCode === "en"
                         ? item.englishName || ""
                         : item.arabicName || ""}
@@ -232,8 +250,8 @@ export const ProgramCourses = () => {
                 onChange={handleCourseGrades}
               />
             </div>
-            </div>
-            <div className="row mb-4">
+          </div>
+          <div className="row mb-4">
             <label className="col-sm-2 col-form-label">
               {t("courses.final")}
             </label>
@@ -247,12 +265,11 @@ export const ProgramCourses = () => {
                 onChange={handleCourseGrades}
               />
             </div>
-            
-          
-          {wrongCourseGrades.error && (
-            <div>{wrongCourseGrades.errorMessage}</div>
-          )}
-          
+
+            {wrongCourseGrades.error && (
+              <div>{wrongCourseGrades.errorMessage}</div>
+            )}
+
             <label className="col-sm-2 col-form-label">{t("grades.max")}</label>
             <div className="col-sm-4">
               <input
@@ -260,11 +277,13 @@ export const ProgramCourses = () => {
                 type="number"
                 name="maxGrade"
                 value={maxGrade}
+                readOnly
+                disabled
               />
             </div>
-            </div>
-            {/* {authContext.program.credit === "CREDIT" && <></>} */}
-            <div className="row mb-4">
+          </div>
+          {/* {authContext.program.credit === "CREDIT" && <></>} */}
+          <div className="row mb-4">
             <label className="col-sm-2 col-form-label">
               {t("academicMain.credit")}
             </label>
@@ -293,7 +312,6 @@ export const ProgramCourses = () => {
                 <option value="SECOND">{t("kolya")}</option>
                 <option value="SUMMER">{t("gam3a")}</option>
               </select>
-           
             </div>
           </div>
 
@@ -326,41 +344,45 @@ export const ProgramCourses = () => {
             </div>
           </div>
           <div className="row mb-4">
-          <div className="form-check form-switch form-check-inline col-sm-4">
-          <label className="form-check-label " htmlfor="addedToGpa "> تضاف للمعدل التراكمي</label>
-         <input className={`form-check-input ${styles.preSwitch}`  }
-          type="checkbox"  
-          role="switch" 
-           name="addedToGpa"
-           id="addedToGpa"
-           onChange={handleEditFormChange}
-           value={programCourseData["addedToGpa"] || ""}/>
-           </div>
-           </div>
-         
-         
-          <div className={styles.formLine}>
-          <div className="row mb-4">
-            <DropdownSearch
-              label={"pre req courses"}
-              menuData={programCourses}
-              inputPlaceholder={"program code"}
-              handleListClick={addToPrerequisite}
-            />
+            <div className="form-check form-switch form-check-inline col-sm-4">
+              <label className="form-check-label " htmlFor="addedToGpa ">
+                {" "}
+                تضاف للمعدل التراكمي
+              </label>
+              <input
+                className={`form-check-input ${styles.preSwitch}`}
+                type="checkbox"
+                role="switch"
+                name="addedToGpa"
+                id="addedToGpa"
+                onChange={handleEditFormChange}
+                value={programCourseData["addedToGpa"] || ""}
+              />
+            </div>
           </div>
-          {preCourses.length !== 0 && (
-            <PrerequisiteTable
-              tableTitle={"gdwl el prerequisite"}
-              headerItems={[
-                { id: 1, title: t(`courses.code`) },
-                { id: 2, title: t(`courses.name`) },
-                { id: 3, title: t(`courses.eng_name`) },
-              ]}
-              rowItems={preCourses}
-              deletableItems={true}
-              handleDelete={removeFromPrerequisite}
-            />
-          )}
+
+          <div className={styles.formLine}>
+            <div className="row mb-4">
+              <DropdownSearch
+                label={"pre req courses"}
+                menuData={programCourses}
+                inputPlaceholder={"program code"}
+                handleListClick={addToPrerequisite}
+              />
+            </div>
+            {preCourses.length !== 0 && (
+              <PrerequisiteTable
+                tableTitle={"gdwl el prerequisite"}
+                headerItems={[
+                  { id: 1, title: t(`courses.code`) },
+                  { id: 2, title: t(`courses.name`) },
+                  { id: 3, title: t(`courses.eng_name`) },
+                ]}
+                rowItems={preCourses}
+                deletableItems={true}
+                handleDelete={removeFromPrerequisite}
+              />
+            )}
           </div>
           <button
             type="submit"
@@ -389,6 +411,7 @@ export const ProgramCourses = () => {
             rowItems={programCourses.filter(
               (course) => course.level === item.level
             )}
+            onRowClick={handleFormEditSwitch}
           />
         );
       })}

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { TbArrowBearRight } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
-import { CommonPage } from "../components/CommonPage";
+import { CommonPage } from "../components/other/CommonPage";
 
 export const Redirecting = () => {
   const navigate = useNavigate();

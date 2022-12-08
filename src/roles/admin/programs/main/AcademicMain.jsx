@@ -8,9 +8,9 @@ import cookies from "js-cookie";
 import { AcademicFormData } from "./AcademicFormData";
 
 // Reusable Components
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { FormCard } from "../../../../components/FormCard";
-import { FormInput } from "../../../../components/FormInput";
+import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
+import { FormCard } from "../../../../components/forms/FormCard";
+import { FormInput } from "../../../../components/forms/FormInput";
 import { Accordion } from "react-bootstrap";
 
 export const AcademicMain = () => {

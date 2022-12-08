@@ -1,5 +1,5 @@
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { FormCard } from "../../../../components/FormCard";
+import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
+import { FormCard } from "../../../../components/forms/FormCard";
 import { useTranslation } from "react-i18next";
 
 export const AcademicGPA = () => {

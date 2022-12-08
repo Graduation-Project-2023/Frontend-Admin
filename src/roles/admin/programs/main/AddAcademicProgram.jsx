@@ -7,10 +7,10 @@ import axios from "axios";
 import { AcademicFormData } from "./AcademicFormData";
 
 // Reusable Components
-import { SidebarContainer } from "../../../../components/SidebarContainer";
-import { FormCard } from "../../../../components/FormCard";
-import { FormInput } from "../../../../components/FormInput";
-import { Sidebar } from "../../../../components/Sidebar";
+import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
+import { FormCard } from "../../../../components/forms/FormCard";
+import { FormInput } from "../../../../components/forms/FormInput";
+import { Sidebar } from "../../../../components/sidebar/Sidebar";
 import { Accordion } from "react-bootstrap";
 import cookies from "js-cookie";
 

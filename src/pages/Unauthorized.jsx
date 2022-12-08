@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbBan } from "react-icons/tb";
-import { CommonPage } from "../components/CommonPage";
+import { CommonPage } from "../components/other/CommonPage";
 import { useTranslation } from "react-i18next";
 
 export const Unauthorized = () => {

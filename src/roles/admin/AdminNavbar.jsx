@@ -1,4 +1,4 @@
-import { HeaderNavbar } from "../../components/HeaderNavbar";
+import { HeaderNavbar } from "../../components/header/HeaderNavbar";
 
 const AdminNavbarData = [
   {

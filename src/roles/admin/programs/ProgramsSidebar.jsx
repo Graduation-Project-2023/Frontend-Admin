@@ -5,7 +5,7 @@ import { BASE_URL } from "../../../shared/API";
 import cookies from "js-cookie";
 import axios from "axios";
 
-import { Sidebar } from "../../../components/Sidebar";
+import { Sidebar } from "../../../components/sidebar/Sidebar";
 import { Dropdown } from "react-bootstrap";
 
 const ProgramsSidebarData = [

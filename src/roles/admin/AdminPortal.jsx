@@ -5,11 +5,10 @@ import { useAuth } from "../../hooks/useAuth";
 import { BASE_URL } from "../../shared/API";
 import axios from "axios";
 import cookies from "js-cookie";
-import Modal from "react-bootstrap/Modal";
+import { Popup } from "../../components/popups/Popup";
 
 export const AdminPortal = () => {
   const { t } = useTranslation();
-  const [show, setShow] = useState(false);
   const [colleges, setColleges] = useState([]);
   const [filteredColleges, setFilteredColleges] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -54,63 +53,29 @@ export const AdminPortal = () => {
   }, [searchValue]);
 
   return (
-    <>
-      <div className="d-flex justify-content-center">
-        <button
-          className="btn btn-primary align-center"
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          اظهار قائمة الكليات
-        </button>
+    <Popup
+      button={"اظهار قائمة الكليات"}
+      className={"btn"}
+      title={"academicMain.faculty"}
+      searchItem={true}
+    >
+      <div className="popup_list">
+        {filteredColleges.map((item) => {
+          return (
+            <Link
+              key={item.id}
+              onClick={() => {
+                authContext.changeCollege(item);
+              }}
+              to="academic_programs"
+            >
+              {currentLanguageCode === "en"
+                ? item.englishName
+                : item.arabicName}
+            </Link>
+          );
+        })}
       </div>
-
-      <Modal
-        show={show}
-        onHide={() => {
-          setShow(false);
-        }}
-        className="popup"
-      >
-        <Modal.Header className="popup_header">
-          <Modal.Title className="popup_title">
-            {t(`academicMain.faculty`)}
-          </Modal.Title>
-          <button
-            onClick={() => {
-              setShow(false);
-            }}
-          >
-            X
-          </button>
-          <input
-            type="text"
-            onChange={(e) => setSearchValue(e.target.value)}
-            value={searchValue}
-            placeholder={t("academicMain.search")}
-          />
-        </Modal.Header>
-        <Modal.Body>
-          <div className="popup_list">
-            {filteredColleges.map((item) => {
-              return (
-                <Link
-                  key={item.id}
-                  onClick={() => {
-                    authContext.changeCollege(item);
-                  }}
-                  to="academic_programs"
-                >
-                  {currentLanguageCode === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </Link>
-              );
-            })}
-          </div>
-        </Modal.Body>
-      </Modal>
-    </>
+    </Popup>
   );
 };

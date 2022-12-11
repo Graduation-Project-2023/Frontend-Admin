@@ -1,5 +1,21 @@
 * {
   box-sizing: border-box;
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+
+    &-track {
+      box-shadow: none;
+    }
+
+    &-thumb {
+      background: #858d97;
+      border-radius: 10px;
+
+      &:hover {
+        background: #3d7dca;
+      }
+    }
+  }
 }
 .App {
   height: 100vh;
@@ -9,4 +25,10 @@ body {
   background-color: #f7f8fc;
   scrollbar-gutter: stable both-edges;
   overflow-x: hidden;
+}
+body::-webkit-scrollbar {
+  width: 1rem;
+  &-thumb {
+    border-radius: 0;
+  }
 }

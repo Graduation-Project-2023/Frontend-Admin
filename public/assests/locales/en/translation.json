@@ -177,5 +177,13 @@
     "qualify": "Qualified hours",
     "tabletitle": "Levels table",
     "select": "Select Academic level"
+  },
+  "registeration": {
+    "formhead": "Academic Registeration",
+    "advisor": "Academic Advisor",
+    "number": "Number of Students",
+    "form": "Selecting Academic Advisor",
+    "menu": "Level Students",
+    "search": "Search with student name"
   }
 }

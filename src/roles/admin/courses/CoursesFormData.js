@@ -18,6 +18,7 @@ export const CoursesFormData = [
     title: "courses.code",
     name: "id",
     req: true,
+    disabled: true,
     type: "text",
   },
   {

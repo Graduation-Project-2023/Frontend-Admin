@@ -37,5 +37,14 @@
     color: #444444;
     font: normal 400 1rem/1.3rem "Inter";
     padding: 1.3rem !important;
+
+    &-icon {
+      color: red;
+
+      &:hover {
+        color: black;
+        cursor: pointer;
+      }
+    }
   }
 }

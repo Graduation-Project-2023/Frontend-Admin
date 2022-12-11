@@ -15,6 +15,7 @@ export const FormInput = (props) => {
             name={inputData.name}
             onChange={props.handleEditFormChange}
             value={valueData[inputData.name] || ""}
+            disabled={inputData.disabled}
           >
             {inputData.options.map((option) => {
               return (
@@ -32,6 +33,7 @@ export const FormInput = (props) => {
             className="form-control"
             onChange={props.handleEditFormChange}
             value={valueData[inputData.name] || ""}
+            disabled={inputData.disabled}
           />
         ) : (
           <input
@@ -41,6 +43,7 @@ export const FormInput = (props) => {
             className="form-control"
             onChange={props.handleEditFormChange}
             value={valueData[inputData.name] || ""}
+            disabled={inputData.disabled}
           />
         )}
       </div>

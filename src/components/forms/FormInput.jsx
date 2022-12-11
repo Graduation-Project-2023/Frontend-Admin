@@ -24,6 +24,15 @@ export const FormInput = (props) => {
               );
             })}
           </select>
+        ) : inputData.type === "textarea" ? (
+          <textarea
+            name={inputData.name}
+            type={inputData.type}
+            required={inputData.req}
+            className="form-control"
+            onChange={props.handleEditFormChange}
+            value={valueData[inputData.name] || ""}
+          />
         ) : (
           <input
             name={inputData.name}

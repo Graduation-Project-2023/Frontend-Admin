@@ -10,9 +10,9 @@ import { RegisterationPortal } from "./registeration/portal/RegisterationPortal"
 import { RegisterationRoutes } from "./registeration/RegisterationRoutes";
 import { StudySchedulesRoutes } from "./schedules/StudySchedulesRoutes";
 import { StudySchedulesPortal } from "./schedules/portal/StudySchedulesPortal";
-import { CoursesData } from "./courses/CoursesData";
 import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
 import { NotFound } from "../../pages/NotFound";
+import { CoursesRoutes } from "./courses/CoursesRoutes";
 
 export function AdminRoutes() {
   return (
@@ -22,8 +22,7 @@ export function AdminRoutes() {
         <Route path="" element={<AdminPortal />} />
         <Route path="student_data" element={<StudentDataPortal />} />
         <Route path="student_data/*" element={<StudentDataRoutes />} />
-        <Route path="courses" element={<CoursesData />} />
-        <Route path="courses/:courseCode" element={<CoursesData />} />
+        <Route path="courses/*" element={<CoursesRoutes />} />
         <Route path="academic_programs" element={<AcademicPorgramsPortal />} />
         <Route path="academic_programs/add" element={<AddAcademicProgram />} />
         <Route

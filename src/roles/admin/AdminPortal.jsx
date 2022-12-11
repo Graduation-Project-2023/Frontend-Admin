@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../hooks/useAuth";
-import { BASE_URL } from "../../../shared/API";
+import { useAuth } from "../../hooks/useAuth";
+import { BASE_URL } from "../../shared/API";
 import axios from "axios";
 import cookies from "js-cookie";
-import styles from "./AdminPortal.module.scss";
 import Modal from "react-bootstrap/Modal";
 
 export const AdminPortal = () => {
@@ -72,10 +71,10 @@ export const AdminPortal = () => {
         onHide={() => {
           setShow(false);
         }}
-        className={styles.popup}
+        className="popup"
       >
-        <Modal.Header className={styles.popup_header}>
-          <Modal.Title className={styles.popup_title}>
+        <Modal.Header className="popup_header">
+          <Modal.Title className="popup_title">
             {t(`academicMain.faculty`)}
           </Modal.Title>
           <button
@@ -93,7 +92,7 @@ export const AdminPortal = () => {
           />
         </Modal.Header>
         <Modal.Body>
-          <div className={styles.popup_list}>
+          <div className="popup_list">
             {filteredColleges.map((item) => {
               return (
                 <Link

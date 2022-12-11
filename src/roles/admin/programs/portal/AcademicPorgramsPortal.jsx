@@ -22,23 +22,24 @@ export const AcademicPorgramsPortal = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
-    console.log(authContext.program);
-    if (Object.keys(authContext.college).length === 0) {
+    if (authContext.college === undefined) {
       navigate("/admin_portal");
+    } else {
+      // Get request to get all programs to display it in the menu
+      axios
+        .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+        .then((res) => {
+          setPrograms(res.data);
+          setFilteredPrograms(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error);
+          console.log(error);
+        });
     }
-    // Get request to get all programs to display it in the menu
-    axios
-      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
-      .then((res) => {
-        setPrograms(res.data);
-        setFilteredPrograms(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error);
-        console.log(error);
-      });
+
     // eslint-disable-next-line
   }, []);
 
@@ -86,6 +87,7 @@ export const AcademicPorgramsPortal = () => {
               <li
                 key={item.id}
                 onClick={() => {
+                  authContext.changeProgram(item);
                   navigate(`${item.id}/main`);
                 }}
               >

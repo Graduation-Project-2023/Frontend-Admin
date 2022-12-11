@@ -4,33 +4,28 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import { BASE_URL } from "../../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
-import { Link } from "react-router-dom";
+import { CoursesObjData } from "./CoursesObjData";
+
+// Resuable Components
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../components/forms/FormCard";
 import { FormInput } from "../../../components/forms/FormInput";
-import { Table } from "../../../components/table/Table";
-import { Dropdown } from "react-bootstrap";
 
 export const CoursesData = () => {
-  const [coursesDataData, setCoursesDataData] = useState([]);
+  const [courseData, setCourseData] = useState([]);
   const [courses, setCourses] = useState([]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
   const [error, setError] = useState();
   const { t } = useTranslation();
-  const { programId } = useParams();
   const authContext = useAuth();
-  const currentLanguageCode = cookies.get("i18next") || "en";
-  const [filteredcourse, setFilteredCourse] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    // GET request to get all level allowed hours to display it in the table
+    // GET request to get all college courses to display it in the sidebar
     axios
-      .get(BASE_URL + `/programs/${programId}/courses`)
+      .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
         console.log(res.data);
         setCourses(res.data);
@@ -41,7 +36,7 @@ export const CoursesData = () => {
         console.log(error);
       });
     // eslint-disable-next-line
-  }, []);
+  }, [authContext.college.id]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -50,26 +45,24 @@ export const CoursesData = () => {
     if (event.target.type === "number") {
       fieldValue = +fieldValue;
     }
-    const coursesData = { ...coursesDataData };
-    coursesData[fieldName] = fieldValue;
-    setCoursesDataData(coursesData);
+    const newCourseData = { ...courseData };
+    newCourseData[fieldName] = fieldValue;
+    setCourseData(newCourseData);
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const rows = [...courses];
-    const academicCoursesData = { ...coursesDataData };
-    academicCoursesData["collegeId"] = authContext.college.id;
-    rows.push(academicCoursesData);
+    const allCourses = [...courses];
+    const newCourse = { ...courseData };
+    newCourse["collegeId"] = authContext.college.id;
+    allCourses.push(newCourse);
 
     // POST request to create a new level allowed hours
     axios
-      .post(BASE_URL + `/programs/${programId}/courses`, {
-        academicCoursesData,
-      })
+      .post(BASE_URL + `/courses`, newCourse)
       .then((res) => {
         console.log(res);
-        setCourses(rows);
+        setCourses(allCourses);
         setLoading(false);
       })
       .catch((error) => {
@@ -77,84 +70,18 @@ export const CoursesData = () => {
         console.log(error);
       });
   };
-  const CoursesDataData = [
-    {
-      id: 0,
-      title: "courses.eng_name",
-      name: "englishName",
-      req: true,
-      options: false,
-      type: "text",
-    },
-    {
-      id: 1,
-      title: "courses.ar_name",
-      name: "arabicName",
-      req: true,
-      options: false,
-      type: "text",
-    },
-    {
-      id: 2,
-      title: "courses.code",
-      name: "code",
-      req: true,
-      options: false,
-      type: "text",
-    },
-
-    {
-      id: 3,
-      title: "courses.ar_des",
-      name: "arabicDescription",
-      req: false,
-      options: false,
-      type: "text",
-    },
-    {
-      id: 4,
-      title: "courses.eng_des",
-      name: "englishDescription",
-      req: true,
-      options: false,
-      type: "text",
-    },
-  ];
-
-  useEffect(() => {
-    if (currentLanguageCode === "en") {
-      setFilteredCourse(
-        courses.filter((item) =>
-          item.englishName.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredCourse(
-        courses.filter((item) =>
-          item.arabicName.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      );
-    }
-    // eslint-disable-next-line
-  }, [searchValue]);
 
   return (
     <>
       <Sidebar
         options={
-          <>
-            <input
-              type="text"
-              className="form-control"
-              onChange={(e) => setSearchValue(e.target.value)}
-              value={searchValue}
-              placeholder={t("courses.name")}
-            />
-            <button className="coursesSidebarBtn">{t("portal.add")}</button>
-          </>
+          <button className="coursesSidebarBtn">{t("portal.add")}</button>
         }
         sideData={courses}
         sidebarTitle={"courses.formhead"}
+        searchable={true}
+        backendData={true}
+        activeNav={true}
       />
 
       <SidebarContainer>
@@ -164,12 +91,12 @@ export const CoursesData = () => {
               handleFormSubmit(event);
             }}
           >
-            {CoursesDataData.map((data) => {
+            {CoursesObjData.map((data) => {
               return (
                 <FormInput
                   inputData={data}
                   handleEditFormChange={handleEditFormChange}
-                  valueData={coursesDataData}
+                  valueData={courseData}
                   key={data.id}
                 />
               );
@@ -188,19 +115,6 @@ export const CoursesData = () => {
             </button>
           </form>
         </FormCard>
-        <Table
-          tableTitle={"courses.tabletitle"}
-          headerItems={[
-            { id: 1, title: t(`courses.eng_name`) },
-            { id: 2, title: t(`courses.ar_name`) },
-            { id: 3, title: t(`courses.code`) },
-            { id: 4, title: t(`courses.ar_des`) },
-            { id: 5, title: t(`courses.eng_des`) },
-          ]}
-          rowItems={courses}
-          editableItems={true}
-          deletableItems={true}
-        />
       </SidebarContainer>
     </>
   );

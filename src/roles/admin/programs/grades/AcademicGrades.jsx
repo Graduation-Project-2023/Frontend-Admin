@@ -35,7 +35,7 @@ export const AcademicGrades = () => {
         console.log(error);
       });
     // eslint-disable-next-line
-  }, []);
+  }, [programId]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();

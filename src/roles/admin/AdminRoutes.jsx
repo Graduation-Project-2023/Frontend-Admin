@@ -1,15 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import { AdminPortal } from "./portal/AdminPortal";
+import { AdminPortal } from "./AdminPortal";
 import { AdminNavbar } from "./AdminNavbar";
-import { AcademicProgramsRoutes } from "./programs/AcademicProgramsRoutes";
-import { AcademicPorgramsPortal } from "./programs/portal/AcademicPorgramsPortal";
-import { StudySchedules } from "./schedules/StudySchedules";
-import { CoursesData } from "./courses/CoursesData";
-import { StudentData } from "./student_data/StudentData";
-import { ControlSystem } from "./control/ControlSystem";
-import { NotFound } from "../../pages/NotFound";
-import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
 import { AddAcademicProgram } from "./programs/main/AddAcademicProgram";
+import { AcademicPorgramsPortal } from "./programs/portal/AcademicPorgramsPortal";
+import { AcademicProgramsRoutes } from "./programs/AcademicProgramsRoutes";
+import { StudentDataRoutes } from "./student_data/StudentDataRoutes";
+import { StudentDataPortal } from "./student_data/portal/StudentDataPortal";
+import { RegisterationPortal } from "./registeration/portal/RegisterationPortal";
+import { RegisterationRoutes } from "./registeration/RegisterationRoutes";
+import { StudySchedulesRoutes } from "./schedules/StudySchedulesRoutes";
+import { StudySchedulesPortal } from "./schedules/portal/StudySchedulesPortal";
+import { CoursesData } from "./courses/CoursesData";
+import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
+import { NotFound } from "../../pages/NotFound";
 
 export function AdminRoutes() {
   return (
@@ -17,22 +20,26 @@ export function AdminRoutes() {
       <AdminNavbar />
       <Routes>
         <Route path="" element={<AdminPortal />} />
+        <Route path="student_data" element={<StudentDataPortal />} />
+        <Route path="student_data/*" element={<StudentDataRoutes />} />
+        <Route path="courses" element={<CoursesData />} />
+        <Route path="courses/:courseCode" element={<CoursesData />} />
         <Route path="academic_programs" element={<AcademicPorgramsPortal />} />
         <Route path="academic_programs/add" element={<AddAcademicProgram />} />
         <Route
           path="academic_programs/:programId/*"
           element={<AcademicProgramsRoutes />}
         />
-        <Route path="study_schedules" element={<StudySchedules />} />
-        <Route path="student_data" element={<StudentData />} />
-        <Route path="registeration" element={<ControlSystem />} />
-        <Route path="exams" element={<ControlSystem />} />
-        <Route path="results" element={<ControlSystem />} />
+        <Route path="study_schedules" element={<StudySchedulesPortal />} />
+        <Route path="study_schedules/*" element={<StudySchedulesRoutes />} />
+        <Route path="registeration" element={<RegisterationPortal />} />
+        <Route path="registeration/*" element={<RegisterationRoutes />} />
+        <Route path="exams" element={<StudentDataPortal />} />
+        <Route path="results" element={<StudentDataPortal />} />
         <Route path="finance" element={<LevelHours />} />
-        <Route path="absence" element={<ControlSystem />} />
-        <Route path="courses" element={<CoursesData />} />
-        <Route path="supervision" element={<ControlSystem />} />
-        <Route path="control_system" element={<ControlSystem />} />
+        <Route path="absence" element={<StudentDataPortal />} />
+        <Route path="supervision" element={<StudentDataPortal />} />
+        <Route path="control_system" element={<StudentDataPortal />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -3,9 +3,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import styles from "./ProgramCourses.module.scss";
-// eslint-disable-next-line
 import { BASE_URL } from "../../../../shared/API";
-// eslint-disable-next-line
 import axios from "axios";
 import cookies from "js-cookie";
 
@@ -16,21 +14,13 @@ import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTable";
 import { CollapsibleTable } from "../../../../components/table/CollapsibleTable";
 
-// to delete
-import { DatabaseCourses } from "./DatabaseCourses";
-import { DatabaseLevels } from "./DatabaseLevels";
-import { DatabaseProgramCourses } from "./DatabaseProgramCourses";
-
 export const ProgramCourses = () => {
   const [programCourseData, setProgramCourseData] = useState([]);
   const [course, setCourse] = useState({});
   const [preCourses, setPreCourses] = useState([]);
-  // eslint-disable-next-line
-  const [courses, setCourses] = useState(DatabaseCourses);
-  // eslint-disable-next-line
-  const [programCourses, setProgramCourses] = useState(DatabaseProgramCourses);
-  // eslint-disable-next-line
-  const [levels, setLevels] = useState(DatabaseLevels);
+  const [courses, setCourses] = useState([]);
+  const [programCourses, setProgramCourses] = useState([]);
+  const [levels, setLevels] = useState([]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   const [editRowId, setEditRowId] = useState(null);
@@ -38,7 +28,6 @@ export const ProgramCourses = () => {
   const [error, setError] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
-  // eslint-disable-next-line
   const { programId } = useParams();
   const classWorkRef = useRef();
   const midtermRef = useRef();
@@ -75,20 +64,53 @@ export const ProgramCourses = () => {
   };
 
   useEffect(() => {
-    // GET request to get all cousres to display it in the table
-    // axios
-    //   .get(BASE_URL + `/programs/${programId}/courses`)
-    //   .then((res) => {
-    //     setCourses(res.data);
-    //     setFilteredCourses(res.data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
+    // GET request to get all college cousres
+    axios
+      .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
+      .then((res) => {
+        console.log("courses : ");
+        console.log(res.data);
+        setCourses(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    // GET request to get all the program cousres to display it in the tables
+    axios
+      .get(BASE_URL + `/programs/${programId}/program_courses`)
+      .then((res) => {
+        console.log("program courses : ");
+        console.log(res.data);
+        setProgramCourses(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+
+    // GET request to get all the program levels to display it in the level selection
+    axios
+      .get(BASE_URL + `/programs/${programId}/levels`)
+      .then((res) => {
+        console.log("levels : ");
+        console.log(res.data);
+        setLevels(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+        console.log(error);
+      });
+    // eslint-disable-next-line
+  }, [programId]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -168,6 +190,7 @@ export const ProgramCourses = () => {
               menuData={courses}
               inputPlaceholder={"program code"}
               handleListClick={handleCourseSelection}
+              codeEqualsId={true}
             />
             <label className="col-sm-2 col-form-label">
               {t("courses.name")}

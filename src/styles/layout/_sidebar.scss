@@ -1,9 +1,10 @@
 .sidebar {
   position: absolute;
   background-color: white;
-  margin: 20px;
+  margin: 32px 20px;
   width: 350px;
   height: auto;
+  max-height: calc(100vw - 150px);
   border-radius: 5px;
 
   &-title {
@@ -20,10 +21,13 @@
   }
 
   &-list {
+    margin-bottom: 20px;
+
     & ul {
       width: 100%;
       padding: 0;
       margin: 0;
+      overflow-y: hidden;
       & li {
         width: 100%;
         list-style: none;
@@ -44,7 +48,13 @@
         }
       }
     }
-
+    &-search {
+      position: fixed;
+      height: 200px;
+      & input {
+        height: 300px;
+      }
+    }
     &-active {
       background-color: #6892c5;
       color: white !important;

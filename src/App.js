@@ -32,7 +32,7 @@ function App() {
         <Route path="resetpwd/:token" element={<ResetPwd />} />
         <Route path="testing" element={<TestingPage />} />
 
-        {/* Professor Routes (Private) */}
+        {/* Staff Routes (Private) */}
         <Route element={<LoginRoute allowedRoles={"STAFF"} />}>
           <Route path="staff_portal/*" element={<StaffRoutes />} />
         </Route>

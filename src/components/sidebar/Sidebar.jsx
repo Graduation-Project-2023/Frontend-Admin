@@ -4,13 +4,28 @@ import { NavLink, Link } from "react-router-dom";
 import cookies from "js-cookie";
 
 export const Sidebar = (props) => {
-  const [sidebarData, setSidebarData] = useState(props.sideData);
+  const sidebarData = props.sideData;
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredMenu, setFilteredMenu] = useState([]);
   const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
 
   useEffect(() => {
-    setSidebarData(props.sideData);
+    setFilteredMenu(props.sideData);
   }, [props.sideData]);
+
+  useEffect(() => {
+    setFilteredMenu(
+      sidebarData.filter(
+        (item) =>
+          item.id?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.code?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.englishName?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.arabicName?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    );
+    // eslint-disable-next-line
+  }, [searchValue]);
 
   return (
     <nav className="sidebar">
@@ -20,7 +35,17 @@ export const Sidebar = (props) => {
       </div>
       <div className="sidebar-list">
         <ul>
-          {sidebarData.map((item) => {
+          {props.searchable && (
+            <li className="siderbar-list-search">
+              <input
+                type="text"
+                onChange={(e) => setSearchValue(e.target.value)}
+                value={searchValue}
+                placeholder={t(props.inputPlaceholder)}
+              />
+            </li>
+          )}
+          {filteredMenu.map((item) => {
             return (
               <li key={item.id}>
                 {props.activeNav ? (

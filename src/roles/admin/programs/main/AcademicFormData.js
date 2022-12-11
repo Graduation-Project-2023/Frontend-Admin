@@ -50,7 +50,7 @@ export const AcademicFormData = [
       },
       {
         id: 6,
-        title: "academicMain.max grade",
+        title: "grades.max",
         name: "maxGrade",
         req: true,
         type: "number",

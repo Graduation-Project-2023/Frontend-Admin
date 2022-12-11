@@ -3,7 +3,7 @@
     color: white;
     background-color: #6892c5;
     border: 1px solid#6892C5;
-    width: 17rem;
+    width: 25rem;
 
     &:hover {
       background-color: rgba(13, 13, 80, 0.753);
@@ -12,7 +12,10 @@
   }
   &_menu {
     padding: 0.4rem !important;
-    width: 17rem;
+    width: 25rem;
+    & input {
+      margin: 5px 0px 15px 0px;
+    }
     &_searchList {
       list-style: none;
       color: #686d72;
@@ -23,13 +26,13 @@
       padding: 0;
       margin: 0;
 
-      & li {
+      & a {
         padding: 1rem;
         border-bottom: solid#EDE7E7 0.5px;
         & div {
           display: flex;
           flex-direction: row;
-          gap: 90px;
+          gap: 30px;
         }
       }
 

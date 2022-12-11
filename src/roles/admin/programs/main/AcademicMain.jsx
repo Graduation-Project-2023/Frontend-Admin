@@ -43,20 +43,21 @@ export const AcademicMain = () => {
         setLoading(false);
         console.log(error);
       });
+    // eslint-disable-next-line
+  }, [programId]);
 
-    setTimeout(() => {
-      // GET request to get all programs to display it in the sidebar
-      axios
-        .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
-        .then((res) => {
-          setAllPrograms(res.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error);
-        });
-    }, 2000);
+  useEffect(() => {
+    // GET request to get all programs to display it in the pre programs selection
+    axios
+      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+      .then((res) => {
+        setAllPrograms(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
     // eslint-disable-next-line
   }, []);
 
@@ -94,7 +95,7 @@ export const AcademicMain = () => {
     // Post request to create a new program
     setLoading(true);
     axios
-      .post(BASE_URL + `/programs`)
+      .put(BASE_URL + `/programs/${programId}`, program)
       .then((res) => {
         setLoading(false);
         navigate("/admin_portal/academic_programs");
@@ -128,16 +129,18 @@ export const AcademicMain = () => {
                         return null;
                       }
                       if (data.prerequisites) {
-                        const newProgramsData = allPrograms.map((item) => {
-                          return {
-                            id: item.id,
-                            value: item.id,
-                            title:
-                              currentLanguageCode === "en"
-                                ? item.englishName
-                                : item.arabicName,
-                          };
-                        });
+                        const newProgramsData = allPrograms
+                          .filter((obj) => obj.id !== programId)
+                          .map((item) => {
+                            return {
+                              id: item.id,
+                              value: item.id,
+                              title:
+                                currentLanguageCode === "en"
+                                  ? item.englishName
+                                  : item.arabicName,
+                            };
+                          });
                         newProgramsData.unshift({
                           id: 0,
                           title: "common.select",

@@ -81,9 +81,9 @@ export const LevelHours = () => {
       req: true,
       options: [
         { id: 0, title: "common.select", value: null },
-        { id: 1, title: "academicMain.first", value: "FIRST" },
-        { id: 2, title: "levelHours.second", value: "SECOND" },
-        { id: 3, title: "levelHours.summer", value: "SUMMER" },
+        { id: 1, title: "common.firstTerm", value: "FIRST" },
+        { id: 2, title: "common.secondTerm", value: "SECOND" },
+        { id: 3, title: "common.summerTerm", value: "SUMMER" },
       ],
     },
     {

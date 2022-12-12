@@ -5,7 +5,7 @@ export const AcademicFormData = [
     formData: [
       {
         id: 1,
-        title: "academicMain.ar_name",
+        title: "common.ar_name",
         name: "arabicName",
         req: true,
         options: false,
@@ -13,7 +13,7 @@ export const AcademicFormData = [
       },
       {
         id: 2,
-        title: "academicMain.eng_name",
+        title: "common.eng_name",
         name: "englishName",
         req: true,
         options: false,
@@ -57,12 +57,13 @@ export const AcademicFormData = [
       },
       {
         id: 7,
-        title: "academicMain.has summer semester",
+        title: "academicMain.has_summer_semester",
         name: "hasSummerSemester",
         req: true,
         options: [
-          { id: 0, title: "levelHours. nooo", value: false },
-          { id: 1, title: "academicMain. yesss", value: true },
+          { id: 0, title: "common.select", value: null },
+          { id: 1, title: "common.choice_no", value: false },
+          { id: 2, title: "common.choice_yes", value: true },
         ],
       },
     ],
@@ -111,7 +112,7 @@ export const AcademicFormData = [
           { id: 3, title: "academicMain.s_gpa", value: "INCLUDESUMMER" },
           {
             id: 4,
-            title: "academicMain.semester fixed",
+            title: "academicMain.semester_fixed",
             value: "SEMESTERFIXED",
           },
         ],

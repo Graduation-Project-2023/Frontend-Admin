@@ -48,7 +48,7 @@ export const ProgramCourses = () => {
     ) {
       setWrongCourseGrades({
         error: true,
-        errorMessage: "sum of grades must be equal to the max grade",
+        errorMessage: "Sum of grades must be equal to MAX grade",
       });
       classWorkRef.current.value = "";
       midtermRef.current.value = "";
@@ -188,7 +188,7 @@ export const ProgramCourses = () => {
               label={"courses.code"}
               specialData={course}
               menuData={courses}
-              inputPlaceholder={"program code"}
+              inputPlaceholder={"courses.progCode"}
               handleListClick={handleCourseSelection}
               codeEqualsId={true}
             />
@@ -241,9 +241,9 @@ export const ProgramCourses = () => {
                 value={programCourseData["semester"] || ""}
               >
                 <option value={null}>{t("common.select")}</option>
-                <option value="FIRST">{t("academicMain.first")}</option>
-                <option value="SECOND">{t("levelHours.second")}</option>
-                <option value="SUMMER">{t("levelHours.summer")}</option>
+                <option value="FIRST">{t("common.firstTerm")}</option>
+                <option value="SECOND">{t("common.secondTerm")}</option>
+                <option value="SUMMER">{t("common.summerTerm")}</option>
               </select>
             </div>
           </div>
@@ -331,9 +331,9 @@ export const ProgramCourses = () => {
                 value={programCourseData["require"] || ""}
               >
                 <option value={null}>{t("common.select")}</option>
-                <option value="FIRST">{t("ta5asos")}</option>
-                <option value="SECOND">{t("kolya")}</option>
-                <option value="SUMMER">{t("gam3a")}</option>
+                <option value="FIRST">{t("courses.department")}</option>
+                <option value="SECOND">{t("courses.faculty")}</option>
+                <option value="SUMMER">{t("courses.university")}</option>
               </select>
             </div>
           </div>
@@ -369,8 +369,8 @@ export const ProgramCourses = () => {
           <div className="row mb-4">
             <div className="form-check form-switch form-check-inline col-sm-4">
               <label className="form-check-label " htmlFor="addedToGpa ">
-                {" "}
-                تضاف للمعدل التراكمي
+                {t("courses.added_gpa")}
+                
               </label>
               <input
                 className={`form-check-input ${styles.preSwitch}`}
@@ -387,15 +387,15 @@ export const ProgramCourses = () => {
           <div className={styles.formLine}>
             <div className="row mb-4">
               <DropdownSearch
-                label={"pre req courses"}
+                label={t(`courses.prereqCourses`)}
                 menuData={programCourses}
-                inputPlaceholder={"program code"}
+                inputPlaceholder={"Program Code"}
                 handleListClick={addToPrerequisite}
               />
             </div>
             {preCourses.length !== 0 && (
               <PrerequisiteTable
-                tableTitle={"gdwl el prerequisite"}
+                tableTitle={"Prerequisite Table"}
                 headerItems={[
                   { id: 1, title: t(`courses.code`) },
                   { id: 2, title: t(`courses.name`) },

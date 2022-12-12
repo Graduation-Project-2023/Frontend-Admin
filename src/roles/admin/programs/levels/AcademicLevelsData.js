@@ -1,7 +1,7 @@
 export const AcademicLevelsData = [
   {
     id: 0,
-    title: "levels.eng_level",
+    title: "common.eng_name",
     name: "englishName",
     req: true,
     options: false,
@@ -9,7 +9,7 @@ export const AcademicLevelsData = [
   },
   {
     id: 1,
-    title: "levels.ar_level",
+    title: "common.ar_name",
     name: "arabicName",
     req: true,
     options: false,

@@ -75,7 +75,7 @@ export const GPAHours = () => {
   const GPAHoursData = [
     {
       id: 0,
-      title: "gpaHours.from",
+      title: "common.gpaFrom",
       name: "fromGpa",
       req: true,
       options: false,
@@ -83,7 +83,7 @@ export const GPAHours = () => {
     },
     {
       id: 1,
-      title: "gpaHours.to",
+      title: "common.gpaTo",
       name: "toGpa",
       req: true,
       options: false,
@@ -150,7 +150,7 @@ export const GPAHours = () => {
         tableTitle={"levelHours.tabletitle"}
         headerItems={[
           { id: 1, title: t(`gpaHours.from`) },
-          { id: 2, title: t(`gpaHours.to`) },
+          { id: 2, title: t(`common.gpaTo`) },
           { id: 3, title: t(`levelHours.min`) },
           { id: 4, title: t(`levelHours.max`) },
         ]}

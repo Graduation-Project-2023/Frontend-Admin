@@ -1,7 +1,7 @@
 export const CoursesObjData = [
   {
     id: 0,
-    title: "courses.eng_name",
+    title: "common.eng_name",
     name: "englishName",
     req: true,
     options: false,
@@ -9,7 +9,7 @@ export const CoursesObjData = [
   },
   {
     id: 1,
-    title: "courses.ar_name",
+    title: "common.ar_name",
     name: "arabicName",
     req: true,
     options: false,

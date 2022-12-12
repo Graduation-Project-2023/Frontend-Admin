@@ -107,7 +107,7 @@ export const AcademicGrades = () => {
     },
     {
       id: 4,
-      title: "grades.gpa",
+      title: "common.gpaFrom",
       name: "gpa",
       req: true,
       options: false,

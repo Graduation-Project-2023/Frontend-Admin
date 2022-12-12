@@ -19,8 +19,15 @@
     "save": "Save",
     "cancel": "Reset",
     "level1": "Level 1",
-    "select": "Select from this menu..",
+    "select": "Choose an option",
     "future": "Future Work",
+    "eng_name": "English Name",
+    "ar_name": "Arabic Name",
+    "firstTerm": "First",
+    "secondTerm": "Second",
+    "summerTerm": "Summer",
+    "gpaFrom": "GPA From ",
+    "gpaTo": "GPA To",
     "choice_yes": "Yes",
     "choice_no": "No"
   },
@@ -75,23 +82,23 @@
     "control": "Control"
   },
   "levelHours": {
+    "tabletitle": "Academic Load Table",
     "tablehead": "Allowed Hours Table",
     "term": "Semester",
     "level": "Academic Year",
     "max": "Maximum Hours",
     "min": "Minimum Hours",
     "maxCourses": "Maximum Courses  ",
-    "formhead": "Allowed hours according to academic level"
+    "formhead": "Academic Load (Level)"
   },
   "gpaHours": {
-    "from": "From GPA",
-    "to": "To GPA",
-    "formhead": "GPA allowed hours"
+    "from": "GPA From",
+    "formhead": "GPA Allowed Hours"
   },
   "portal": {
     "programs": "Academic Programs",
-    "search": "search..",
-    "add": "Add a new program"
+    "search": "Search",
+    "add": "Add a New Program"
   },
   "academicSidebar": {
     "main": "Academic Programs",
@@ -99,11 +106,11 @@
     "grades": "Grades",
     "levelHours": "Academic load (Level)",
     "gpaHours": "Academic load (GPA)",
-    "courses": "Program courses",
+    "courses": "Program Courses",
     "gpa": "GPA",
     "control": "Control",
     "graduation": "Graduation",
-    "select": "Select a program"
+    "select": "Select a Program"
   },
   "academicMain": {
     "formhead": "Program Data",
@@ -111,28 +118,27 @@
     "section2": "Program Hours",
     "section3": "Program Fees",
     "section4": "Control",
-    "ar_name": "Program Name in Arabic",
-    "eng_name": "Program Name in English",
+
     "code": "Program Code",
     "faculty": "Select a Faculty",
-    "edu_degree": "Degree of education",
+    "edu_degree": "Degree Of Education",
     "degree_bachelor": "Bachelor's Degree",
     "degree_diploma": "Diploma's Degree",
-    "sys_type": "System type",
+    "sys_type": "System Type",
     "max_grade": "Maximum grade",
-    "has_summer_semester": "Has summer semester?",
+    "has_summer_semester": "Has Summer Semester?",
     "credit": "Credit Hours",
     "mandatory": "Mandatory Hours",
     "option": "Optional Hours",
-    "project": "Project Qualified Hours",
+    "project": "Project Qualifying Hours",
     "compute": "Computing Allowed Hours  ",
     "c_gpa": "Accumlative GPA",
     "gpa": "Term GPA",
     "s_gpa": "Term & Summer GPA ",
     "semester_fixed": "Academic level",
-    "prerequest": "Prerequest Programs",
+    "prerequest": "Prerequesite Programs",
     "fees": "Computing Fees ",
-    "summer_fees": "Computing Summer Fees According to",
+    "summer_fees": "Summer Fees",
     "rate": "Reduction Rate",
     "trial": "Number of Trials",
     "failure": "Failure Grade",
@@ -140,19 +146,20 @@
     "type": "Type of Requirement"
   },
   "grades": {
-    "grade": "Grade name ",
-    "from": "From presentage ",
-    "to": " To presentage ",
-    "equivalent": "Equivalent grade",
+    "grade": "Grade Name ",
+    "from": "Percentage From ",
+    "to": "Percentage To ",
+    "equivalent": "Equivalent Grade",
     "formhead": "Grades",
     "tablehead": "Grades Table",
-    "gpa": "from gpa ",
     "max": "Maximum Grade"
   },
   "courses": {
     "name": "Course Name ",
     "code": "Course Code",
+    "chooseCode": "Choose a Course Code",
     "pre_code": "Prerequest Code",
+    "progCode": "Program Code",
     "hours": "Course Hours",
     "min": "Minimum Hours",
     "type": "Course Type",
@@ -161,29 +168,23 @@
     "oral": "Oral and Practical",
     "mid": "Midterm Exams",
     "attendance": "Attendance",
+    "department": "Department",
+    "faculty": "Faculty",
+    "university": "University",
+    "prereqCourses": "Prerequisite Courses",
     "option": "Optional",
     "mandatory": "Mandatory",
     "tabletitle": "Courses Table",
-    "ar_name": "Cousre Name in Arabic",
-    "eng_name": "Course Name in English",
     "ar_des": "Course description in Arabic",
     "eng_des": "Course description in English",
+    "grade": "Minimum Passing Percentage",
+    "added_gpa": "Added to GPA",
     "formhead": "Course Data"
   },
   "levels": {
-    "ar_level": "Name of level in arabic",
-    "eng_level": "Name of level in english",
     "level": "Level",
-    "qualify": "Qualified hours",
-    "tabletitle": "Levels table",
+    "qualify": "Qualifying Hours",
+    "tabletitle": "Levels Table",
     "select": "Select Academic level"
-  },
-  "registeration": {
-    "formhead": "Academic Registeration",
-    "advisor": "Academic Advisor",
-    "number": "Number of Students",
-    "form": "Selecting Academic Advisor",
-    "menu": "Level Students",
-    "search": "Search with student name"
   }
 }

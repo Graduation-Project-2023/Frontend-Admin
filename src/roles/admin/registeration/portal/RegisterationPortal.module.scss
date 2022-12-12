@@ -44,13 +44,12 @@
     }
     &_search {
       border-bottom: 1px solid #d9d9d9;
-      padding: 0.7rem;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
+      position: relative;
+      width: 100%;
       & input {
+        width: 100%;
         border: none;
-        width: 15rem;
+        padding: 1rem;
         &:focus {
           outline: none;
         }
@@ -59,8 +58,12 @@
           font: normal 400 1rem/1.3rem "intern";
         }
       }
-      & span {
+
+      &_icon {
         cursor: pointer;
+        position: absolute;
+        right: 80%;
+        top: 20%;
         color: #cccc;
       }
     }

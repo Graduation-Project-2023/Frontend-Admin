@@ -100,7 +100,11 @@ export const RegisterationPortal = () => {
                           type="text"
                           placeholder={t("registeration.search")}
                         />
-                        <span>
+                        <span
+                          className={
+                            styles.registerationContainer_menu_search_icon
+                          }
+                        >
                           <IoIosSearch />
                         </span>
                       </div>

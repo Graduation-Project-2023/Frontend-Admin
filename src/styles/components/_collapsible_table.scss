@@ -9,8 +9,11 @@
       max-height: 30vh;
 
       & tr:hover {
-        background-color: aquamarine;
+        background-color: #3d7dca;
         cursor: pointer;
+        & td {
+          color: white;
+        }
       }
     }
     & tr {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -33,36 +33,13 @@ export const ProgramCourses = () => {
   const classWorkRef = useRef();
   const midtermRef = useRef();
   const finalExamRef = useRef();
+  const addedToGpaRef = useRef();
   const [wrongCourseGrades, setWrongCourseGrades] = useState({
     error: false,
     errorMessage: "",
   });
   const currentLanguageCode = cookies.get("i18next") || "en";
   const maxGrade = 100;
-
-  const handleCourseGrades = () => {
-    if (
-      +classWorkRef.current.value +
-        +midtermRef.current.value +
-        +finalExamRef.current.value >
-      maxGrade
-    ) {
-      setWrongCourseGrades({
-        error: true,
-        errorMessage: "sum of grades must be equal to the max grade",
-      });
-      classWorkRef.current.value = "";
-      midtermRef.current.value = "";
-      finalExamRef.current.value = "";
-    } else if (
-      +classWorkRef.current.value +
-        +midtermRef.current.value +
-        +finalExamRef.current.value ===
-      maxGrade
-    ) {
-      setWrongCourseGrades({ error: false });
-    }
-  };
 
   useEffect(() => {
     // GET request to get all college cousres
@@ -107,6 +84,13 @@ export const ProgramCourses = () => {
     // eslint-disable-next-line
   }, [programId]);
 
+  useLayoutEffect(() => {
+    if (editRowId === null) {
+      return;
+    }
+    console.log(preCourses);
+  }, [preCourses]);
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
@@ -114,21 +98,53 @@ export const ProgramCourses = () => {
     if (event.target.type === "number") {
       fieldValue = +fieldValue;
     }
+    if (
+      +classWorkRef.current.value +
+        +midtermRef.current.value +
+        +finalExamRef.current.value >
+      maxGrade
+    ) {
+      setWrongCourseGrades({
+        error: true,
+        errorMessage: "sum of grades must be equal to the max grade",
+      });
+      setProgramCourseData((current) => {
+        return { ...current, midTerm: "", finalExam: "", classWork: "" };
+      });
+      classWorkRef.current.value = "";
+      midtermRef.current.value = "";
+      finalExamRef.current.value = "";
+      return;
+    } else {
+      setWrongCourseGrades({ error: false });
+    }
     const newProgramCourseData = { ...programCourseData };
     newProgramCourseData[fieldName] = fieldValue;
     setProgramCourseData(newProgramCourseData);
-    setUpdatedData((current) => {
-      return { ...current, [`${fieldName}`]: fieldValue };
-    });
+    if (editRowId !== null) {
+      setUpdatedData((current) => {
+        return { ...current, [`${fieldName}`]: fieldValue };
+      });
+    }
   };
 
   const handleFormSubmit = (e) => {
+    console.log(addedToGpaRef.current.checked);
     e.preventDefault();
     setLoading(true);
     const newProgramCourses = [...programCourses];
     newProgramCourses.push(programCourseData);
     if (editRowId === null) {
-      console.log(programCourseData);
+      const newProgramCourse = {
+        ...programCourseData,
+        code: course.id,
+        programId: programId,
+        englishName: course?.englishName,
+        arabicName: course?.arabicName,
+        prerequisites: preCourses?.map((item) => item.id),
+      };
+      console.log(course);
+      console.log(newProgramCourse);
       // POST request to add a new program course to the database
       // axios
       //   .post(
@@ -321,7 +337,8 @@ export const ProgramCourses = () => {
                 type="number"
                 name="classWork"
                 ref={classWorkRef}
-                onChange={handleCourseGrades}
+                onChange={handleEditFormChange}
+                value={programCourseData["classWork"] || ""}
               />
             </div>
             <label className="col-sm-2 col-form-label">
@@ -332,9 +349,10 @@ export const ProgramCourses = () => {
                 className="form-control"
                 type="number"
                 name="midTerm"
-                required
                 ref={midtermRef}
-                onChange={handleCourseGrades}
+                required
+                onChange={handleEditFormChange}
+                value={programCourseData["midTerm"] || ""}
               />
             </div>
           </div>
@@ -347,9 +365,10 @@ export const ProgramCourses = () => {
                 className="form-control"
                 type="number"
                 name="finalExam"
-                required
                 ref={finalExamRef}
-                onChange={handleCourseGrades}
+                required
+                onChange={handleEditFormChange}
+                value={programCourseData["finalExam"] || ""}
               />
             </div>
 
@@ -390,9 +409,9 @@ export const ProgramCourses = () => {
             <div className="col-sm-4">
               <select
                 className="form-select"
-                name="require"
-                onChange={handleEditFormChange}
-                value={programCourseData["require"] || ""}
+                name="test"
+                // onChange={handleEditFormChange}
+                // value={programCourseData["requirement"] || ""}
               >
                 <option value={null}>{t("common.select")}</option>
                 <option value="FIRST">{t("ta5asos")}</option>
@@ -432,7 +451,7 @@ export const ProgramCourses = () => {
           </div>
           <div className="row mb-4">
             <div className="form-check form-switch form-check-inline col-sm-4">
-              <label className="form-check-label " htmlFor="addedToGpa ">
+              <label className="form-check-label" htmlFor="addedToGpa">
                 {" "}
                 تضاف للمعدل التراكمي
               </label>
@@ -442,12 +461,10 @@ export const ProgramCourses = () => {
                 role="switch"
                 name="addedToGpa"
                 id="addedToGpa"
-                onChange={handleEditFormChange}
-                value={programCourseData["addedToGpa"] || ""}
+                ref={addedToGpaRef}
               />
             </div>
           </div>
-
           <div className={styles.formLine}>
             <div className="row mb-4">
               <DropdownSearch
@@ -462,8 +479,8 @@ export const ProgramCourses = () => {
                 tableTitle={"gdwl el prerequisite"}
                 headerItems={[
                   { id: 1, title: t(`courses.code`) },
-                  { id: 2, title: t(`courses.name`) },
-                  { id: 3, title: t(`courses.eng_name`) },
+                  { id: 2, title: t(`courses.eng_name`) },
+                  { id: 3, title: t(`courses.name`) },
                 ]}
                 rowItems={preCourses}
                 deletableItems={true}
@@ -492,7 +509,7 @@ export const ProgramCourses = () => {
                 {t(`common.7azf el mokarar`)}
               </button>
               <button
-                className="form-card-button form-card-button-cancel"
+                className="form-card-button form-card-button-save"
                 onClick={addProgramCourse}
               >
                 {t(`common.add mokrar gded`)}

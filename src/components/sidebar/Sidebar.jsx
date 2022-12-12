@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
 import cookies from "js-cookie";
+import { IoIosSearch } from "react-icons/io";
 
 export const Sidebar = (props) => {
   const sidebarData = props.sideData;
@@ -33,51 +34,53 @@ export const Sidebar = (props) => {
         <h2>{t(props.sidebarTitle)}</h2>
         <div className="sidebar-title-options">{props.options}</div>
       </div>
+
+      {props.searchable && (
+        <div className="sidebar-search">
+          <input
+            type="text"
+            onChange={(e) => setSearchValue(e.target.value)}
+            value={searchValue}
+            placeholder={t(props.inputPlaceholder)}
+          />
+          <span className="sidebar-search-icon">
+            <IoIosSearch />
+          </span>
+        </div>
+      )}
       <div className="sidebar-list">
-        <ul>
-          {props.searchable && (
-            <li className="siderbar-list-search">
-              <input
-                type="text"
-                onChange={(e) => setSearchValue(e.target.value)}
-                value={searchValue}
-                placeholder={t(props.inputPlaceholder)}
-              />
+        {filteredMenu.map((item) => {
+          return (
+            <li key={item.id}>
+              {props.activeNav ? (
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-list-active" : ""
+                  }
+                >
+                  {props.backendData
+                    ? `${
+                        currentLanguageCode === "en"
+                          ? item.englishName
+                          : item.arabicName
+                      }`
+                    : `${t(item.title)}`}
+                </NavLink>
+              ) : (
+                <Link to={item.path}>
+                  {props.backendData
+                    ? `${
+                        currentLanguageCode === "en"
+                          ? item.englishName
+                          : item.arabicName
+                      }`
+                    : `${t(item.title)}`}
+                </Link>
+              )}
             </li>
-          )}
-          {filteredMenu.map((item) => {
-            return (
-              <li key={item.id}>
-                {props.activeNav ? (
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      isActive ? "sidebar-list-active" : ""
-                    }
-                  >
-                    {props.backendData
-                      ? `${
-                          currentLanguageCode === "en"
-                            ? item.englishName
-                            : item.arabicName
-                        }`
-                      : `${t(item.title)}`}
-                  </NavLink>
-                ) : (
-                  <Link to={item.path}>
-                    {props.backendData
-                      ? `${
-                          currentLanguageCode === "en"
-                            ? item.englishName
-                            : item.arabicName
-                        }`
-                      : `${t(item.title)}`}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+          );
+        })}
       </div>
     </nav>
   );

@@ -44,6 +44,7 @@ export const CoursesSidebar = () => {
       sideData={courses.map((obj) => ({ ...obj, path: obj.id }))}
       sidebarTitle={"courses.formhead"}
       searchable={true}
+      inputPlaceholder={"courses.name"}
       backendData={true}
       activeNav={true}
     />

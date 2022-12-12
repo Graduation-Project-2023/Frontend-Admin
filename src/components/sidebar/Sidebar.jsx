@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
 import cookies from "js-cookie";
-import { IoIosSearch } from "react-icons/io";
 
 export const Sidebar = (props) => {
   const sidebarData = props.sideData;
@@ -43,9 +42,6 @@ export const Sidebar = (props) => {
             value={searchValue}
             placeholder={t(props.inputPlaceholder)}
           />
-          <span className="sidebar-search-icon">
-            <IoIosSearch />
-          </span>
         </div>
       )}
       <div className="sidebar-list">

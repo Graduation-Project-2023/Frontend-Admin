@@ -2,7 +2,6 @@ import React from "react";
 import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import styles from "./RegisterationPortal.module.scss";
-import { IoIosSearch } from "react-icons/io";
 
 export const RegisterationPortal = () => {
   const { t } = useTranslation();
@@ -100,13 +99,6 @@ export const RegisterationPortal = () => {
                           type="text"
                           placeholder={t("registeration.search")}
                         />
-                        <span
-                          className={
-                            styles.registerationContainer_menu_search_icon
-                          }
-                        >
-                          <IoIosSearch />
-                        </span>
                       </div>
                       <div className={styles.registerationContainer_menu_list}>
                         {student.map((item) => (

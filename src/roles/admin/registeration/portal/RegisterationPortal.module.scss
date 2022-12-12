@@ -46,10 +46,16 @@
       border-bottom: 1px solid #d9d9d9;
       position: relative;
       width: 100%;
+
       & input {
         width: 100%;
         border: none;
         padding: 1rem;
+        background-image: url(../../../../shared/images/search.png);
+        background-size: 15px;
+        background-position: 30px 22px;
+        background-repeat: no-repeat;
+
         &:focus {
           outline: none;
         }
@@ -57,14 +63,6 @@
           color: #cccc;
           font: normal 400 1rem/1.3rem "intern";
         }
-      }
-
-      &_icon {
-        cursor: pointer;
-        position: absolute;
-        right: 80%;
-        top: 20%;
-        color: #cccc;
       }
     }
     &_list {

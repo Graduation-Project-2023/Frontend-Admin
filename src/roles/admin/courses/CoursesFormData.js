@@ -1,14 +1,14 @@
 export const CoursesFormData = [
   {
     id: 0,
-    title: "courses.eng_name",
+    title: "common.eng_name",
     name: "englishName",
     req: true,
     type: "text",
   },
   {
     id: 1,
-    title: "courses.ar_name",
+    title: "common.ar_name",
     name: "arabicName",
     req: true,
     type: "text",

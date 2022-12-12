@@ -1,0 +1,42 @@
+export const AcademicGradesData = [
+  {
+    id: 0,
+    title: "grades.grade",
+    name: "name",
+    req: true,
+    options: false,
+    type: "text",
+  },
+  {
+    id: 1,
+    title: "grades.from",
+    name: "startsFrom",
+    req: true,
+    options: false,
+    type: "number",
+  },
+  {
+    id: 2,
+    title: "grades.to",
+    name: "endsAt",
+    req: true,
+    options: false,
+    type: "number",
+  },
+  {
+    id: 3,
+    title: "grades.equivalent",
+    name: "equivalent",
+    req: true,
+    options: false,
+    type: "text",
+  },
+  {
+    id: 4,
+    title: "common.gpaFrom",
+    name: "gpa",
+    req: true,
+    options: false,
+    type: "number",
+  },
+];

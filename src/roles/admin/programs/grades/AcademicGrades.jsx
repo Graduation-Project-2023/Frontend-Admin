@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
+import { AcademicGradesData } from "./AcademicGradesData";
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
@@ -71,49 +72,6 @@ export const AcademicGrades = () => {
         console.log(error);
       });
   };
-
-  const AcademicGradesData = [
-    {
-      id: 0,
-      title: "grades.grade",
-      name: "name",
-      req: true,
-      options: false,
-      type: "text",
-    },
-    {
-      id: 1,
-      title: "grades.from",
-      name: "startsFrom",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 2,
-      title: "grades.to",
-      name: "endsAt",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 3,
-      title: "grades.equivalent",
-      name: "equivalent",
-      req: true,
-      options: false,
-      type: "text",
-    },
-    {
-      id: 4,
-      title: "grades.gpa",
-      name: "gpa",
-      req: true,
-      options: false,
-      type: "number",
-    },
-  ];
 
   return (
     <SidebarContainer>

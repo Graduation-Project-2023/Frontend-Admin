@@ -72,48 +72,6 @@ export const GPAHours = () => {
       });
   };
 
-  const GPAHoursData = [
-    {
-      id: 0,
-      title: "gpaHours.from",
-      name: "fromGpa",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 1,
-      title: "gpaHours.to",
-      name: "toGpa",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 2,
-      title: "levelHours.min",
-      name: "minHours",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 3,
-      title: "levelHours.max",
-      name: "maxHours",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 4,
-      title: "levelHours.maxCourses",
-      name: "maxCourses",
-      req: false,
-      options: false,
-      type: "number",
-    },
-  ];
   return (
     <SidebarContainer>
       <FormCard cardTitle={"gpaHours.formhead"}>
@@ -150,7 +108,7 @@ export const GPAHours = () => {
         tableTitle={"levelHours.tabletitle"}
         headerItems={[
           { id: 1, title: t(`gpaHours.from`) },
-          { id: 2, title: t(`gpaHours.to`) },
+          { id: 2, title: t(`common.gpaTo`) },
           { id: 3, title: t(`levelHours.min`) },
           { id: 4, title: t(`levelHours.max`) },
         ]}

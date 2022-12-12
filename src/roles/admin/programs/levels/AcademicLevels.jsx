@@ -104,8 +104,8 @@ export const AcademicLevels = () => {
       <Table
         tableTitle={"levels.tabletitle"}
         headerItems={[
-          { id: 1, title: t(`levels.eng_level`) },
-          { id: 2, title: t(`levels.ar_level`) },
+          { id: 1, title: t(`common.eng_name`) },
+          { id: 2, title: t(`common.ar_name`) },
           { id: 3, title: t(`levels.level`) },
           { id: 4, title: t(`levels.qualify`) },
         ]}

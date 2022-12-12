@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
+import { GPAHoursData } from "./GPAHoursData";
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";

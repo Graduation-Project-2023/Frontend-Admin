@@ -1,5 +1,12 @@
 .collapsetable {
-  text-align: center;
+  border: #c8cacd solid 1px;
+  border-radius: 10px;
+  margin: 2rem;
+  & h3 {
+    color: #686d72;
+    font: normal 400 1.8rem / rem "Inter";
+    padding: 1rem;
+  }
   &-scroll {
     & tbody {
       display: block;

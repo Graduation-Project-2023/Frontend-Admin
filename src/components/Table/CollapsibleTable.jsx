@@ -40,7 +40,7 @@ export const CollapsibleTable = (props) => {
               return (
                 <div className="collapsetable" key={semester.id}>
                   <h3>{t(semester.title)}</h3>
-                  <table className="table collapsetable-scroll">
+                  <table className="table table-striped collapsetable-scroll">
                     <thead>
                       <tr>
                         {headerItems.map((item) => {

@@ -5,6 +5,7 @@
   width: 350px;
   height: auto;
   border-radius: 5px;
+  max-height: calc(100vh - 194px);
 
   &-title {
     width: 100%;
@@ -21,7 +22,6 @@
   &-list {
     margin-top: 0.2rem;
     list-style: none;
-    max-height: 45rem;
     overflow-y: scroll;
 
     &-active {

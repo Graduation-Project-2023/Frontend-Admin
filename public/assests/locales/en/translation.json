@@ -88,7 +88,7 @@
     "level": "Academic Year",
     "max": "Maximum Hours",
     "min": "Minimum Hours",
-    "maxCourses": "Maximum Courses  ",
+    "maxCourses": "Maximum Courses",
     "formhead": "Academic Load (Level)"
   },
   "gpaHours": {
@@ -97,15 +97,15 @@
   },
   "portal": {
     "programs": "Academic Programs",
-    "search": "Search",
+    "search": "Search..",
     "add": "Add a New Program"
   },
   "academicSidebar": {
     "main": "Academic Programs",
     "level": "Levels",
     "grades": "Grades",
-    "levelHours": "Academic load (Level)",
-    "gpaHours": "Academic load (GPA)",
+    "levelHours": "Level Allowed Hours",
+    "gpaHours": "GPA Allowed Hours",
     "courses": "Program Courses",
     "gpa": "GPA",
     "control": "Control",
@@ -118,7 +118,6 @@
     "section2": "Program Hours",
     "section3": "Program Fees",
     "section4": "Control",
-
     "code": "Program Code",
     "faculty": "Select a Faculty",
     "edu_degree": "Degree Of Education",
@@ -135,7 +134,7 @@
     "c_gpa": "Accumlative GPA",
     "gpa": "Term GPA",
     "s_gpa": "Term & Summer GPA ",
-    "semester_fixed": "Academic level",
+    "semester_fixed": "Academic Level",
     "prerequest": "Prerequesite Programs",
     "fees": "Computing Fees ",
     "summer_fees": "Summer Fees",
@@ -146,19 +145,19 @@
     "type": "Type of Requirement"
   },
   "grades": {
-    "grade": "Grade Name ",
-    "from": "Percentage From ",
-    "to": "Percentage To ",
+    "grade": "Grade Name",
+    "from": "Percentage From",
+    "to": "Percentage To",
     "equivalent": "Equivalent Grade",
     "formhead": "Grades",
     "tablehead": "Grades Table",
     "max": "Maximum Grade"
   },
   "courses": {
-    "name": "Course Name ",
+    "name": "Course Name",
     "code": "Course Code",
     "chooseCode": "Choose a Course Code",
-    "pre_code": "Prerequest Code",
+    "pre_code": "prerequisitE Code",
     "progCode": "Program Code",
     "hours": "Course Hours",
     "min": "Minimum Hours",

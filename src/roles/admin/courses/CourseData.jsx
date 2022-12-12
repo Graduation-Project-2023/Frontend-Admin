@@ -94,7 +94,14 @@ export const CourseData = () => {
           }}
         >
           {CoursesFormData.map((data) => {
-            return (
+            return data.name === "id" ? (
+              <FormInput
+                inputData={{ ...data, disabled: true }}
+                handleEditFormChange={handleEditFormChange}
+                valueData={courseData}
+                key={data.id}
+              />
+            ) : (
               <FormInput
                 inputData={data}
                 handleEditFormChange={handleEditFormChange}

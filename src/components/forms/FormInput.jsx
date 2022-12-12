@@ -7,8 +7,8 @@ export const FormInput = (props) => {
 
   return (
     <div className="row mb-4">
-      <label className="col-sm-2 col-form-label">{t(inputData.title)}</label>
-      <div className="col-sm-5">
+      <label className="col-sm-3 col-form-label">{t(inputData.title)}</label>
+      <div className="col-sm-4">
         {inputData.options ? (
           <select
             className="form-select"

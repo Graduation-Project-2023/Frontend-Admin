@@ -1,0 +1,31 @@
+.form-navbar {
+  margin: 30px 20px 0 20px;
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 150px;
+  border-bottom: 1px solid black;
+
+  &-container {
+    background-color: white;
+    margin: 0px 20px 30px 20px;
+    padding: 20px 30px;
+  }
+
+  & a {
+    display: block;
+    text-decoration: none;
+    color: grey;
+    &:hover {
+      color: blue;
+    }
+  }
+
+  &-active {
+    color: red;
+    font-size: 100px;
+  }
+}

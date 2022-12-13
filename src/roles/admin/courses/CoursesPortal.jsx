@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../hooks/useAuth";
 import { BASE_URL } from "../../../shared/API";
 import axios from "axios";
 import { CoursesFormData } from "./CoursesFormData";
@@ -13,11 +13,27 @@ import { FormInput } from "../../../components/forms/FormInput";
 export const CoursesPortal = () => {
   const [courseData, setCourseData] = useState([]);
   // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
   const [error, setError] = useState();
   const { t } = useTranslation();
-  const authContext = useAuth();
+  const { courseCode } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (courseCode !== "add" && courseCode !== undefined) {
+      // GET request to get college course by it's id
+      axios
+        .get(BASE_URL + `/courses/${courseCode}`)
+        .then((res) => {
+          setCourseData(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setCourseData([]);
+    }
+    // eslint-disable-next-line
+  }, [courseCode]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -35,19 +51,43 @@ export const CoursesPortal = () => {
     e.preventDefault();
     const newCourse = {
       ...courseData,
-      collegeId: authContext.college.id,
       id: courseData.id.replace(/\s/g, ""),
     };
-    setLoading(true);
-    // POST request to create a new level allowed hours
+    // Condition to check whether it's adding a new course or updating the current
+    courseCode !== "add" && courseCode === undefined
+      ? // PUT request to update the current college course
+        axios
+          .put(BASE_URL + `/courses/${newCourse.id}`, newCourse)
+          .then((res) => {
+            setCourseData(res.data);
+
+            navigate("/admin_portal/courses");
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      : // POST request to create a new level allowed hours
+        axios
+          .post(BASE_URL + `/courses`, newCourse)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+  };
+
+  const handleCourseDelete = (e) => {
+    e.preventDefault();
+    // DELETE request to delete the current college course
     axios
-      .post(BASE_URL + `/courses`, newCourse)
+      .delete(BASE_URL + `/courses/CCE 302`)
       .then((res) => {
         console.log(res);
-        setLoading(false);
+
+        navigate("/admin_portal/courses");
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
   };
@@ -61,20 +101,35 @@ export const CoursesPortal = () => {
           }}
         >
           {CoursesFormData.map((data) => {
-            return (
-              <FormInput
-                inputData={data}
-                handleEditFormChange={handleEditFormChange}
-                valueData={courseData}
-                key={data.id}
-              />
-            );
+            if (
+              data.name === "id" &&
+              courseCode !== "add" &&
+              courseCode !== undefined
+            ) {
+              return (
+                <FormInput
+                  inputData={{ ...data, disabled: true }}
+                  handleEditFormChange={handleEditFormChange}
+                  valueData={courseData}
+                  key={data.id}
+                />
+              );
+            } else {
+              return (
+                <FormInput
+                  inputData={data}
+                  handleEditFormChange={handleEditFormChange}
+                  valueData={courseData}
+                  key={data.id}
+                />
+              );
+            }
           })}
           <button
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {t(`common.add`)}
+            {courseCode === "add" ? t(`common.add`) : t(`common.save`)}
           </button>
           <button
             type="reset"
@@ -82,6 +137,14 @@ export const CoursesPortal = () => {
           >
             {t(`common.cancel`)}
           </button>
+          {courseCode !== "add" && courseCode !== undefined && (
+            <button
+              className="form-card-button form-card-button-delete"
+              onClick={handleCourseDelete}
+            >
+              {t(`common.7azf el mokarar`)}
+            </button>
+          )}
         </form>
       </FormCard>
     </SidebarContainer>

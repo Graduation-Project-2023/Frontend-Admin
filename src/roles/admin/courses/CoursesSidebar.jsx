@@ -9,12 +9,13 @@ import { Sidebar } from "../../../components/sidebar/Sidebar";
 export const CoursesSidebar = () => {
   const [courses, setCourses] = useState([]);
   // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
   const [error, setError] = useState();
   const { t } = useTranslation();
   const authContext = useAuth();
   const location = useLocation();
+  const showOptions =
+    location.pathname.split("/").pop() !== "add" &&
+    location.pathname.split("/").pop() !== "courses";
 
   useEffect(() => {
     // GET request to get all college courses to display it in the sidebar
@@ -22,10 +23,8 @@ export const CoursesSidebar = () => {
       .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
         setCourses(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
 
@@ -35,8 +34,8 @@ export const CoursesSidebar = () => {
   return (
     <Sidebar
       options={
-        location.pathname.split("/").pop() !== "courses" && (
-          <Link to={"/admin_portal/courses"}>
+        showOptions && (
+          <Link to={"/admin_portal/courses/add"}>
             <button className="coursesSidebarBtn">{t("portal.add")}</button>
           </Link>
         )

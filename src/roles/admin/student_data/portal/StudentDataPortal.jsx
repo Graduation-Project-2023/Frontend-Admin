@@ -1,3 +1,5 @@
+import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
+
 export const StudentDataPortal = () => {
-  return <div>Student</div>;
+  return <FormNavbarContainer>CoursesRegisteration</FormNavbarContainer>;
 };

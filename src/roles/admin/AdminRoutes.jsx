@@ -9,7 +9,6 @@ import { StudentDataPortal } from "./student_data/portal/StudentDataPortal";
 import { RegisterationPortal } from "./registeration/portal/RegisterationPortal";
 import { RegisterationRoutes } from "./registeration/RegisterationRoutes";
 import { StudySchedulesRoutes } from "./schedules/StudySchedulesRoutes";
-import { StudySchedulesPortal } from "./schedules/portal/StudySchedulesPortal";
 import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
 import { NotFound } from "../../pages/NotFound";
 import { CoursesRoutes } from "./courses/CoursesRoutes";
@@ -29,7 +28,6 @@ export function AdminRoutes() {
           path="academic_programs/:programId/*"
           element={<AcademicProgramsRoutes />}
         />
-        <Route path="study_schedules" element={<StudySchedulesPortal />} />
         <Route path="study_schedules/*" element={<StudySchedulesRoutes />} />
         <Route path="registeration" element={<RegisterationPortal />} />
         <Route path="registeration/*" element={<RegisterationRoutes />} />

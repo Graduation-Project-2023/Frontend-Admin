@@ -1,4 +1,4 @@
-import React from "react";
+import { StudentFormData } from "./StudentFormData";
 
 export const TestingPage = () => {
   return <div>TestingPage</div>;

@@ -193,5 +193,14 @@
     "form": "Selecting Academic Advisor",
     "menu": "Level Students",
     "search": "Search with student name"
+  },
+  "studentsData": {
+    "section1": "Student Personal Data",
+    "section2": "Contact Data",
+    "section3": "Familay Data",
+    "section4": "Previous Qualification Data",
+    "section5": "Recruitment Data",
+    "section6": "Print Cards",
+    "formhead": "Main Data"
   }
 }

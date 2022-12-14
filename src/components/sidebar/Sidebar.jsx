@@ -44,7 +44,8 @@ export const Sidebar = (props) => {
           />
         </div>
       )}
-      <div className="sidebar-list">
+
+      <ul className="sidebar-list">
         {filteredMenu.map((item) => {
           return (
             <li key={item.id}>
@@ -77,7 +78,7 @@ export const Sidebar = (props) => {
             </li>
           );
         })}
-      </div>
+      </ul>
     </nav>
   );
 };

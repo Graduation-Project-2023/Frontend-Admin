@@ -52,7 +52,6 @@ export const CollapsibleTable = (props) => {
                         })}
                       </tr>
                     </thead>
-
                     <tbody>
                       {rowItems
                         .filter((course) => course.semester === semester.value)

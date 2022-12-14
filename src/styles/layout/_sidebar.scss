@@ -5,8 +5,6 @@
   width: 350px;
   height: auto;
   border-radius: 5px;
-  max-height: calc(100vh - 194px);
-  overflow-y: scroll;
 
   &-title {
     width: 100%;
@@ -20,11 +18,12 @@
       color: #3d7dca;
     }
   }
+
   &-list {
-    margin-top: 0.2rem;
+    padding: 0 !important;
     list-style: none;
     overflow-y: scroll;
-
+    max-height: calc(100vh - 290px);
     &-active {
       background-color: #6892c5;
       color: white !important;

@@ -12,12 +12,12 @@ export function StudySchedulesRoutes() {
         headerData={[
           {
             id: 0,
-            title: "el tasgel",
+            title: "registeration.formhead",
             path: "register_course",
             locationIndex: "study_schedules",
           },
-          { id: 1, title: "el gdawl", path: "tables" },
-          { id: 2, title: "el ftrat", path: "table_period" },
+          { id: 1, title: "adminNavbar.schedule", path: "tables" },
+          { id: 2, title: "adminNavbarkeys.period", path: "table_period" },
         ]}
       />
       <Routes>

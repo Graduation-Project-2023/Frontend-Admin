@@ -23,7 +23,7 @@ const AdminNavbarData = [
     id: "4",
     title: "adminNavbar.schedule",
     keyword: "adminNavbarkeys.schedule",
-    path: "study_schedules/register_course",
+    path: "study_schedules",
   },
   {
     id: "5",

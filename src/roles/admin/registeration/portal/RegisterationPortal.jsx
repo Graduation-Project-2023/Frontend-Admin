@@ -82,7 +82,7 @@ export const RegisterationPortal = () => {
         <Accordion
           defaultActiveKey={["0"]}
           alwaysOpen
-          className={styles.registerationContainer_collapse}
+          className={`${styles.registerationContainer_collapse} collapseSection`}
         >
           {Levels.map((item) => {
             return (

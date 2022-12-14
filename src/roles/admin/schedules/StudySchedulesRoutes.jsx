@@ -10,7 +10,12 @@ export function StudySchedulesRoutes() {
     <>
       <FormNavbar
         headerData={[
-          { id: 0, title: "el tasgel", path: "register_course" },
+          {
+            id: 0,
+            title: "el tasgel",
+            path: "register_course",
+            locationIndex: "study_schedules",
+          },
           { id: 1, title: "el gdawl", path: "tables" },
           { id: 2, title: "el ftrat", path: "table_period" },
         ]}
@@ -18,7 +23,10 @@ export function StudySchedulesRoutes() {
       <Routes>
         <Route path="" element={<CoursesRegisteration />} />
         <Route path="register_course" element={<CoursesRegisteration />} />
-        <Route path="register_course/:courseId" element={<CoursesRegisteration />} />
+        <Route
+          path="register_course/:courseId"
+          element={<CoursesRegisteration />}
+        />
         <Route path="tables" element={<StudySchedules />} />
         <Route path="table_period" element={<TablePeriods />} />
         <Route path="*" element={<NotFound />} />

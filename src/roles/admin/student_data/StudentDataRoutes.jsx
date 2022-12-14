@@ -9,7 +9,12 @@ export function StudentDataRoutes() {
     <>
       <FormNavbar
         headerData={[
-          { id: 0, title: "el tasgel", path: "register" },
+          {
+            id: 0,
+            title: "el tasgel",
+            path: "register",
+            locationIndex: "student_data",
+          },
           { id: 1, title: "edaft tolab", path: "add" },
         ]}
       />

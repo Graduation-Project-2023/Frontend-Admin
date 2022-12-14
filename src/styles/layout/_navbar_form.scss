@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   gap: 150px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #bbbdc0;
 
   &-container {
     background-color: white;
@@ -18,14 +18,20 @@
   & a {
     display: block;
     text-decoration: none;
-    color: grey;
+    color: #858d97;
+    font: normal 400 2rem/2.3rem "inter";
+    margin: 1.3rem;
+    padding: 1.1rem;
     &:hover {
-      color: blue;
+      color: #3d7dca;
+      border: 0.5px solid #3d7dca;
+      border-radius: 5px;
     }
   }
 
   &-active {
-    color: red;
-    font-size: 100px;
+    color: #3d7dca !important;
+    border: 0.5px solid #3d7dca;
+    border-radius: 5px;
   }
 }

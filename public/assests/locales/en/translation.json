@@ -72,6 +72,7 @@
     "student": "Students",
     "academic": "Programs",
     "schedule": "Schedule",
+    "period": "Schedule Period",
     "registeration": "Registeration",
     "exams": "Exams",
     "results": "Results",
@@ -197,7 +198,7 @@
   "studentsData": {
     "section1": "Student Personal Data",
     "section2": "Contact Data",
-    "section3": "Familay Data",
+    "section3": "Family Data",
     "section4": "Previous Qualification Data",
     "section5": "Recruitment Data",
     "section6": "Print Cards",

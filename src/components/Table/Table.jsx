@@ -91,7 +91,9 @@ export const Table = (props) => {
               {editableItems && (
                 <th className="table-container-header">{t(`common.edit`)}</th>
               )}
-              {deletableItems && (
+              {editRowId && deletableItems ? (
+                <th className="table-container-header">{t(`common.cancel`)}</th>
+              ) : (
                 <th className="table-container-header">{t(`common.delete`)}</th>
               )}
             </tr>

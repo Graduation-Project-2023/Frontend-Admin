@@ -17,6 +17,7 @@ import { Header } from "./components/header/Header";
 import { AdminRoutes } from "./roles/admin/AdminRoutes";
 import { StaffRoutes } from "./roles/staff/StaffRoutes";
 import { TestingPage } from "./common/TestingPage";
+import { TableSkeletonLoader } from "./components/loaders/TableSkeletonLoader";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="forgetpwd" element={<ForgetPwd />} />
         <Route path="resetpwd/:token" element={<ResetPwd />} />
         <Route path="testing" element={<TestingPage />} />
+        <Route path="table" element={<TableSkeletonLoader />} />
 
         {/* Staff Routes (Private) */}
         <Route element={<LoginRoute allowedRoles={"STAFF"} />}>

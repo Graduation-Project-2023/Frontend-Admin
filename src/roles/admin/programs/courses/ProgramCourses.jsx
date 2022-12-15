@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -15,6 +15,7 @@ import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTabl
 import { CollapsibleTable } from "../../../../components/table/CollapsibleTable";
 
 export const ProgramCourses = () => {
+  const [updatedData, setUpdatedData] = useState({});
   const [programCourseData, setProgramCourseData] = useState([]);
   const [course, setCourse] = useState({});
   const [preCourses, setPreCourses] = useState([]);
@@ -32,6 +33,7 @@ export const ProgramCourses = () => {
   const classWorkRef = useRef();
   const midtermRef = useRef();
   const finalExamRef = useRef();
+  const addedToGpaRef = useRef();
   const [wrongCourseGrades, setWrongCourseGrades] = useState({
     error: false,
     errorMessage: "",
@@ -39,6 +41,7 @@ export const ProgramCourses = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
   const maxGrade = 100;
 
+<<<<<<< HEAD
   const handleCourseGrades = () => {
     if (
       +classWorkRef.current.value +
@@ -63,13 +66,13 @@ export const ProgramCourses = () => {
     }
   };
 
+=======
+>>>>>>> main
   useEffect(() => {
     // GET request to get all college cousres
     axios
       .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
-        console.log("courses : ");
-        console.log(res.data);
         setCourses(res.data);
         setLoading(false);
       })
@@ -85,8 +88,6 @@ export const ProgramCourses = () => {
     axios
       .get(BASE_URL + `/programs/${programId}/program_courses`)
       .then((res) => {
-        console.log("program courses : ");
-        console.log(res.data);
         setProgramCourses(res.data);
         setLoading(false);
       })
@@ -99,8 +100,6 @@ export const ProgramCourses = () => {
     axios
       .get(BASE_URL + `/programs/${programId}/levels`)
       .then((res) => {
-        console.log("levels : ");
-        console.log(res.data);
         setLevels(res.data);
         setLoading(false);
       })
@@ -112,6 +111,13 @@ export const ProgramCourses = () => {
     // eslint-disable-next-line
   }, [programId]);
 
+  useLayoutEffect(() => {
+    if (editRowId === null) {
+      return;
+    }
+    console.log(preCourses);
+  }, [preCourses]);
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
@@ -119,28 +125,87 @@ export const ProgramCourses = () => {
     if (event.target.type === "number") {
       fieldValue = +fieldValue;
     }
+    if (
+      +classWorkRef.current.value +
+        +midtermRef.current.value +
+        +finalExamRef.current.value >
+      maxGrade
+    ) {
+      setWrongCourseGrades({
+        error: true,
+        errorMessage: "sum of grades must be equal to the max grade",
+      });
+      setProgramCourseData((current) => {
+        return { ...current, midTerm: "", finalExam: "", classWork: "" };
+      });
+      classWorkRef.current.value = "";
+      midtermRef.current.value = "";
+      finalExamRef.current.value = "";
+      return;
+    } else {
+      setWrongCourseGrades({ error: false });
+    }
     const newProgramCourseData = { ...programCourseData };
     newProgramCourseData[fieldName] = fieldValue;
     setProgramCourseData(newProgramCourseData);
+    if (editRowId !== null) {
+      setUpdatedData((current) => {
+        return { ...current, [`${fieldName}`]: fieldValue };
+      });
+    }
   };
 
   const handleFormSubmit = (e) => {
+    console.log(addedToGpaRef.current.checked);
     e.preventDefault();
-    const rows = [...programCourses];
-    rows.push(programCourseData);
-    // POST request to add a new program course to the database
-    // axios
-    //   .get(BASE_URL + `/programs/${programId}/courses`, { academicCoursesData })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setProgramCourses(rows);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     setError(error);
-    //     console.log(error);
-    //   });
+    setLoading(true);
+    const newProgramCourses = [...programCourses];
+    newProgramCourses.push(programCourseData);
+    if (editRowId === null) {
+      const newProgramCourse = {
+        ...programCourseData,
+        code: course.id,
+        programId: programId,
+        englishName: course?.englishName,
+        arabicName: course?.arabicName,
+        prerequisites: preCourses?.map((item) => item.id),
+      };
+      console.log(course);
+      console.log(newProgramCourse);
+      // POST request to add a new program course to the database
+      // axios
+      //   .post(
+      //     BASE_URL + `/programs/${programId}/program_courses`,
+      //     programCourseData
+      //   )
+      //   .then((res) => {
+      //     console.log(res);
+      //     setProgramCourses(newProgramCourses);
+      //     setLoading(false);
+      //   })
+      //   .catch((error) => {
+      //     setLoading(false);
+      //     setError(error);
+      //     console.log(error);
+      //   });
+    } else {
+      // PUT request to update the current program course
+      axios
+        .put(
+          BASE_URL + `/programs/${programId}/program_courses/${editRowId}`,
+          updatedData
+        )
+        .then((res) => {
+          console.log(res);
+          setProgramCourses(newProgramCourses);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error);
+          console.log(error);
+        });
+    }
   };
 
   const handleCourseSelection = (item) => {
@@ -158,21 +223,47 @@ export const ProgramCourses = () => {
   };
 
   const handleFormEditSwitch = (item) => {
-    if (item.prerequisites) {
-      console.log(
-        item.prerequisites.map((prerequisite) =>
-          programCourses.filter((obj) => obj.id === prerequisite)
-        )
-      );
-      // setPreCourses(
-      //   item.prerequisites.map((prerequisite) =>
-      //     programCourses.filter((obj) => obj.id === prerequisite)
-      //   )
-      // );
-    }
-    setCourse(item);
     setEditRowId(item.id);
-    setProgramCourseData(item);
+    setCourse(item);
+    setLoading(true);
+    axios
+      .get(BASE_URL + `/programs/${programId}/program_courses/${item.id}`)
+      .then((res) => {
+        setProgramCourseData(res.data);
+        if (res.data.prerequisites) {
+          setPreCourses(res.data.prerequisites);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
+  const deleteProgramCourse = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    // DELETE request to delete the current program course
+    axios
+      .delete(BASE_URL + `/programs/${programId}/program_courses/${course.id}`)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        setEditRowId(null);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
+
+  const addProgramCourse = (e) => {
+    e.preventDefault();
+    setEditRowId(null);
+    setCourse([]);
+    setProgramCourseData([]);
+    setPreCourses([]);
   };
 
   return (
@@ -184,6 +275,7 @@ export const ProgramCourses = () => {
           }}
         >
           <div className="row mb-4">
+<<<<<<< HEAD
             <DropdownSearch
               label={"courses.code"}
               specialData={course}
@@ -192,6 +284,32 @@ export const ProgramCourses = () => {
               handleListClick={handleCourseSelection}
               codeEqualsId={true}
             />
+=======
+            {editRowId ? (
+              <>
+                <label className="col-sm-2 col-form-label">
+                  {t("courses.code")}
+                </label>
+                <div className="col-sm-4">
+                  <input
+                    disabled
+                    className="form-control"
+                    value={course.code}
+                  />
+                </div>
+              </>
+            ) : (
+              <DropdownSearch
+                label={"courses.code"}
+                specialData={course}
+                menuData={courses}
+                inputPlaceholder={"courses.progCode"}
+                handleListClick={handleCourseSelection}
+                codeEqualsId={true}
+              />
+            )}
+
+>>>>>>> main
             <label className="col-sm-2 col-form-label">
               {t("courses.name")}
             </label>
@@ -214,9 +332,9 @@ export const ProgramCourses = () => {
             <div className="col-sm-4">
               <select
                 className="form-select"
-                name="level"
+                name="levelId"
                 onChange={handleEditFormChange}
-                value={programCourseData["level"] || ""}
+                value={programCourseData["levelId"] || ""}
               >
                 <option value={null}>{t("common.select")}</option>
                 {levels.map((item) => {
@@ -257,7 +375,8 @@ export const ProgramCourses = () => {
                 type="number"
                 name="classWork"
                 ref={classWorkRef}
-                onChange={handleCourseGrades}
+                onChange={handleEditFormChange}
+                value={programCourseData["classWork"] || ""}
               />
             </div>
             <label className="col-sm-2 col-form-label">
@@ -268,9 +387,10 @@ export const ProgramCourses = () => {
                 className="form-control"
                 type="number"
                 name="midTerm"
-                required
                 ref={midtermRef}
-                onChange={handleCourseGrades}
+                required
+                onChange={handleEditFormChange}
+                value={programCourseData["midTerm"] || ""}
               />
             </div>
           </div>
@@ -283,9 +403,10 @@ export const ProgramCourses = () => {
                 className="form-control"
                 type="number"
                 name="finalExam"
-                required
                 ref={finalExamRef}
-                onChange={handleCourseGrades}
+                required
+                onChange={handleEditFormChange}
+                value={programCourseData["finalExam"] || ""}
               />
             </div>
 
@@ -326,9 +447,9 @@ export const ProgramCourses = () => {
             <div className="col-sm-4">
               <select
                 className="form-select"
-                name="require"
-                onChange={handleEditFormChange}
-                value={programCourseData["require"] || ""}
+                name="test"
+                // onChange={handleEditFormChange}
+                // value={programCourseData["requirement"] || ""}
               >
                 <option value={null}>{t("common.select")}</option>
                 <option value="FIRST">{t("courses.department")}</option>
@@ -368,9 +489,14 @@ export const ProgramCourses = () => {
           </div>
           <div className="row mb-4">
             <div className="form-check form-switch form-check-inline col-sm-4">
+<<<<<<< HEAD
               <label className="form-check-label " htmlFor="addedToGpa ">
                 {t("courses.added_gpa")}
                 
+=======
+              <label className="form-check-label" htmlFor="addedToGpa">
+                {t("courses.added_gpa")}
+>>>>>>> main
               </label>
               <input
                 className={`form-check-input ${styles.preSwitch}`}
@@ -378,18 +504,22 @@ export const ProgramCourses = () => {
                 role="switch"
                 name="addedToGpa"
                 id="addedToGpa"
-                onChange={handleEditFormChange}
-                value={programCourseData["addedToGpa"] || ""}
+                ref={addedToGpaRef}
               />
             </div>
           </div>
-
           <div className={styles.formLine}>
             <div className="row mb-4">
               <DropdownSearch
+<<<<<<< HEAD
                 label={t(`courses.prereqCourses`)}
                 menuData={programCourses}
                 inputPlaceholder={"Program Code"}
+=======
+                label={"courses.prereqCourses"}
+                menuData={programCourses}
+                inputPlaceholder={"courses.progCode"}
+>>>>>>> main
                 handleListClick={addToPrerequisite}
               />
             </div>
@@ -398,8 +528,8 @@ export const ProgramCourses = () => {
                 tableTitle={"Prerequisite Table"}
                 headerItems={[
                   { id: 1, title: t(`courses.code`) },
-                  { id: 2, title: t(`courses.name`) },
-                  { id: 3, title: t(`courses.eng_name`) },
+                  { id: 2, title: t(`courses.eng_name`) },
+                  { id: 3, title: t(`courses.name`) },
                 ]}
                 rowItems={preCourses}
                 deletableItems={true}
@@ -411,7 +541,7 @@ export const ProgramCourses = () => {
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {t(`common.save`)}
+            {editRowId ? t(`common.save`) : t(`common.add`)}
           </button>
           <button
             type="reset"
@@ -419,6 +549,22 @@ export const ProgramCourses = () => {
           >
             {t(`common.cancel`)}
           </button>
+          {editRowId && (
+            <>
+              <button
+                onClick={deleteProgramCourse}
+                className="form-card-button form-card-button-delete"
+              >
+                {t(`common.7azf el mokarar`)}
+              </button>
+              <button
+                className="form-card-button form-card-button-save"
+                onClick={addProgramCourse}
+              >
+                {t(`common.add mokrar gded`)}
+              </button>
+            </>
+          )}
         </form>
       </FormCard>
       {levels.map((item) => {
@@ -432,7 +578,7 @@ export const ProgramCourses = () => {
               { id: 3, title: t(`courses.eng_name`) },
             ]}
             rowItems={programCourses.filter(
-              (course) => course.level === item.level
+              (course) => course.level.level === item.level
             )}
             onRowClick={handleFormEditSwitch}
           />

@@ -61,7 +61,10 @@ export const AcademicFormData = [
         name: "hasSummerSemester",
         req: true,
         options: [
+<<<<<<< HEAD
           { id: 0, title: "common.select", value: null },
+=======
+>>>>>>> main
           { id: 1, title: "common.choice_no", value: false },
           { id: 2, title: "common.choice_yes", value: true },
         ],

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
+import { LevelHoursData } from "./LevelHoursData";
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
@@ -73,6 +74,7 @@ export const LevelHours = () => {
       });
   };
 
+<<<<<<< HEAD
   const LevelHoursData = [
     {
       id: 0,
@@ -123,6 +125,8 @@ export const LevelHours = () => {
     },
   ];
 
+=======
+>>>>>>> main
   return (
     <SidebarContainer>
       <FormCard cardTitle={"levelHours.formhead"}>

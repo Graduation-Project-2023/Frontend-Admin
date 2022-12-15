@@ -48,7 +48,7 @@ export const DropdownSearch = (props) => {
               {filteredMenu.map((item) => {
                 return (
                   <Dropdown.Item
-                    key={item.id}
+                    key={item.id ? item.id : item.code}
                     onClick={(event) => {
                       props.handleListClick(item);
                     }}

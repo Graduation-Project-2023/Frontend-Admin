@@ -14,6 +14,7 @@ import { FormInput } from "../../../../components/forms/FormInput";
 import { Accordion } from "react-bootstrap";
 
 export const AcademicMain = () => {
+  const [updatedData, setUpdatedData] = useState({});
   const [programData, setProgramData] = useState([]);
   const [allPrograms, setAllPrograms] = useState([]);
   const [creditHours, setCreditHours] = useState();
@@ -85,17 +86,17 @@ export const AcademicMain = () => {
     const program = { ...programData };
     program[fieldName] = fieldValue;
     setProgramData(program);
+    setUpdatedData((current) => {
+      return { ...current, [`${fieldName}`]: fieldValue };
+    });
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const program = { ...programData };
-    program["collegeId"] = authContext.college.id;
-
-    // Post request to create a new program
+    // PUT request to update the current program
     setLoading(true);
     axios
-      .put(BASE_URL + `/programs/${programId}`, program)
+      .put(BASE_URL + `/programs/${programId}`, updatedData)
       .then((res) => {
         setLoading(false);
         navigate("/admin_portal/academic_programs");

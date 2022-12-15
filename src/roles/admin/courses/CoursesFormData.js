@@ -1,10 +1,9 @@
-export const CoursesObjData = [
+export const CoursesFormData = [
   {
     id: 0,
     title: "common.eng_name",
     name: "englishName",
     req: true,
-    options: false,
     type: "text",
   },
   {
@@ -12,7 +11,6 @@ export const CoursesObjData = [
     title: "common.ar_name",
     name: "arabicName",
     req: true,
-    options: false,
     type: "text",
   },
   {
@@ -20,24 +18,18 @@ export const CoursesObjData = [
     title: "courses.code",
     name: "id",
     req: true,
-    options: false,
     type: "text",
   },
-
   {
     id: 3,
     title: "courses.ar_des",
     name: "arabicDescription",
-    req: false,
-    options: false,
-    type: "text",
+    type: "textarea",
   },
   {
     id: 4,
     title: "courses.eng_des",
     name: "englishDescription",
-    req: true,
-    options: false,
-    type: "text",
+    type: "textarea",
   },
 ];

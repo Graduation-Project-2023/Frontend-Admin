@@ -12,11 +12,10 @@
       border-bottom: solid#EDE7E7 0.5px;
       padding: 2rem;
       text-decoration: none;
-    }
-
-    & :hover {
-      background-color: #3d7dca;
-      color: white;
+      &:hover {
+        background-color: #3d7dca;
+        color: white;
+      }
     }
   }
   &_title {

@@ -33,52 +33,52 @@ export const Sidebar = (props) => {
         <h2>{t(props.sidebarTitle)}</h2>
         <div className="sidebar-title-options">{props.options}</div>
       </div>
-      <div className="sidebar-list">
-        <ul>
-          {props.searchable && (
-            <li className="siderbar-list-search">
-              <input
-                type="text"
-                onChange={(e) => setSearchValue(e.target.value)}
-                value={searchValue}
-                placeholder={t(props.inputPlaceholder)}
-              />
+
+      {props.searchable && (
+        <div className="sidebar-search">
+          <input
+            type="text"
+            onChange={(e) => setSearchValue(e.target.value)}
+            value={searchValue}
+            placeholder={t(props.inputPlaceholder)}
+          />
+        </div>
+      )}
+
+      <ul className="sidebar-list">
+        {filteredMenu.map((item) => {
+          return (
+            <li key={item.id}>
+              {props.activeNav ? (
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-list-active" : ""
+                  }
+                >
+                  {props.backendData
+                    ? `${
+                        currentLanguageCode === "en"
+                          ? item.englishName
+                          : item.arabicName
+                      }`
+                    : `${t(item.title)}`}
+                </NavLink>
+              ) : (
+                <Link to={item.path}>
+                  {props.backendData
+                    ? `${
+                        currentLanguageCode === "en"
+                          ? item.englishName
+                          : item.arabicName
+                      }`
+                    : `${t(item.title)}`}
+                </Link>
+              )}
             </li>
-          )}
-          {filteredMenu.map((item) => {
-            return (
-              <li key={item.id}>
-                {props.activeNav ? (
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      isActive ? "sidebar-list-active" : ""
-                    }
-                  >
-                    {props.backendData
-                      ? `${
-                          currentLanguageCode === "en"
-                            ? item.englishName
-                            : item.arabicName
-                        }`
-                      : `${t(item.title)}`}
-                  </NavLink>
-                ) : (
-                  <Link to={item.path}>
-                    {props.backendData
-                      ? `${
-                          currentLanguageCode === "en"
-                            ? item.englishName
-                            : item.arabicName
-                        }`
-                      : `${t(item.title)}`}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+          );
+        })}
+      </ul>
     </nav>
   );
 };

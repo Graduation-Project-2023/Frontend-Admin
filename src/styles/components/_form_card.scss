@@ -30,7 +30,7 @@
     margin: 1rem;
     padding: 0.5rem;
     border-radius: 2px;
-    width: 5rem;
+    min-width: 5rem;
     font: normal 400 1rem/1.3rem "Inter";
     transition-duration: 0.4s;
 
@@ -52,6 +52,16 @@
 
       &:hover {
         background-color: #a2aab4;
+        color: white;
+      }
+    }
+
+    &-delete {
+      color: black;
+      background-color: rgb(232, 1, 1);
+      border: 1px solid #a2aab4;
+
+      &:hover {
         color: white;
       }
     }

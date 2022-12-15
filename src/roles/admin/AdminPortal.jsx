@@ -1,116 +1,45 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useAuth } from "../../hooks/useAuth";
 import { BASE_URL } from "../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
-import Modal from "react-bootstrap/Modal";
+import { ModalPopup } from "../../components/popups/ModalPopup";
+import { useTranslation } from "react-i18next";
 
 export const AdminPortal = () => {
-  const { t } = useTranslation();
-  const [show, setShow] = useState(false);
   const [colleges, setColleges] = useState([]);
-  const [filteredColleges, setFilteredColleges] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   // eslint-disable-next-line
   const [error, setError] = useState();
-  const authContext = useAuth();
-  const currentLanguageCode = cookies.get("i18next") || "en";
+  const { t } = useTranslation();
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(BASE_URL + "/colleges")
       .then((res) => {
         setColleges(res.data);
-        setFilteredColleges(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (currentLanguageCode === "en") {
-      setFilteredColleges(
-        colleges.filter((item) =>
-          item.englishName.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredColleges(
-        colleges.filter((item) =>
-          item.arabicName.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      );
-    }
-    // eslint-disable-next-line
-  }, [searchValue]);
-
   return (
     <>
-      <div className="d-flex justify-content-center">
-        <button
-          className="btn btn-primary align-center"
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          اظهار قائمة الكليات
-        </button>
-      </div>
-
-      <Modal
-        show={show}
-        onHide={() => {
-          setShow(false);
+      <div
+        onClick={() => {
+          setShowModal(true);
         }}
-        className="popup"
       >
-        <Modal.Header className="popup_header">
-          <Modal.Title className="popup_title">
-            {t(`academicMain.faculty`)}
-          </Modal.Title>
-          <button
-            onClick={() => {
-              setShow(false);
-            }}
-          >
-            X
-          </button>
-          <input
-            type="text"
-            onChange={(e) => setSearchValue(e.target.value)}
-            value={searchValue}
-            placeholder={t("academicMain.search")}
-          />
-        </Modal.Header>
-        <Modal.Body>
-          <div className="popup_list">
-            {filteredColleges.map((item) => {
-              return (
-                <Link
-                  key={item.id}
-                  onClick={() => {
-                    authContext.changeCollege(item);
-                  }}
-                  to="academic_programs"
-                >
-                  {currentLanguageCode === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </Link>
-              );
-            })}
-          </div>
-        </Modal.Body>
-      </Modal>
+        {t("اظهار قائمة الكليات")}
+      </div>
+      {showModal && (
+        <ModalPopup
+          title={"academicMain.faculty"}
+          searchable={true}
+          popupList={{ state: true, data: colleges, path: "academic_programs" }}
+          closeModal={() => {setShowModal(false)}}
+        />
+      )}
     </>
   );
 };

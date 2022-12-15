@@ -7,14 +7,15 @@ export const FormInput = (props) => {
 
   return (
     <div className="row mb-4">
-      <label className="col-sm-2 col-form-label">{t(inputData.title)}</label>
-      <div className="col-sm-5">
+      <label className="col-sm-3 col-form-label">{t(inputData.title)}</label>
+      <div className="col-sm-4">
         {inputData.options ? (
           <select
             className="form-select"
             name={inputData.name}
             onChange={props.handleEditFormChange}
             value={valueData[inputData.name] || ""}
+            disabled={inputData.disabled}
           >
             {inputData.options.map((option) => {
               return (
@@ -24,6 +25,16 @@ export const FormInput = (props) => {
               );
             })}
           </select>
+        ) : inputData.type === "textarea" ? (
+          <textarea
+            name={inputData.name}
+            type={inputData.type}
+            required={inputData.req}
+            className="form-control"
+            onChange={props.handleEditFormChange}
+            value={valueData[inputData.name] || ""}
+            disabled={inputData.disabled}
+          />
         ) : (
           <input
             name={inputData.name}
@@ -32,6 +43,7 @@ export const FormInput = (props) => {
             className="form-control"
             onChange={props.handleEditFormChange}
             value={valueData[inputData.name] || ""}
+            disabled={inputData.disabled}
           />
         )}
       </div>

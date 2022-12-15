@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
+import { AcademicGradesData } from "./AcademicGradesData";
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
@@ -72,6 +73,7 @@ export const AcademicGrades = () => {
       });
   };
 
+<<<<<<< HEAD
   const AcademicGradesData = [
     {
       id: 0,
@@ -115,6 +117,8 @@ export const AcademicGrades = () => {
     },
   ];
 
+=======
+>>>>>>> main
   return (
     <SidebarContainer>
       <FormCard cardTitle={"grades.formhead"}>

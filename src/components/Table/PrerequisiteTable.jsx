@@ -37,6 +37,8 @@ export const PrerequisiteTable = (props) => {
               <tr key={item.id}>
                 {Object.keys(item)?.map((key) => {
                   if (key === "id") return null;
+                  if (key === "level") return null;
+                  if (key === "semester") return null;
                   return (
                     <td className="collapsetable-items" key={key}>
                       {item[key] === 0 ? 0 : item[key] || ""}
@@ -46,9 +48,8 @@ export const PrerequisiteTable = (props) => {
                 {deletableItems && (
                   <td className="collapsetable-items">
                     <BsTrash
-                      color="red"
+                      className="collapsetable-items-icon"
                       onClick={(event) => props.handleDelete(item)}
-                      
                     />
                   </td>
                 )}

@@ -23,7 +23,11 @@
     "future": "Future Work",
     "eng_name": "English Name",
     "ar_name": "Arabic Name",
+<<<<<<< HEAD
     "firstTerm":"First",
+=======
+    "firstTerm": "First",
+>>>>>>> main
     "secondTerm": "Second",
     "summerTerm": "Summer",
     "gpaFrom": "GPA From ",
@@ -72,12 +76,14 @@
     "student": "Students",
     "academic": "Programs",
     "schedule": "Schedule",
+    "period": "Schedule Period",
     "registeration": "Registeration",
     "exams": "Exams",
     "results": "Results",
     "finance": "Financial",
     "absence": "Absence",
     "courses": "Courses",
+    "choose": "Choose academic course",
     "supervision": "Supervision",
     "control": "Control"
   },
@@ -88,7 +94,11 @@
     "level": "Academic Year",
     "max": "Maximum Hours",
     "min": "Minimum Hours",
+<<<<<<< HEAD
     "maxCourses": "Maximum Courses  ",
+=======
+    "maxCourses": "Maximum Courses",
+>>>>>>> main
     "formhead": "Academic Load (Level)"
   },
   "gpaHours": {
@@ -97,15 +107,24 @@
   },
   "portal": {
     "programs": "Academic Programs",
+<<<<<<< HEAD
     "search": "Search",
+=======
+    "search": "Search..",
+>>>>>>> main
     "add": "Add a New Program"
   },
   "academicSidebar": {
     "main": "Academic Programs",
     "level": "Levels",
     "grades": "Grades",
+<<<<<<< HEAD
     "levelHours": "Academic load (Level)",
     "gpaHours": "Academic load (GPA)",
+=======
+    "levelHours": "Level Allowed Hours",
+    "gpaHours": "GPA Allowed Hours",
+>>>>>>> main
     "courses": "Program Courses",
     "gpa": "GPA",
     "control": "Control",
@@ -118,7 +137,10 @@
     "section2": "Program Hours",
     "section3": "Program Fees",
     "section4": "Control",
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     "code": "Program Code",
     "faculty": "Select a Faculty",
     "edu_degree": "Degree Of Education",
@@ -135,7 +157,11 @@
     "c_gpa": "Accumlative GPA",
     "gpa": "Term GPA",
     "s_gpa": "Term & Summer GPA ",
+<<<<<<< HEAD
     "semester_fixed": "Academic level",
+=======
+    "semester_fixed": "Academic Level",
+>>>>>>> main
     "prerequest": "Prerequesite Programs",
     "fees": "Computing Fees ",
     "summer_fees": "Summer Fees",
@@ -146,19 +172,29 @@
     "type": "Type of Requirement"
   },
   "grades": {
+<<<<<<< HEAD
     "grade": "Grade Name ",
     "from": "Percentage From ",
     "to": "Percentage To ",
+=======
+    "grade": "Grade Name",
+    "from": "Percentage From",
+    "to": "Percentage To",
+>>>>>>> main
     "equivalent": "Equivalent Grade",
     "formhead": "Grades",
     "tablehead": "Grades Table",
     "max": "Maximum Grade"
   },
   "courses": {
-    "name": "Course Name ",
+    "name": "Course Name",
     "code": "Course Code",
     "chooseCode": "Choose a Course Code",
+<<<<<<< HEAD
     "pre_code": "Prerequest Code",
+=======
+    "pre_code": "prerequisitE Code",
+>>>>>>> main
     "progCode": "Program Code",
     "hours": "Course Hours",
     "min": "Minimum Hours",
@@ -171,7 +207,11 @@
     "department": "Department",
     "faculty": "Faculty",
     "university": "University",
+<<<<<<< HEAD
     "prereqCourses":"Prerequisite Courses",
+=======
+    "prereqCourses": "Prerequisite Courses",
+>>>>>>> main
     "option": "Optional",
     "mandatory": "Mandatory",
     "tabletitle": "Courses Table",
@@ -186,5 +226,22 @@
     "qualify": "Qualifying Hours",
     "tabletitle": "Levels Table",
     "select": "Select Academic level"
+  },
+  "registeration": {
+    "formhead": "Academic Registeration",
+    "advisor": "Academic Advisor",
+    "number": "Number of Students",
+    "form": "Selecting Academic Advisor",
+    "menu": "Level Students",
+    "search": "Search with student name"
+  },
+  "studentsData": {
+    "section1": "Student Personal Data",
+    "section2": "Contact Data",
+    "section3": "Family Data",
+    "section4": "Previous Qualification Data",
+    "section5": "Recruitment Data",
+    "section6": "Print Cards",
+    "formhead": "Main Data"
   }
 }

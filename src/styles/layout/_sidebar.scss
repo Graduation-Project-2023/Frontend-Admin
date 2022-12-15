@@ -4,12 +4,11 @@
   margin: 32px 20px;
   width: 350px;
   height: auto;
-  max-height: calc(100vw - 150px);
   border-radius: 5px;
 
   &-title {
     width: 100%;
-    padding: 40px;
+    padding: 40px 40px 10px 40px;
     border-bottom: solid rgb(217, 216, 216) 1px;
 
     & h2 {
@@ -21,74 +20,80 @@
   }
 
   &-list {
-    margin-bottom: 20px;
-
-    & ul {
-      width: 100%;
-      padding: 0;
-      margin: 0;
-      overflow-y: hidden;
-      & li {
-        width: 100%;
-        list-style: none;
-        border-bottom: solid rgb(217, 216, 216) 1px;
-        font: normal 400 1rem/1.3rem "Inter";
-
-        & a {
-          display: block;
-          width: 100%;
-          padding: 1rem 2rem;
-          color: #6892c5;
-          text-decoration: none;
-
-          &:hover {
-            background-color: #6892c5;
-            color: white;
-          }
-        }
-      }
-    }
-    &-search {
-      position: fixed;
-      height: 200px;
-      & input {
-        height: 300px;
-      }
-    }
+    padding: 0 !important;
+    list-style: none;
+    overflow-y: scroll;
+    max-height: calc(100vh - 290px);
     &-active {
       background-color: #6892c5;
       color: white !important;
     }
-  }
-}
-.sidebarBtn {
-  & button {
-    background-color: #6892c5;
-    font: normal 400 1rem/1.3rem "Inter";
-  }
-  & a {
-    display: block;
-    text-decoration: none;
-    text-align: center;
-    border-bottom: 1px solid rgb(217, 216, 216);
-    padding: 1rem;
-    font: normal 400 1rem/1.3rem "Inter";
-    &:hover {
-      background-color: #6892c5;
-      color: white;
+
+    & li {
+      border-bottom: solid #d9d9d9 1px;
+
+      & a {
+        text-decoration: none;
+        font: normal 400 1rem/1.3rem "intern";
+        color: #858d97;
+        padding: 1.5rem;
+        display: block;
+        &:hover {
+          background-color: #6892c5;
+          color: white;
+          cursor: pointer;
+        }
+      }
     }
   }
-}
-.coursesSidebarBtn {
-  background-color: #6892c5;
-  font: normal 400 1rem/1.3rem "Inter";
-  color: white;
-  margin: 1rem;
-  padding: 0.4rem;
-  border: none;
-  border-radius: 5px;
-  &:hover {
-    background-color: rgb(217, 216, 216);
-    color: black;
+
+  &-search {
+    border-bottom: 1px solid #d9d9d9;
+
+    & input {
+      height: 7vh;
+      width: 100%;
+      border: none;
+      padding: 2rem;
+      background-image: url(../../shared/images/search.png);
+      background-size: 15px;
+      background-position: 30px 22px;
+      background-repeat: no-repeat;
+      ba &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .sidebarBtn {
+    & button {
+      background-color: #6892c5;
+      font: normal 400 1rem/1.3rem "Inter";
+    }
+    & a {
+      display: block;
+      text-decoration: none;
+      text-align: center;
+      border-bottom: 1px solid rgb(217, 216, 216);
+      padding: 1rem;
+      font: normal 400 1rem/1.3rem "Inter";
+      &:hover {
+        background-color: #6892c5;
+        color: white;
+      }
+    }
+  }
+  .coursesSidebarBtn {
+    background-color: #6892c5;
+    font: normal 400 1rem/1.3rem "Inter";
+    color: white;
+    margin: 1rem;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 5px;
+    &:hover {
+      background-color: rgb(217, 216, 216);
+      color: black;
+    }
   }
 }

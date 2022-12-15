@@ -8,26 +8,16 @@
     font: normal 400 2rem/2.3rem "intern";
     padding: 3rem;
   }
-  &_collapse {
-    padding: 5rem;
-    & h2 {
-      & button {
-        color: #858d97;
-        font: normal 400 1.9rem/2.3rem "Inter";
-        text-align: center;
-        display: inline;
-      }
-    }
-  }
-  &_body {
+
+  &-body {
     display: grid;
     grid-template-columns: 40% 52%;
     gap: 8%;
     margin: 2rem;
   }
 
-  &_menu,
-  &_form {
+  &-menu,
+  &-form {
     border: 0.5px solid #bbbdc0;
     border-radius: 10px;
     & h3 {
@@ -36,13 +26,13 @@
       font: normal 400 1.5rem/1.9rem "intern";
       padding: 1.5rem;
     }
-    &_inputs {
+    &-inputs {
       border-bottom: 1px solid #d9d9d9;
       padding: 2rem;
       font: normal 400 1rem/1.3rem "intern";
       color: #858d97;
     }
-    &_search {
+    &-search {
       border-bottom: 1px solid #d9d9d9;
       position: relative;
       width: 100%;
@@ -51,10 +41,6 @@
         width: 100%;
         border: none;
         padding: 1rem;
-        background-image: url(../../../../shared/images/search.png);
-        background-size: 15px;
-        background-position: 30px 22px;
-        background-repeat: no-repeat;
 
         &:focus {
           outline: none;
@@ -65,7 +51,26 @@
         }
       }
     }
-    &_list {
+    &-collapse {
+      &-item {
+        &:first-of-type {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+      }
+
+      & button {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        &:not(.collapsed),
+        &:focus {
+          box-shadow: none;
+          background-color: #6892c5;
+          color: white;
+        }
+      }
+    }
+    &-list {
       margin-top: 0.2rem;
       list-style: none;
       max-height: 22rem;
@@ -83,7 +88,7 @@
       }
     }
   }
-  &_form {
+  &-form {
     max-height: 22rem;
   }
 }

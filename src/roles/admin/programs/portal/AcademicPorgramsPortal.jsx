@@ -6,7 +6,6 @@ import { BASE_URL } from "../../../../shared/API";
 import cookies from "js-cookie";
 import axios from "axios";
 import { FaPlusCircle } from "react-icons/fa";
-import styles from "./AcademicPorgramsPortal.module.scss";
 
 export const AcademicPorgramsPortal = () => {
   const [programs, setPrograms] = useState([]);
@@ -62,18 +61,18 @@ export const AcademicPorgramsPortal = () => {
 
   return (
     <div className="container">
-      <div className={styles.portal_body}>
-        <h5 className={styles.portal_title}>{t("portal.programs")}</h5>
-        <div className={styles.portal_search}>
+      <div className="portal-body">
+        <h5 className="portal-title">{t("portal.programs")}</h5>
+        <div className="portal-search">
           <input
             type="text"
-            className={styles.portal_search_rec}
+            className="form-control"
             onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
             placeholder={t("portal.search")}
           />
         </div>
-        <div className={styles.portal_list}>
+        <div className="portal-fixed">
           <li
             onClick={() => {
               navigate("add");
@@ -82,21 +81,23 @@ export const AcademicPorgramsPortal = () => {
             {t("portal.add")}
             <FaPlusCircle style={{ margin: "10px" }} />
           </li>
-          {filteredPrograms.map((item) => {
-            return (
-              <li
-                key={item.id}
-                onClick={() => {
-                  authContext.changeProgram(item);
-                  navigate(`${item.id}/main`);
-                }}
-              >
-                {currentLanguageCode === "en"
-                  ? item.englishName
-                  : item.arabicName}
-              </li>
-            );
-          })}
+          <div className="portal-list">
+            {filteredPrograms.map((item) => {
+              return (
+                <li
+                  key={item.id}
+                  onClick={() => {
+                    authContext.changeProgram(item);
+                    navigate(`${item.id}/main`);
+                  }}
+                >
+                  {currentLanguageCode === "en"
+                    ? item.englishName
+                    : item.arabicName}
+                </li>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

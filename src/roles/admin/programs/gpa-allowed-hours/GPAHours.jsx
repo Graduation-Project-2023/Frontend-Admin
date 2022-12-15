@@ -73,48 +73,6 @@ export const GPAHours = () => {
       });
   };
 
-  const GPAHoursData = [
-    {
-      id: 0,
-      title: "common.gpaFrom",
-      name: "fromGpa",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 1,
-      title: "common.gpaTo",
-      name: "toGpa",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 2,
-      title: "levelHours.min",
-      name: "minHours",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 3,
-      title: "levelHours.max",
-      name: "maxHours",
-      req: true,
-      options: false,
-      type: "number",
-    },
-    {
-      id: 4,
-      title: "levelHours.maxCourses",
-      name: "maxCourses",
-      req: false,
-      options: false,
-      type: "number",
-    },
-  ];
   return (
     <SidebarContainer>
       <FormCard cardTitle={"gpaHours.formhead"}>

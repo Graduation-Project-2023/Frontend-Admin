@@ -41,30 +41,6 @@ export const ProgramCourses = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
   const maxGrade = 100;
 
-  const handleCourseGrades = () => {
-    if (
-      +classWorkRef.current.value +
-        +midtermRef.current.value +
-        +finalExamRef.current.value >
-      maxGrade
-    ) {
-      setWrongCourseGrades({
-        error: true,
-        errorMessage: "Sum of grades must be equal to MAX grade",
-      });
-      classWorkRef.current.value = "";
-      midtermRef.current.value = "";
-      finalExamRef.current.value = "";
-    } else if (
-      +classWorkRef.current.value +
-        +midtermRef.current.value +
-        +finalExamRef.current.value ===
-      maxGrade
-    ) {
-      setWrongCourseGrades({ error: false });
-    }
-  };
-
   useEffect(() => {
     // GET request to get all college cousres
     axios
@@ -272,14 +248,30 @@ export const ProgramCourses = () => {
           }}
         >
           <div className="row mb-4">
-            <DropdownSearch
-              label={"courses.code"}
-              specialData={course}
-              menuData={courses}
-              inputPlaceholder={"courses.progCode"}
-              handleListClick={handleCourseSelection}
-              codeEqualsId={true}
-            />
+            {editRowId ? (
+              <>
+                <label className="col-sm-2 col-form-label">
+                  {t("courses.code")}
+                </label>
+                <div className="col-sm-4">
+                  <input
+                    disabled
+                    className="form-control"
+                    value={course.code}
+                  />
+                </div>
+              </>
+            ) : (
+              <DropdownSearch
+                label={"courses.code"}
+                specialData={course}
+                menuData={courses}
+                inputPlaceholder={"courses.progCode"}
+                handleListClick={handleCourseSelection}
+                codeEqualsId={true}
+              />
+            )}
+
             <label className="col-sm-2 col-form-label">
               {t("courses.name")}
             </label>
@@ -459,9 +451,8 @@ export const ProgramCourses = () => {
           </div>
           <div className="row mb-4">
             <div className="form-check form-switch form-check-inline col-sm-4">
-              <label className="form-check-label " htmlFor="addedToGpa ">
+              <label className="form-check-label" htmlFor="addedToGpa">
                 {t("courses.added_gpa")}
-                
               </label>
               <input
                 className={`form-check-input ${styles.preSwitch}`}
@@ -476,9 +467,9 @@ export const ProgramCourses = () => {
           <div className={styles.formLine}>
             <div className="row mb-4">
               <DropdownSearch
-                label={t(`courses.prereqCourses`)}
+                label={"courses.prereqCourses"}
                 menuData={programCourses}
-                inputPlaceholder={"Program Code"}
+                inputPlaceholder={"courses.progCode"}
                 handleListClick={addToPrerequisite}
               />
             </div>

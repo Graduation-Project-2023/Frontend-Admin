@@ -78,7 +78,7 @@ export const CoursesRegisteration = () => {
                       <div className="portal-search">
                         <input
                           type="text"
-                          className="form-control"
+                          className="form-control "
                           onChange={(e) => setSearchValue(e.target.value)}
                           value={searchValue}
                           placeholder={t("courses.name")}

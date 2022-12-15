@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { FormNavbar } from "../../../components/other/FormNavbar";
 import { NotFound } from "../../../pages/NotFound";
 import { TablePeriods } from "./periods/TablePeriods";
+import { CourseRegister } from "./registeration/CourseRegister";
 import { CoursesRegisteration } from "./registeration/CoursesRegisteration";
 import { StudySchedules } from "./tables/StudySchedules";
 
@@ -23,10 +24,7 @@ export function StudySchedulesRoutes() {
       <Routes>
         <Route path="" element={<CoursesRegisteration />} />
         <Route path="register_course" element={<CoursesRegisteration />} />
-        <Route
-          path="register_course/:courseId"
-          element={<CoursesRegisteration />}
-        />
+        <Route path="register_course/:courseId" element={<CourseRegister />} />
         <Route path="tables" element={<StudySchedules />} />
         <Route path="table_period" element={<TablePeriods />} />
         <Route path="*" element={<NotFound />} />

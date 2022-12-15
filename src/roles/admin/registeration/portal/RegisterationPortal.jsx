@@ -1,7 +1,7 @@
 import React from "react";
 import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import styles from "./RegisterationPortal.module.scss";
+import { FormCard } from "../../../../components/forms/FormCard";
 
 export const RegisterationPortal = () => {
   const { t } = useTranslation();
@@ -77,41 +77,38 @@ export const RegisterationPortal = () => {
 
   return (
     <div className="container">
-      <div className={styles.registerationContainer}>
+      <div className="registerationContainer">
         <h1>{t(`registeration.formhead`)}</h1>
+
         <Accordion
           defaultActiveKey={["0"]}
           alwaysOpen
-          className={`${styles.registerationContainer_collapse} collapseSection`}
+          className="collapseSection"
         >
           {Levels.map((item) => {
             return (
               <Accordion.Item eventKey={item.id} key={item.id}>
                 <Accordion.Header>{item.title}</Accordion.Header>
                 <Accordion.Body>
-                  <div className={styles.registerationContainer_body}>
-                    <div className={styles.registerationContainer_menu}>
+                  <div className="registerationContainer-body">
+                    <div className="registerationContainer-menu">
                       <h3>{t(`registeration.menu`)}</h3>
-                      <div
-                        className={styles.registerationContainer_menu_search}
-                      >
+                      <div className="registerationContainer-menu-search">
                         <input
                           type="text"
                           placeholder={t("registeration.search")}
                         />
                       </div>
-                      <div className={styles.registerationContainer_menu_list}>
+                      <div className="registerationContainer-menu-list">
                         {student.map((item) => (
                           <li key={item.id}>{item.title}</li>
                         ))}
                       </div>
                     </div>
-                    <div className={styles.registerationContainer_form}>
+                    <div className="registerationContainer-form">
                       <h3>{t(`registeration.form`)}</h3>
                       <form>
-                        <div
-                          className={styles.registerationContainer_form_inputs}
-                        >
+                        <div className="registerationContainer-form-inputs">
                           <div className="row mb-4">
                             <label className="col-sm-4 col-form-label">
                               {t(`registeration.advisor`)}

@@ -7,37 +7,39 @@ import { FormNavbarContainer } from "../../../../components/other/FormNavbarCont
 export const StudentDataPortal = () => {
   const { t } = useTranslation();
   return (
-    <FormNavbarContainer>
-      <FormCard>
-        <form>
-          <Accordion
-            defaultActiveKey={["0"]}
-            alwaysOpen
-            className="collapseSection"
-          >
-            {StudentFormData.map((item) => {
-              return (
-                <Accordion.Item eventKey={item.id} key={item.id}>
-                  <Accordion.Header>{t(item.title)}</Accordion.Header>
-                  <Accordion.Body>hellooooooo</Accordion.Body>
-                </Accordion.Item>
-              );
-            })}
-            <button
-              type="submit"
-              className="form-card-button form-card-button-save"
+    <div className="container">
+      <FormNavbarContainer>
+        <div className="collapseSectionCard">
+          <form>
+            <Accordion
+              defaultActiveKey={["0"]}
+              alwaysOpen
+              className="collapseSection"
             >
-              {t(`common.save`)}
-            </button>
-            <button
-              type="reset"
-              className="form-card-button form-card-button-cancel"
-            >
-              {t(`common.cancel`)}
-            </button>
-          </Accordion>
-        </form>
-      </FormCard>
-    </FormNavbarContainer>
+              {StudentFormData.map((item) => {
+                return (
+                  <Accordion.Item eventKey={item.id} key={item.id}>
+                    <Accordion.Header>{t(item.title)}</Accordion.Header>
+                    <Accordion.Body>hellooooooo</Accordion.Body>
+                  </Accordion.Item>
+                );
+              })}
+              <button
+                type="submit"
+                className="form-card-button form-card-button-save"
+              >
+                {t(`common.save`)}
+              </button>
+              <button
+                type="reset"
+                className="form-card-button form-card-button-cancel"
+              >
+                {t(`common.cancel`)}
+              </button>
+            </Accordion>
+          </form>
+        </div>
+      </FormNavbarContainer>
+    </div>
   );
 };

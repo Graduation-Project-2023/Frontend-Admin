@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 150px;
+  gap: 50px;
   border-bottom: 1px solid #bbbdc0;
 
   &-container {
@@ -18,9 +18,9 @@
     display: block;
     text-decoration: none;
     color: #858d97;
-    font: normal 400 2rem/2.3rem "inter";
-    margin: 1.3rem;
-    padding: 1.1rem;
+    font: normal 400 1.9rem/2.2rem "inter";
+    margin: 1rem;
+    padding: 1rem;
     &:hover {
       color: #3d7dca;
       border: 0.5px solid #3d7dca;

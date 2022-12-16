@@ -12,7 +12,7 @@
     border-bottom: solid $White5 1px;
 
     & h2 {
-      @include font ("math.div(1.2rem/1.4rem)");
+      @include font(1.2rem, 1.4rem);
       font-size: 30px;
       margin-bottom: 20px;
       color: #3d7dca;
@@ -34,12 +34,12 @@
 
       & a {
         text-decoration: none;
-        @include font ("math.div(1rem/1.3rem)");
+        @include font(1rem, 1.3rem);
         color: #858d97;
         padding: 1.5rem;
         display: block;
         &:hover {
-        @include hover($Blue2, white, pointer)
+          @include hover($Blue2, white, pointer);
         }
       }
     }
@@ -66,7 +66,7 @@
   .sidebarBtn {
     & button {
       background-color: $Blue2;
-      @include font ("math.div(1rem/1.3rem)");
+      @include font(1rem, 1.3rem);
     }
     & a {
       display: block;
@@ -74,22 +74,22 @@
       text-align: center;
       border-bottom: 1px solid $White5;
       padding: 1rem;
-      @include font ("math.div(1rem/1.3rem)");
+      @include font(1rem, 1.3rem);
       &:hover {
-        @include hover($Blue2,white , "")
+        @include hover($Blue2, white, "");
       }
     }
   }
   .coursesSidebarBtn {
     background-color: $Blue2;
-    @include font ("math.div(1rem/1.3rem)");
+    @include font(1rem, 1.3rem);
     color: white;
     margin: 1rem;
     padding: 0.4rem;
     border: none;
     border-radius: 5px;
     &:hover {
-      @include hover($White5,black , "")
+      @include hover($White5, black, "");
     }
   }
 }

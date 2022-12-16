@@ -1,19 +1,19 @@
 .header-navbar {
   background-color: white;
   height: 60px;
-  @include flex ("", center,"");
+  @include flex("", center, "");
 
   &-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    @include flex (center, "", "");
+    @include flex(center, "", "");
     gap: 20px;
     width: 100%;
 
     & li {
       display: inline;
-      @include font ("math.div(1.2rem/1.4rem)");
+      @include font(1.2rem, 1.4rem);
       & a {
         text-decoration: none !important;
         transition: all 0.3s ease-out;
@@ -39,7 +39,7 @@
 
 .main-header {
   color: white;
-  @include font ("math.div(1.2rem/1.4rem)");
+  @include font(1.2rem, 1.4rem);
   background-color: $Blue1;
   text-align: center;
   padding: 1rem;
@@ -47,6 +47,6 @@
   grid-template-columns: 150px auto 150px;
 
   &-item {
-    @include flex (center, center, "")
+    @include flex(center, center, "");
   }
 }

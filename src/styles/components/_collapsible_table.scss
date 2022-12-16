@@ -4,7 +4,7 @@
   margin: 2rem;
   & h3 {
     color: $Grey4;
-    @include font ("math.div(1.8rem / rem)");
+    @include font(1.8rem, 1rem);
     padding: 1rem;
   }
   &-scroll {
@@ -38,14 +38,14 @@
   }
   &-header {
     color: $Grey3;
-    @include font ("math.div(1.4rem/1.8rem)");
+    @include font(1.4rem, 1.8rem);
     border-top: 1px solid $White5;
     padding: 1.3rem !important;
   }
 
   &-items {
     color: $Black2;
-    @include font ("math.div(1rem/1.3rem)");
+    @include font(1rem, 1.3rem);
     padding: 1.3rem !important;
 
     &-icon {

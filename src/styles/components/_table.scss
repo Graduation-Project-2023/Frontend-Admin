@@ -5,7 +5,7 @@
   margin: 2rem;
   & h3 {
     color: $Grey3;
-    @include font ("math.div(2.5rem/3rem)");
+    @include font(2.5rem, 3rem);
     padding: 0rem 0 3rem 0;
   }
   & h4 {
@@ -20,14 +20,14 @@
       &-header {
         text-align: center;
         color: $Grey3;
-        @include font ("math.div(1.4rem/1.8rem)");
+        @include font(1.4rem, 1.8rem);
         border-top: 1px solid $White5;
         padding: 1.5rem !important;
       }
       &-items {
         text-align: center;
         color: $Black2;
-        @include font ("math.div(1rem/1.3rem)");
+        @include font(1rem, 1.3rem);
         padding: 1.5rem !important;
         &-button {
           border: none;

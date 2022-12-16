@@ -7,7 +7,7 @@
   }
   &-title {
     padding: 2rem 5rem 0.8rem 5rem;
-    @include font ("math.div(2rem/2.5rem)");
+    @include font(2rem, 2.5rem);
     color: $Blue4;
   }
   &-search {

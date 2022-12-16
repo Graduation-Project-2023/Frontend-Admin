@@ -11,18 +11,18 @@
     margin: 2rem;
 
     & label {
-      @include font ("math.div(1rem/1.3rem)");
+      @include font(1rem, 1.3rem);
       color: $Grey3;
     }
     & select {
       color: $Black2;
-      @include font ("math.div(1rem/1.3rem)");
+      @include font(1rem, 1.3rem);
     }
   }
 
   & h3 {
     color: $Grey3;
-    @include font ("math.div(2.5rem/3rem)");
+    @include font(2.5rem, 3rem);
     padding: 0rem 0 1rem 0;
   }
 
@@ -31,7 +31,7 @@
     padding: 0.5rem;
     border-radius: 2px;
     min-width: 5rem;
-    @include font ("math.div(1rem/1.3rem)");
+    @include font(1rem, 1.3rem);
     transition-duration: 0.4s;
 
     &-save {

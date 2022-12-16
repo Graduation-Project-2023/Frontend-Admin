@@ -3,7 +3,7 @@
   background-color: white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  @include flex (center, center, 50);
+  @include flex(center, center, 50px);
   border-bottom: 1px solid $White8;
 
   &-container {
@@ -15,7 +15,7 @@
     display: block;
     text-decoration: none;
     color: $Grey3;
-    @include font ("math.div(1.9rem/2.2rem)");
+    @include font(1.9rem, 2.2rem);
     margin: 1rem;
     padding: 1rem;
     &:hover {

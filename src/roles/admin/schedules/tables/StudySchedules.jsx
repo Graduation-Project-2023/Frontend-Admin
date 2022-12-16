@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 export const StudySchedules = () => {
   const navigate = useNavigate();
   return (
-    <FormNavbarContainer>
-      <button
-        onClick={() => {
-          navigate("20");
-        }}
-      >
-        GO TO TABLE
-      </button>
-    </FormNavbarContainer>
+    <div className="container">
+      <FormNavbarContainer>
+        <button
+          onClick={() => {
+            navigate("20");
+          }}
+        >
+          GO TO TABLE
+        </button>
+      </FormNavbarContainer>
+    </div>
   );
 };

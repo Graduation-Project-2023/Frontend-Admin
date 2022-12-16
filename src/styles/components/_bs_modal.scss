@@ -3,24 +3,22 @@
 
   &_list {
     list-style: none;
-    color: #686d72;
-
-    font: normal 400 1rem/1.3rem "Inter";
-
+    color: $Grey4;
+    @include font ("math.div(1rem/1.3rem)");
     & a {
       display: block;
       border-bottom: solid#EDE7E7 0.5px;
       padding: 2rem;
       text-decoration: none;
       &:hover {
-        background-color: #3d7dca;
+        background-color: $Blue4;
         color: white;
       }
     }
   }
   &_title {
-    color: #3d7dca;
-    font: normal 400 2.5rem/3rem "Inter";
+    color: $Blue4;
+    @include font ("math.div(2.5rem/3rem)");
     padding: 2rem 2rem 0;
   }
   &_close {
@@ -30,10 +28,10 @@
     border-radius: 50%;
     width: 2rem;
     height: 2rem;
-    background-color: #76a6e0;
-    border: 1px solid #76a6e0;
-    font: normal 400 1.2rem/1.4rem "Inter";
-    color: #ffffff;
+    background-color: $Blue1;
+    border: 1px solid $Blue1;
+    @include font ("math.div(1.2rem/1.4rem)");
+    color: white;
     padding: 0;
   }
   &_header {

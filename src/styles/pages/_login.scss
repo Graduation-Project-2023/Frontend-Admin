@@ -5,16 +5,16 @@
       width: 300px;
       padding: 0px 0px 20px 0px;
       text-align: center;
-      color: #3d7dca;
+      color: $Blue4;
       font-weight: 700;
     }
   }
 
   &_form {
     & div {
-      border: 0px solid rgb(130, 117, 117);
+      border: 0px solid $Brown2;
       padding: 10px 0px;
-      color: rgb(129, 117, 117);
+      color: $Brown2;
       font-size: 18px;
     }
 
@@ -24,7 +24,7 @@
       margin-top: 20px;
       background: transparent;
       border-radius: 3px;
-      border: 0.5px solid #bdc0c9;
+      border: 0.5px solid $White7;
       outline: none;
     }
 
@@ -32,7 +32,7 @@
       & button {
         font-size: 18px;
         margin-top: 5px;
-        background: #3d7dca;
+        background: $Blue4;
         width: 400px;
         height: 45px;
         border: none;
@@ -41,7 +41,7 @@
         cursor: pointer;
 
         &:hover {
-          background: #5c8bc5;
+          background: $Blue3;
         }
       }
     }

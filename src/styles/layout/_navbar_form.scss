@@ -3,11 +3,8 @@
   background-color: white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
-  border-bottom: 1px solid #bbbdc0;
+  @include flex (center, center, 50);
+  border-bottom: 1px solid $White8;
 
   &-container {
     background-color: white;
@@ -17,20 +14,20 @@
   & a {
     display: block;
     text-decoration: none;
-    color: #858d97;
-    font: normal 400 1.9rem/2.2rem "inter";
+    color: $Grey3;
+    @include font ("math.div(1.9rem/2.2rem)");
     margin: 1rem;
     padding: 1rem;
     &:hover {
-      color: #3d7dca;
-      border: 0.5px solid #3d7dca;
+      color: $Blue4;
+      border: 0.5px solid $Blue4;
       border-radius: 5px;
     }
   }
 
   &-active {
     color: #3d7dca !important;
-    border: 0.5px solid #3d7dca;
+    border: 0.5px solid $Blue4;
     border-radius: 5px;
   }
 }

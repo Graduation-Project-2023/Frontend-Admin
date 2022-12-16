@@ -1,7 +1,8 @@
-@mixin flex($justify, $align) {
+@mixin flex($justify, $align, $gap) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
+  gap: $gap px;
 }
 
 @mixin prefix($prop, $value) {
@@ -11,3 +12,58 @@
   -o-#{$prop}: #{$value};
   #{$prop}: #{$value};
 }
+
+@mixin font ($fontSize) {
+  font: normal 400 $fontSize "Inter";
+}
+
+@mixin overflow ($maxHeight, $overflowX, $overflowY) {
+  max-height: $maxHeight rem;
+  overflow: $overflowY;
+  overflow-x: $overflowX;
+}
+@mixin hover ($hovBackgroundCol,$hovCol,$hovCursor:"") {
+  background-color: $hovBackgroundCol;
+  color: $hovCol;
+  cursor: $hovCursor;
+}
+@mixin colorandback ($color, $backColor) {
+  color: $color;
+  background-color: $backColor;
+}
+
+
+//Variables
+$Brown2:rgb(130, 117, 117);
+$Black2: #444444;
+
+
+
+//scale from 1 to 10, 1 is close to white and 10 dark blue
+$Blue1:#76a6e0;
+$Blue2:#6892c5;
+$Blue3:#5c8bc5;
+$Blue4:#3d7dca;
+
+
+//scale from 1 to 10, 1 is close to white and 10 black
+$Grey1: #BBBDC080;
+$Grey1:#BBBDC080;
+$Grey2:#a2aab4;
+$Grey3:#858d97;
+$Grey4:#686d72;
+
+
+
+
+
+
+//scale from 1 to 10, 1 is close to white and 10 black
+$White1:#f8f8f9;
+$White2:#f7f8fc;
+$White3: #ede7e7; 
+$White4: #dfe3ee; 
+$White5:#d9d9d9; 
+$White6:#c8cacd; 
+$White7:#bdc0c9; 
+$White8: #bbbdc0; 

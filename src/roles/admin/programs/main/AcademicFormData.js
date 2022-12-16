@@ -8,61 +8,67 @@ export const AcademicFormData = [
         title: "common.ar_name",
         name: "arabicName",
         req: true,
-        options: false,
         type: "text",
+        row: true,
       },
       {
         id: 2,
         title: "common.eng_name",
         name: "englishName",
         req: true,
-        options: false,
         type: "text",
+        row: true,
       },
       {
         id: 3,
-        title: "academicMain.code",
-        name: "programCode",
-        req: true,
-        options: false,
-        type: "text",
-      },
-      {
-        id: 4,
-        title: "academicMain.edu_degree",
-        name: "degree",
-        options: [
-          { id: 0, title: "common.select", value: null },
-          { id: 1, title: "academicMain.degree_bachelor", value: "BACHELOR" },
-          { id: 2, title: "academicMain.degree_diploma", value: "DIPLOMA" },
+        splitRow: [
+          {
+            id: 1,
+            title: "academicMain.code",
+            name: "programCode",
+            req: true,
+            type: "text",
+          },
+          {
+            id: 2,
+            title: "academicMain.edu_degree",
+            name: "degree",
+            options: [
+              { id: 0, title: "common.select", value: null },
+              {
+                id: 1,
+                title: "academicMain.degree_bachelor",
+                value: "BACHELOR",
+              },
+              { id: 2, title: "academicMain.degree_diploma", value: "DIPLOMA" },
+            ],
+          },
         ],
       },
       {
-        id: 5,
-        title: "academicMain.sys_type",
-        name: "system",
-        req: true,
-        options: [
-          { id: 0, title: "common.select", value: null },
-          { id: 1, title: "academicMain.credit", value: "CREDIT" },
-          { id: 2, title: "levelHours.level", value: "SCHOOLYEAR" },
-        ],
-      },
-      {
-        id: 6,
-        title: "grades.max",
-        name: "maxGrade",
-        req: true,
-        type: "number",
-      },
-      {
-        id: 7,
-        title: "academicMain.has_summer_semester",
-        name: "hasSummerSemester",
-        req: true,
-        options: [
-          { id: 1, title: "common.choice_no", value: false },
-          { id: 2, title: "common.choice_yes", value: true },
+        id: 3,
+        splitRow: [
+          {
+            id: 1,
+            title: "academicMain.sys_type",
+            name: "system",
+            req: true,
+            options: [
+              { id: 0, title: "common.select", value: null },
+              { id: 1, title: "academicMain.credit", value: "CREDIT" },
+              { id: 2, title: "levelHours.level", value: "SCHOOLYEAR" },
+            ],
+          },
+          {
+            id: 2,
+            title: "academicMain.has_summer_semester",
+            name: "hasSummerSemester",
+            req: true,
+            options: [
+              { id: 1, title: "common.choice_no", value: false },
+              { id: 2, title: "common.choice_yes", value: true },
+            ],
+          },
         ],
       },
     ],
@@ -73,35 +79,45 @@ export const AcademicFormData = [
     formData: [
       {
         id: 1,
-        title: "academicMain.credit",
-        name: "creditHours",
-        req: true,
         credit: true,
-        type: "number",
+
+        splitRow: [
+          {
+            id: 1,
+            title: "academicMain.credit",
+            name: "creditHours",
+            req: true,
+            type: "number",
+          },
+          {
+            id: 2,
+            title: "academicMain.mandatory",
+            name: "mandatoryHours",
+            type: "number",
+          },
+        ],
       },
       {
         id: 2,
-        title: "academicMain.mandatory",
-        name: "mandatoryHours",
         credit: true,
-        type: "number",
+
+        splitRow: [
+          {
+            id: 1,
+            title: "academicMain.option",
+            name: "optionalHours",
+            type: "number",
+          },
+          {
+            id: 2,
+            title: "academicMain.project",
+            name: "projectQualifyingHours",
+            type: "number",
+          },
+        ],
       },
       {
         id: 3,
-        title: "academicMain.option",
-        name: "optionalHours",
-        credit: true,
-        type: "number",
-      },
-      {
-        id: 4,
-        title: "academicMain.project",
-        name: "projectQualifyingHours",
-        credit: true,
-        type: "number",
-      },
-      {
-        id: 5,
         title: "academicMain.compute",
         name: "allowedHrs",
         options: [
@@ -115,12 +131,14 @@ export const AcademicFormData = [
             value: "SEMESTERFIXED",
           },
         ],
+        row: true,
       },
       {
-        id: 6,
+        id: 4,
         title: "academicMain.prerequest",
         name: "prerequisiteProgramId",
         prerequisites: true,
+        row: true,
       },
     ],
   },
@@ -140,6 +158,7 @@ export const AcademicFormData = [
           { id: 3, title: "academicMain.credit", value: "CREDITHOURS" },
           { id: 4, title: "portal.programs", value: "COURSES" },
         ],
+        row: true,
       },
       {
         id: 2,
@@ -153,6 +172,8 @@ export const AcademicFormData = [
           { id: 3, title: "academicMain.credit", value: "CREDITHOURS" },
           { id: 4, title: "portal.programs", value: "COURSES" },
         ],
+        row: true,
+        summer: true,
       },
     ],
   },
@@ -162,21 +183,38 @@ export const AcademicFormData = [
     formData: [
       {
         id: 1,
-        title: "academicMain.rate",
-        name: "gradeLowering",
-        type: "number",
+        splitRow: [
+          {
+            id: 1,
+            title: "academicMain.rate",
+            name: "gradeLowering",
+            type: "number",
+          },
+          {
+            id: 2,
+            title: "academicMain.trial",
+            name: "attemptsToLowerGrade",
+            type: "number",
+          },
+        ],
       },
       {
         id: 2,
-        title: "academicMain.trial",
-        name: "attemptsToLowerGrade",
-        type: "number",
-      },
-      {
-        id: 3,
-        title: "academicMain.failure",
-        name: "failureGrade",
-        type: "number",
+        splitRow: [
+          {
+            id: 1,
+            title: "academicMain.failure",
+            name: "failureGrade",
+            type: "number",
+          },
+          {
+            id: 2,
+            title: "grades.max",
+            name: "maxGrade",
+            req: true,
+            type: "number",
+          },
+        ],
       },
     ],
   },

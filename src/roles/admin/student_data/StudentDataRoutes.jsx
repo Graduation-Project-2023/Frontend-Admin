@@ -3,7 +3,6 @@ import { FormNavbar } from "../../../components/other/FormNavbar";
 import { NotFound } from "../../../pages/NotFound";
 import { AddStudents } from "./add/AddStudents";
 import { StudentDataPortal } from "./portal/StudentDataPortal";
-import { StudentInfo } from "./portal/StudentInfo";
 
 export function StudentDataRoutes() {
   return (
@@ -21,8 +20,7 @@ export function StudentDataRoutes() {
       />
       <Routes>
         <Route path="" element={<StudentDataPortal />} />
-        <Route path="register" element={<StudentDataPortal />} />
-        <Route path="register/:studentId" element={<StudentInfo />} />
+        <Route path="/:studentId" element={<StudentDataPortal />} />
         <Route path="add" element={<AddStudents />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

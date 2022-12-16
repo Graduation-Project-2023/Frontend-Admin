@@ -54,19 +54,18 @@ export const CoursesPortal = () => {
       id: courseData.id.replace(/\s/g, ""),
     };
     // Condition to check whether it's adding a new course or updating the current
-    courseCode !== "add" && courseCode === undefined
+    courseCode !== "add" && courseCode !== undefined
       ? // PUT request to update the current college course
         axios
           .put(BASE_URL + `/courses/${newCourse.id}`, newCourse)
           .then((res) => {
             setCourseData(res.data);
-
             navigate("/admin_portal/courses");
           })
           .catch((error) => {
             console.log(error);
           })
-      : // POST request to create a new level allowed hours
+      : // POST request to create a new college course
         axios
           .post(BASE_URL + `/courses`, newCourse)
           .then((res) => {
@@ -84,7 +83,6 @@ export const CoursesPortal = () => {
       .delete(BASE_URL + `/courses/CCE 302`)
       .then((res) => {
         console.log(res);
-
         navigate("/admin_portal/courses");
       })
       .catch((error) => {
@@ -129,7 +127,9 @@ export const CoursesPortal = () => {
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {courseCode === "add" ? t(`common.add`) : t(`common.save`)}
+            {courseCode !== "add" && courseCode !== undefined
+              ? t(`common.save`)
+              : t(`common.add`)}
           </button>
           <button
             type="reset"

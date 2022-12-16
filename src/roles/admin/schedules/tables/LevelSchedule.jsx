@@ -64,44 +64,42 @@ export const LevelSchedule = () => {
   return (
     <div className="container">
       <FormNavbarContainer>
-        <div className={styles.tableContainer}>
-          <div className={styles.tableContainer_level}>
-            <Dropdown>
+        <div className={styles.tableContainer_level}>
+          <Dropdown>
+            {levels
+              .filter((item) => item.id === levelId)
+              .map((level) => {
+                return (
+                  <Dropdown.Toggle key={level.id}>
+                    {level.level}&nbsp;-&nbsp;
+                    {currentLanguageCode === "en"
+                      ? level.englishName
+                      : level.arabicName}
+                  </Dropdown.Toggle>
+                );
+              })}
+            <Dropdown.Menu className={styles.tableContainer_level_menu}>
               {levels
-                .filter((item) => item.id === levelId)
+                .filter((item) => item.id != levelId)
                 .map((level) => {
                   return (
-                    <Dropdown.Toggle key={level.id}>
+                    <Dropdown.Item key={level.id}>
+                      {level.level}&nbsp;-&nbsp;
                       {currentLanguageCode === "en"
                         ? level.englishName
                         : level.arabicName}
-                      - {level.code}
-                    </Dropdown.Toggle>
+                    </Dropdown.Item>
                   );
                 })}
-              <Dropdown.Menu className={styles.tableContainer_level_menu}>
-                {levels
-                  .filter((item) => item.id != levelId)
-                  .map((level) => {
-                    return (
-                      <Dropdown.Item key={level.id}>
-                        {" "}
-                        {currentLanguageCode === "en"
-                          ? level.englishName
-                          : level.arabicName}
-                        - {level.code}
-                      </Dropdown.Item>
-                    );
-                  })}
-              </Dropdown.Menu>
-            </Dropdown>
-            <h6>
-              {currentLanguageCode === "en"
-                ? authContext.program.englishName
-                : authContext.program.arabicName}
-            </h6>
-          </div>
+            </Dropdown.Menu>
+          </Dropdown>
+          <h6>
+            {currentLanguageCode === "en"
+              ? authContext.program.englishName
+              : authContext.program.arabicName}
+          </h6>
         </div>
+
         <StudyTable
           tableData={tableData}
           emptyCellClick={emptyCellClick}

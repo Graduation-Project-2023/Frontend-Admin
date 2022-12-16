@@ -1,6 +1,7 @@
 .tableContainer {
   border: 1px solid #d9d9d9;
-  margin: 2rem 2rem 0;
+  margin: 2rem;
+
   border-radius: 10px;
   &_level {
     padding: 2rem;
@@ -24,6 +25,7 @@
     display: block;
     overflow-x: auto;
     white-space: nowrap;
+    color: #858d97;
   }
   &_tableCard {
     border-top: 0.1px solid #d9d9d9;
@@ -34,14 +36,16 @@
 
 .empty_cell {
   &:hover {
-    background-color: rgb(108, 132, 194);
+    background-color: palevioletred;
     cursor: pointer;
   }
 }
 
 .filled_cell {
+  background-color: #d9d9d933 !important;
+  color: #444444;
   &:hover {
-    background-color: rgb(164, 106, 131);
+    background-color: #3d7dca !important;
     cursor: pointer;
   }
 }

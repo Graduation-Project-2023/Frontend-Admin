@@ -115,20 +115,25 @@ export const StudentFormData = [
       },
       {
         id: 2,
-        title: "home phone number",
-        name: "homeNumber",
-        type: "number",
-        row: true,
+        splitRow: [
+          {
+            id: 1,
+            title: "home phone number",
+            name: "homeNumber",
+            type: "number",
+            row: true,
+          },
+          {
+            id: 2,
+            title: "mobile number",
+            name: "mobileNumber",
+            type: "number",
+            row: true,
+          },
+        ],
       },
       {
         id: 3,
-        title: "mobile number",
-        name: "mobileNumber",
-        type: "number",
-        row: true,
-      },
-      {
-        id: 4,
         title: "email",
         name: "email",
         type: "email",

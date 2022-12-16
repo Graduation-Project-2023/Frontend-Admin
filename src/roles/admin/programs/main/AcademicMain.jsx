@@ -35,7 +35,6 @@ export const AcademicMain = () => {
       .get(BASE_URL + `/programs/${programId}`)
       .then((res) => {
         setProgramData(res.data);
-        authContext.changeProgram(res.data);
         res.data.system === "CREDIT"
           ? setCreditHours(true)
           : setCreditHours(false);

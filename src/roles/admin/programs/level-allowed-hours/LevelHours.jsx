@@ -64,7 +64,6 @@ export const LevelHours = () => {
         levelAllowedHour,
       })
       .then((res) => {
-        console.log(res);
         setLevelHours(rows);
         setLoading(false);
       })

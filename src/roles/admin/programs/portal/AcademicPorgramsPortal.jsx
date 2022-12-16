@@ -87,6 +87,7 @@ export const AcademicPorgramsPortal = () => {
                 <li
                   key={item.id}
                   onClick={() => {
+                    console.log(item);
                     authContext.changeProgram(item);
                     navigate(`${item.id}/main`);
                   }}

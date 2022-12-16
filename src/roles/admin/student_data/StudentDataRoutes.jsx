@@ -20,8 +20,7 @@ export function StudentDataRoutes() {
       />
       <Routes>
         <Route path="" element={<StudentDataPortal />} />
-        <Route path="register" element={<StudentDataPortal />} />
-        <Route path="register/:studentId" element={<StudentDataPortal />} />
+        <Route path="/:studentId" element={<StudentDataPortal />} />
         <Route path="add" element={<AddStudents />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

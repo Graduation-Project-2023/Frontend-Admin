@@ -14,7 +14,7 @@ import { Table } from "../../../../components/table/Table";
 
 export const LevelHours = () => {
   const [levelHoursData, setLevelHoursData] = useState([]);
-  const [levels, setLevels] = useState([]);
+  const [levelHours, setLevelHours] = useState([]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
@@ -29,7 +29,7 @@ export const LevelHours = () => {
       .get(BASE_URL + `/programs/${programId}/level_allowed_hours`)
       .then((res) => {
         console.log(res.data);
-        setLevels(res.data);
+        setLevelHours(res.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -53,7 +53,7 @@ export const LevelHours = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const rows = [...levels];
+    const rows = [...levelHours];
     const levelAllowedHour = { ...levelHoursData };
     levelAllowedHour["collegeId"] = authContext.college.id;
     rows.push(levelAllowedHour);
@@ -65,7 +65,7 @@ export const LevelHours = () => {
       })
       .then((res) => {
         console.log(res);
-        setLevels(rows);
+        setLevelHours(rows);
         setLoading(false);
       })
       .catch((error) => {
@@ -83,6 +83,16 @@ export const LevelHours = () => {
           }}
         >
           {LevelHoursData.map((data) => {
+            if (data.levels === true) {
+              return (
+                <FormInput
+                  inputData={data}
+                  handleEditFormChange={handleEditFormChange}
+                  valueData={levelHoursData}
+                  key={data.id}
+                />
+              );
+            }
             return (
               <FormInput
                 inputData={data}
@@ -96,7 +106,7 @@ export const LevelHours = () => {
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {t(`common.save`)}
+            {t(`common.add`)}
           </button>
           <button
             type="reset"
@@ -114,7 +124,7 @@ export const LevelHours = () => {
           { id: 3, title: t(`levelHours.min`) },
           { id: 4, title: t(`levelHours.max`) },
         ]}
-        rowItems={levels}
+        rowItems={levelHours}
         editableItems={true}
         deletableItems={true}
       />

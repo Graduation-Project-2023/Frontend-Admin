@@ -1,7 +1,6 @@
 import React from "react";
 import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { FormCard } from "../../../../components/forms/FormCard";
 
 export const RegisterationPortal = () => {
   const { t } = useTranslation();
@@ -13,15 +12,15 @@ export const RegisterationPortal = () => {
     },
     {
       id: 2,
-      title: "Level 1",
+      title: "Level 2",
     },
     {
       id: 3,
-      title: "Level 1",
+      title: "Level 3",
     },
     {
       id: 4,
-      title: "Level 1",
+      title: "Level 4",
     },
   ];
   const student = [

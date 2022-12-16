@@ -18,6 +18,7 @@ export const AddAcademicProgram = () => {
   const [programsData, setProrgramsData] = useState([]);
   const [newProgram, setNewProgram] = useState({});
   const [creditHours, setCreditHours] = useState(false);
+  const [summerSemester, setSummerSemester] = useState(false);
   const authContext = useAuth();
   const { t } = useTranslation();
   // eslint-disable-next-line
@@ -52,8 +53,10 @@ export const AddAcademicProgram = () => {
     if (fieldName === "hasSummerSemester") {
       if (fieldValue === "true") {
         fieldValue = true;
+        setSummerSemester(true);
       } else if (fieldValue === "false") {
         fieldValue = false;
+        setSummerSemester(false);
       }
     }
     if (fieldName === "system") {
@@ -118,6 +121,9 @@ export const AddAcademicProgram = () => {
                     <Accordion.Body>
                       {item.formData.map((data) => {
                         if (!creditHours && data.credit) {
+                          return null;
+                        }
+                        if (!summerSemester && data.summer) {
                           return null;
                         }
                         if (data.prerequisites) {

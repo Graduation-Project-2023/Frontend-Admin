@@ -23,14 +23,20 @@ export const CoursesRegisteration = () => {
         setCourses(res.data);
         setFilteredCourses(res.data);
       });
+    // eslint-disable-next-line
   }, []);
+
   useEffect(() => {
     setFilteredCourses(
       courses.filter((item) => {
-        item.arabicName.toLowerCase().includes(searchValue.toLowerCase());
+        return item.arabicName
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
       })
     );
+    // eslint-disable-next-line
   }, [searchValue]);
+
   const Levels = [
     {
       id: 1,

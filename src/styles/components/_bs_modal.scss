@@ -21,7 +21,7 @@
     @include font ("math.div(2.5rem/3rem)");
     padding: 2rem 2rem 0;
   }
-  & button {
+  &_close {
     position: absolute;
     top: -0.5rem;
     left: -0.5rem;

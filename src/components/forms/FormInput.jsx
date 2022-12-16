@@ -5,48 +5,99 @@ export const FormInput = (props) => {
   const valueData = props.valueData;
   const { t } = useTranslation();
 
-  return (
-    <div className="row mb-4">
-      <label className="col-sm-3 col-form-label">{t(inputData.title)}</label>
-      <div className="col-sm-4">
-        {inputData.options ? (
-          <select
-            className="form-select"
-            name={inputData.name}
-            onChange={props.handleEditFormChange}
-            value={valueData[inputData.name] || ""}
-            disabled={inputData.disabled}
-          >
-            {inputData.options.map((option) => {
-              return (
-                <option key={option.id} value={option.value}>
-                  {t(option.title)}
-                </option>
-              );
-            })}
-          </select>
-        ) : inputData.type === "textarea" ? (
-          <textarea
-            name={inputData.name}
-            type={inputData.type}
-            required={inputData.req}
-            className="form-control"
-            onChange={props.handleEditFormChange}
-            value={valueData[inputData.name] || ""}
-            disabled={inputData.disabled}
-          />
-        ) : (
-          <input
-            name={inputData.name}
-            type={inputData.type}
-            required={inputData.req}
-            className="form-control"
-            onChange={props.handleEditFormChange}
-            value={valueData[inputData.name] || ""}
-            disabled={inputData.disabled}
-          />
-        )}
+  if (inputData.row) {
+    return (
+      <div className="col-sm-10 mb-3">
+        <label className="form-label">{t(inputData.title)}</label>
+        <div>
+          {inputData.options ? (
+            <select
+              className="form-select"
+              name={inputData.name}
+              onChange={props.handleEditFormChange}
+              value={valueData[inputData.name] || ""}
+              disabled={inputData.disabled}
+            >
+              {inputData.options.map((option) => {
+                return (
+                  <option key={option.id} value={option.value}>
+                    {t(option.title)}
+                  </option>
+                );
+              })}
+            </select>
+          ) : inputData.type === "textarea" ? (
+            <textarea
+              name={inputData.name}
+              type={inputData.type}
+              required={inputData.req}
+              className="form-control"
+              onChange={props.handleEditFormChange}
+              value={valueData[inputData.name] || ""}
+              disabled={inputData.disabled}
+            />
+          ) : (
+            <input
+              name={inputData.name}
+              type={inputData.type}
+              required={inputData.req}
+              className="form-control"
+              onChange={props.handleEditFormChange}
+              value={valueData[inputData.name] || ""}
+              disabled={inputData.disabled}
+            />
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="row">
+        {inputData.splitRow.map((item) => {
+          return (
+            <div className="form-group col-sm-5 mb-3" key={item.id}>
+              <label className="form-label">{t(item.title)}</label>
+              {item.options ? (
+                <select
+                  className="form-select"
+                  name={item.name}
+                  onChange={props.handleEditFormChange}
+                  value={valueData[item.name] || ""}
+                  disabled={item.disabled}
+                >
+                  {item.options.map((option) => {
+                    return (
+                      <option key={option.id} value={option.value}>
+                        {t(option.title)}
+                      </option>
+                    );
+                  })}
+                </select>
+              ) : item.type === "textarea" ? (
+                <textarea
+                  name={item.name}
+                  type={item.type}
+                  required={item.req}
+                  className="form-control"
+                  onChange={props.handleEditFormChange}
+                  value={valueData[item.name] || ""}
+                  disabled={item.disabled}
+                />
+              ) : (
+                <input
+                  name={item.name}
+                  type={item.type}
+                  required={item.req}
+                  className="form-control"
+                  onChange={props.handleEditFormChange}
+                  value={valueData[item.name] || ""}
+                  disabled={item.disabled}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 };

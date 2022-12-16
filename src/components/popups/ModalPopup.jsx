@@ -6,7 +6,7 @@ import cookies from "js-cookie";
 import Modal from "react-bootstrap/Modal";
 
 export const ModalPopup = (props) => {
-  const listData = props.popupList.data;
+  const listData = props.popupList?.data;
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const authContext = useAuth();
@@ -14,17 +14,21 @@ export const ModalPopup = (props) => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
-    setFilteredData(props.popupList.data);
-  }, [props.popupList.data]);
+    setFilteredData(props.popupList?.data);
+  }, [props.popupList?.data]);
 
   useEffect(() => {
-    setFilteredData(
-      listData.filter(
-        (item) =>
-          item.englishName?.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.arabicName?.toLowerCase().includes(searchValue.toLowerCase())
-      )
-    );
+    if (props.searchable) {
+      setFilteredData(
+        listData.filter(
+          (item) =>
+            item.englishName
+              ?.toLowerCase()
+              .includes(searchValue.toLowerCase()) ||
+            item.arabicName?.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    }
     // eslint-disable-next-line
   }, [searchValue]);
 
@@ -36,7 +40,7 @@ export const ModalPopup = (props) => {
     <Modal show={true} onHide={hideModal} className="popup">
       <Modal.Header className="popup_header">
         <Modal.Title className="popup_title">{t(props.title)}</Modal.Title>
-        <button onClick={hideModal}>X</button>
+        <button className="popup_close" onClick={hideModal}>X</button>
         {props.searchable && (
           <input
             type="text"

@@ -95,7 +95,7 @@ export const GPAHours = () => {
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {t(`common.save`)}
+            {t(`common.add`)}
           </button>
           <button
             type="reset"

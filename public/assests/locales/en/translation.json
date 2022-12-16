@@ -186,7 +186,8 @@
     "level": "Level",
     "qualify": "Qualifying Hours",
     "tabletitle": "Levels Table",
-    "select": "Select Academic level"
+    "select": "Select Academic level",
+    "table": "Select table of level"
   },
   "registeration": {
     "formhead": "Academic Registeration",

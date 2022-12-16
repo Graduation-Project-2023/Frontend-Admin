@@ -1,6 +1,5 @@
 import { Accordion } from "react-bootstrap";
 import { StudentFormData } from "./StudentFormData";
-import { FormCard } from "../../../../components/forms/FormCard";
 import { useTranslation } from "react-i18next";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 

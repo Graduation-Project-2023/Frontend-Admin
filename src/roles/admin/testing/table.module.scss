@@ -1,12 +1,34 @@
-.tabletable {
-  max-width: 80vw;
-  overflow-x: scroll;
-
-  & table {
-    & td,
-    th {
-      border: 1px solid black;
+.tableContainer {
+  border: 1px solid #d9d9d9;
+  margin: 2rem 2rem 0;
+  border-radius: 10px;
+  &_level {
+    padding: 2rem;
+    &_menu {
+      padding: 0.4rem !important;
+      width: 25rem;
     }
+    & button {
+      color: white;
+      background-color: #6892c5;
+      border: 1px solid#6892C5;
+      width: 25rem;
+
+      &:hover {
+        background-color: rgba(13, 13, 80, 0.753);
+        color: black;
+      }
+    }
+  }
+  & table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  &_tableCard {
+    border-top: 0.1px solid #d9d9d9;
+    border-bottom: 0.1px solid #d9d9d9;
+    padding: 2rem;
   }
 }
 

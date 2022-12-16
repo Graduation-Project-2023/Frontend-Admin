@@ -6,6 +6,7 @@ import {
   BackendData,
 } from "./studytabledata";
 import { ModalPopup } from "../../../components/popups/ModalPopup";
+
 export const StudyTable = (props) => {
   const [cellsOccupied, setCellsOccupied] = useState([]);
   const [cellsAvailable, setCellsAvailable] = useState([]);

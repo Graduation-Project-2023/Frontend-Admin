@@ -4,6 +4,7 @@ import { NotFound } from "../../../pages/NotFound";
 import { TablePeriods } from "./periods/TablePeriods";
 import { CourseRegister } from "./registeration/CourseRegister";
 import { CoursesRegisteration } from "./registeration/CoursesRegisteration";
+import { LevelSchedule } from "./tables/LevelSchedule";
 import { StudySchedules } from "./tables/StudySchedules";
 
 export function StudySchedulesRoutes() {
@@ -26,6 +27,7 @@ export function StudySchedulesRoutes() {
         <Route path="register_course" element={<CoursesRegisteration />} />
         <Route path="register_course/:courseId" element={<CourseRegister />} />
         <Route path="tables" element={<StudySchedules />} />
+        <Route path="tables/:levelId" element={<LevelSchedule />} />
         <Route path="table_period" element={<TablePeriods />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

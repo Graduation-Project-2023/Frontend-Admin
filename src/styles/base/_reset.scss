@@ -8,11 +8,11 @@
     }
 
     &-thumb {
-      background: #858d97;
+      background: $Grey3;
       border-radius: 10px;
 
       &:hover {
-        background: #3d7dca;
+        background: $Blue4;
       }
     }
   }
@@ -22,7 +22,7 @@
   width: 100vw;
 }
 body {
-  background-color: #f7f8fc;
+  background-color: $White2;
   scrollbar-gutter: stable both-edges;
   overflow-x: hidden;
 }

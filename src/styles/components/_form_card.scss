@@ -5,24 +5,24 @@
   margin: 2rem;
 
   & form {
-    border-top: 1px solid #d9d9d9;
-    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid $White5;
+    border-bottom: 1px solid $White5;
     padding: 2rem;
     margin: 2rem;
 
     & label {
-      font: normal 400 1rem/1.3rem "Inter";
-      color: #858d97;
+      @include font ("math.div(1rem/1.3rem)");
+      color: $Grey3;
     }
     & select {
-      color: #444444;
-      font: normal 400 1rem/1.3rem "Inter";
+      color: $Black2;
+      @include font ("math.div(1rem/1.3rem)");
     }
   }
 
   & h3 {
-    color: #858d97;
-    font: normal 400 2.5rem/3rem "Inter";
+    color: $Grey3;
+    @include font ("math.div(2.5rem/3rem)");
     padding: 0rem 0 1rem 0;
   }
 
@@ -31,35 +31,30 @@
     padding: 0.5rem;
     border-radius: 2px;
     min-width: 5rem;
-    font: normal 400 1rem/1.3rem "Inter";
+    @include font ("math.div(1rem/1.3rem)");
     transition-duration: 0.4s;
 
     &-save {
-      color: white;
-      background-color: #6892c5;
-      border: 1px solid#6892C5;
+      @include colorandback(white, $Blue2);
+      border: 1px solid $Blue2;
 
       &:hover {
-        background-color: rgba(66, 66, 197, 0.753);
-        color: black;
+        @include colorandback(black, rgba(66, 66, 197, 0.753));
       }
     }
 
-    &-cancel { 
-      color: #444444;
-      background-color: #f8f8f9;
-      border: 1px solid #a2aab4;
+    &-cancel {
+      @include colorandback($Black2, $White1);
+      border: 1px solid $Grey2;
 
       &:hover {
-        background-color: #a2aab4;
-        color: white;
+        @include colorandback(white, $Grey2);
       }
     }
 
     &-delete {
-      color: black;
-      background-color: rgb(232, 1, 1);
-      border: 1px solid #a2aab4;
+      @include colorandback(black, rgb(232, 1, 1));
+      border: 1px solid $Grey2;
 
       &:hover {
         color: white;

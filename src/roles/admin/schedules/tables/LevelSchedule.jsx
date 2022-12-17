@@ -80,7 +80,7 @@ export const LevelSchedule = () => {
               })}
             <Dropdown.Menu className={styles.tableContainer_level_menu}>
               {levels
-                .filter((item) => item.id != levelId)
+                .filter((item) => item.id !== levelId)
                 .map((level) => {
                   return (
                     <Dropdown.Item key={level.id}>

@@ -1,114 +1,72 @@
-import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
-import { Accordion } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { BASE_URL } from "../../../../shared/API";
+import { useNavigate } from "react-router-dom";
 import cookies from "js-cookie";
-import { useAuth } from "../../../../hooks/useAuth";
+
+// Reusable Components
+import { Accordion } from "react-bootstrap";
+import { SearchContainer } from "../../../../components/other/SearchContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
 
-export const CoursesRegisteration = () => {
-  const { t } = useTranslation();
-  const [courses, setCourses] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+export const CoursesRegisteration = (props) => {
+  const [programCourses, setProgramCourses] = useState([]);
+  const [levels, setLevels] = useState([]);
+  const [loading, setLoading] = useState();
   const currentLanguageCode = cookies.get("i18next") || "en";
-  const authContext = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
-      .then((res) => {
-        setCourses(res.data);
-        setFilteredCourses(res.data);
-      });
-    // eslint-disable-next-line
-  }, []);
+    setLevels(props.levels);
+  }, [props.levels]);
 
   useEffect(() => {
-    setFilteredCourses(
-      courses.filter((item) => {
-        return item.arabicName
-          .toLowerCase()
-          .includes(searchValue.toLowerCase());
-      })
-    );
-    // eslint-disable-next-line
-  }, [searchValue]);
+    setProgramCourses(props.programCourses);
+  }, [props.programCourses]);
 
-  const Levels = [
-    {
-      id: 1,
-      title: "Level 1",
-    },
-    {
-      id: 2,
-      title: "Level 2",
-    },
-    {
-      id: 3,
-      title: "Level 3",
-    },
-    {
-      id: 4,
-      title: "Level 4",
-    },
-    {
-      id: 5,
-      title: "Level 5",
-    },
-  ];
+  useEffect(() => {
+    setLoading(props.loading);
+  }, [props.loading]);
+
+  const handleCourseSelect = (course) => {
+    navigate(`/admin_portal/study_schedules/register_course/add/${course.id}`);
+  };
 
   return (
-    <div className="container">
-      <FormNavbarContainer>
-        <FormCard>
-          <Accordion
-            defaultActiveKey="0"
-            alwaysOpen
-            className="collapseSection"
-          >
-            {Levels.map((item) => {
-              return (
-                <Accordion.Item
-                  eventKey={Levels.length === 1 ? "0" : `${item.id}`}
-                  key={item.id}
-                >
-                  <Accordion.Header>{item.title}</Accordion.Header>
-                  <Accordion.Body>
-                    <div className="portal-body">
-                      <h5 className="portal-title">
-                        {t("adminNavbarkeys.choose")}
-                      </h5>
-                      <div className="portal-search">
-                        <input
-                          type="text"
-                          className="form-control "
-                          onChange={(e) => setSearchValue(e.target.value)}
-                          value={searchValue}
-                          placeholder={t("courses.name")}
-                        />
-                      </div>
-                      <div className="portal-list">
-                        {filteredCourses.map((item) => {
-                          return (
-                            <li key={item.id}>
-                              {currentLanguageCode === "en"
-                                ? item.englishName
-                                : item.arabicName}
-                            </li>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              );
-            })}
-          </Accordion>
-        </FormCard>
-      </FormNavbarContainer>
-    </div>
+    <FormCard>
+      <Accordion defaultActiveKey="0" alwaysOpen className="collapseSection">
+        {levels?.map((item) => {
+          return (
+            <Accordion.Item
+              eventKey={levels?.length === 1 ? "0" : `${item.id}`}
+              key={item.id}
+            >
+              <Accordion.Header>
+                {item.level}&nbsp;-&nbsp;
+                {currentLanguageCode === "en"
+                  ? item.englishName
+                  : item.arabicName}
+              </Accordion.Header>
+              <Accordion.Body>
+                <SearchContainer
+                  title={"adminNavbarkeys.choose"}
+                  placeholder={"courses.name"}
+                  emptyListPlaceholder={
+                    programCourses.filter((course) => {
+                      return course.levelId === item.id;
+                    }).length === 0
+                      ? "la yooogd courses"
+                      : ""
+                  }
+                  listLoading={loading}
+                  listData={programCourses.filter((course) => {
+                    return course.levelId === item.id;
+                  })}
+                  handleListClick={handleCourseSelect}
+                />
+              </Accordion.Body>
+            </Accordion.Item>
+          );
+        })}
+      </Accordion>
+    </FormCard>
   );
 };

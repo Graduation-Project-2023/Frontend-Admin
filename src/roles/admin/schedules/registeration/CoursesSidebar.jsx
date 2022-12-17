@@ -36,76 +36,82 @@ export const CoursesSidebar = (props) => {
   }, [listData]);
 
   return (
-    <Accordion defaultActiveKey="0" alwaysOpen>
+    <Accordion
+      defaultActiveKey="0"
+      alwaysOpen
+      className={props.registered ? "assignedPrograms" : "notAssignedPrograms"}
+    >
       <Accordion.Item eventKey={props.eventKey} key={props.eventKey}>
         <Accordion.Header>
           <h3>{t(props.title)}</h3>
         </Accordion.Header>
-        <Accordion.Body>
-          <div className="registerationContainer-menu">
-            <div className="registerationContainer-menu-search">
-              <input
-                type="text"
-                placeholder={t("courses.name")}
-                value={searchValue}
-                onChange={(event) => setSearchValue(event.target.value)}
-              />
-            </div>
-            {searchValue === "" ? (
-              <Accordion
-                defaultActiveKey="0"
-                alwaysOpen
-                className="registerationContainer-menu-collapse"
-              >
-                {levels.map((item) => (
-                  <Accordion.Item
-                    eventKey={item.id}
-                    key={item.id}
-                    className="registerationContainer-menu-collapse-item"
-                  >
-                    <Accordion.Header>{item.englishName}</Accordion.Header>
-
-                    <Accordion.Body
-                      className="registerationContainer-menu-list"
-                      style={{ padding: "0" }}
-                    >
-                      {filteredList
-                        .filter((obj) => obj.levelId === item.id)
-                        .map((item) => (
-                          <li
-                            key={item.id}
-                            onClick={(event) => {
-                              props.registered
-                                ? props.handleListClick("edit", item)
-                                : props.handleListClick("add", item);
-                            }}
-                          >
-                            {currentLanguageCode === "en"
-                              ? item.englishName
-                              : item.arabicName}
-                          </li>
-                        ))}
-                    </Accordion.Body>
-                  </Accordion.Item>
-                ))}
-              </Accordion>
-            ) : (
-              filteredList.map((item) => (
-                <li
-                  key={item.id}
-                  onClick={(event) => {
-                    props.registered
-                      ? props.handleListClick("edit", item)
-                      : props.handleListClick("add", item);
-                  }}
-                >
-                  {currentLanguageCode === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </li>
-              ))
-            )}
+        <Accordion.Body className="registerationContainer-menu-searchList">
+          <div className="registerationContainer-menu-search">
+            <input
+              type="text"
+              placeholder={t("courses.name")}
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.target.value)}
+            />
           </div>
+          {searchValue === "" ? (
+            <Accordion
+              defaultActiveKey="0"
+              alwaysOpen
+              className="registerationContainer-menu-collapse"
+            >
+              {levels.map((item) => (
+                <Accordion.Item
+                  eventKey={item.id}
+                  key={item.id}
+                  className="registerationContainer-menu-collapse-item"
+                >
+                  <Accordion.Header>
+                    {currentLanguageCode === "en"
+                      ? item.englishName || ""
+                      : item.arabicName || ""}{" "}
+                  </Accordion.Header>
+
+                  <Accordion.Body
+                    className="registerationContainer-menu-list"
+                    style={{ padding: "0" }}
+                  >
+                    {filteredList
+                      .filter((obj) => obj.levelId === item.id)
+                      .map((item) => (
+                        <li
+                          key={item.id}
+                          onClick={(event) => {
+                            props.registered
+                              ? props.handleListClick("edit", item)
+                              : props.handleListClick("add", item);
+                          }}
+                        >
+                          {currentLanguageCode === "en"
+                            ? item.englishName
+                            : item.arabicName}
+                        </li>
+                      ))}
+                  </Accordion.Body>
+                </Accordion.Item>
+              ))}
+            </Accordion>
+          ) : (
+            filteredList.map((item) => (
+              <li
+                key={item.id}
+                onClick={(event) => {
+                  props.registered
+                    ? props.handleListClick("edit", item)
+                    : props.handleListClick("add", item);
+                }}
+              >
+                {currentLanguageCode === "en"
+                  ? item.englishName
+                  : item.arabicName}
+              </li>
+            ))
+          )}
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>

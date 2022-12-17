@@ -33,8 +33,8 @@ export const CourseRegister = (props) => {
   const labHoursRef = useRef();
   const currentLanguageCode = cookies.get("i18next") || "en";
   const menus = [
-    { id: 1, title: "registered course", registered: true },
-    { id: 2, title: "adminNavbar.academic" },
+    { id: 1, title: "adminNavbar.academic" },
+    { id: 2, title: "registered course", registered: true },
   ];
 
   useEffect(() => {
@@ -137,16 +137,18 @@ export const CourseRegister = (props) => {
 
   return (
     <div className="registerationContainer-body">
-      {menus.map((menu) => (
-        <CoursesSidebar
-          key={menu.id}
-          title={menu.title}
-          listData={menu.registered ? registeredCourses : programCourses}
-          handleListClick={handleListClick}
-          registered={menu.registered}
-          eventKey={menu.id}
-        />
-      ))}
+      <div className="registerationContainer-menu">
+        {menus.map((menu) => (
+          <CoursesSidebar
+            key={menu.id}
+            title={menu.title}
+            listData={menu.registered ? registeredCourses : programCourses}
+            handleListClick={handleListClick}
+            registered={menu.registered}
+            eventKey={menu.id}
+          />
+        ))}
+      </div>
       <div className="registerationContainer-form">
         <h3>
           {currentLanguageCode === "en"

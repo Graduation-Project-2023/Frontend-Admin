@@ -27,28 +27,26 @@ export const StudySchedules = () => {
   }, []);
 
   return (
-    <div className="container">
-      <FormNavbarContainer>
-        <div className="portal-body">
-          <h5 className="portal-title">{t("levels.table")}</h5>
-          <div className="portal-list">
-            {levels.map((item) => {
-              return (
-                <li
-                  key={item.id}
-                  onClick={() => {
-                    navigate(item.id);
-                  }}
-                >
-                  {currentLanguageCode === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </li>
-              );
-            })}
-          </div>
+    <FormNavbarContainer>
+      <div className="portal-body">
+        <h5 className="portal-title">{t("levels.table")}</h5>
+        <div className="portal-list">
+          {levels.map((item) => {
+            return (
+              <li
+                key={item.id}
+                onClick={() => {
+                  navigate(item.id);
+                }}
+              >
+                {currentLanguageCode === "en"
+                  ? item.englishName
+                  : item.arabicName}
+              </li>
+            );
+          })}
         </div>
-      </FormNavbarContainer>
-    </div>
+      </div>
+    </FormNavbarContainer>
   );
 };

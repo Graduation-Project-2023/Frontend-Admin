@@ -7,7 +7,6 @@ import axios from "axios";
 import cookies from "js-cookie";
 
 // Reusable Components
-import { Accordion } from "react-bootstrap";
 import { CoursesSidebar } from "./CoursesSidebar";
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 
@@ -24,12 +23,14 @@ export const CourseRegister = (props) => {
   });
   // eslint-disable-next-line
   const [error, setError] = useState();
+  // eslint-disable-next-line
+  const authContext = useAuth();
   const { courseId } = useParams();
   const location = useLocation();
-  const authContext = useAuth();
   const { t } = useTranslation();
-  const professorRef = useRef();
   const navigate = useNavigate();
+  const lectureHoursRef = useRef();
+  const labHoursRef = useRef();
   const currentLanguageCode = cookies.get("i18next") || "en";
   const menus = [
     { id: 1, title: "registered course", registered: true },
@@ -37,12 +38,10 @@ export const CourseRegister = (props) => {
   ];
 
   useEffect(() => {
-    console.log("wtf");
     setLevels(props.levels);
   }, [props.levels]);
 
   useEffect(() => {
-    console.log("wtf");
     setProgramCourses(props.programCourses);
   }, [props.programCourses]);
 
@@ -156,57 +155,46 @@ export const CourseRegister = (props) => {
         </h3>
         <form onSubmit={handleFormSubmit}>
           <div className="registerationContainer-form-inputs">
-            <div className="row mb-4">
-              <label className="col-sm-4 col-form-label">
-                {t(`courses.name`)}
-              </label>
-              <div className="col-sm-8">
-                <input
-                  className="form-control"
-                  value={
-                    currentLanguageCode === "en"
-                      ? courseData?.englishName || ""
-                      : courseData?.arabicName || ""
-                  }
-                  readOnly
-                  disabled
-                />
-              </div>
+            <div className="form-group row mb-4">
+              <label className="col-form-label">{t(`courses.name`)}</label>
+              <input
+                className="form-control"
+                value={
+                  currentLanguageCode === "en"
+                    ? courseData?.englishName || ""
+                    : courseData?.arabicName || ""
+                }
+                readOnly
+                disabled
+              />
             </div>
-            <div className="row mb-4">
+            <div className="form-group row mb-4">
               <label className="col-sm-4 col-form-label">
                 {t(`courses.code`)}
               </label>
-              <div className="col-sm-8">
-                <input
-                  className="form-control"
-                  value={courseData?.code || ""}
-                  readOnly
-                  disabled
-                />
-              </div>
+
+              <input
+                className="form-control"
+                value={courseData?.code || ""}
+                readOnly
+                disabled
+              />
             </div>
-            <div className="row mb-4">
-              <label className="col-sm-4 col-form-label">
-                {t(`el mostawa`)}
-              </label>
-              <div className="col-sm-8">
-                <select
-                  className="form-select"
-                  value={courseData?.levelId || ""}
-                >
-                  {levels.map((level) => (
-                    <option key={level.id} value={level.id}>
-                      {level.level}&nbsp;-&nbsp;
-                      {currentLanguageCode === "en"
-                        ? level.englishName
-                        : level.arabicName}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group row mb-4">
+              <label className="col-form-label">{t(`el mostawa`)}</label>
+
+              <select className="form-select" value={courseData?.levelId || ""}>
+                {levels.map((level) => (
+                  <option key={level.id} value={level.id}>
+                    {level.level}&nbsp;-&nbsp;
+                    {currentLanguageCode === "en"
+                      ? level.englishName
+                      : level.arabicName}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="row mb-4">
+            <div className="form-group row mb-4">
               <DropdownSearch
                 name={profData}
                 menuData={[]}

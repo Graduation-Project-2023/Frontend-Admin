@@ -55,7 +55,7 @@ export const FormInput = (props) => {
       <div className="row">
         {inputData.splitRow.map((item) => {
           return (
-            <div className="form-group col-sm-5 mb-3" key={item.id}>
+            <div className=" col-sm-5 mb-3" key={item.id}>
               <label className="form-label">{t(item.title)}</label>
               {item.options ? (
                 <select

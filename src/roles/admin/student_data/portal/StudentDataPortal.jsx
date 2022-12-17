@@ -4,17 +4,23 @@ import { useTranslation } from "react-i18next";
 import { StudentFormData } from "./StudentFormData";
 import axios from "axios";
 import { BASE_URL } from "../../../../shared/API";
+import styles from "./StudentDataPortal.module.scss";
 
 // Reusable Components
 import { Accordion } from "react-bootstrap";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { FormInput } from "../../../../components/forms/FormInput";
+import cookies from "js-cookie";
 
 export const StudentDataPortal = () => {
   const { t } = useTranslation();
+  const currentLanguageCode = cookies.get("i18next") || "en";
   const [studentData, setStudentData] = useState([]);
+  const [filteredStudentData, setFilteredStudentData] = useState([]);
   const [updatedData, setUpdatedData] = useState({});
+  const [searchValue, setSearchValue] = useState("");
   const [genderMale, setGenderMale] = useState(false);
+  const [showStudents, setShowStudents] = useState(false);
   const nationalIdRef = useRef();
   const { studentId } = useParams();
   const navigate = useNavigate();
@@ -35,6 +41,15 @@ export const StudentDataPortal = () => {
     }
     // eslint-disable-next-line
   }, [studentId]);
+  useEffect(() => {
+    setFilteredStudentData(
+      studentData.filter(
+        (item) =>
+          item.englishName?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.arabicName?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    );
+  }, [searchValue]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -89,55 +104,89 @@ export const StudentDataPortal = () => {
   return (
     <div className="container">
       <FormNavbarContainer>
-        <div className="collapseSectionCard">
-          <form onSubmit={handleFormSubmit}>
-            <Accordion
-              defaultActiveKey={["0"]}
-              alwaysOpen
-              className="collapseSection"
-            >
-              {StudentFormData.map((item) => {
-                if (
-                  (studentId === "register" || studentId === undefined) &&
-                  item.addStudent
-                ) {
-                  return null;
-                }
-                if (item.male && !genderMale) {
-                  return null;
-                }
-                return (
-                  <Accordion.Item eventKey={item.id} key={item.id}>
-                    <Accordion.Header>{t(item.title)}</Accordion.Header>
-                    <Accordion.Body>
-                      {item.formData.map((data) => {
-                        return (
-                          <FormInput
-                            inputData={data}
-                            handleEditFormChange={handleEditFormChange}
-                            valueData={studentData}
-                            key={data.id}
-                          />
-                        );
-                      })}
-                    </Accordion.Body>
-                  </Accordion.Item>
-                );
-              })}
+        <div className={styles.studentBody}>
+          <div className={styles.studentBody_students}>
+            <h3>
+              {t(`registeration.menu`)}
+              <span>number of students</span>
+            </h3>
+
+            <div className={styles.studentBody_students_search}>
+              <input
+                type="text"
+                placeholder={t("registeration.search")}
+                value={searchValue}
+              />
               <button
-                type="submit"
-                className="form-card-button form-card-button-save"
+                onClick={() => {
+                  setShowStudents(true);
+                }}
               >
-                {t(`common.save`)}
+                Search
               </button>
-              <button
-                type="reset"
-                className="form-card-button form-card-button-cancel"
+            </div>
+            {showStudents && (
+              <div className={styles.studentBody_students_list}>
+                {setFilteredStudentData.map((item) => (
+                  <li key={item.id}>
+                    {currentLanguageCode === "en"
+                      ? item.englishName
+                      : item.arabicName}
+                  </li>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className={styles.studentBody_data}>
+            <form onSubmit={handleFormSubmit}>
+              <Accordion
+                defaultActiveKey={["0"]}
+                alwaysOpen
+                className="collapseSection"
               >
-                {t(`common.cancel`)}
-              </button>
-            </Accordion>
-          </form>
+                {StudentFormData.map((item) => {
+                  if (
+                    (studentId === "register" || studentId === undefined) &&
+                    item.addStudent
+                  ) {
+                    return null;
+                  }
+                  if (item.male && !genderMale) {
+                    return null;
+                  }
+                  return (
+                    <Accordion.Item eventKey={item.id} key={item.id}>
+                      <Accordion.Header>{t(item.title)}</Accordion.Header>
+                      <Accordion.Body style={{ margin: "2rem" }}>
+                        {item.formData.map((data) => {
+                          return (
+                            <FormInput
+                              inputData={data}
+                              handleEditFormChange={handleEditFormChange}
+                              valueData={studentData}
+                              key={data.id}
+                            />
+                          );
+                        })}
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  );
+                })}
+                <button
+                  type="submit"
+                  className="form-card-button form-card-button-save"
+                >
+                  {t(`common.save`)}
+                </button>
+                <button
+                  type="reset"
+                  className="form-card-button form-card-button-cancel"
+                >
+                  {t(`common.cancel`)}
+                </button>
+              </Accordion>
+            </form>
+          </div>
         </div>
       </FormNavbarContainer>
     </div>

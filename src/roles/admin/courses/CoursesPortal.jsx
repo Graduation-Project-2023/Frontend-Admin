@@ -142,7 +142,7 @@ export const CoursesPortal = () => {
               className="form-card-button form-card-button-delete"
               onClick={handleCourseDelete}
             >
-              {t(`common.7azf el mokarar`)}
+              {t(`common.delete`)}
             </button>
           )}
         </form>

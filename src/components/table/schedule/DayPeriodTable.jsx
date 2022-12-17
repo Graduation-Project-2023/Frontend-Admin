@@ -1,29 +1,30 @@
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import styles from "./table.module.scss";
-import {
-  ScheduleTableBody,
-  ScheduleTableHeader,
-  BackendData,
-} from "./studytabledata";
+import styles from "./DayPeriodTable.module.scss";
+import { ScheduleTableBody, ScheduleTableHeader } from "./DayPeriodData";
 
-export const StudyTable = (props) => {
+export const DayPeriodTable = (props) => {
+  const [cells, setCells] = useState({
+    occupied: [],
+    available: [],
+  });
+  const [tableData, setTableData] = useState(props.tableData);
   const { t } = useTranslation();
-  const [cellsOccupied, setCellsOccupied] = useState([]);
-  const [cellsAvailable, setCellsAvailable] = useState([]);
-  const [showModal, setShowModal] = useState({ state: false, data: null });
-  const [backendTable, setBackendTable] = useState(BackendData);
-  const endsAtRef = useRef();
 
   useEffect(() => {
+    setTableData(props.tableData);
+  }, [props.tableData]);
+
+  useEffect(() => {
+    if (tableData.length === 0) return;
     const occupiedCells = [];
-    backendTable.forEach((item) => {
+    tableData.forEach((item) => {
       for (let i = item.startPeriod; i <= item.endPeriod; i++) {
         occupiedCells.push({ period: i, day: item.day });
       }
     });
-    let availableCells = [];
 
+    let availableCells = [];
     ScheduleTableBody.forEach((item) => {
       for (let i = 1; i <= 20; i++) {
         availableCells.push({ period: i, day: item.day });
@@ -34,25 +35,22 @@ export const StudyTable = (props) => {
         return cell.period === item.period && cell.day === item.day;
       });
     });
-    setCellsAvailable(availableCells);
-    setCellsOccupied(occupiedCells);
-  }, [backendTable]);
-
-  const TestingAddSubject = () => {
-    const newSubject = {
-      id: "etgaeg",
-      day: showModal.data.day,
-      startPeriod: showModal.data.startsAt,
-      endPeriod: endsAtRef.current.value,
-      englishName: "hhhhhhh",
-      arabicName: "ههههه",
-    };
-    setBackendTable((prev) => [...prev, newSubject]);
-    setShowModal({ state: false, data: null });
-  };
+    setCells((current) => {
+      return {
+        ...current,
+        occupied: occupiedCells,
+        available: availableCells,
+      };
+    });
+    // eslint-disable-next-line
+  }, [tableData]);
 
   return (
-    <form>
+    <form
+      onSubmit={(event) => {
+        props.saveTableData(event, tableData);
+      }}
+    >
       <div className={styles.tableContainer_tableCard}>
         <table
           className={` table  table-bordered ${styles.tableContainer_scroll}`}
@@ -90,7 +88,7 @@ export const StudyTable = (props) => {
 
           <tbody>
             {ScheduleTableBody.map((item) => {
-              const backendTableFiltered = backendTable.filter(
+              const backendTableFiltered = tableData.filter(
                 (day) => item.day === day.day
               );
               return (
@@ -105,7 +103,10 @@ export const StudyTable = (props) => {
                         <td
                           key={cell.period}
                           onClick={(event) => {
-                            props.occupiedCellClick(cellFilter[0]);
+                            props.occupiedCellClick(
+                              cellFilter[0],
+                              cells.available
+                            );
                           }}
                           className={styles.filled_cell}
                           colSpan={
@@ -136,7 +137,10 @@ export const StudyTable = (props) => {
                                   borderBottom: "1px solid black",
                                 }}
                                 onClick={(event) => {
-                                  props.occupiedCellClick(item);
+                                  props.occupiedCellClick(
+                                    item,
+                                    cells.available
+                                  );
                                 }}
                               >
                                 {item.arabicName}
@@ -146,7 +150,7 @@ export const StudyTable = (props) => {
                         </td>
                       );
                     } else if (
-                      cellsOccupied?.filter(
+                      cells.occupied?.filter(
                         (obj) =>
                           obj.period === cell.period && obj.day === item.day
                       ).length !== 0
@@ -157,10 +161,13 @@ export const StudyTable = (props) => {
                         <td
                           key={cell.period}
                           onClick={(event) => {
-                            props.emptyCellClick({
-                              cellNo: cell.period,
-                              day: item.day,
-                            });
+                            props.emptyCellClick(
+                              {
+                                cellNo: cell.period,
+                                day: item.day,
+                              },
+                              cells.available
+                            );
                           }}
                           className={styles.empty_cell}
                         ></td>

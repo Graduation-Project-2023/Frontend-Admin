@@ -7,12 +7,17 @@ export const Sidebar = (props) => {
   const sidebarData = props.sideData;
   const [searchValue, setSearchValue] = useState("");
   const [filteredMenu, setFilteredMenu] = useState([]);
+  const [userUX, setUserUX] = useState({});
   const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
 
   useEffect(() => {
     setFilteredMenu(props.sideData);
   }, [props.sideData]);
+
+  useEffect(() => {
+    setUserUX(props.userUX);
+  }, [props.userUX]);
 
   useEffect(() => {
     setFilteredMenu(
@@ -44,7 +49,6 @@ export const Sidebar = (props) => {
           />
         </div>
       )}
-
       <ul className="sidebar-list">
         {filteredMenu.map((item) => {
           return (

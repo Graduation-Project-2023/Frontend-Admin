@@ -11,7 +11,6 @@ import { StudySchedulesRoutes } from "./schedules/StudySchedulesRoutes";
 import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
 import { NotFound } from "../../pages/NotFound";
 import { CoursesRoutes } from "./courses/CoursesRoutes";
-import { StudyTable } from "./testing/studytable";
 
 export function AdminRoutes() {
   return (
@@ -35,7 +34,7 @@ export function AdminRoutes() {
         <Route path="finance" element={<LevelHours />} />
         <Route path="absence" element={<LevelHours />} />
         <Route path="supervision" element={<LevelHours />} />
-        <Route path="control_system" element={<StudyTable />} />
+        <Route path="control_system" element={<LevelHours />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

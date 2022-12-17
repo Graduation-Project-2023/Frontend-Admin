@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import cookies from "js-cookie";
+
+// Reusable Components
 import Modal from "react-bootstrap/Modal";
 
 export const ModalPopup = (props) => {

@@ -180,7 +180,9 @@
     "eng_des": "Course description in English",
     "grade": "Minimum Passing Percentage",
     "added_gpa": "Added to GPA",
-    "formhead": "Course Data"
+    "formhead": "Course Data",
+    "sidebar": "College Courses",
+    "add": "Add New Course"
   },
   "levels": {
     "level": "Level",

@@ -3,14 +3,15 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
 import { BASE_URL } from "../../../../shared/API";
-import styles from "../../testing/table.module.scss";
 import cookies from "js-cookie";
+import styles from "../../../../components/table/schedule/DayPeriodTable.module.scss";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
-import { StudyTable } from "../../testing/studytable";
+import { DayPeriodTable } from "../../../../components/table/schedule/DayPeriodTable";
 import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
+import { TablePopup } from "./TablePopup";
 
 export const LevelSchedule = () => {
   const [tableData, setTableData] = useState([]);
@@ -19,7 +20,10 @@ export const LevelSchedule = () => {
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
   const [error, setError] = useState();
-  const [showModal, setShowModal] = useState({ state: false, data: null });
+  const [showModal, setShowModal] = useState({
+    add: { state: false, data: null },
+    edit: { state: false, data: null },
+  });
   const { levelId } = useParams();
   const endsAtRef = useRef();
   const authContext = useAuth();
@@ -30,34 +34,50 @@ export const LevelSchedule = () => {
     axios
       .get(
         BASE_URL +
-          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
+          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
       )
       .then((res) => {
-        console.log(res);
-        // setTableData(res.data);
+        console.log(res.data);
+        setTableData(res.data.classes);
       })
       .catch((error) => {
         console.log(error);
       });
 
-    // GET request to get all levels of a specific program
-    axios
-      .get(BASE_URL + `/programs/${authContext.program.id}/levels`)
-      .then((res) => {
-        setLevels(res.data);
-      })
-      .catch((error) => {
-        setError(error);
-        console.log(error);
-      });
+    setLevels(authContext.program.levels);
     // eslint-disable-next-line
   }, [authContext.program.id, levelId]);
 
-  const emptyCellClick = (item) => {
-    console.log(item);
+  const emptyCellClick = (cell, availableCells) => {
+    setShowModal((current) => {
+      return {
+        ...current,
+        add: {
+          state: true,
+          data: { cellData: cell, availableCells: availableCells },
+        },
+      };
+    });
   };
 
-  const occupiedCellClick = (item) => {
+  const occupiedCellClick = (subject, availableCells) => {
+    setShowModal((current) => {
+      return {
+        ...current,
+        edit: {
+          state: true,
+          data: { cellData: subject, availableCells: availableCells },
+        },
+      };
+    });
+  };
+
+  const handlePopupSubmit = () => {
+    console.log("hi");
+  };
+
+  const saveTableData = (event, item) => {
+    event.preventDefault();
     console.log(item);
   };
 
@@ -100,40 +120,44 @@ export const LevelSchedule = () => {
           </h6>
         </div>
 
-        <StudyTable
+        <DayPeriodTable
           tableData={tableData}
           emptyCellClick={emptyCellClick}
           occupiedCellClick={occupiedCellClick}
+          saveTableData={saveTableData}
         />
       </FormNavbarContainer>
-      {showModal.state && (
-        <ModalPopup
-          title={"add to table"}
-          closeModal={() => {
-            setShowModal({ state: false });
+      {showModal.add.state && (
+        <TablePopup
+          title={"add subject to table"}
+          close={() => {
+            setShowModal((current) => {
+              return {
+                ...current,
+                add: { state: false, data: null },
+              };
+            });
           }}
-          child={true}
-        >
-          <div className="d-flex justify-content-center">
-            <div className="d-flex flex-column">
-              <div className="d-flex justify-content-center">
-                <h5>Day: {showModal.data.day}</h5>
-              </div>
-              <div className="d-flex justify-content-center">
-                <h5>Period {showModal.data.startPeriod}</h5>
-              </div>
-              <div>
-                Ends at : <input ref={endsAtRef} type="number" />
-                <div
-                  className="btn btn-primary"
-                  // onClick={TestingAddSubject}
-                >
-                  Add Subject Here
-                </div>
-              </div>
-            </div>
-          </div>
-        </ModalPopup>
+          state={"add"}
+          submit={handlePopupSubmit}
+          cellData={showModal.add.data}
+        />
+      )}
+      {showModal.edit.state && (
+        <TablePopup
+          title={"edit subject"}
+          close={() => {
+            setShowModal((current) => {
+              return {
+                ...current,
+                edit: { state: false, data: null },
+              };
+            });
+          }}
+          state={"edit"}
+          submit={handlePopupSubmit}
+          cellData={showModal.edit.data}
+        />
       )}
     </>
   );

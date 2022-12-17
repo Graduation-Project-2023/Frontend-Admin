@@ -36,22 +36,20 @@ export const CoursesRegPortal = () => {
   }, [authContext.program.id]);
 
   return (
-    <div className="container">
-      <FormNavbarContainer>
-        {courseId === undefined ? (
-          <CoursesRegisteration
-            programCourses={courses}
-            levels={levels}
-            loading={loading}
-          />
-        ) : (
-          <CourseRegister
-            programCourses={courses}
-            levels={levels}
-            loading={loading}
-          />
-        )}
-      </FormNavbarContainer>
-    </div>
+    <FormNavbarContainer>
+      {courseId === undefined ? (
+        <CoursesRegisteration
+          programCourses={courses}
+          levels={levels}
+          loading={loading}
+        />
+      ) : (
+        <CourseRegister
+          programCourses={courses}
+          levels={levels}
+          loading={loading}
+        />
+      )}
+    </FormNavbarContainer>
   );
 };

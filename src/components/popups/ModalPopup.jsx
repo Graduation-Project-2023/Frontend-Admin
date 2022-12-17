@@ -40,7 +40,9 @@ export const ModalPopup = (props) => {
     <Modal show={true} onHide={hideModal} className="popup">
       <Modal.Header className="popup_header">
         <Modal.Title className="popup_title">{t(props.title)}</Modal.Title>
-        <button className="popup_close" onClick={hideModal}>X</button>
+        <button className="popup_close" onClick={hideModal}>
+          X
+        </button>
         {props.searchable && (
           <input
             type="text"
@@ -70,7 +72,7 @@ export const ModalPopup = (props) => {
             })}
           </div>
         )}
-        {props.form?.state && <>{props.children}</>}
+        {props.child && <>{props.children}</>}
       </Modal.Body>
     </Modal>
   );

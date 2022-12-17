@@ -33,7 +33,11 @@ export const DropdownSearch = (props) => {
       <div className="col-sm-4">
         <Dropdown className="progCourses" autoClose={true}>
           <Dropdown.Toggle id="dropdown-autoclose-true">
-            {props.specialData?.id || t("courses.chooseCode")}
+            {props.name
+              ? currentLanguageCode === "en"
+                ? props.name?.englishName || t("courses.choose prof name")
+                : props.name?.arabicName || t("courses.choose prof name")
+              : props.specialData?.id || t("courses.chooseCode")}
           </Dropdown.Toggle>
 
           <Dropdown.Menu className="progCourses_menu">

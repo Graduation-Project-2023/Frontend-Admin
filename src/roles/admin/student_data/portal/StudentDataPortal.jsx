@@ -87,59 +87,57 @@ export const StudentDataPortal = () => {
   };
 
   return (
-    <div className="container">
-      <FormNavbarContainer>
-        <div className="collapseSectionCard">
-          <form onSubmit={handleFormSubmit}>
-            <Accordion
-              defaultActiveKey={["0"]}
-              alwaysOpen
-              className="collapseSection"
+    <FormNavbarContainer>
+      <div className="collapseSectionCard">
+        <form onSubmit={handleFormSubmit}>
+          <Accordion
+            defaultActiveKey={["0"]}
+            alwaysOpen
+            className="collapseSection"
+          >
+            {StudentFormData.map((item) => {
+              if (
+                (studentId === "register" || studentId === undefined) &&
+                item.addStudent
+              ) {
+                return null;
+              }
+              if (item.male && !genderMale) {
+                return null;
+              }
+              return (
+                <Accordion.Item eventKey={item.id} key={item.id}>
+                  <Accordion.Header>{t(item.title)}</Accordion.Header>
+                  <Accordion.Body>
+                    {item.formData.map((data) => {
+                      return (
+                        <FormInput
+                          inputData={data}
+                          handleEditFormChange={handleEditFormChange}
+                          valueData={studentData}
+                          key={data.id}
+                        />
+                      );
+                    })}
+                  </Accordion.Body>
+                </Accordion.Item>
+              );
+            })}
+            <button
+              type="submit"
+              className="form-card-button form-card-button-save"
             >
-              {StudentFormData.map((item) => {
-                if (
-                  (studentId === "register" || studentId === undefined) &&
-                  item.addStudent
-                ) {
-                  return null;
-                }
-                if (item.male && !genderMale) {
-                  return null;
-                }
-                return (
-                  <Accordion.Item eventKey={item.id} key={item.id}>
-                    <Accordion.Header>{t(item.title)}</Accordion.Header>
-                    <Accordion.Body>
-                      {item.formData.map((data) => {
-                        return (
-                          <FormInput
-                            inputData={data}
-                            handleEditFormChange={handleEditFormChange}
-                            valueData={studentData}
-                            key={data.id}
-                          />
-                        );
-                      })}
-                    </Accordion.Body>
-                  </Accordion.Item>
-                );
-              })}
-              <button
-                type="submit"
-                className="form-card-button form-card-button-save"
-              >
-                {t(`common.save`)}
-              </button>
-              <button
-                type="reset"
-                className="form-card-button form-card-button-cancel"
-              >
-                {t(`common.cancel`)}
-              </button>
-            </Accordion>
-          </form>
-        </div>
-      </FormNavbarContainer>
-    </div>
+              {t(`common.save`)}
+            </button>
+            <button
+              type="reset"
+              className="form-card-button form-card-button-cancel"
+            >
+              {t(`common.cancel`)}
+            </button>
+          </Accordion>
+        </form>
+      </div>
+    </FormNavbarContainer>
   );
 };

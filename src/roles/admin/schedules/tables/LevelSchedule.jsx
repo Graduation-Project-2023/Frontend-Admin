@@ -62,7 +62,7 @@ export const LevelSchedule = () => {
   };
 
   return (
-    <div className="container">
+    <>
       <FormNavbarContainer>
         <div className={styles.tableContainer_level}>
           <Dropdown>
@@ -112,7 +112,7 @@ export const LevelSchedule = () => {
           closeModal={() => {
             setShowModal({ state: false });
           }}
-          form={{ state: true }}
+          child={true}
         >
           <div className="d-flex justify-content-center">
             <div className="d-flex flex-column">
@@ -135,6 +135,6 @@ export const LevelSchedule = () => {
           </div>
         </ModalPopup>
       )}
-    </div>
+    </>
   );
 };

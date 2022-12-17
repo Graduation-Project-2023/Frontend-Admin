@@ -27,7 +27,7 @@ export const SearchContainer = (props) => {
   }, [listData]);
   return (
     <div className="portal-body">
-      {!props.listLoading && filteredList.length === 0 ? (
+      {!props.listLoading && listData.length === 0 ? (
         <h5 className="d-flex justify-content-center portal-title">
           {t(props.emptyListPlaceholder)}
         </h5>
@@ -36,7 +36,7 @@ export const SearchContainer = (props) => {
       )}
 
       {!props.listLoading &&
-        (filteredList.length === 0 ? (
+        (listData.length === 0 ? (
           ""
         ) : (
           <div className="portal-search">
@@ -65,20 +65,22 @@ export const SearchContainer = (props) => {
           <div>list with search loading component</div>
         ) : (
           <div className="portal-list">
-            {filteredList.map((item) => {
-              return (
-                <li
-                  key={item.id}
-                  onClick={(event) => {
-                    props.handleListClick(item);
-                  }}
-                >
-                  {currentLanguageCode === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </li>
-              );
-            })}
+            {filteredList.length === 0
+              ? listData.length !== 0 && <li>la yooogd mokrrat bhza el esm</li>
+              : filteredList.map((item) => {
+                  return (
+                    <li
+                      key={item.id}
+                      onClick={(event) => {
+                        props.handleListClick(item);
+                      }}
+                    >
+                      {currentLanguageCode === "en"
+                        ? item.englishName
+                        : item.arabicName}
+                    </li>
+                  );
+                })}
           </div>
         )}
       </div>

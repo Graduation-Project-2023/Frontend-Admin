@@ -46,7 +46,7 @@ export const AcademicFormData = [
         ],
       },
       {
-        id: 3,
+        id: 4,
         splitRow: [
           {
             id: 1,
@@ -80,7 +80,6 @@ export const AcademicFormData = [
       {
         id: 1,
         credit: true,
-
         splitRow: [
           {
             id: 1,
@@ -100,7 +99,6 @@ export const AcademicFormData = [
       {
         id: 2,
         credit: true,
-
         splitRow: [
           {
             id: 1,

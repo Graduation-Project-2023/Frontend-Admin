@@ -1,13 +1,11 @@
 .progCourses {
   & button {
-    color: white;
-    background-color: #6892c5;
-    border: 1px solid#6892C5;
+    @include colorandback(white, $Blue2);
+    border: 1px solid $Blue2;
     width: 25rem;
 
     &:hover {
-      background-color: rgba(13, 13, 80, 0.753);
-      color: black;
+      @include colorandback(black, rgba(13, 13, 80, 0.753));
     }
   }
   &_menu {
@@ -18,27 +16,23 @@
     }
     &_searchList {
       list-style: none;
-      color: #686d72;
-      font: normal 400 1rem/1.3rem "Inter";
-      max-height: 10rem;
-      overflow: scroll;
-      overflow-x: hidden;
+      color: $Grey4;
+      @include font(1rem, 1.3rem);
+      @include overflow(10, scroll, hidden);
       padding: 0;
       margin: 0;
 
       & a {
         padding: 1rem;
-        border-bottom: solid#EDE7E7 0.5px;
+        border-bottom: solid $White3 0.5px;
         & div {
-          display: flex;
+          @include flex("", "", 30);
           flex-direction: row;
-          gap: 30px;
         }
       }
 
       & :hover {
-        background-color: #3d7dca;
-        color: white;
+        @include colorandback(white, $Blue4);
         cursor: pointer;
       }
     }

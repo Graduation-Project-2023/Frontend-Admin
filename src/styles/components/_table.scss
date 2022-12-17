@@ -4,13 +4,13 @@
   padding: 2rem;
   margin: 2rem;
   & h3 {
-    color: #858d97;
-    font: normal 400 2.5rem/3rem "Inter";
+    color: $Grey3;
+    @include font(2.5rem, 3rem);
     padding: 0rem 0 3rem 0;
   }
   & h4 {
     font: normal "Inter";
-    color: #858d97;
+    color: $Grey3;
     padding: 0rem 0 1rem 0;
   }
   & table {
@@ -19,15 +19,15 @@
     .table-container {
       &-header {
         text-align: center;
-        color: #858d97;
-        font: normal 400 1.4rem/1.8rem "Inter";
-        border-top: 1px solid #d9d9d9;
+        color: $Grey3;
+        @include font(1.4rem, 1.8rem);
+        border-top: 1px solid $White5;
         padding: 1.5rem !important;
       }
       &-items {
         text-align: center;
-        color: #444444;
-        font: normal 400 1rem/1.3rem "Inter";
+        color: $Black2;
+        @include font(1rem, 1.3rem);
         padding: 1.5rem !important;
         &-button {
           border: none;

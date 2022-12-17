@@ -190,5 +190,6 @@ export const StudentDataPortal = () => {
         </div>
       </FormNavbarContainer>
     </div>
+
   );
 };

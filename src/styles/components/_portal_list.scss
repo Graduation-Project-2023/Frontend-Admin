@@ -3,12 +3,12 @@
     background-color: white;
     margin: 2rem;
     border-radius: 10px;
-    border: 1px solid#BBBDC080;
+    border: 1px solid $Grey1;
   }
   &-title {
     padding: 2rem 5rem 0.8rem 5rem;
-    font: normal 400 2rem/2.5rem "inter";
-    color: #3d7dca;
+    @include font(2rem, 2.5rem);
+    color: $Blue4;
   }
   &-search {
     width: 80%;
@@ -21,10 +21,10 @@
 
     li {
       padding: 1.5rem 5rem;
-      border-top: solid #ede7e7 1px;
+      border-top: solid $White3 1px;
     }
     li:hover {
-      background-color: #3d7dca;
+      background-color: $Blue4;
       color: white;
       cursor: pointer;
     }

@@ -1,10 +1,10 @@
 .collapsetable {
-  border: #c8cacd solid 1px;
+  border: $White6 solid 1px;
   border-radius: 10px;
   margin: 2rem;
   & h3 {
-    color: #686d72;
-    font: normal 400 1.8rem / rem "Inter";
+    color: $Grey4;
+    @include font(1.8rem, 1rem);
     padding: 1rem;
   }
   &-scroll {
@@ -16,7 +16,7 @@
       max-height: 30vh;
 
       & tr:hover {
-        background-color: #3d7dca;
+        background-color: $Blue4;
         cursor: pointer;
         & td {
           color: white;
@@ -37,15 +37,15 @@
     }
   }
   &-header {
-    color: #858d97;
-    font: normal 400 1.4rem/1.8rem "Inter";
-    border-top: 1px solid #d9d9d9;
+    color: $Grey3;
+    @include font(1.4rem, 1.8rem);
+    border-top: 1px solid $White5;
     padding: 1.3rem !important;
   }
 
   &-items {
-    color: #444444;
-    font: normal 400 1rem/1.3rem "Inter";
+    color: $Black2;
+    @include font(1rem, 1.3rem);
     padding: 1.3rem !important;
 
     &-icon {

@@ -43,19 +43,13 @@ export const AcademicPorgramsPortal = () => {
   }, []);
 
   useEffect(() => {
-    if (currentLanguageCode === "en") {
-      setFilteredPrograms(
-        programs.filter((item) =>
-          item.englishName.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredPrograms(
-        programs.filter((item) =>
+    setFilteredPrograms(
+      programs.filter(
+        (item) =>
+          item.englishName.toLowerCase().includes(searchValue.toLowerCase()) ||
           item.arabicName.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      );
-    }
+      )
+    );
     // eslint-disable-next-line
   }, [searchValue]);
 
@@ -87,6 +81,7 @@ export const AcademicPorgramsPortal = () => {
                 <li
                   key={item.id}
                   onClick={() => {
+                    console.log(item);
                     authContext.changeProgram(item);
                     navigate(`${item.id}/main`);
                   }}

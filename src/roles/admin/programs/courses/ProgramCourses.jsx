@@ -69,18 +69,8 @@ export const ProgramCourses = () => {
         console.log(error);
       });
 
-    // GET request to get all the program levels to display it in the level selection
-    axios
-      .get(BASE_URL + `/programs/${programId}/levels`)
-      .then((res) => {
-        setLevels(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error);
-        console.log(error);
-      });
+    setLevels(authContext.program.levels);
+    console.log(authContext.program);
     // eslint-disable-next-line
   }, [programId]);
 
@@ -528,7 +518,7 @@ export const ProgramCourses = () => {
               { id: 3, title: t(`courses.eng_name`) },
             ]}
             rowItems={programCourses.filter(
-              (course) => course.level.level === item.level
+              (course) => course.levelId === item.id
             )}
             onRowClick={handleFormEditSwitch}
           />

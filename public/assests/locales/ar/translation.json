@@ -29,7 +29,18 @@
     "gpaTo": "المعدل التراكمي الي",
     "future": "عمل مستقبلي",
     "choice_yes": "نعم",
-    "choice_no": "لا"
+    "choice_no": "لا",
+    "lecture": "محاضرة",
+    "lab": "معمل"
+  },
+  "week": {
+    "saturday": "السبت",
+    "sunday": "الاحد",
+    "monday": "الاثنين",
+    "tuesday": "الثلاثاء",
+    "wednesday": "الاربعاء",
+    "thursday": "الخميس",
+    "friday": "الجمعة"
   },
   "header": {
     "title": "العربية",

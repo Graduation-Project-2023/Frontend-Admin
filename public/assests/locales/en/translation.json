@@ -29,7 +29,18 @@
     "gpaFrom": "GPA From ",
     "gpaTo": "GPA To",
     "choice_yes": "Yes",
-    "choice_no": "No"
+    "choice_no": "No",
+    "lecture": "Lecture",
+    "lab": "Lab / Section"
+  },
+  "week": {
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday"
   },
   "header": {
     "title": "English",

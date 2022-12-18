@@ -5,6 +5,7 @@ import axios from "axios";
 import { BASE_URL } from "../../../../shared/API";
 import cookies from "js-cookie";
 import styles from "../../../../components/table/schedule/DayPeriodTable.module.scss";
+import { ScheduleTableBody } from "../../../../components/table/schedule/DayPeriodData";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
@@ -16,16 +17,14 @@ import { TablePopup } from "./TablePopup";
 export const LevelSchedule = () => {
   const [tableData, setTableData] = useState([]);
   const [levels, setLevels] = useState([]);
+  const [cells, setCells] = useState({ occupied: [], available: [] });
   // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
+  const [userUX, setUserUX] = useState(true);
   const [showModal, setShowModal] = useState({
     add: { state: false, data: null },
     edit: { state: false, data: null },
   });
   const { levelId } = useParams();
-  const endsAtRef = useRef();
   const authContext = useAuth();
   const currentLanguageCode = cookies.get("i18next") || "en";
 
@@ -37,7 +36,6 @@ export const LevelSchedule = () => {
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
       )
       .then((res) => {
-        console.log(res.data);
         setTableData(res.data.classes);
       })
       .catch((error) => {
@@ -48,37 +46,44 @@ export const LevelSchedule = () => {
     // eslint-disable-next-line
   }, [authContext.program.id, levelId]);
 
-  const emptyCellClick = (cell, availableCells) => {
+  const handleCellsSetter = (occupiedCells, availableCells) => {
+    setCells((current) => {
+      return {
+        ...current,
+        occupied: occupiedCells,
+        available: availableCells,
+      };
+    });
+  };
+
+  const emptyCellClick = (cell) => {
     setShowModal((current) => {
       return {
         ...current,
         add: {
           state: true,
-          data: { cellData: cell, availableCells: availableCells },
+          data: { cellData: cell, availableCells: cells.available },
         },
       };
     });
   };
 
-  const occupiedCellClick = (subject, availableCells) => {
+  const occupiedCellClick = (subject) => {
     setShowModal((current) => {
       return {
         ...current,
         edit: {
           state: true,
-          data: { cellData: subject, availableCells: availableCells },
+          data: { cellData: subject, availableCells: cells.available },
         },
       };
     });
   };
 
-  const handlePopupSubmit = () => {
-    console.log("hi");
-  };
+  const handlePopupSubmit = () => {};
 
   const saveTableData = (event, item) => {
     event.preventDefault();
-    console.log(item);
   };
 
   return (
@@ -121,6 +126,7 @@ export const LevelSchedule = () => {
         </div>
 
         <DayPeriodTable
+          cellsSetter={handleCellsSetter}
           tableData={tableData}
           emptyCellClick={emptyCellClick}
           occupiedCellClick={occupiedCellClick}
@@ -138,7 +144,6 @@ export const LevelSchedule = () => {
               };
             });
           }}
-          state={"add"}
           submit={handlePopupSubmit}
           cellData={showModal.add.data}
         />
@@ -154,7 +159,7 @@ export const LevelSchedule = () => {
               };
             });
           }}
-          state={"edit"}
+          edit={true}
           submit={handlePopupSubmit}
           cellData={showModal.edit.data}
         />

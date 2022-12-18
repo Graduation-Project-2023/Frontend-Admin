@@ -4,11 +4,8 @@ import styles from "./DayPeriodTable.module.scss";
 import { ScheduleTableBody, ScheduleTableHeader } from "./DayPeriodData";
 
 export const DayPeriodTable = (props) => {
-  const [cells, setCells] = useState({
-    occupied: [],
-    available: [],
-  });
   const [tableData, setTableData] = useState(props.tableData);
+  const [cells, setCells] = useState({ occupied: [], available: [] });
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -42,6 +39,7 @@ export const DayPeriodTable = (props) => {
         available: availableCells,
       };
     });
+    props.cellsSetter(occupiedCells, availableCells);
     // eslint-disable-next-line
   }, [tableData]);
 
@@ -53,7 +51,7 @@ export const DayPeriodTable = (props) => {
     >
       <div className={styles.tableContainer_tableCard}>
         <table
-          className={` table  table-bordered ${styles.tableContainer_scroll}`}
+          className={`table table-bordered ${styles.tableContainer_scroll}`}
         >
           <thead>
             <tr>
@@ -103,10 +101,7 @@ export const DayPeriodTable = (props) => {
                         <td
                           key={cell.period}
                           onClick={(event) => {
-                            props.occupiedCellClick(
-                              cellFilter[0],
-                              cells.available
-                            );
+                            props.occupiedCellClick(cellFilter[0]);
                           }}
                           className={styles.filled_cell}
                           colSpan={
@@ -137,10 +132,7 @@ export const DayPeriodTable = (props) => {
                                   borderBottom: "1px solid black",
                                 }}
                                 onClick={(event) => {
-                                  props.occupiedCellClick(
-                                    item,
-                                    cells.available
-                                  );
+                                  props.occupiedCellClick(item);
                                 }}
                               >
                                 {item.arabicName}
@@ -150,7 +142,7 @@ export const DayPeriodTable = (props) => {
                         </td>
                       );
                     } else if (
-                      cells.occupied?.filter(
+                      cells.occupied.filter(
                         (obj) =>
                           obj.period === cell.period && obj.day === item.day
                       ).length !== 0
@@ -161,13 +153,10 @@ export const DayPeriodTable = (props) => {
                         <td
                           key={cell.period}
                           onClick={(event) => {
-                            props.emptyCellClick(
-                              {
-                                cellNo: cell.period,
-                                day: item.day,
-                              },
-                              cells.available
-                            );
+                            props.emptyCellClick({
+                              cellNo: cell.period,
+                              day: item.day,
+                            });
                           }}
                           className={styles.empty_cell}
                         ></td>

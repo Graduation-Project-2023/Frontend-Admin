@@ -79,6 +79,7 @@ export const ProgramCourses = () => {
       return;
     }
     console.log(preCourses);
+    // eslint-disable-next-line
   }, [preCourses]);
 
   const handleEditFormChange = (event) => {

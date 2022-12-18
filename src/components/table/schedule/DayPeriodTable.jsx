@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 // import { CurrentLanguage } from "../../../shared/Language";
 import cookies from "js-cookie";

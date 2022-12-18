@@ -1,16 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
 import { BASE_URL } from "../../../../shared/API";
 import cookies from "js-cookie";
 import styles from "../../../../components/table/schedule/DayPeriodTable.module.scss";
-import { ScheduleTableBody } from "../../../../components/table/schedule/DayPeriodData";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
 import { DayPeriodTable } from "../../../../components/table/schedule/DayPeriodTable";
-import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { TablePopup } from "./TablePopup";
 

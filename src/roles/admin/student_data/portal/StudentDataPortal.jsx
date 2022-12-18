@@ -15,8 +15,10 @@ import { FormInput } from "../../../../components/forms/FormInput";
 
 export const StudentDataPortal = () => {
   const [studentData, setStudentData] = useState([]);
+  // eslint-disable-next-line
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
+  // eslint-disable-next-line
   const [updatedData, setUpdatedData] = useState({});
   const [searchValue, setSearchValue] = useState("");
   const [genderMale, setGenderMale] = useState(false);
@@ -26,6 +28,7 @@ export const StudentDataPortal = () => {
     studentDataLoading: false,
     emptyState: { state: false, message: "" },
   });
+  // eslint-disable-next-line
   const nationalIdRef = useRef();
   const { studentId } = useParams();
   const navigate = useNavigate();
@@ -59,6 +62,7 @@ export const StudentDataPortal = () => {
             item.arabicName?.toLowerCase().includes(searchValue.toLowerCase())
           )
     );
+    // eslint-disable-next-line
   }, [searchValue]);
 
   const handleEditFormChange = (event) => {

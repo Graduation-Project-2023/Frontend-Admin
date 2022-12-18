@@ -1,6 +1,5 @@
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { useNavigate } from "react-router-dom";
-import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../../shared/API";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -24,6 +23,7 @@ export const StudySchedules = () => {
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line
   }, []);
 
   return (

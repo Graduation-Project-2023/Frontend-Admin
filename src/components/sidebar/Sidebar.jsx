@@ -7,6 +7,7 @@ export const Sidebar = (props) => {
   const sidebarData = props.sideData;
   const [searchValue, setSearchValue] = useState("");
   const [filteredMenu, setFilteredMenu] = useState([]);
+  // eslint-disable-next-line
   const [userUX, setUserUX] = useState({});
   const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();

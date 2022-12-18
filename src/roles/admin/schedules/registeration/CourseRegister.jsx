@@ -2,7 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
+// eslint-disable-next-line
 import { BASE_URL } from "../../../../shared/API";
+// eslint-disable-next-line
 import axios from "axios";
 import cookies from "js-cookie";
 
@@ -11,12 +13,11 @@ import { CoursesSidebar } from "./CoursesSidebar";
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 
 export const CourseRegister = (props) => {
-  const lectureHourRef = useRef();
-  const sectionHourRef = useRef();
-  const creditHourRef = useRef();
   const [programCourses, setProgramCourses] = useState([]);
+  // eslint-disable-next-line
   const [registeredCourses, setRegisteredCourses] = useState([]);
   const [courseData, setCourseData] = useState({});
+  // eslint-disable-next-line
   const [profData, setProfData] = useState({ englishName: "", arabicName: "" });
   const [levels, setLevels] = useState([]);
   const [loading, setLoading] = useState({
@@ -24,6 +25,9 @@ export const CourseRegister = (props) => {
     sidebar: false,
     submit: false,
   });
+  const lectureHourRef = useRef();
+  const sectionHourRef = useRef();
+  const creditHourRef = useRef();
   // eslint-disable-next-line
   const [error, setError] = useState();
   // eslint-disable-next-line
@@ -32,8 +36,6 @@ export const CourseRegister = (props) => {
   const location = useLocation();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const lectureHoursRef = useRef();
-  const labHoursRef = useRef();
   const currentLanguageCode = cookies.get("i18next") || "en";
   const menus = [
     { id: 1, title: "adminNavbar.academic" },
@@ -144,7 +146,7 @@ export const CourseRegister = (props) => {
       event.target.value = +event.target.value;
     }
     if (
-      +lectureHourRef.current.value + +sectionHourRef.current.value !=
+      +lectureHourRef.current.value + +sectionHourRef.current.value !==
       creditHourRef.current.value
     ) {
       console.log("enter correct value");

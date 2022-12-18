@@ -28,50 +28,45 @@ export const DropdownSearch = (props) => {
   }, [searchValue]);
 
   return (
-    <>
-      <label className="col-sm-2 col-form-label">{t(props.label)}</label>
-      <div className="col-sm-4">
-        <Dropdown className="progCourses" autoClose={true}>
-          <Dropdown.Toggle id="dropdown-autoclose-true">
-            {props.name
-              ? currentLanguageCode === "en"
-                ? props.name?.englishName || t("courses.choose prof name")
-                : props.name?.arabicName || t("courses.choose prof name")
-              : props.specialData?.id || t("courses.chooseCode")}
-          </Dropdown.Toggle>
+    <Dropdown className="progCourses" autoClose={true}>
+      <Dropdown.Toggle id="dropdown-autoclose-true">
+        {props.name
+          ? currentLanguageCode === "en"
+            ? props.name?.englishName || t("courses.choose prof name")
+            : props.name?.arabicName || t("courses.choose prof name")
+          : props.specialData?.id || t("courses.chooseCode")}
+      </Dropdown.Toggle>
 
-          <Dropdown.Menu className="progCourses_menu">
-            <input
-              type="text"
-              onChange={(e) => setSearchValue(e.target.value)}
-              value={searchValue}
-              placeholder={t(props.inputPlaceholder)}
-              className="form-control"
-            />
-            <ul className="progCourses_menu_searchList">
-              {filteredMenu.map((item) => {
-                return (
-                  <Dropdown.Item
-                    key={item.id ? item.id : item.code}
-                    onClick={(event) => {
-                      props.handleListClick(item);
-                    }}
-                  >
-                    <div>
-                      <span>{props.codeEqualsId ? item.id : item.code}</span>
-                      <span>
-                        {currentLanguageCode === "en"
-                          ? item.englishName
-                          : item.arabicName}
-                      </span>
-                    </div>
-                  </Dropdown.Item>
-                );
-              })}
-            </ul>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
-    </>
+      <Dropdown.Menu className="progCourses_menu">
+        <input
+          type="text"
+          onChange={(e) => setSearchValue(e.target.value)}
+          value={searchValue}
+          placeholder={t(props.inputPlaceholder)}
+          className="form-control"
+        />
+        <ul className="progCourses_menu_searchList">
+          {filteredMenu.map((item) => {
+            return (
+              <Dropdown.Item
+                key={item.id ? item.id : item.code}
+                onClick={(event) => {
+                  props.handleListClick(item);
+                }}
+              >
+                <div>
+                  <span>{props.codeEqualsId ? item.id : item.code}</span>
+                  <span>
+                    {currentLanguageCode === "en"
+                      ? item.englishName
+                      : item.arabicName}
+                  </span>
+                </div>
+              </Dropdown.Item>
+            );
+          })}
+        </ul>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };

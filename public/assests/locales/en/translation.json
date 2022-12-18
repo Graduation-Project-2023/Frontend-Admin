@@ -23,9 +23,9 @@
     "future": "Future Work",
     "eng_name": "English Name",
     "ar_name": "Arabic Name",
-    "firstTerm": "First",
-    "secondTerm": "Second",
-    "summerTerm": "Summer",
+    "firstTerm": "First Semester",
+    "secondTerm": "Second Semester",
+    "summerTerm": "Summer Semester",
     "gpaFrom": "GPA From ",
     "gpaTo": "GPA To",
     "choice_yes": "Yes",
@@ -173,7 +173,7 @@
     "name": "Course Name",
     "code": "Course Code",
     "chooseCode": "Choose a Course Code",
-    "pre_code": "prerequisitE Code",
+    "pre_code": "Prerequisite Code",
     "progCode": "Program Code",
     "hours": "Course Hours",
     "min": "Minimum Hours",
@@ -190,8 +190,8 @@
     "option": "Optional",
     "mandatory": "Mandatory",
     "tabletitle": "Courses Table",
-    "ar_des": "Course description in Arabic",
-    "eng_des": "Course description in English",
+    "ar_des": "Course Description in Arabic",
+    "eng_des": "Course Description in English",
     "grade": "Minimum Passing Percentage",
     "added_gpa": "Added to GPA",
     "formhead": "Course Data",
@@ -199,15 +199,16 @@
     "add": "Add New Course",
     "lecture": "Lecture Hours",
     "section": "Section Hours",
-    "lectures": "Number of lectures",
-    "sections": "Number of Sections "
+    "lectures": "Number of Lectures",
+    "sections": "Number of Sections",
+    "preTable": "Prerequisite Courses Table"
   },
   "levels": {
     "level": "Level",
     "qualify": "Qualifying Hours",
     "tabletitle": "Levels Table",
-    "select": "Select Academic level",
-    "table": "Select table of level"
+    "select": "Select Academic Level",
+    "table": "Select Table of Level"
   },
   "registeration": {
     "formhead": "Academic Registeration",

@@ -11,9 +11,9 @@ export const CollapsibleTable = (props) => {
   const { t } = useTranslation();
 
   const semesters = [
-    { id: 0, title: "first semester", value: "FIRST" },
-    { id: 1, title: "second", value: "SECOND" },
-    { id: 2, title: "summer", value: "SUMMER" },
+    { id: 0, title: "common.firstTerm", value: "FIRST" },
+    { id: 1, title: "common.secondTerm", value: "SECOND" },
+    { id: 2, title: "common.summerTerm", value: "SUMMER" },
   ];
 
   useEffect(() => {

@@ -237,35 +237,23 @@ export const ProgramCourses = () => {
             handleFormSubmit(event);
           }}
         >
-          <div className="row mb-4">
-            {editRowId ? (
-              <>
-                <label className="col-sm-2 col-form-label">
-                  {t("courses.code")}
-                </label>
-                <div className="col-sm-4">
-                  <input
-                    disabled
-                    className="form-control"
-                    value={course.code}
-                  />
-                </div>
-              </>
-            ) : (
-              <DropdownSearch
-                label={"courses.code"}
-                specialData={course}
-                menuData={courses}
-                inputPlaceholder={"courses.progCode"}
-                handleListClick={handleCourseSelection}
-                codeEqualsId={true}
-              />
-            )}
-
-            <label className="col-sm-2 col-form-label">
-              {t("courses.name")}
-            </label>
-            <div className="col-sm-4">
+          <div className="row">
+            <div className="form-group col-xl-6 mb-4">
+              <label className="col-form-label">{t("courses.code")}</label>
+              {editRowId ? (
+                <input disabled className="form-control" value={course.code} />
+              ) : (
+                <DropdownSearch
+                  specialData={course}
+                  menuData={courses}
+                  inputPlaceholder={"courses.progCode"}
+                  handleListClick={handleCourseSelection}
+                  codeEqualsId={true}
+                />
+              )}
+            </div>
+            <div className="form-group col-xl-6 mb-4">
+              <label className="col-form-label">{t("courses.name")}</label>
               <input
                 disabled
                 className="form-control"
@@ -277,11 +265,9 @@ export const ProgramCourses = () => {
               />
             </div>
           </div>
-          <div className="row mb-4">
-            <label className="col-sm-2 col-form-label">
-              {t("levels.level")}
-            </label>
-            <div className="col-sm-4">
+          <div className="row">
+            <div className="form-group col-xl-4 mb-4">
+              <label className="col-form-label">{t("levels.level")}</label>
               <select
                 className="form-select"
                 name="levelId"
@@ -300,10 +286,8 @@ export const ProgramCourses = () => {
                 })}
               </select>
             </div>
-            <label className="col-sm-2 col-form-label">
-              {t("levelHours.term")}
-            </label>
-            <div className="col-sm-4">
+            <div className="form-group col-xl-4 mb-4">
+              <label className="col-form-label">{t("levelHours.term")}</label>
               <select
                 className="form-select"
                 name="semester"
@@ -316,12 +300,19 @@ export const ProgramCourses = () => {
                 <option value="SUMMER">{t("common.summerTerm")}</option>
               </select>
             </div>
+            <div className="form-group col-xl-4 mb-4">
+              <label className="col-form-label">{t("courses.grade")}</label>
+              <input
+                className="form-control"
+                type="number"
+                disabled
+                value={authContext.program.failureGrade}
+              />
+            </div>
           </div>
-          <div className="row mb-4">
-            <label className="col-sm-2 col-form-label">
-              {t("courses.class")}
-            </label>
-            <div className="col-sm-4">
+          <div className="row">
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">{t("courses.class")}</label>
               <input
                 className="form-control"
                 type="number"
@@ -331,10 +322,8 @@ export const ProgramCourses = () => {
                 value={programCourseData["classWork"] || ""}
               />
             </div>
-            <label className="col-sm-2 col-form-label">
-              {t("courses.mid")}
-            </label>
-            <div className="col-sm-4">
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">{t("courses.mid")}</label>
               <input
                 className="form-control"
                 type="number"
@@ -345,12 +334,8 @@ export const ProgramCourses = () => {
                 value={programCourseData["midTerm"] || ""}
               />
             </div>
-          </div>
-          <div className="row mb-4">
-            <label className="col-sm-2 col-form-label">
-              {t("courses.final")}
-            </label>
-            <div className="col-sm-4">
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">{t("courses.final")}</label>
               <input
                 className="form-control"
                 type="number"
@@ -361,13 +346,8 @@ export const ProgramCourses = () => {
                 value={programCourseData["finalExam"] || ""}
               />
             </div>
-
-            {wrongCourseGrades.error && (
-              <div>{wrongCourseGrades.errorMessage}</div>
-            )}
-
-            <label className="col-sm-2 col-form-label">{t("grades.max")}</label>
-            <div className="col-sm-4">
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">{t("grades.max")}</label>
               <input
                 className="form-control"
                 type="number"
@@ -378,12 +358,11 @@ export const ProgramCourses = () => {
               />
             </div>
           </div>
-          {/* {authContext.program.credit === "CREDIT" && <></>} */}
-          <div className="row mb-4">
-            <label className="col-sm-2 col-form-label">
-              {t("academicMain.credit")}
-            </label>
-            <div className="col-sm-4">
+          <div className="row">
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">
+                {t("academicMain.credit")}
+              </label>
               <input
                 className="form-control"
                 type="number"
@@ -393,10 +372,21 @@ export const ProgramCourses = () => {
                 value={programCourseData["creditHours"] || ""}
               />
             </div>
-            <label className="col-sm-2 col-form-label">
-              {t("academicMain.type")}
-            </label>
-            <div className="col-sm-4">
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">{t("courses.type")}</label>
+              <select
+                className="form-select"
+                name="courseType"
+                onChange={handleEditFormChange}
+                value={programCourseData["courseType"] || ""}
+              >
+                <option value={null}>{t("common.select")}</option>
+                <option value="COMPULSORY">{t("courses.mandatory")}</option>
+                <option value="ELECTIVE">{t("courses.option")}</option>
+              </select>
+            </div>
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">{t("academicMain.type")}</label>
               <select
                 className="form-select"
                 name="test"
@@ -409,55 +399,24 @@ export const ProgramCourses = () => {
                 <option value="SUMMER">{t("courses.university")}</option>
               </select>
             </div>
-          </div>
-
-          <div className="row mb-4">
-            <label className="col-sm-2 col-form-label">
-              {t("courses.grade")}
-            </label>
-            <div className="col-sm-4">
-              <input
-                className="form-control"
-                type="number"
-                disabled
-                value={authContext.program.failureGrade}
-              />
-            </div>
-            <label className="col-sm-2 col-form-label">
-              {t("courses.type")}
-            </label>
-            <div className="col-sm-4">
-              <select
-                className="form-select"
-                name="courseType"
-                onChange={handleEditFormChange}
-                value={programCourseData["courseType"] || ""}
-              >
-                <option value={null}>{t("common.select")}</option>
-                <option value="COMPULSORY">{t("courses.mandatory")}</option>
-                <option value="ELECTIVE">{t("courses.option")}</option>
+            <div className="form-group col-xl-3 mb-4">
+              <label className="col-form-label">{t("courses.added_gpa")}</label>
+              <select className="form-select" name="addedToGpa">
+                <option value="FALSE">{t("common.choice_no")}</option>
+                <option value="TRUE">{t("common.choice_yes")}</option>
               </select>
             </div>
+            {wrongCourseGrades.error && (
+              <div>{wrongCourseGrades.errorMessage}</div>
+            )}
           </div>
-          <div className="row mb-4">
-            <div className="form-check form-switch form-check-inline col-sm-4">
-              <label className="form-check-label" htmlFor="addedToGpa">
-                {t("courses.added_gpa")}
-              </label>
-              <input
-                className={`form-check-input ${styles.preSwitch}`}
-                type="checkbox"
-                role="switch"
-                name="addedToGpa"
-                id="addedToGpa"
-                ref={addedToGpaRef}
-              />
-            </div>
-          </div>
+          {/* {authContext.program.credit === "CREDIT" && <></>} */}
           <div className={styles.formLine}>
-            <div className="row mb-4">
+            <div className="form-group mb-4">
+              <label className="col-form-label">
+                {t("courses.prereqCourses")}
+              </label>
               <DropdownSearch
-                label={"courses.prereqCourses"}
                 menuData={programCourses}
                 inputPlaceholder={"courses.progCode"}
                 handleListClick={addToPrerequisite}
@@ -465,7 +424,7 @@ export const ProgramCourses = () => {
             </div>
             {preCourses.length !== 0 && (
               <PrerequisiteTable
-                tableTitle={"Prerequisite Table"}
+                tableTitle={"courses.preTable"}
                 headerItems={[
                   { id: 1, title: t(`courses.code`) },
                   { id: 2, title: t(`courses.eng_name`) },

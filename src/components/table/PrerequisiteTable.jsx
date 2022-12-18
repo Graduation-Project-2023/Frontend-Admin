@@ -9,6 +9,7 @@ export const PrerequisiteTable = (props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    console.log("props.rowItems", props.rowItems);
     setTableData(props.rowItems);
   }, [props.rowItems]);
 
@@ -39,6 +40,7 @@ export const PrerequisiteTable = (props) => {
                   if (key === "id") return null;
                   if (key === "level") return null;
                   if (key === "semester") return null;
+                  if (key === "levelId") return null;
                   return (
                     <td className="collapsetable-items" key={key}>
                       {item[key] === 0 ? 0 : item[key] || ""}

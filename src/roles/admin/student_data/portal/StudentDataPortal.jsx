@@ -6,6 +6,7 @@ import { BASE_URL } from "../../../../shared/API";
 import cookies from "js-cookie";
 import axios from "axios";
 import styles from "./StudentDataPortal.module.scss";
+import { FcSearch } from "react-icons/fc";
 
 // Reusable Components
 import { Accordion } from "react-bootstrap";
@@ -138,7 +139,7 @@ export const StudentDataPortal = () => {
       <div className={styles.studentBody}>
         <div className={styles.studentBody_students}>
           <h3>
-            {t(`registeration.menu`)}
+            {t(`registeration.all`)}
             {filteredStudents.length > 0 && (
               <span>3dd el tolab : {filteredStudents.length}</span>
             )}
@@ -154,10 +155,13 @@ export const StudentDataPortal = () => {
             />
             <button onClick={handleSearchButtonClick}>Search</button>
           </div>
-          <h1>
-            {!userUX.searchClicked &&
-              students.length === 0 &&
-              "click search to search"}
+          <h1 className={styles.studentBody_students_alertBox}>
+            {!userUX.searchClicked && students.length === 0 && (
+              <>
+                <FcSearch />
+                <div>{t(`registeration.type`)}</div>
+              </>
+            )}
             {userUX.listLoading && "LOADING"}
             {userUX.emptyState.state && `${userUX.emptyState.message}`}
           </h1>

@@ -54,7 +54,7 @@ export const DayPeriodTable = (props) => {
     >
       <div className={styles.tableContainer_tableCard}>
         <table
-          className={`table table-bordered ${styles.tableContainer_scroll}`}
+          className={`table table-bordered ${styles.tableContainer_tableCard_scroll}`}
         >
           <thead>
             <tr>

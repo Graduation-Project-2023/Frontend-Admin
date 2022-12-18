@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+// import { CurrentLanguage } from "../../../shared/Language";
+import cookies from "js-cookie";
 import styles from "./DayPeriodTable.module.scss";
 import { ScheduleTableBody, ScheduleTableHeader } from "./DayPeriodData";
 
@@ -7,6 +9,7 @@ export const DayPeriodTable = (props) => {
   const [tableData, setTableData] = useState(props.tableData);
   const [cells, setCells] = useState({ occupied: [], available: [] });
   const { t } = useTranslation();
+  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setTableData(props.tableData);
@@ -68,14 +71,16 @@ export const DayPeriodTable = (props) => {
                     {item.period === 0 ? (
                       <>
                         <span className={styles.table_first_cell_up}>
-                          Period
+                          {t("common.period")}
                         </span>
                         <span className={styles.table_first_cell_down}>
-                          Day
+                          {t("common.day")}
                         </span>
                       </>
                     ) : (
-                      <h6>period {item.period}</h6>
+                      <h6>
+                        {t("common.period")} {item.period}
+                      </h6>
                     )}
                     <h6>{item.time}</h6>
                   </th>
@@ -91,7 +96,7 @@ export const DayPeriodTable = (props) => {
               );
               return (
                 <tr key={item.id}>
-                  <td>{item.day}</td>
+                  <td>{t(`week.${item.day.toLowerCase()}`)}</td>
                   {item.cells.map((cell) => {
                     const cellFilter = backendTableFiltered.filter(
                       (obj) => obj.startPeriod === cell.period
@@ -111,7 +116,9 @@ export const DayPeriodTable = (props) => {
                           }
                         >
                           <h6 key={cellFilter[0].id}>
-                            {cellFilter[0].arabicName}
+                            {currentLanguageCode === "en"
+                              ? cellFilter[0].englishName
+                              : cellFilter[0].arabicName}
                           </h6>
                         </td>
                       ) : (

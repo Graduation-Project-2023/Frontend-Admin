@@ -31,7 +31,10 @@
     "choice_yes": "Yes",
     "choice_no": "No",
     "lecture": "Lecture",
-    "lab": "Lab / Section"
+    "lab": "Lab / Section",
+    "day": "Day",
+    "period": "Period",
+    "time": "Time"
   },
   "week": {
     "saturday": "Saturday",

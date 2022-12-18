@@ -31,7 +31,10 @@
     "choice_yes": "نعم",
     "choice_no": "لا",
     "lecture": "محاضرة",
-    "lab": "معمل"
+    "lab": "معمل",
+    "day": "اليوم",
+    "period": "الفترة",
+    "time": "الوقت"
   },
   "week": {
     "saturday": "السبت",

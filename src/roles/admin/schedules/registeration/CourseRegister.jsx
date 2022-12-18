@@ -11,6 +11,9 @@ import { CoursesSidebar } from "./CoursesSidebar";
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 
 export const CourseRegister = (props) => {
+  const lectureHourRef = useRef();
+  const sectionHourRef = useRef();
+  const creditHourRef = useRef();
   const [programCourses, setProgramCourses] = useState([]);
   const [registeredCourses, setRegisteredCourses] = useState([]);
   const [courseData, setCourseData] = useState({});
@@ -134,7 +137,19 @@ export const CourseRegister = (props) => {
       //   });
     }
   };
+  const handleChange = (event) => {
+    event.preventDefault();
 
+    if (event.target.type === "number") {
+      event.target.value = +event.target.value;
+    }
+    if (
+      +lectureHourRef.current.value + +sectionHourRef.current.value !=
+      creditHourRef.current.value
+    ) {
+      console.log("enter correct value");
+    }
+  };
   return (
     <div className="registerationContainer-body">
       <div className="registerationContainer-menu">
@@ -157,7 +172,7 @@ export const CourseRegister = (props) => {
         </h3>
         <form onSubmit={handleFormSubmit}>
           <div className="registerationContainer-form-inputs">
-            <div className="form-group row mb-4">
+            <div className="row mb-4">
               <label className="col-form-label">{t(`courses.name`)}</label>
               <input
                 className="form-control"
@@ -170,20 +185,31 @@ export const CourseRegister = (props) => {
                 disabled
               />
             </div>
-            <div className="form-group row mb-4">
-              <label className="col-sm-4 col-form-label">
-                {t(`courses.code`)}
-              </label>
+            <div className=" row mb-4">
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.code`)}</label>
 
-              <input
-                className="form-control"
-                value={courseData?.code || ""}
-                readOnly
-                disabled
-              />
+                <input
+                  className="form-control"
+                  value={courseData?.code || ""}
+                  readOnly
+                  disabled
+                />
+              </div>
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.hours`)}</label>
+
+                <input
+                  className="form-control"
+                  value={"4"}
+                  ref={creditHourRef}
+                  readOnly
+                  disabled
+                />
+              </div>
             </div>
-            <div className="form-group row mb-4">
-              <label className="col-form-label">{t(`el mostawa`)}</label>
+            <div className=" row mb-4">
+              <label className="form-label">{t(`levels.level`)}</label>
 
               <select className="form-select" value={courseData?.levelId || ""}>
                 {levels.map((level) => (
@@ -196,7 +222,7 @@ export const CourseRegister = (props) => {
                 ))}
               </select>
             </div>
-            <div className="form-group row mb-4">
+            <div className="row mb-4">
               <DropdownSearch
                 name={profData}
                 menuData={[]}
@@ -204,7 +230,40 @@ export const CourseRegister = (props) => {
                 inputPlaceholder={"ektb esm el moshrf"}
               />
             </div>
+            <div className=" row mb-4">
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.lectures`)}</label>
+
+                <input className="form-control" />
+              </div>
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.lecture`)}</label>
+
+                <input
+                  className="form-control"
+                  ref={lectureHourRef}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className=" row mb-4">
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.sections`)}</label>
+
+                <input className="form-control" />
+              </div>
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.section`)}</label>
+
+                <input
+                  className="form-control"
+                  ref={sectionHourRef}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
           </div>
+
           <button
             type="submit"
             className="form-card-button form-card-button-save"

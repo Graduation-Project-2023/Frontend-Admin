@@ -20,16 +20,7 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    &-searchList {
-      & li {
-        list-style: none;
-        padding: 1rem;
-        border: 1px solid $White5;
-        &:hover {
-          @include hover($Blue4, white, pointer);
-        }
-      }
-    }
+
     & h3 {
       color: $Blue4;
       @include font(1.5rem, 1.9rem);
@@ -40,6 +31,7 @@
       & input {
         border: none;
         padding: 1rem;
+        width: 100%;
 
         &:focus {
           outline: none;
@@ -76,11 +68,19 @@
         }
       }
     }
+    &-searchList {
+      max-height: 30rem;
+      overflow-y: scroll;
+    }
     &-list {
+      max-height: 13rem;
+      overflow-y: scroll;
+    }
+    &-list,
+    &-searchList {
       margin-top: 0.2rem;
       list-style: none;
-      max-height: 22rem;
-      overflow-y: scroll;
+
       @include font(1rem, 1.3rem);
       color: $Grey3;
       li {
@@ -97,7 +97,7 @@
   &-form {
     border: 0.5px solid #bbbdc0;
     border-radius: 10px;
-    max-height: 40rem;
+    max-height: 50rem;
     & h3 {
       border-bottom: 1px solid $White5;
       color: $Blue4;

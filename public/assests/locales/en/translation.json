@@ -193,7 +193,11 @@
     "added_gpa": "Added to GPA",
     "formhead": "Course Data",
     "sidebar": "College Courses",
-    "add": "Add New Course"
+    "add": "Add New Course",
+    "lecture": "Lecture Hours",
+    "section": "Section Hours",
+    "lectures": "Number of lectures",
+    "sections": "Number of Sections "
   },
   "levels": {
     "level": "Level",
@@ -208,6 +212,8 @@
     "number": "Number of Students",
     "form": "Selecting Academic Advisor",
     "menu": "Level Students",
+    "all": "College Students",
+    "type": "Type a student name to search",
     "search": "Search with student name"
   },
   "studentsData": {

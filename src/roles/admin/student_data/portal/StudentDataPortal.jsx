@@ -201,7 +201,7 @@ export const StudentDataPortal = () => {
                 return (
                   <Accordion.Item eventKey={item.id} key={item.id}>
                     <Accordion.Header>{t(item.title)}</Accordion.Header>
-                    <Accordion.Body style={{ margin: "2rem" }}>
+                    <Accordion.Body style={{ margin: "2rem " }}>
                       {item.formData.map((data) => {
                         return (
                           <FormInput

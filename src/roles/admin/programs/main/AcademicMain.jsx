@@ -127,7 +127,7 @@ export const AcademicMain = () => {
               return (
                 <Accordion.Item eventKey={item.id} key={item.id}>
                   <Accordion.Header>{t(item.title)}</Accordion.Header>
-                  <Accordion.Body>
+                  <Accordion.Body style={{ padding: "1rem 2rem" }}>
                     {item.formData.map((data) => {
                       if (!creditHours && data.credit) {
                         return null;

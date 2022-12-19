@@ -1,6 +1,7 @@
 import React from "react";
 import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import styles from "./RegisterationPortal.module.scss";
 
 export const RegisterationPortal = () => {
   const { t } = useTranslation();
@@ -90,9 +91,13 @@ export const RegisterationPortal = () => {
                   <Accordion.Header>{item.title}</Accordion.Header>
                   <Accordion.Body>
                     <div className="registerationContainer-body">
-                      <div className="registerationContainer-menu">
+                      <div
+                        className={`registerationContainer-menu ${styles.studentList}`}
+                      >
                         <h3>{t(`registeration.menu`)}</h3>
-                        <div className="registerationContainer-menu-search">
+                        <div
+                          className={`registerationContainer-menu-search ${styles.studentList_search}`}
+                        >
                           <input
                             type="text"
                             placeholder={t("registeration.search")}

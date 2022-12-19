@@ -88,12 +88,15 @@ export const LevelSchedule = () => {
     <>
       <FormNavbarContainer>
         <div className={styles.tableContainer_level}>
-          <Dropdown>
+          <Dropdown className="customDropMenu">
             {levels
               .filter((item) => item.id === levelId)
               .map((level) => {
                 return (
-                  <Dropdown.Toggle key={level.id}>
+                  <Dropdown.Toggle
+                    key={level.id}
+                    className="customDropMenu-btn"
+                  >
                     {level.level}&nbsp;-&nbsp;
                     {currentLanguageCode === "en"
                       ? level.englishName
@@ -101,7 +104,7 @@ export const LevelSchedule = () => {
                   </Dropdown.Toggle>
                 );
               })}
-            <Dropdown.Menu className={styles.tableContainer_level_menu}>
+            <Dropdown.Menu className="customDropMenu-list">
               {levels
                 .filter((item) => item.id !== levelId)
                 .map((level) => {

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
+
 // eslint-disable-next-line
 import { BASE_URL } from "../../../../shared/API";
 // eslint-disable-next-line
@@ -153,135 +154,140 @@ export const CourseRegister = (props) => {
     }
   };
   return (
-    <div className="registerationContainer-body">
-      <div className="registerationContainer-menu">
-        {menus.map((menu) => (
-          <CoursesSidebar
-            key={menu.id}
-            title={menu.title}
-            listData={menu.registered ? registeredCourses : programCourses}
-            handleListClick={handleListClick}
-            registered={menu.registered}
-            eventKey={menu.id}
-          />
-        ))}
-      </div>
-      <div className="registerationContainer-form">
-        <h3>
-          {currentLanguageCode === "en"
-            ? courseData?.englishName
-            : courseData?.arabicName}
-        </h3>
-        <form onSubmit={handleFormSubmit}>
-          <div className="registerationContainer-form-inputs">
-            <div className="row mb-4">
-              <label className="col-form-label">{t(`courses.name`)}</label>
-              <input
-                className="form-control"
-                value={
-                  currentLanguageCode === "en"
-                    ? courseData?.englishName || ""
-                    : courseData?.arabicName || ""
-                }
-                readOnly
-                disabled
-              />
-            </div>
-            <div className=" row mb-4">
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.code`)}</label>
-
+    <>
+      <div className="registerationContainer-body">
+        <div className={`registerationContainer-menu `}>
+          {menus.map((menu) => (
+            <CoursesSidebar
+              key={menu.id}
+              title={menu.title}
+              listData={menu.registered ? registeredCourses : programCourses}
+              handleListClick={handleListClick}
+              registered={menu.registered}
+              eventKey={menu.id}
+            />
+          ))}
+        </div>
+        <div className="registerationContainer-form">
+          <h3>
+            {currentLanguageCode === "en"
+              ? courseData?.englishName
+              : courseData?.arabicName}
+          </h3>
+          <form onSubmit={handleFormSubmit}>
+            <div className="registerationContainer-form-inputs">
+              <div className="row mb-4">
+                <label className="col-form-label">{t(`courses.name`)}</label>
                 <input
                   className="form-control"
-                  value={courseData?.code || ""}
+                  value={
+                    currentLanguageCode === "en"
+                      ? courseData?.englishName || ""
+                      : courseData?.arabicName || ""
+                  }
                   readOnly
                   disabled
                 />
               </div>
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.hours`)}</label>
+              <div className=" row mb-4">
+                <div className="col-sm-6">
+                  <label className="form-label">{t(`courses.code`)}</label>
 
-                <input
-                  className="form-control"
-                  value={"4"}
-                  ref={creditHourRef}
-                  readOnly
-                  disabled
+                  <input
+                    className="form-control"
+                    value={courseData?.code || ""}
+                    readOnly
+                    disabled
+                  />
+                </div>
+                <div className="col-sm-6">
+                  <label className="form-label">{t(`courses.hours`)}</label>
+
+                  <input
+                    className="form-control"
+                    value={"4"}
+                    ref={creditHourRef}
+                    readOnly
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className=" row mb-4">
+                <label className="form-label">{t(`levels.level`)}</label>
+
+                <select
+                  className="form-select"
+                  value={courseData?.levelId || ""}
+                >
+                  {levels.map((level) => (
+                    <option key={level.id} value={level.id}>
+                      {level.level}&nbsp;-&nbsp;
+                      {currentLanguageCode === "en"
+                        ? level.englishName
+                        : level.arabicName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="row mb-4">
+                <DropdownSearch
+                  name={profData}
+                  menuData={[]}
+                  label={"esm moshrf el mada"}
+                  inputPlaceholder={"ektb esm el moshrf"}
                 />
               </div>
-            </div>
-            <div className=" row mb-4">
-              <label className="form-label">{t(`levels.level`)}</label>
+              <div className=" row mb-4">
+                <div className="col-sm-6">
+                  <label className="form-label">{t(`courses.lectures`)}</label>
 
-              <select className="form-select" value={courseData?.levelId || ""}>
-                {levels.map((level) => (
-                  <option key={level.id} value={level.id}>
-                    {level.level}&nbsp;-&nbsp;
-                    {currentLanguageCode === "en"
-                      ? level.englishName
-                      : level.arabicName}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="row mb-4">
-              <DropdownSearch
-                name={profData}
-                menuData={[]}
-                label={"esm moshrf el mada"}
-                inputPlaceholder={"ektb esm el moshrf"}
-              />
-            </div>
-            <div className=" row mb-4">
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.lectures`)}</label>
+                  <input className="form-control" />
+                </div>
+                <div className="col-sm-6">
+                  <label className="form-label">{t(`courses.lecture`)}</label>
 
-                <input className="form-control" />
+                  <input
+                    className="form-control"
+                    ref={lectureHourRef}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.lecture`)}</label>
+              <div className=" row mb-4">
+                <div className="col-sm-6">
+                  <label className="form-label">{t(`courses.sections`)}</label>
 
-                <input
-                  className="form-control"
-                  ref={lectureHourRef}
-                  onChange={handleChange}
-                />
+                  <input className="form-control" />
+                </div>
+                <div className="col-sm-6">
+                  <label className="form-label">{t(`courses.section`)}</label>
+
+                  <input
+                    className="form-control"
+                    ref={sectionHourRef}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
-            <div className=" row mb-4">
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.sections`)}</label>
 
-                <input className="form-control" />
-              </div>
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.section`)}</label>
-
-                <input
-                  className="form-control"
-                  ref={sectionHourRef}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            className="form-card-button form-card-button-save"
-          >
-            {location.pathname.split("/").at(-2) === "add"
-              ? t(`common.add`)
-              : t(`common.save`)}
-          </button>
-          <button
-            type="reset"
-            className="form-card-button form-card-button-cancel"
-          >
-            {t(`common.cancel`)}
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="form-card-button form-card-button-save"
+            >
+              {location.pathname.split("/").at(-2) === "add"
+                ? t(`common.add`)
+                : t(`common.save`)}
+            </button>
+            <button
+              type="reset"
+              className="form-card-button form-card-button-cancel"
+            >
+              {t(`common.cancel`)}
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };

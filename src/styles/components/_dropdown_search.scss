@@ -1,24 +1,25 @@
 .progCourses {
   & button {
-    @include colorandback(white, $Blue2);
-    border: 1px solid $Blue2;
-    width: 25rem;
-
-    &:hover {
-      @include colorandback(black, rgba(13, 13, 80, 0.753));
-    }
+    @include colorandback(#3d7dca, #bbbdc01a);
+    border: 1px solid#D9D9D9;
+    width: 100%;
+    text-align: start;
+    @include font(1rem, 1.3rem);
+    padding: 0.5rem 2rem;
   }
   &_menu {
-    padding: 0.4rem !important;
-    width: 25rem;
+    padding: 0.1rem !important;
+    width: 100%;
     & input {
-      margin: 5px 0px 15px 0px;
+      margin: 0.5rem;
+      width: 96%;
     }
     &_searchList {
       list-style: none;
       color: $Grey4;
       @include font(1rem, 1.3rem);
-      @include overflow(10, scroll, hidden);
+      max-height: 10rem;
+      overflow-y: scroll;
       padding: 0;
       margin: 0;
 
@@ -26,8 +27,9 @@
         padding: 1rem;
         border-bottom: solid $White3 0.5px;
         & div {
-          @include flex("", "", 30);
+          display: flex;
           flex-direction: row;
+          justify-content: space-between;
         }
       }
 

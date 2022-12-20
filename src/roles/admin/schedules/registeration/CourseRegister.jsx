@@ -177,7 +177,7 @@ export const CourseRegister = (props) => {
           <form onSubmit={handleFormSubmit}>
             <div className="registerationContainer-form-inputs">
               <div className="row mb-4">
-                <label className="col-form-label">{t(`courses.name`)}</label>
+                <label className="form-label">{t(`courses.name`)}</label>
                 <input
                   className="form-control"
                   value={
@@ -229,7 +229,8 @@ export const CourseRegister = (props) => {
                   ))}
                 </select>
               </div>
-              <div className="row mb-4">
+              <div className=" mb-4">
+                <label className="form-label">{t(`esm el moshrf`)}</label>
                 <DropdownSearch
                   name={profData}
                   menuData={[]}
@@ -237,15 +238,13 @@ export const CourseRegister = (props) => {
                   inputPlaceholder={"ektb esm el moshrf"}
                 />
               </div>
-              <div className=" row mb-4">
+              <div className="row mb-4">
                 <div className="col-sm-6">
                   <label className="form-label">{t(`courses.lectures`)}</label>
-
                   <input className="form-control" />
                 </div>
                 <div className="col-sm-6">
                   <label className="form-label">{t(`courses.lecture`)}</label>
-
                   <input
                     className="form-control"
                     ref={lectureHourRef}

@@ -90,10 +90,29 @@ export const TablePopup = (props) => {
       });
     }
   };
+  const handleSubjectSelection = () => {};
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    props.submit();
+    if (
+      userUX.cellOccupied ||
+      period.startPeriod === null ||
+      period.endPeriod === null
+    ) {
+      console.log("error");
+      return;
+    }
+    if (props.edit) {
+      const editedData = {
+        ...cellData,
+        startPeriod: period.startPeriod,
+        endPeriod: period.endPeriod,
+      };
+      props.submit(editedData);
+      props.close();
+    } else {
+      console.log(cellData);
+    }
   };
 
   return (
@@ -130,6 +149,7 @@ export const TablePopup = (props) => {
                 menuData={[]}
                 label={"courses.name"}
                 inputPlaceholder={"common.select"}
+                handleListClick={handleSubjectSelection}
               />
             )}
           </div>
@@ -188,6 +208,7 @@ export const TablePopup = (props) => {
                 type="text"
                 className="form-select"
                 name="startPeriod"
+                required
                 onChange={handlePeriodChange}
                 value={period.startPeriod || ""}
               >
@@ -276,7 +297,9 @@ export const TablePopup = (props) => {
           className="btn btn-primary"
           // onClick={TestingAddSubject}
         >
-          <button type="submit">Add Subject Here</button>
+          <button type="submit" onClick={handleFormSubmit}>
+            Add Subject Here
+          </button>
         </div>
       </form>
     </ModalPopup>

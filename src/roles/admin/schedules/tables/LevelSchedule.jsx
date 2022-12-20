@@ -110,7 +110,25 @@ export const LevelSchedule = () => {
     });
   };
 
-  const handlePopupSubmit = () => {};
+  const handlePopupSubmit = (subject) => {
+    const subjectExists = tableData.find(
+      (element) =>
+        element.englishName === subject.englishName &&
+        element.classType === subject.classType
+    );
+    if (subjectExists) {
+      setTableData(
+        tableData.map((obj) =>
+          obj.englishName === subject.englishName &&
+          obj.classType === subject.classType
+            ? subject
+            : obj
+        )
+      );
+    } else {
+      setTableData((prev) => [...prev, subject]);
+    }
+  };
 
   const saveTableData = (event, item) => {
     event.preventDefault();

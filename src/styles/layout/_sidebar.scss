@@ -8,7 +8,7 @@
 
   &-title {
     width: 100%;
-    padding: 40px 40px 10px 40px;
+    padding: 2rem;
     border-bottom: solid $White5 1px;
 
     & h2 {
@@ -65,13 +65,20 @@
 
   .sidebarBtn {
     & button {
-      background-color: $Blue2;
+      @include colorandback(#3d7dca, #bbbdc01a);
+      border: 1px solid#D9D9D9;
+      width: 80%;
       @include font(1rem, 1.3rem);
+      padding: 1rem;
+      text-align: start;
+    }
+    & div {
+      width: 80%;
     }
     & a {
       display: block;
       text-decoration: none;
-      text-align: center;
+      text-align: start;
       border-bottom: 1px solid $White5;
       padding: 1rem;
       @include font(1rem, 1.3rem);

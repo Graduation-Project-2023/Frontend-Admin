@@ -19,7 +19,7 @@
   &_title {
     color: $Blue4;
     @include font(2.5rem, 3rem);
-    padding: 2rem 2rem 0;
+    padding: 0.5rem;
   }
   &_close {
     position: absolute;
@@ -30,13 +30,18 @@
     height: 2rem;
     background-color: $Blue1;
     border: 1px solid $Blue1;
-    @include font(1.2rem, 1.4rem);
+    @include font(1.1rem, 1rem);
     color: white;
     padding: 0;
   }
-  &_header {
+  &_header,
+  &_noheader {
     flex-direction: column !important;
     align-items: flex-start !important;
+  }
+  &_noheader {
+    border-bottom: none;
+    padding: 0;
   }
   & input {
     width: 90%;

@@ -11,7 +11,7 @@ import { Dropdown } from "react-bootstrap";
 const ProgramsSidebarData = [
   {
     id: "1",
-    title: "academicSidebar.main",
+    title: "academicMain.formhead",
     path: "main",
   },
   {

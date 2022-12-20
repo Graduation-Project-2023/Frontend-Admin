@@ -13,7 +13,39 @@ import { FormNavbarContainer } from "../../../../components/other/FormNavbarCont
 import { TablePopup } from "./TablePopup";
 
 export const LevelSchedule = () => {
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState([
+    {
+      englishName: "English",
+      arabicName: "لغة انجليزية",
+      startDate: null,
+      startPeriod: 3,
+      endPeriod: 5,
+      endDate: null,
+      classType: "LECTURE",
+      day: "MONDAY",
+    },
+    {
+      englishName: "Advanced English 2",
+      arabicName: "2 لغة انجليزية متقدمة",
+      startDate: null,
+      startPeriod: 7,
+      endPeriod: 9,
+      endDate: null,
+      classType: "LAB",
+      day: "TUESDAY",
+    },
+    {
+      englishName: "Advanced English",
+      arabicName: "لغة انجليزية متقدمة",
+      startDate: null,
+      startPeriod: 1,
+      endPeriod: 4,
+      endDate: null,
+      classType: "LAB",
+      day: "TUESDAY",
+    },
+  ]);
+
   const [levels, setLevels] = useState([]);
   const [cells, setCells] = useState({ occupied: [], available: [] });
   // eslint-disable-next-line
@@ -28,18 +60,18 @@ export const LevelSchedule = () => {
 
   useEffect(() => {
     // GET request to get table data by it's level and semester id
-    axios
-      .get(
-        BASE_URL +
-          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
-      )
-      .then((res) => {
-        setTableData(res.data.classes);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+    // axios
+    //   .get(
+    //     BASE_URL +
+    //       `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
+    //   )
+    //   .then((res) => {
+    //     console.log(res.data.classes);
+    //     setTableData(res.data.classes);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
     setLevels(authContext.program.levels);
     // eslint-disable-next-line
   }, [authContext.program.id, levelId]);
@@ -136,7 +168,7 @@ export const LevelSchedule = () => {
       </FormNavbarContainer>
       {showModal.add.state && (
         <TablePopup
-          title={"add subject to table"}
+          title={"table.add"}
           close={() => {
             setShowModal((current) => {
               return {
@@ -151,7 +183,7 @@ export const LevelSchedule = () => {
       )}
       {showModal.edit.state && (
         <TablePopup
-          title={"edit subject"}
+          title={"table.edit"}
           close={() => {
             setShowModal((current) => {
               return {

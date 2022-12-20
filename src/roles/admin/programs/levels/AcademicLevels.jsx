@@ -71,7 +71,7 @@ export const AcademicLevels = () => {
 
   return (
     <SidebarContainer>
-      <FormCard cardTitle={"levels.level"}>
+      <FormCard cardTitle={"academicSidebar.level"}>
         <form
           onSubmit={(event) => {
             handleFormSubmit(event);

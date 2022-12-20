@@ -19,7 +19,7 @@
     "save": "Save",
     "cancel": "Reset",
     "level1": "Level 1",
-    "select": "Choose an option",
+    "select": "Choose an Option",
     "future": "Future Work",
     "eng_name": "English Name",
     "ar_name": "Arabic Name",
@@ -227,6 +227,17 @@
     "section4": "Previous Qualification Data",
     "section5": "Recruitment Data",
     "section6": "Print Cards",
-    "formhead": "Main Data"
+    "formhead": "Main Data",
+    "data": "Students Data",
+    "add": "Students Enrollment"
+  },
+  "table": {
+    "add": "Add Course to the Schedule",
+    "edit": "Edit Course in the Schedule",
+    "start": "Start Period",
+    "end": "End Period",
+    "place": "Place",
+    "studentNo": "Number of Students",
+    "classType": "Class Type"
   }
 }

@@ -11,11 +11,11 @@ export function StudentDataRoutes() {
         headerData={[
           {
             id: 0,
-            title: "el tasgel",
+            title: "studentsData.data",
             path: "register",
             locationIndex: "student_data",
           },
-          { id: 1, title: "edaft tolab", path: "add" },
+          { id: 1, title: "studentsData.add", path: "add" },
         ]}
       />
       <Routes>

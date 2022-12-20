@@ -27,7 +27,7 @@ for (let x = 1; x < 8; x++) {
   });
 }
 
-let tableHeader = [
+const tableHeader = [
   { period: 0, time: "" },
   { period: 1, time: "8:00 - 8:30" },
   { period: 2, time: "8:30 - 9:00" },
@@ -51,5 +51,16 @@ let tableHeader = [
   { period: 20, time: "5:30 - 6:00" },
 ];
 
+const Days = [
+  { id: 1, title: "saturday", value: "SATURDAY" },
+  { id: 2, title: "sunday", value: "SUNDAY" },
+  { id: 3, title: "monday", value: "MONDAY" },
+  { id: 4, title: "tuesday", value: "TUESDAY" },
+  { id: 5, title: "wednesday", value: "WEDNESDAY" },
+  { id: 6, title: "thursday", value: "THURSDAY" },
+  { id: 7, title: "friday", value: "FRIDAY" },
+];
+
+export const ScheduleTableDays = Days;
 export const ScheduleTableBody = tableBody;
 export const ScheduleTableHeader = tableHeader;

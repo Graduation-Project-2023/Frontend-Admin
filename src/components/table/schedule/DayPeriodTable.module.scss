@@ -7,7 +7,7 @@
   &_level {
     display: flex;
     flex-direction: row;
-    gap: 25rem;
+    justify-content: space-between;
     padding: 2rem;
     & h6 {
       @include font(1.7rem, 2rem);

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import cookies from "js-cookie";
+import { AiOutlineClose } from "react-icons/ai";
 
 // Reusable Components
 import Modal from "react-bootstrap/Modal";
@@ -40,10 +41,10 @@ export const ModalPopup = (props) => {
 
   return (
     <Modal show={true} onHide={hideModal} className="popup">
-      <Modal.Header className="popup_header">
+      <Modal.Header className={props.title ? "popup_header" : "popup_noheader"}>
         <Modal.Title className="popup_title">{t(props.title)}</Modal.Title>
         <button className="popup_close" onClick={hideModal}>
-          X
+          <AiOutlineClose />
         </button>
         {props.searchable && (
           <input

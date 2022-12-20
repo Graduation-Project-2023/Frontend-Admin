@@ -39,8 +39,8 @@ export const CourseRegister = (props) => {
   const navigate = useNavigate();
   const currentLanguageCode = cookies.get("i18next") || "en";
   const menus = [
-    { id: 1, title: "adminNavbar.academic" },
-    { id: 2, title: "registered course", registered: true },
+    { id: "0", title: "adminNavbar.academic" },
+    { id: "1", title: "registered course", registered: true },
   ];
 
   useEffect(() => {

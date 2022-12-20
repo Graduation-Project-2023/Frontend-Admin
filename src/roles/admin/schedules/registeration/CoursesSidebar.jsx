@@ -37,7 +37,7 @@ export const CoursesSidebar = (props) => {
 
   return (
     <Accordion
-      defaultActiveKey="0"
+      defaultActiveKey={["0"]}
       alwaysOpen
       className={props.registered ? "assignedPrograms" : "notAssignedPrograms"}
     >

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../shared/API";
 import axios from "axios";
@@ -12,11 +13,10 @@ import { FormInput } from "../../../components/forms/FormInput";
 
 export const CoursesPortal = () => {
   const [courseData, setCourseData] = useState([]);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
   const { t } = useTranslation();
   const { courseCode } = useParams();
   const navigate = useNavigate();
+  const authContext = useAuth();
 
   useEffect(() => {
     if (courseCode !== "add" && courseCode !== undefined) {
@@ -24,6 +24,7 @@ export const CoursesPortal = () => {
       axios
         .get(BASE_URL + `/courses/${courseCode}`)
         .then((res) => {
+          console.log(res);
           setCourseData(res.data);
         })
         .catch((error) => {
@@ -52,6 +53,7 @@ export const CoursesPortal = () => {
     const newCourse = {
       ...courseData,
       id: courseData.id.replace(/\s/g, ""),
+      collegeId: authContext.college.id,
     };
     // Condition to check whether it's adding a new course or updating the current
     courseCode !== "add" && courseCode !== undefined
@@ -80,7 +82,7 @@ export const CoursesPortal = () => {
     e.preventDefault();
     // DELETE request to delete the current college course
     axios
-      .delete(BASE_URL + `/courses/CCE 302`)
+      .delete(BASE_URL + `/courses/${courseData.id}`)
       .then((res) => {
         console.log(res);
         navigate("/admin_portal/courses");

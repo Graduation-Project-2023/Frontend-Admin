@@ -39,7 +39,6 @@ export const AcademicGrades = () => {
   }, [programId]);
 
   const handleEditFormChange = (event) => {
-    event.preventDefault();
     const fieldName = event.target.getAttribute("name");
     let fieldValue = event.target.value;
     if (event.target.type === "number") {

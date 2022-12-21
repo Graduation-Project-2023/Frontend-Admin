@@ -67,7 +67,11 @@
     "enrollmentEndDate": "Enrollment End Date",
     "totalPrevQualification": "Total Previous Qualification",
     "schoolMarks": "School Marks",
-    "schoolSeat": "Seat ID"
+    "schoolSeat": "Seat ID",
+    "regCourses": "Registered Courses",
+    "addCourse": "Add Course",
+    "editCourse": "Edit Course",
+    "coursesNotReg": "Courses Not Registered"
   },
   "popup": {
     "success": "Success!",

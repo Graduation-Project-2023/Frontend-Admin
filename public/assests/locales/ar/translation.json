@@ -67,7 +67,11 @@
     "enrollmentEndDate": "تاريخ انتهاء التسجيل",
     "totalPrevQualification": "مجموع المؤهل السابق",
     "schoolMarks": "درجات المدرسة",
-    "schoolSeat": "رقم الجلوس"
+    "schoolSeat": "رقم الجلوس",
+    "regCourses": "المقررات المسجلة",
+    "addCourse": "تسجيل المقرر",
+    "editCourse": "تعديل المقرر",
+    "coursesNotReg": "المقررات غير المسجلة"
   },
   "popup": {
     "success": "تمت العملية بنجاح",

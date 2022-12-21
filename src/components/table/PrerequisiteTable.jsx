@@ -15,7 +15,7 @@ export const PrerequisiteTable = (props) => {
 
   return (
     <div className="collapsetable">
-      <h4>{t(props.tableTitle)}</h4>
+      <h3>{t(props.tableTitle)}</h3>
       <table className="table table-striped">
         <thead>
           <tr>
@@ -41,6 +41,7 @@ export const PrerequisiteTable = (props) => {
                   if (key === "level") return null;
                   if (key === "semester") return null;
                   if (key === "levelId") return null;
+                  if (key === "creditHours") return null;
                   return (
                     <td className="collapsetable-items" key={key}>
                       {item[key] === 0 ? 0 : item[key] || ""}

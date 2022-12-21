@@ -102,7 +102,9 @@ export const Table = (props) => {
           <tbody>
             {data.map((item) => {
               return (
-                <tr key={item.id}>
+                <tr
+                  key={item.id || (Math.random() + 1).toString(36).substring(7)}
+                >
                   {editRowId === item.id ? (
                     <EditableRow
                       editRowData={editRowData}

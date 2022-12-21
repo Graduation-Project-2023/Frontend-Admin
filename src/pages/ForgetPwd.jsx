@@ -51,7 +51,7 @@ export const ForgetPwd = () => {
                 <span className="small_loader"></span>
               </button>
             ) : (
-              <button>{t(`forgetpwd.done`)}</button>
+              <button>{t(`common.done`)}</button>
             )}
           </div>
           <div>

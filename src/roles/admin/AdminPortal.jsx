@@ -36,8 +36,10 @@ export const AdminPortal = () => {
         <ModalPopup
           title={"academicMain.faculty"}
           searchable={true}
-          popupList={{ state: true, data: colleges, path: "academic_programs" }}
-          closeModal={() => {setShowModal(false)}}
+          list={{ state: true, data: colleges, path: "academic_programs" }}
+          closeModal={() => {
+            setShowModal(false);
+          }}
         />
       )}
     </>

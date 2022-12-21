@@ -1,7 +1,7 @@
 .popup {
   padding: 5rem;
 
-  &_list {
+  &-list {
     list-style: none;
     color: $Grey4;
     @include font(1rem, 1.3rem);
@@ -17,13 +17,13 @@
     }
   }
 
-  &_title {
+  &-title {
     color: $Blue4;
     @include font(2.5rem, 3rem);
     padding: 0.5rem;
   }
 
-  &_close {
+  &-close {
     position: absolute;
     top: -0.5rem;
     left: -0.5rem;
@@ -35,9 +35,14 @@
     @include font(1.1rem, 1rem);
     color: white;
     padding: 0;
+
+    &-error {
+      background-color: red;
+      border: 1px solid red;
+    }
   }
 
-  &_header {
+  &-header {
     flex-direction: column !important;
     align-items: flex-start !important;
   }
@@ -47,5 +52,47 @@
     padding: 0.3rem;
     margin: 1rem;
     border: 1px solid #d9d9d9;
+  }
+
+  &-msg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-icon {
+      font-size: 60px;
+      color: $Blue2;
+      text-align: center;
+      &-error {
+        color: red;
+      }
+    }
+    &-title,
+    &-text {
+      text-align: center;
+      color: black;
+    }
+    &-text {
+      width: 80%;
+      padding: 10px;
+    }
+    &-button {
+      border: transparent;
+      background-color: $Blue2;
+      color: white;
+      width: 90px;
+      height: 35px;
+      border-radius: 5px;
+      &:hover {
+        @include hover(green, red);
+      }
+      &-error {
+        background-color: red;
+        &:hover {
+          @include hover(blue, white);
+        }
+      }
+    }
   }
 }

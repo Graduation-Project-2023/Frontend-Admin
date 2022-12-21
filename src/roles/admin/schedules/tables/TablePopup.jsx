@@ -141,7 +141,7 @@ export const TablePopup = (props) => {
       closeModal={() => {
         props.close();
       }}
-      child={true}
+      form={{ state: true }}
     >
       <form
         onSubmit={(event) => {

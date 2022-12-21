@@ -8,8 +8,16 @@ import { AiOutlineClose } from "react-icons/ai";
 // Reusable Components
 import Modal from "react-bootstrap/Modal";
 
+// Component Props:
+// title: string
+// error: boolean
+// searchable: boolean (if there is a search bar)
+// list: {state, data, path}
+// form: {state, children} (not a self-closing tag)
+// message: { state, icon: tag, title, text, button, handleClick}
+
 export const ModalPopup = (props) => {
-  const listData = props.popupList?.data;
+  const listData = props.list?.data;
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const authContext = useAuth();
@@ -17,8 +25,8 @@ export const ModalPopup = (props) => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
-    setFilteredData(props.popupList?.data);
-  }, [props.popupList?.data]);
+    setFilteredData(props.list?.data);
+  }, [props.list?.data]);
 
   useEffect(() => {
     if (props.searchable) {
@@ -42,8 +50,11 @@ export const ModalPopup = (props) => {
   return (
     <Modal show={true} onHide={hideModal} className="popup">
       {props.title && (
-        <Modal.Header className="popup_header">
-          <Modal.Title className="popup_title">{t(props.title)}</Modal.Title>
+        <Modal.Header className="popup-header">
+          <button className="popup-close" onClick={hideModal}>
+            <AiOutlineClose />
+          </button>
+          <Modal.Title className="popup-title">{t(props.title)}</Modal.Title>
           {props.searchable && (
             <input
               type="text"
@@ -56,11 +67,16 @@ export const ModalPopup = (props) => {
         </Modal.Header>
       )}
       <Modal.Body>
-        <button className="popup_close" onClick={hideModal}>
-          <AiOutlineClose />
-        </button>
-        {props.popupList?.state && (
-          <div className="popup_list">
+        {!props.title && (
+          <button
+            className={`popup-close ${props.error ? "popup-close-error" : ""}`}
+            onClick={hideModal}
+          >
+            <AiOutlineClose />
+          </button>
+        )}
+        {props.list?.state && (
+          <div className="popup-list">
             {filteredData.map((item) => {
               return (
                 <Link
@@ -68,7 +84,7 @@ export const ModalPopup = (props) => {
                   onClick={() => {
                     authContext.changeCollege(item);
                   }}
-                  to={props.popupList.path}
+                  to={props.list.path}
                 >
                   {currentLanguageCode === "en"
                     ? item.englishName
@@ -78,7 +94,28 @@ export const ModalPopup = (props) => {
             })}
           </div>
         )}
-        {props.child && <>{props.children}</>}
+        {props.form?.state && <>{props.children}</>}
+        {props.message?.state && (
+          <div className="popup-msg">
+            <div
+              className={`popup-msg-icon ${
+                props.error ? "popup-msg-icon-error" : ""
+              }`}
+            >
+              {props.message.icon}
+            </div>
+            <h4 className="popup-msg-title">{t(props.message.title)}</h4>
+            <h5 className="popup-msg-text">{t(props.message.text)}</h5>
+            <button
+              className={`popup-msg-button ${
+                props.error ? "popup-msg-button-error" : ""
+              }`}
+              onClick={props.message.handleClick}
+            >
+              {t(props.message.button)}
+            </button>
+          </div>
+        )}
       </Modal.Body>
     </Modal>
   );

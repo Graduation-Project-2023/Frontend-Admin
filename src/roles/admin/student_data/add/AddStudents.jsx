@@ -1,119 +1,65 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import styles from "./AddStudents.module.scss";
+import { StudentsWrongData } from "./StudentsWrongData";
+
+// Reusable Components and Icons
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { ModalPopup } from "../../../../components/popups/ModalPopup";
-import styles from "./AddStudents.module.scss";
-import { useRef } from "react";
 import { TbFileUpload } from "react-icons/tb";
 import { MdErrorOutline } from "react-icons/md";
 import { BsFillPersonCheckFill } from "react-icons/bs";
-import { StudentsWrongData } from "./StudentsWrongData";
 
 export const AddStudents = () => {
-  const [files, setFiles] = useState(null);
-  const inputRef = useRef();
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-  const handleDrop = (event) => {
-    event.preventDefault();
-    console.log(event.dataTransfer.files);
-  };
-
-  /*if (files) return (
-    <div className="uploads">
-      <ul>
-        {Array.from(files).map((file, idx) => <li key= {idx}>{file.name}</li> ) }
-      </ul>
-
-    </div>
-  )
-*/
-
-  const [error, setError] = useState({
-    state: false,
-    errorMessage: "",
-    success: true,
+  const [userUX, setUserUX] = useState({
+    error: true,
+    success: false,
     table: true,
   });
+  const { t } = useTranslation();
+
+  const handleDragOver = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log("hello drag");
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    if (event.dataTransfer.files.length > 1) {
+      console.log("more than one file");
+    } else {
+      if (event.dataTransfer.files[0].type !== "text/csv") {
+        console.log("not csv");
+      } else {
+        console.log("everything ok");
+        // backend logic
+      }
+    }
+  };
 
   return (
     <FormNavbarContainer>
-      {!files && (
-        <div className={styles.addform}>
-          <div
-            className={styles.dashform}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            <div className={styles.dashform_icon}>
-              <TbFileUpload />
-            </div>
-            <h4 className={styles.dashform_text}>
-              قم بسحب وافلات ملفات ال CSV
-            </h4>
-            <input
-              type="file"
-              multiple
-              onChange={(event) => setFiles(event.target.files)}
-              hidden
-              ref={inputRef}
-            />
+      <div className={styles.addform}>
+        <div
+          className={styles.dashform}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <div className={styles.dashform_icon}>
+            <TbFileUpload />
           </div>
+          <h4 className={styles.dashform_text}>{t("common.drag")}</h4>
         </div>
-      )}
-
-      {/*  success modal */}
-      {error.success && (
-        <ModalPopup
-          child={true}
-          closeModal={() => {
-            setError({ success: false });
-          }}
-        >
-          <div className={styles.successMessage}>
-            <div className={styles.successMessage_icon}>
-              <BsFillPersonCheckFill />
-            </div>
-            <h4 className={styles.successMessage_text}>تم بنجاح</h4>
-            <h5 className={styles.successMessage_txt}>
-              كل شئ يبدو على ما يرام,من فضلك اضغط على "حفظ" للمتابعة.
-            </h5>
-            <button className={styles.successMessage_btn}>حفظ</button>
-          </div>
-        </ModalPopup>
-      )}
-
-      {/* Error modal */}
-      {error.state && (
-        <ModalPopup
-          child={true}
-          closeModal={() => {
-            setError({ state: false });
-          }}
-        >
-          <div className={styles.errorMessage}>
-            <div className={styles.errorMessage_icon}>
-              <MdErrorOutline />
-            </div>
-            <h4 className={styles.errorMessage_text}>عفوا..!</h4>
-            <h5 className={styles.errorMessage_txt}>
-              يبدو ان هناك خطأ منه من فضلك حاول مرة اخرى
-            </h5>
-            <button className={styles.errorMessage_btn}>متابعة</button>
-          </div>
-        </ModalPopup>
-      )}
-
-      {/* <div></div> */}
+      </div>
 
       {/* Table */}
-      {error.table && (
+      {userUX.table && (
         <table
           className={styles.tableHead}
           child={true}
           closeModal={() => {
-            setError({ table: false });
+            setUserUX({ table: false });
           }}
         >
           <thead>
@@ -133,6 +79,53 @@ export const AddStudents = () => {
             })}
           </tbody>
         </table>
+      )}
+
+      {/* Success Modal */}
+      {userUX.success && (
+        <ModalPopup
+          message={{
+            state: true,
+            icon: <BsFillPersonCheckFill />,
+            title: "popup.success",
+            text: "popup.message_success",
+            button: "common.save",
+            handleClick: () => {
+              setUserUX((prev) => {
+                return { ...prev, success: false };
+              });
+            },
+          }}
+          closeModal={() => {
+            setUserUX((prev) => {
+              return { ...prev, success: false };
+            });
+          }}
+        />
+      )}
+
+      {/* Error Modal */}
+      {userUX.error && (
+        <ModalPopup
+          message={{
+            state: true,
+            icon: <MdErrorOutline />,
+            title: "popup.error",
+            text: "popup.message_error",
+            button: "common.continue",
+            handleClick: () => {
+              setUserUX((prev) => {
+                return { ...prev, error: false };
+              });
+            },
+          }}
+          error={true}
+          closeModal={() => {
+            setUserUX((prev) => {
+              return { ...prev, error: false };
+            });
+          }}
+        />
       )}
     </FormNavbarContainer>
   );

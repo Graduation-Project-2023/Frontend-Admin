@@ -41,22 +41,24 @@ export const ModalPopup = (props) => {
 
   return (
     <Modal show={true} onHide={hideModal} className="popup">
-      <Modal.Header className={props.title ? "popup_header" : "popup_noheader"}>
-        <Modal.Title className="popup_title">{t(props.title)}</Modal.Title>
+      {props.title && (
+        <Modal.Header className="popup_header">
+          <Modal.Title className="popup_title">{t(props.title)}</Modal.Title>
+          {props.searchable && (
+            <input
+              type="text"
+              onChange={(e) => setSearchValue(e.target.value)}
+              value={searchValue}
+              placeholder={t("common.search")}
+              className="popup-search form-control"
+            />
+          )}
+        </Modal.Header>
+      )}
+      <Modal.Body>
         <button className="popup_close" onClick={hideModal}>
           <AiOutlineClose />
         </button>
-        {props.searchable && (
-          <input
-            type="text"
-            onChange={(e) => setSearchValue(e.target.value)}
-            value={searchValue}
-            placeholder={t("common.search")}
-            className="popup-search form-control"
-          />
-        )}
-      </Modal.Header>
-      <Modal.Body>
         {props.popupList?.state && (
           <div className="popup_list">
             {filteredData.map((item) => {

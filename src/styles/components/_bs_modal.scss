@@ -16,11 +16,13 @@
       }
     }
   }
+
   &_title {
     color: $Blue4;
     @include font(2.5rem, 3rem);
     padding: 0.5rem;
   }
+
   &_close {
     position: absolute;
     top: -0.5rem;
@@ -34,15 +36,12 @@
     color: white;
     padding: 0;
   }
-  &_header,
-  &_noheader {
+
+  &_header {
     flex-direction: column !important;
     align-items: flex-start !important;
   }
-  &_noheader {
-    border-bottom: none;
-    padding: 0;
-  }
+
   &-search {
     width: 90%;
     padding: 0.3rem;

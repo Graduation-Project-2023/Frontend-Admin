@@ -53,15 +53,13 @@ export const AcademicGrades = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const rows = [...grades];
-    const gpaAllowedHour = { ...academicGradesData };
-    gpaAllowedHour["collegeId"] = authContext.college.id;
-    rows.push(gpaAllowedHour);
+    const grade = { ...academicGradesData };
+    grade["programId"] = authContext.program.id;
+    rows.push(grade);
 
     // POST request to create a new academic grade
     axios
-      .post(BASE_URL + `/programs/${programId}/gpa_allowed_hours`, {
-        gpaAllowedHour,
-      })
+      .post(BASE_URL + `/programs/${programId}/grades`, grade)
       .then((res) => {
         console.log(res);
         setGrades(rows);

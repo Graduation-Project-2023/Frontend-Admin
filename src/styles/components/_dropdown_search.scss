@@ -32,9 +32,12 @@
         padding: 1rem;
         border-bottom: solid $White3 0.5px;
         & div {
-          display: flex;
-          flex-direction: row;
-          gap: 6rem;
+          display: grid;
+          grid-template-columns: 20% 70%;
+          gap: 10%;
+          & span {
+            display: flex;
+          }
         }
       }
 

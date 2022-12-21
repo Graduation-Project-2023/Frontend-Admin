@@ -7,7 +7,7 @@ export const FormInput = (props) => {
 
   if (inputData.row) {
     return (
-      <div className="col-sm-10 mb-3">
+      <div className="col-lg-12 mb-4">
         <label className="form-label">{t(inputData.title)}</label>
         <div>
           {inputData.options ? (
@@ -55,7 +55,7 @@ export const FormInput = (props) => {
       <div className="row">
         {inputData.splitRow.map((item) => {
           return (
-            <div className=" col-sm-5 mb-3" key={item.id}>
+            <div className=" col-lg-6 mb-4" key={item.id}>
               <label className="form-label">{t(item.title)}</label>
               {item.options ? (
                 <select

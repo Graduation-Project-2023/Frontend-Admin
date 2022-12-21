@@ -52,6 +52,7 @@ export const ModalPopup = (props) => {
             onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
             placeholder={t("common.search")}
+            className="popup-search form-control"
           />
         )}
       </Modal.Header>

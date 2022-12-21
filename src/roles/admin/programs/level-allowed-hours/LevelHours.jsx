@@ -54,15 +54,20 @@ export const LevelHours = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const rows = [...levelHours];
-    const levelAllowedHour = { ...levelHoursData };
-    levelAllowedHour["collegeId"] = authContext.college.id;
+    const levelAllowedHour = {
+      ...levelHoursData,
+      level: +levelHoursData.level,
+    };
+
+    levelAllowedHour["programId"] = authContext.program.id;
     rows.push(levelAllowedHour);
 
     // POST request to create a new level allowed hours
     axios
-      .post(BASE_URL + `/programs/${programId}/level_allowed_hours`, {
-        levelAllowedHour,
-      })
+      .post(
+        BASE_URL + `/programs/${programId}/level_allowed_hours`,
+        levelAllowedHour
+      )
       .then((res) => {
         setLevelHours(rows);
         setLoading(false);
@@ -83,9 +88,16 @@ export const LevelHours = () => {
         >
           {LevelHoursData.map((data) => {
             if (data.levels === true) {
+              const levels = authContext.program?.levels.map((item) => ({
+                id: item.id,
+                value: item.level,
+                title: item.arabicName,
+              }));
+              levels.unshift(data.options[0]);
+
               return (
                 <FormInput
-                  inputData={data}
+                  inputData={{ ...data, options: levels }}
                   handleEditFormChange={handleEditFormChange}
                   valueData={levelHoursData}
                   key={data.id}

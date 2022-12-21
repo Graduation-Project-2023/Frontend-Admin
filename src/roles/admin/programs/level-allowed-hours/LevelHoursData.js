@@ -2,7 +2,7 @@ export const LevelHoursData = [
   {
     id: 1,
     title: "levelHours.level",
-    name: "semester",
+    name: "level",
     levels: true,
     req: true,
     options: [{ id: 0, title: "common.select", value: null }],
@@ -14,7 +14,7 @@ export const LevelHoursData = [
       {
         id: 1,
         title: "levelHours.term",
-        name: "level",
+        name: "semester",
         req: true,
         options: [
           { id: 0, title: "common.select", value: null },

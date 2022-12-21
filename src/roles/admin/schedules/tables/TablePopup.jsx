@@ -148,8 +148,8 @@ export const TablePopup = (props) => {
           handleFormSubmit(event);
         }}
       >
-        <div className="row">
-          <div className="form-group col-md-6">
+        <div className="row mb-3">
+          <div className="col-md-6">
             <label>{t(`courses.name`)}</label>
             {props.edit ? (
               <input
@@ -176,7 +176,7 @@ export const TablePopup = (props) => {
               />
             )}
           </div>
-          <div className="form-group col-md-6">
+          <div className="col-md-6">
             <label>{t(`table.classType`)}</label>
             {props.edit ? (
               <input
@@ -209,8 +209,8 @@ export const TablePopup = (props) => {
             )}
           </div>
         </div>
-        <div className="row">
-          <div className="form-group col-md-4">
+        <div className="row mb-3">
+          <div className="col-md-4">
             <label>{t(`common.day`)}</label>
             {props.edit ? (
               <select
@@ -237,7 +237,7 @@ export const TablePopup = (props) => {
               />
             )}
           </div>
-          <div className="form-group col-md-4">
+          <div className="col-md-4">
             <label>{t(`table.start`)}</label>
 
             <select
@@ -268,7 +268,7 @@ export const TablePopup = (props) => {
                 ))}
             </select>
           </div>
-          <div className="form-group col-md-4">
+          <div className="col-md-4">
             <label>{t(`table.end`)}</label>
             <input
               type="text"
@@ -287,8 +287,8 @@ export const TablePopup = (props) => {
             />
           </div>
         </div>
-        <div className="row">
-          <div className="form-group col-md-6">
+        <div className="row mb-3">
+          <div className="col-md-6">
             <label>{t(`table.place`)}</label>
             <select name="place" className="form-select">
               <option value="1">{t(`common.select`)}</option>
@@ -296,7 +296,7 @@ export const TablePopup = (props) => {
               <option value="3">{t(`el mkaan`)}</option>
             </select>
           </div>
-          <div className="form-group col-md-6">
+          <div className="col-md-6">
             <label>{t(`table.studentNo`)}</label>
             <input type="number" className="form-control" />
           </div>
@@ -305,10 +305,14 @@ export const TablePopup = (props) => {
           <h1>CHOOSE ANOTHER CELL THIS CELL IS OCCUPIED</h1>
         )}
         <div
-          className="btn btn-primary"
-          // onClick={TestingAddSubject}
+
+        // onClick={TestingAddSubject}
         >
-          <button type="submit" onClick={handleFormSubmit}>
+          <button
+            type="submit"
+            onClick={handleFormSubmit}
+            className="form-card-button-save"
+          >
             Add Subject Here
           </button>
         </div>

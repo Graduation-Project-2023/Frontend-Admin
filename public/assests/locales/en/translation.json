@@ -34,7 +34,8 @@
     "lab": "Lab / Section",
     "day": "Day",
     "period": "Period",
-    "time": "Time"
+    "time": "Time",
+    "search": "Search.."
   },
   "week": {
     "saturday": "Saturday",

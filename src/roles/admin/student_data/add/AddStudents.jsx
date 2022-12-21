@@ -33,6 +33,7 @@ export const AddStudents = () => {
         console.log("not csv");
       } else {
         console.log("everything ok");
+        console.log(event.dataTransfer.files[0]);
         // backend logic
       }
     }

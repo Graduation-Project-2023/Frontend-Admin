@@ -5,17 +5,16 @@
     width: 100%;
     text-align: start;
     @include font(1rem, 1.3rem);
-    padding: 0.5rem 2rem;
+
     &::after {
       vertical-align: middle;
-      margin: 0 0.4rem;
     }
   }
   &_menu {
     padding: 0.1rem !important;
     width: 100%;
     & input {
-      margin: 0.5rem;
+      margin: 2%;
       width: 96%;
     }
     &_searchList {

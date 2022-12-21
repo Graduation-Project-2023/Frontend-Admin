@@ -22,6 +22,7 @@
     border-top: 0.1px solid #d9d9d9;
     border-bottom: 0.1px solid #d9d9d9;
     padding: 2rem;
+
     &_wrap {
       &_scroll {
         display: block;
@@ -29,6 +30,7 @@
         white-space: nowrap;
         color: #858d97;
         width: 99%;
+
         &_header {
           text-align: center;
         }
@@ -43,7 +45,7 @@
 
 .empty_cell {
   &:hover {
-    background-color: palevioletred;
+    background-color: $Blue4;
     cursor: pointer;
   }
 }
@@ -52,7 +54,7 @@
   background-color: #d9d9d933 !important;
   color: #444444;
   &:hover {
-    background-color: #3d7dca !important;
+    background-color: hsl(213, 57%, 52%, 20%) !important;
     cursor: pointer;
   }
 }
@@ -88,7 +90,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(80, 207, 133, 0.5);
+    background-color: hsl(213, 57%, 52%, 20%);
     background-size: cover;
     clip-path: polygon(100% 0%, 0% 0%, 0% 100%);
   }

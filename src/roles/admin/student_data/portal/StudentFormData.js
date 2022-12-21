@@ -61,15 +61,27 @@ export const StudentFormData = [
           },
           {
             id: 2,
-            title: "common.birthplace",
-            name: "birthPlace",
-            type: "text",
+            title: "common.marital",
+            name: "maritalStatus",
+            options: [
+              { id: 0, title: "common.select", value: null },
+              { id: 1, title: "common.marital_single", value: "SINGLE" },
+              { id: 2, title: "common.marital_married", value: "MARRIED" },
+              { id: 3, title: "common.marital_separated", value: "SEPARATED" },
+              { id: 4, title: "common.marital_widowed", value: "WIDOWED" },
+            ],
           },
         ],
       },
-
       {
         id: 6,
+        title: "common.birthplace",
+        name: "birthPlace",
+        type: "text",
+        row: true,
+      },
+      {
+        id: 7,
         splitRow: [
           {
             id: 1,
@@ -86,18 +98,11 @@ export const StudentFormData = [
         ],
       },
       {
-        id: 10,
+        id: 8,
         title: "common.nationalId",
         req: true,
         name: "nationalId",
         type: "number",
-        row: true,
-      },
-      {
-        id: 11,
-        title: "common.martial",
-        name: "martialStatus",
-        type: "text",
         row: true,
       },
     ],

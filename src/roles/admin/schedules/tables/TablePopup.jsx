@@ -10,6 +10,9 @@ import cookies from "js-cookie";
 import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 
+// To Delete
+import { MenuData, ProfNames } from "./backendmimic";
+
 export const TablePopup = (props) => {
   const [cellData, setCellData] = useState(props.cellData.cellData);
   const [period, setPeriod] = useState({ startPeriod: 0, endPeriod: 0 });
@@ -41,17 +44,26 @@ export const TablePopup = (props) => {
         }
       }
     }
-    console.log(availableCells);
     setAvailableCells(availableCells);
     // eslint-disable-next-line
   }, [props.cellData.availableCells, props.cellData.cellData]);
 
   useEffect(() => {
-    setCellData(props.cellData.cellData);
-    setPeriod({
-      startPeriod: cellData.startPeriod,
-      endPeriod: cellData.endPeriod,
-    });
+    if (props.edit) {
+      setCellData(props.cellData.cellData);
+      setPeriod({
+        startPeriod: cellData.startPeriod,
+        endPeriod: cellData.endPeriod,
+      });
+    } else {
+      setCellData({
+        startPeriod: props.cellData.cellData.cellNo,
+        day: props.cellData.cellData.day,
+      });
+      setPeriod({
+        startPeriod: props.cellData.cellData.cellNo,
+      });
+    }
     // eslint-disable-next-line
   }, [props.cellData.cellData]);
 
@@ -90,7 +102,15 @@ export const TablePopup = (props) => {
       });
     }
   };
-  const handleSubjectSelection = () => {};
+  const handleSubjectSelection = (item) => {
+    setCellData((prev) => {
+      return {
+        ...prev,
+        englishName: item.englishName,
+        arabicName: item.arabicName,
+      };
+    });
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -145,8 +165,11 @@ export const TablePopup = (props) => {
               />
             ) : (
               <DropdownSearch
-                name={{ arabicName: "ahmed" }}
-                menuData={[]}
+                name={{
+                  englishName: cellData.englishName,
+                  arabicName: cellData.arabicName,
+                }}
+                menuData={MenuData}
                 label={"courses.name"}
                 inputPlaceholder={"common.select"}
                 handleListClick={handleSubjectSelection}
@@ -164,11 +187,24 @@ export const TablePopup = (props) => {
                 disabled
                 readOnly
               />
+            ) : cellData?.arabicName === undefined ? (
+              <input
+                type="text"
+                className="form-control"
+                value={"pls select a subject"}
+                disabled
+                readOnly
+              />
             ) : (
-              <select name="classType" className="form-select">
+              <select
+                name="classType"
+                className="form-select"
+                onChange={handleEditFormChange}
+                value={cellData?.classType || ""}
+              >
                 <option value={null}>{t(`common.select`)}</option>
-                <option value="LECTURE">{t(`lecture`)}</option>
-                <option value="LAB">{t(`lab`)}</option>
+                <option value="LECTURE">{t(`common.lecture`)}</option>
+                <option value="LAB">{t(`common.lab`)}</option>
               </select>
             )}
           </div>
@@ -203,44 +239,34 @@ export const TablePopup = (props) => {
           </div>
           <div className="form-group col-md-4">
             <label>{t(`table.start`)}</label>
-            {props.edit ? (
-              <select
-                type="text"
-                className="form-select"
-                name="startPeriod"
-                required
-                onChange={handlePeriodChange}
-                value={period.startPeriod || ""}
-              >
-                {period.startPeriod === null && (
-                  <option value={null}>{t(`common.select`)}</option>
-                )}
 
-                {availableCells
-                  .filter((item) => item.day === cellData.day)
-                  .sort(function (a, b) {
-                    return a.period - b.period;
-                  })
-                  .map((cell) => (
-                    <option key={cell.period} value={cell.period}>
-                      {ScheduleTableHeader.find(
-                        (item) => item.period === cell.period
-                      )
-                        ?.time.split("-")[0]
-                        .trim()}
-                    </option>
-                  ))}
-              </select>
-            ) : (
-              <input
-                type="text"
-                name="startAt"
-                className="form-control"
-                value={cellData.cellNo}
-                disabled
-                readOnly
-              />
-            )}
+            <select
+              type="text"
+              className="form-select"
+              name="startPeriod"
+              required
+              onChange={handlePeriodChange}
+              value={period.startPeriod || ""}
+            >
+              {period.startPeriod === null && (
+                <option value={null}>{t(`common.select`)}</option>
+              )}
+
+              {availableCells
+                .filter((item) => item.day === cellData.day)
+                .sort(function (a, b) {
+                  return a.period - b.period;
+                })
+                .map((cell) => (
+                  <option key={cell.period} value={cell.period}>
+                    {ScheduleTableHeader.find(
+                      (item) => item.period === cell.period
+                    )
+                      ?.time.split("-")[0]
+                      .trim()}
+                  </option>
+                ))}
+            </select>
           </div>
           <div className="form-group col-md-4">
             <label>{t(`table.end`)}</label>
@@ -259,21 +285,6 @@ export const TablePopup = (props) => {
               }
               disabled
             />
-            {/* {availableCells
-                .filter((item) => item.day === cellData?.day)
-                .sort(function (a, b) {
-                  return a.period - b.period;
-                })
-                .map((cell) => (
-                  <option key={cell.period} value={cell.period}>
-                    {ScheduleTableHeader.find(
-                      (item) => item.period === cell.period
-                    )
-                      ?.time.split("-")[1]
-                      .trim()}
-                  </option>
-            //     ))} */}
-            {/* // </input> */}
           </div>
         </div>
         <div className="row">

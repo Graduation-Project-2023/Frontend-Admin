@@ -12,35 +12,31 @@ import { DayPeriodTable } from "../../../../components/table/schedule/DayPeriodT
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { TablePopup } from "./TablePopup";
 
+
+
 export const LevelSchedule = () => {
   const [tableData, setTableData] = useState([
     {
       englishName: "English",
       arabicName: "لغة انجليزية",
-      startDate: null,
       startPeriod: 3,
       endPeriod: 5,
-      endDate: null,
       classType: "LECTURE",
       day: "MONDAY",
     },
     {
       englishName: "Advanced English 2",
       arabicName: "2 لغة انجليزية متقدمة",
-      startDate: null,
       startPeriod: 7,
       endPeriod: 9,
-      endDate: null,
       classType: "LAB",
       day: "TUESDAY",
     },
     {
       englishName: "Advanced English",
       arabicName: "لغة انجليزية متقدمة",
-      startDate: null,
       startPeriod: 1,
       endPeriod: 4,
-      endDate: null,
       classType: "LAB",
       day: "TUESDAY",
     },

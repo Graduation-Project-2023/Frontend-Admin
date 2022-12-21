@@ -20,7 +20,7 @@ export const StudentFormData = [
       },
       {
         id: 3,
-        title: "Seat Id",
+        title: "common.schoolSeat",
         name: "SeatId",
         type: "number",
         row: true,
@@ -34,8 +34,8 @@ export const StudentFormData = [
             name: "gender",
             options: [
               { id: 0, title: "common.select", value: null },
-              { id: 1, title: "GENDER male", value: "MALE" },
-              { id: 2, title: "gender female", value: "FEMALE" },
+              { id: 1, title: "common.gender_male", value: "MALE" },
+              { id: 2, title: "common.gender_female", value: "FEMALE" },
             ],
           },
           {
@@ -55,13 +55,13 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "birthdate",
+            title: "common.birthdate",
             name: "birthDate",
             type: "date",
           },
           {
             id: 2,
-            title: "birthplace",
+            title: "common.birthplace",
             name: "birthPlace",
             type: "text",
           },
@@ -73,13 +73,13 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "nationality",
+            title: "common.nationality",
             name: "Nationality",
             type: "text",
           },
           {
             id: 2,
-            title: "Second Nationality",
+            title: "common.otherNationality",
             name: "otherNationality",
             type: "text",
           },
@@ -87,7 +87,7 @@ export const StudentFormData = [
       },
       {
         id: 10,
-        title: "National Id",
+        title: "common.nationalId",
         req: true,
         name: "nationalId",
         type: "number",
@@ -95,7 +95,7 @@ export const StudentFormData = [
       },
       {
         id: 11,
-        title: "Martial Status",
+        title: "common.martial",
         name: "martialStatus",
         type: "text",
         row: true,
@@ -108,7 +108,7 @@ export const StudentFormData = [
     formData: [
       {
         id: 1,
-        title: "Address",
+        title: "common.address",
         name: "address",
         type: "textarea",
         row: true,
@@ -118,15 +118,15 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Home Phone Number",
-            name: "homePhone",
+            title: "common.phone",
+            name: "contactPhone",
             type: "number",
             row: true,
           },
           {
             id: 2,
-            title: "Mobile Number",
-            name: "contactPhone",
+            title: "common.homeNumber",
+            name: "homePhone",
             type: "number",
             row: true,
           },
@@ -134,7 +134,7 @@ export const StudentFormData = [
       },
       {
         id: 3,
-        title: "Directorate",
+        title: "common.directorate",
         name: "directorate",
         type: "text",
         row: true,
@@ -147,14 +147,14 @@ export const StudentFormData = [
     formData: [
       {
         id: 1,
-        title: "Guardian Name ",
+        title: "common.guardianName",
         name: "guardianName ",
         type: "text",
         row: true,
       },
       {
         id: 2,
-        title: "Guardian Address ",
+        title: "common.guardianAddress",
         name: "guardianAddress ",
         type: "textarea",
         row: true,
@@ -164,14 +164,14 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Guardian Nationality ",
+            title: "common.guardianNationality",
             name: "guardianNationality ",
             type: "text",
             row: true,
           },
           {
             id: 2,
-            title: "Guardian Phone ",
+            title: "common.guardianPhone",
             name: "guardianPhone",
             type: "number",
             row: true,
@@ -189,14 +189,14 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Previous Qualification",
+            title: "common.prevQualification",
             name: "PreviousQualification",
             type: "text",
             row: true,
           },
           {
             id: 2,
-            title: "Previous Qualification Institute",
+            title: "common.prevQualificationInstitute",
             name: "InstitutePreviousQualification",
             type: "text",
             row: true,
@@ -208,14 +208,14 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Enrollment Year",
+            title: "common.enrollmentYear",
             name: "enrollmentYear",
             type: "date",
             row: true,
           },
           {
             id: 2,
-            title: "Enrollment End Date",
+            title: "common.enrollmentEndDate",
             name: "enrollmentYearEndDate",
             type: "date",
             row: true,
@@ -224,7 +224,7 @@ export const StudentFormData = [
       },
       {
         id: 3,
-        title: "Total Previous Qualification",
+        title: "common.totalPrevQualification",
         name: "TotalPreviousQualification",
         type: "number",
         row: true,
@@ -234,14 +234,14 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "School Marks",
+            title: "common.schoolMarks",
             name: "schoolMarks",
             type: "number",
             row: true,
           },
           {
             id: 2,
-            title: "School Seat",
+            title: "common.schoolSeat",
             name: "schoolSeatId",
             type: "number",
             row: true,

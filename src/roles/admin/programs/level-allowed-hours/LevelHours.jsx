@@ -17,8 +17,6 @@ export const LevelHours = () => {
   const [levelHours, setLevelHours] = useState([]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
@@ -33,8 +31,8 @@ export const LevelHours = () => {
         setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
+        setLoading(false);
       });
     // eslint-disable-next-line
   }, [programId]);
@@ -57,10 +55,8 @@ export const LevelHours = () => {
     const levelAllowedHour = {
       ...levelHoursData,
       level: +levelHoursData.level,
+      programId: authContext.program.id,
     };
-
-    levelAllowedHour["programId"] = authContext.program.id;
-    rows.push(levelAllowedHour);
 
     // POST request to create a new level allowed hours
     axios
@@ -69,12 +65,14 @@ export const LevelHours = () => {
         levelAllowedHour
       )
       .then((res) => {
+        console.log(res);
+        rows.push(levelAllowedHour);
         setLevelHours(rows);
         setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
+        setLoading(false);
       });
   };
 
@@ -134,10 +132,12 @@ export const LevelHours = () => {
           { id: 2, title: t(`levelHours.level`) },
           { id: 3, title: t(`levelHours.min`) },
           { id: 4, title: t(`levelHours.max`) },
+          { id: 5, title: t(`levelHours.maxCourses`) },
         ]}
         rowItems={levelHours}
         editableItems={true}
         deletableItems={true}
+        requestPath={`/programs/${authContext.program.id}/level_allowed_hours/`}
       />
     </SidebarContainer>
   );

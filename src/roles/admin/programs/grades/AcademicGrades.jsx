@@ -52,15 +52,14 @@ export const AcademicGrades = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const rows = [...grades];
-    const grade = { ...academicGradesData };
-    grade["programId"] = authContext.program.id;
-    rows.push(grade);
+    const grade = { ...academicGradesData, programId: authContext.program.id };
 
     // POST request to create a new academic grade
     axios
       .post(BASE_URL + `/programs/${programId}/grades`, grade)
       .then((res) => {
         console.log(res);
+        rows.push(grade);
         setGrades(rows);
         setLoading(false);
       })
@@ -114,6 +113,7 @@ export const AcademicGrades = () => {
         rowItems={grades}
         editableItems={true}
         deletableItems={true}
+        requestPath={`/programs/${authContext.program.id}/grades/`}
       />
     </SidebarContainer>
   );

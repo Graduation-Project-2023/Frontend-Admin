@@ -71,7 +71,8 @@
     "regCourses": "المقررات المسجلة",
     "addCourse": "تسجيل المقرر",
     "editCourse": "تعديل المقرر",
-    "coursesNotReg": "المقررات غير المسجلة"
+    "coursesNotReg": "المقررات غير المسجلة",
+    "enterValue": "ادخل القيمة..."
   },
   "popup": {
     "success": "تمت العملية بنجاح",

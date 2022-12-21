@@ -17,8 +17,6 @@ export const GPAHours = () => {
   const [allGPAData, setAllGPAData] = useState([]);
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
@@ -53,23 +51,26 @@ export const GPAHours = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const rows = [...allGPAData];
-    const gpaAllowedHour = { ...gpaHoursData };
-    gpaAllowedHour["collegeId"] = authContext.college.id;
-    rows.push(gpaAllowedHour);
+    const gpaAllowedHour = {
+      ...gpaHoursData,
+      programId: authContext.program.id,
+    };
 
-    // POST request to create a new level allowed hours
+    // POST request to create a new gpa allowed hours
     axios
-      .post(BASE_URL + `/programs/${programId}/gpa_allowed_hours`, {
-        gpaAllowedHour,
-      })
+      .post(
+        BASE_URL + `/programs/${programId}/gpa_allowed_hours`,
+        gpaAllowedHour
+      )
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
+        rows.push(gpaAllowedHour);
         setAllGPAData(rows);
         setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
+        setLoading(false);
       });
   };
 
@@ -116,6 +117,7 @@ export const GPAHours = () => {
         rowItems={allGPAData}
         editableItems={true}
         deletableItems={true}
+        requestPath={`/programs/${authContext.program.id}/gpa_allowed_hours/`}
       />
     </SidebarContainer>
   );

@@ -71,7 +71,8 @@
     "regCourses": "Registered Courses",
     "addCourse": "Add Course",
     "editCourse": "Edit Course",
-    "coursesNotReg": "Courses Not Registered"
+    "coursesNotReg": "Courses Not Registered",
+    "enterValue": "Enter a Value.."
   },
   "popup": {
     "success": "Success!",

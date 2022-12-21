@@ -1,7 +1,11 @@
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { BASE_URL } from "../../shared/API";
+
+// Components
 import { ReadOnlyRow } from "./ReadOnlyRow";
 import { EditableRow } from "./EditableRow";
-import { useState, useEffect } from "react";
 
 export const Table = (props) => {
   const headerItems = props.headerItems;
@@ -23,30 +27,40 @@ export const Table = (props) => {
     event.preventDefault();
 
     const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    let fieldValue = event.target.value;
+
+    if (event.target.type === "number") {
+      fieldValue = +fieldValue;
+    }
 
     const newRowData = { ...editRowData };
     newRowData[fieldName] = fieldValue;
-
     setEditRowData(newRowData);
   };
 
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
-
-    const editedRow = {
-      id: editRowId,
-      ...editRowData,
-    };
-
-    const newData = [...data];
-
-    const index = data.findIndex((item) => item.id === editRowId);
-
-    newData[index] = editedRow;
-
-    setData(newData);
-    setEditRowId(null);
+    console.log(editRowData);
+    const object = editRowData;
+    delete object.id;
+    // PUT request to update the current object
+    axios
+      .put(BASE_URL + props.requestPath + editRowId, object)
+      .then((res) => {
+        console.log(res);
+        const editedRow = {
+          id: editRowId,
+          ...editRowData,
+        };
+        const newData = [...data];
+        const index = data.findIndex((item) => item.id === editRowId);
+        newData[index] = editedRow;
+        setData(newData);
+        setEditRowId(null);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleEditClick = (event, rowData) => {
@@ -66,12 +80,18 @@ export const Table = (props) => {
 
   const handleDeleteClick = (rowId) => {
     const newData = [...data];
-
-    const index = data.findIndex((item) => item.id === rowId);
-
-    newData.splice(index, 1);
-
-    setData(newData);
+    // DELETE request to delete the current object
+    axios
+      .delete(BASE_URL + props.requestPath + rowId)
+      .then((res) => {
+        console.log(res);
+        const index = data.findIndex((item) => item.id === rowId);
+        newData.splice(index, 1);
+        setData(newData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../../../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../../shared/API";
@@ -20,6 +21,7 @@ export const AcademicLevels = () => {
   const [error, setError] = useState();
   const { t } = useTranslation();
   const { programId } = useParams();
+  const authContext = useAuth();
 
   useEffect(() => {
     // GET request to get all levels of a specific program
@@ -52,13 +54,16 @@ export const AcademicLevels = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const rows = [...levels];
-    rows.push(academicLevelsData);
-
+    const acadmicLevel = {
+      ...academicLevelsData,
+      programId: authContext.program.id,
+    };
     // POST request to add a new academic level to the database
     axios
-      .get(BASE_URL + `/programs/${programId}/levels`, { academicLevelsData })
+      .post(BASE_URL + `/programs/${programId}/levels`, acadmicLevel)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        rows.push(res.data);
         setLevels(rows);
         setLoading(false);
       })
@@ -112,6 +117,7 @@ export const AcademicLevels = () => {
         rowItems={levels}
         editableItems={true}
         deletableItems={true}
+        requestPath={`/programs/${authContext.program.id}/levels/`}
       />
     </SidebarContainer>
   );

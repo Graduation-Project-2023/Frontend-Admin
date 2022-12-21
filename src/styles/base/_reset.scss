@@ -16,9 +16,13 @@
       }
     }
   }
+  .scroller {
+    overflow-y: scroll;
+    scrollbar-color: #0a4c95 #c2d2e4;
+  }
 }
 .App {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 body {

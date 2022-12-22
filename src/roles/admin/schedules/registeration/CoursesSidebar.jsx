@@ -31,9 +31,9 @@ export const CoursesSidebar = (props) => {
   }, [searchValue]);
 
   useEffect(() => {
-    setFilteredList(listData);
+    setFilteredList(props.listData);
     // eslint-disable-next-line
-  }, [listData]);
+  }, [props.listData]);
 
   return (
     <Accordion

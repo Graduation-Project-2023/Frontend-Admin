@@ -57,21 +57,24 @@ export const CourseRegister = (props) => {
         })
       );
     } else if (currentLocation === "edit") {
-      setUserUX((prev) => ({ ...prev, formLoading: true }));
-      // GET request to get the registered course data by it's id
-      axios
-        .get(
-          BASE_URL +
-            `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseId}`
-        )
-        .then((res) => {
-          setUserUX((prev) => ({ ...prev, formLoading: false }));
-          setCourseData(res.data);
-        })
-        .catch((error) => {
-          setUserUX((prev) => ({ ...prev, formLoading: false }));
-          console.log(error);
-        });
+      if (props.programCourses.length !== 0) {
+        setUserUX((prev) => ({ ...prev, formLoading: true }));
+        // GET request to get the registered course data by it's id
+        axios
+          .get(
+            BASE_URL +
+              `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseId}`
+          )
+          .then((res) => {
+            console.log(res.data);
+            setUserUX((prev) => ({ ...prev, formLoading: false }));
+            setCourseData(res.data);
+          })
+          .catch((error) => {
+            setUserUX((prev) => ({ ...prev, formLoading: false }));
+            console.log(error);
+          });
+      }
     }
     // eslint-disable-next-line
   }, [courseId, props.programCourses]);
@@ -140,19 +143,19 @@ export const CourseRegister = (props) => {
     }
     const course = {
       ...courseData,
-      programCourseId: courseData.id,
       academicSemesterId: "decc46ba-7d4b-11ed-a1eb-0242ac120002",
     };
     delete course.semester;
     setUserUX((prev) => ({ ...prev, submitLoading: true }));
     if (currentLocation === "add") {
+      course["programCourseId"] = courseData.id;
       delete course.id;
       console.log(course);
       // POST request to add a new course to the current semester
       axios
         .post(
           BASE_URL +
-            `/course_instances/semesters/{{academic_semester_id}}/levels/${courseData.levelId}`,
+            `/course_instances/semesters/{{academic_semester_id}}/programs/${authContext.program.id}`,
           course
         )
         .then((res) => {
@@ -164,97 +167,114 @@ export const CourseRegister = (props) => {
           console.log(error);
         });
     } else if (currentLocation === "edit") {
-      // // PUT request to update the registered course data
-      // axios
-      //   .put(
-      //     BASE_URL +
-      //       `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseId}`,
-      //   )
-      //   .then((res) => {
-      //     setLoading({ ...loading, submit: false });
-      //     navigate("/admin_portal/study_schedules/register_course");
-      //   })
-      //   .catch((error) => {
-      //     setLoading({ ...loading, submit: false });
-      //     console.log(error);
-      //   });
+      // PUT request to update the registered course data
+      delete course.id;
+      axios
+        .put(
+          BASE_URL +
+            `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseData.id}`,
+          course
+        )
+        .then((res) => {
+          console.log(res);
+          // navigate("/admin_portal/study_schedules/register_course");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
+  const handleCourseDelete = () => {
+    // DELETE request to delete the registered course
+    axios
+      .delete(
+        BASE_URL +
+          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseData.id}`
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <>
-      <div className="registerationContainer-body">
-        <div className={`registerationContainer-menu `}>
-          {menus.map((menu) => (
-            <CoursesSidebar
-              key={menu.id}
-              title={menu.title}
-              listData={menu.registered ? registeredCourses : programCourses}
-              handleListClick={handleListClick}
-              registered={menu.registered}
-              eventKey={menu.id}
-            />
-          ))}
-        </div>
-        <div className="registerationContainer-form">
-          <h3>
-            {currentLocation === "add"
-              ? t(`common.addCourse`)
-              : t(`common.editCourse`)}
-          </h3>
-          <form onSubmit={handleFormSubmit}>
-            <div className="registerationContainer-form-inputs">
-              <div className="row mb-4">
-                <label className="form-label">{t(`courses.name`)}</label>
+    <div className="registerationContainer-body">
+      <div className={`registerationContainer-menu `}>
+        {menus.map((menu) => (
+          <CoursesSidebar
+            key={menu.id}
+            title={menu.title}
+            listData={menu.registered ? registeredCourses : programCourses}
+            handleListClick={handleListClick}
+            registered={menu.registered}
+            eventKey={menu.id}
+          />
+        ))}
+      </div>
+      <div className="registerationContainer-form">
+        <h3>
+          {currentLocation === "add"
+            ? t(`common.addCourse`)
+            : t(`common.editCourse`)}
+        </h3>
+        <form onSubmit={handleFormSubmit}>
+          <div className="registerationContainer-form-inputs">
+            <div className="row mb-4">
+              <label className="form-label">{t(`courses.name`)}</label>
+              <input
+                className="form-control"
+                value={
+                  currentLanguageCode === "en"
+                    ? courseData?.englishName || ""
+                    : courseData?.arabicName || ""
+                }
+                readOnly
+                disabled
+              />
+            </div>
+            <div className=" row mb-4">
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.code`)}</label>
                 <input
                   className="form-control"
-                  value={
-                    currentLanguageCode === "en"
-                      ? courseData?.englishName || ""
-                      : courseData?.arabicName || ""
-                  }
+                  value={courseData?.code || ""}
                   readOnly
                   disabled
                 />
               </div>
-              <div className=" row mb-4">
-                <div className="col-sm-6">
-                  <label className="form-label">{t(`courses.code`)}</label>
-                  <input
-                    className="form-control"
-                    value={courseData?.code || ""}
-                    readOnly
-                    disabled
-                  />
-                </div>
-                <div className="col-sm-6">
-                  <label className="form-label">{t(`courses.hours`)}</label>
-                  <input
-                    className="form-control"
-                    value={courseData?.creditHours || ""}
-                    readOnly
-                    disabled
-                  />
-                </div>
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.hours`)}</label>
+                <input
+                  className="form-control"
+                  value={courseData?.creditHours || ""}
+                  readOnly
+                  disabled
+                />
               </div>
-              <div className=" row mb-4">
-                <label className="form-label">{t(`levels.level`)}</label>
-                <select
-                  className="form-select"
-                  value={courseData?.levelId || ""}
-                  onChange={handleFormChange}
-                >
-                  {levels.map((level) => (
-                    <option key={level.id} value={level.id}>
-                      {level.level}&nbsp;-&nbsp;
-                      {currentLanguageCode === "en"
-                        ? level.englishName
-                        : level.arabicName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* <div className="mb-4">
+            </div>
+            <div className=" row mb-4">
+              <label className="form-label">{t(`levels.level`)}</label>
+              <select
+                className="form-select"
+                name="levelId"
+                value={courseData?.levelId || ""}
+                onChange={handleFormChange}
+              >
+                <option value={null}>{t(`common.select`)}</option>
+                {levels.map((level) => (
+                  <option key={level.id} value={level.id}>
+                    {level.level}&nbsp;-&nbsp;
+                    {currentLanguageCode === "en"
+                      ? level.englishName
+                      : level.arabicName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {/* <div className="mb-4">
                 <label className="form-label">{t(`esm el moshrf`)}</label>
                 <DropdownSearch
                   name={profData}
@@ -263,73 +283,82 @@ export const CourseRegister = (props) => {
                   inputPlaceholder={"ektb esm el moshrf"}
                 />
               </div> */}
-              <div className="row mb-4">
-                <div className="col-sm-6">
-                  <label className="form-label">{t(`courses.lecture`)}</label>
-                  <input
-                    className="form-control"
-                    type="number"
-                    name="lectureHrs"
-                    ref={lectureHrsRef}
-                    value={courseData?.lectureHrs || ""}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
-                <div className="col-sm-6">
-                  <label className="form-label">{t(`courses.lectures`)}</label>
-                  <input
-                    className="form-control"
-                    name="lectureCount"
-                    type="number"
-                    value={courseData?.lectureCount || ""}
-                    onChange={handleFormChange}
-                  />
-                </div>
+            <div className="row mb-4">
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.lecture`)}</label>
+                <input
+                  className="form-control"
+                  type="number"
+                  name="lectureHrs"
+                  ref={lectureHrsRef}
+                  value={courseData?.lectureHrs || ""}
+                  onChange={handleFormChange}
+                  required
+                />
               </div>
-              <div className=" row mb-4">
-                <div className="col-sm-6">
-                  <label className="form-label">{t(`courses.section`)}</label>
-                  <input
-                    className="form-control"
-                    name="labHrs"
-                    type="number"
-                    value={courseData?.labHrs || ""}
-                    ref={labHrsRef}
-                    onChange={handleFormChange}
-                  />
-                </div>
-                <div className="col-sm-6">
-                  <label className="form-label">{t(`courses.sections`)}</label>
-                  <input
-                    className="form-control"
-                    name="labCount"
-                    type="number"
-                    value={courseData?.labCount || ""}
-                    onChange={handleFormChange}
-                  />
-                </div>
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.lectures`)}</label>
+                <input
+                  className="form-control"
+                  name="lectureCount"
+                  type="number"
+                  value={courseData?.lectureCount || ""}
+                  onChange={handleFormChange}
+                />
               </div>
             </div>
+            <div className=" row mb-4">
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.section`)}</label>
+                <input
+                  className="form-control"
+                  name="labHrs"
+                  type="number"
+                  value={courseData?.labHrs || ""}
+                  ref={labHrsRef}
+                  onChange={handleFormChange}
+                />
+              </div>
+              <div className="col-sm-6">
+                <label className="form-label">{t(`courses.sections`)}</label>
+                <input
+                  className="form-control"
+                  name="labCount"
+                  type="number"
+                  value={courseData?.labCount || ""}
+                  onChange={handleFormChange}
+                />
+              </div>
+            </div>
+          </div>
 
+          <button
+            type="submit"
+            className="form-card-button form-card-button-save"
+          >
+            {location.pathname.split("/").at(-2) === "add"
+              ? t(`common.add`)
+              : t(`common.save`)}
+          </button>
+          <button
+            type="reset"
+            className="form-card-button form-card-button-cancel"
+          >
+            {t(`common.cancel`)}
+          </button>
+          {currentLocation === "edit" && (
             <button
-              type="submit"
-              className="form-card-button form-card-button-save"
+              type="button"
+              className="form-card-button form-card-button-delete"
+              onClick={handleCourseDelete}
             >
-              {location.pathname.split("/").at(-2) === "add"
-                ? t(`common.add`)
-                : t(`common.save`)}
+              {t(`common.delete`)}
             </button>
-            <button
-              type="reset"
-              className="form-card-button form-card-button-cancel"
-            >
-              {t(`common.cancel`)}
-            </button>
-            {userUX.totalHours && <div>TOTAL HOURS IS WRONG</div>}
-          </form>
-        </div>
+          )}
+
+          {userUX.totalHours && <div>TOTAL HOURS IS WRONG</div>}
+        </form>
       </div>
-    </>
+    </div>
   );
 };

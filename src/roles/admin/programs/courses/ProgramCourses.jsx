@@ -22,6 +22,11 @@ export const ProgramCourses = () => {
   const [courses, setCourses] = useState([]);
   const [programCourses, setProgramCourses] = useState([]);
   const [levels, setLevels] = useState([]);
+  const [userUX, setUserUX] = useState({
+    levelTableLoading: false,
+    levelTableError: false,
+    levelTableErrorMsg: "",
+  });
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   const [editRowId, setEditRowId] = useState(null);

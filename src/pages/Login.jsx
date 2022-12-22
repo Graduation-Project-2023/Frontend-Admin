@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import { BASE_URL } from "../shared/API";
+import axios from "axios";
+import { BASE_URL } from "../shared/API";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -12,11 +12,15 @@ export const Login = () => {
   const pwdRef = useRef();
   const authContext = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [userUX, setUserUX] = useState({
+    submitLoading: false,
+    error: false,
+    errorMsg: "",
+  });
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setUserUX((prev) => ({ ...prev, submitLoading: true, error: false }));
     authContext.login("ssss", "ADMIN");
     navigate("/admin_portal");
     // axios
@@ -26,20 +30,16 @@ export const Login = () => {
     //   })
     //   .then((res) => {
     //     console.log(res);
-    //     setLoading(false);
-    //     authContext.login("ssss", "STUDENT");
-    //     navigate("/student_portal");
-    //     // authContext.login(res.data.token, res.data.role);
-    //     // if (res.data.role === "STUDENT") {
-    //     //   navigate("/sutdent_portal");
-    //     // } else if (res.data.role === "STAFF") {
-    //     //   navigate("/staff_portal");
-    //     // } else if (res.data.role === "ADMIN") {
-    //     //   navigate("/admin_portal");
-    //     // }
+    //     setUserUX((prev) => ({ ...prev, submitLoading: false }));
+    //     // authContext.login("ssss", "STUDENT");
+    //     // navigate("/student_portal");
     //   })
     //   .catch((error) => {
-    //     setLoading(false);
+    //     setUserUX({
+    //       submitLoading: false,
+    //       error: true,
+    //       errorMsg: error.response.data.message,
+    //     });
     //     console.log(error);
     //   });
   };
@@ -60,7 +60,7 @@ export const Login = () => {
               name="email"
               id="email"
               required
-            ></input>
+            />
           </div>
           <div action="">
             <input
@@ -71,18 +71,17 @@ export const Login = () => {
               name="password"
               id="password"
               required
-            ></input>
+            />
           </div>
           <div className="login_form_button">
-            {loading ? (
-              <button disabled>
-                <span className="small_loader"></span>
-              </button>
+            {userUX.submitLoading ? (
+              <h1>LOADING</h1>
             ) : (
               <button>{t(`common.login`)}</button>
             )}
           </div>
           <Link to="/forgetpwd">{t(`login.forget`)}</Link>
+          {userUX.error && <h1>errorrrrrrrrrrrr</h1>}
         </form>
       </div>
     </div>

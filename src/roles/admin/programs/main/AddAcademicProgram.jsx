@@ -21,23 +21,34 @@ export const AddAcademicProgram = () => {
   const [summerSemester, setSummerSemester] = useState(false);
   const authContext = useAuth();
   const { t } = useTranslation();
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
-  const [error, setError] = useState(null);
+  const [userUX, setUserUX] = useState({
+    submitLoading: false,
+    sumbitError: false,
+    submitErrorMsg: "",
+    siderbarLoading: false,
+    siderbarError: false,
+    siderbarErrorMsg: "",
+  });
   const navigate = useNavigate();
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
+    setUserUX((prev) => ({ ...prev, siderbarLoading: true }));
     // GET request to get all programs to display it in the sidebar
     axios
       .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
+        setUserUX((prev) => ({ ...prev, siderbarLoading: false }));
         setProrgramsData(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
+        setUserUX((prev) => ({
+          ...prev,
+          siderbarLoading: false,
+          siderbarError: true,
+          siderbarErrorMsg: "there is an error in sidebar",
+        }));
+
         console.log(error);
       });
     // eslint-disable-next-line
@@ -73,20 +84,27 @@ export const AddAcademicProgram = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const program = { ...newProgram };
-    program["collegeId"] = authContext.college.id;
-    console.log(program);
+    setUserUX((prev) => ({
+      ...prev,
+      submitLoading: true,
+      sumbitError: false,
+      submitErrorMsg: false,
+    }));
+    const program = { ...newProgram, collegeId: authContext.college.id };
     // POST request to create a new program
-    setLoading(true);
     axios
       .post(BASE_URL + `/programs`, program)
       .then((res) => {
-        setLoading(false);
+        setUserUX((prev) => ({ ...prev, submitLoading: false }));
         navigate(`/admin_portal/academic_programs/${res.data.id}/main`);
       })
       .catch((error) => {
-        setLoading(false);
-        setError(error);
+        setUserUX((prev) => ({
+          ...prev,
+          submitLoading: false,
+          sumbitError: true,
+          submitErrorMsg: "THERE WAS AN ERROR",
+        }));
         console.log(error);
       });
   };
@@ -101,6 +119,11 @@ export const AddAcademicProgram = () => {
         backendData={true}
         activeNav={false}
         sidebarTitle={"portal.programs"}
+        userUX={{
+          error: userUX.siderbarError,
+          errorMsg: userUX.siderbarErrorMsg,
+          loading: userUX.siderbarLoading,
+        }}
       />
       <SidebarContainer>
         <FormCard cardTitle={"portal.add"}>
@@ -166,15 +189,20 @@ export const AddAcademicProgram = () => {
                 );
               })}
             </Accordion>
-            <button
-              type="submit"
-              className="form-card-button form-card-button-save"
-            >
-              {t(`common.add`)}
-            </button>
+            {userUX.submitLoading ? (
+              <h1>LOADING</h1>
+            ) : (
+              <button
+                type="submit"
+                className="form-card-button form-card-button-save"
+              >
+                {t(`common.add`)}
+              </button>
+            )}
             <button
               type="reset"
               className="form-card-button form-card-button-cancel"
+              disabled={userUX.submitLoading}
             >
               {t(`common.cancel`)}
             </button>

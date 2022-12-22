@@ -7,8 +7,11 @@ export const Sidebar = (props) => {
   const sidebarData = props.sideData;
   const [searchValue, setSearchValue] = useState("");
   const [filteredMenu, setFilteredMenu] = useState([]);
-  // eslint-disable-next-line
-  const [userUX, setUserUX] = useState({});
+  const [userUX, setUserUX] = useState({
+    loading: true,
+    error: true,
+    errorMsg: "",
+  });
   const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
 
@@ -51,38 +54,48 @@ export const Sidebar = (props) => {
         </div>
       )}
       <ul className="sidebar-list">
-        {filteredMenu.map((item) => {
-          return (
-            <li key={item.id}>
-              {props.activeNav ? (
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    isActive ? "sidebar-list-active" : ""
-                  }
-                >
-                  {props.backendData
-                    ? `${
-                        currentLanguageCode === "en"
-                          ? item.englishName
-                          : item.arabicName
-                      }`
-                    : `${t(item.title)}`}
-                </NavLink>
-              ) : (
-                <Link to={item.path}>
-                  {props.backendData
-                    ? `${
-                        currentLanguageCode === "en"
-                          ? item.englishName
-                          : item.arabicName
-                      }`
-                    : `${t(item.title)}`}
-                </Link>
-              )}
-            </li>
-          );
-        })}
+        {filteredMenu.length === 0 ? (
+          userUX.loading ? (
+            <h1>list is loading</h1>
+          ) : userUX.error ? (
+            <h1>{userUX.errorMsg}</h1>
+          ) : (
+            <h1>LIST IS EMPTY</h1>
+          )
+        ) : (
+          filteredMenu.map((item) => {
+            return (
+              <li key={item.id}>
+                {props.activeNav ? (
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) =>
+                      isActive ? "sidebar-list-active" : ""
+                    }
+                  >
+                    {props.backendData
+                      ? `${
+                          currentLanguageCode === "en"
+                            ? item.englishName
+                            : item.arabicName
+                        }`
+                      : `${t(item.title)}`}
+                  </NavLink>
+                ) : (
+                  <Link to={item.path}>
+                    {props.backendData
+                      ? `${
+                          currentLanguageCode === "en"
+                            ? item.englishName
+                            : item.arabicName
+                        }`
+                      : `${t(item.title)}`}
+                  </Link>
+                )}
+              </li>
+            );
+          })
+        )}
       </ul>
     </nav>
   );

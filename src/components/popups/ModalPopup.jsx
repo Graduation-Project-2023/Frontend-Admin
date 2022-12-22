@@ -10,7 +10,7 @@ import Modal from "react-bootstrap/Modal";
 
 // Component Props:
 // title: string
-// error: boolean
+// error: object {state, message}
 // searchable: boolean (if there is a search bar)
 // list: {state, data, path}
 // form: {state, children} (not a self-closing tag)
@@ -55,7 +55,7 @@ export const ModalPopup = (props) => {
             <AiOutlineClose />
           </button>
           <Modal.Title className="popup-title">{t(props.title)}</Modal.Title>
-          {props.searchable && (
+          {props.searchable && filteredData.length > 0 && (
             <input
               type="text"
               onChange={(e) => setSearchValue(e.target.value)}
@@ -75,25 +75,32 @@ export const ModalPopup = (props) => {
             <AiOutlineClose />
           </button>
         )}
-        {props.list?.state && (
-          <div className="popup-list">
-            {filteredData.map((item) => {
-              return (
-                <Link
-                  key={item.id}
-                  onClick={() => {
-                    authContext.changeCollege(item);
-                  }}
-                  to={props.list.path}
-                >
-                  {currentLanguageCode === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </Link>
-              );
-            })}
-          </div>
-        )}
+        {props.list?.state &&
+          (filteredData.length === 0 ? (
+            props.error.state ? (
+              <h1>there is an error</h1>
+            ) : (
+              <h1>list loading</h1>
+            )
+          ) : (
+            <div className="popup-list">
+              {filteredData.map((item) => {
+                return (
+                  <Link
+                    key={item.id}
+                    onClick={() => {
+                      authContext.changeCollege(item);
+                    }}
+                    to={props.list.path}
+                  >
+                    {currentLanguageCode === "en"
+                      ? item.englishName
+                      : item.arabicName}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         {props.form?.state && <>{props.children}</>}
         {props.message?.state && (
           <div className="popup-msg">

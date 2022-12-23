@@ -10,11 +10,9 @@ import cookies from "js-cookie";
 import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 
-// To Delete
-import { MenuData, ProfNames } from "./backendmimic";
-
 export const TablePopup = (props) => {
   const [cellData, setCellData] = useState(props.cellData.cellData);
+  const [courses, setCourses] = useState({ registered: [], notRegistered: [] });
   const [period, setPeriod] = useState({ startPeriod: 0, endPeriod: 0 });
   const [userUX, setUserUX] = useState({ cellOccupied: false });
   const [availableCells, setAvailableCells] = useState([]);
@@ -22,11 +20,10 @@ export const TablePopup = (props) => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
-    let availableCells = [];
-    availableCells = props.cellData.availableCells;
-    if (props.edit && availableCells.length > 0) {
+    let cellsAvailable = [...props.availableCells];
+    if (props.edit && cellsAvailable.length > 0) {
       for (let i = 0; i < cellData.endPeriod - cellData.startPeriod + 1; i++) {
-        const cellFound = availableCells.some((cell) => {
+        const cellFound = cellsAvailable.some((cell) => {
           if (
             cell.period === cellData.startPeriod + i &&
             cell.day === cellData.day
@@ -37,16 +34,17 @@ export const TablePopup = (props) => {
           }
         });
         if (!cellFound) {
-          availableCells.push({
+          cellsAvailable.push({
             period: cellData.startPeriod + i,
             day: cellData.day,
           });
         }
       }
     }
-    setAvailableCells(availableCells);
+
+    setAvailableCells(cellsAvailable);
     // eslint-disable-next-line
-  }, [props.cellData.availableCells, props.cellData.cellData]);
+  }, [props.cellData.cellData]);
 
   useEffect(() => {
     if (props.edit) {
@@ -66,6 +64,11 @@ export const TablePopup = (props) => {
     }
     // eslint-disable-next-line
   }, [props.cellData.cellData]);
+
+  useEffect(() => {
+    setCourses(props.courses);
+    console.log(props.courses);
+  }, [props.courses]);
 
   const handleEditFormChange = (e) => {
     const { name, value } = e.target;
@@ -108,6 +111,8 @@ export const TablePopup = (props) => {
         ...prev,
         englishName: item.englishName,
         arabicName: item.arabicName,
+        labCount: item.labCount,
+        lectureCount: item.lectureCount,
       };
     });
   };
@@ -169,7 +174,7 @@ export const TablePopup = (props) => {
                   englishName: cellData.englishName,
                   arabicName: cellData.arabicName,
                 }}
-                menuData={MenuData}
+                menuData={courses.notRegistered}
                 label={"courses.name"}
                 inputPlaceholder={"common.select"}
                 handleListClick={handleSubjectSelection}
@@ -204,7 +209,9 @@ export const TablePopup = (props) => {
               >
                 <option value={null}>{t(`common.select`)}</option>
                 <option value="LECTURE">{t(`common.lecture`)}</option>
-                <option value="LAB">{t(`common.lab`)}</option>
+                {cellData?.labCount > 0 && (
+                  <option value="LAB">{t(`common.lab`)}</option>
+                )}
               </select>
             )}
           </div>

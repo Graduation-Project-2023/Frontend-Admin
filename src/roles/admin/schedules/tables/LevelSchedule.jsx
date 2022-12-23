@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
 import { BASE_URL } from "../../../../shared/API";
@@ -12,36 +12,10 @@ import { DayPeriodTable } from "../../../../components/table/schedule/DayPeriodT
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { TablePopup } from "./TablePopup";
 
-
-
 export const LevelSchedule = () => {
-  const [tableData, setTableData] = useState([
-    {
-      englishName: "English",
-      arabicName: "لغة انجليزية",
-      startPeriod: 3,
-      endPeriod: 5,
-      classType: "LECTURE",
-      day: "MONDAY",
-    },
-    {
-      englishName: "Advanced English 2",
-      arabicName: "2 لغة انجليزية متقدمة",
-      startPeriod: 7,
-      endPeriod: 9,
-      classType: "LAB",
-      day: "TUESDAY",
-    },
-    {
-      englishName: "Advanced English",
-      arabicName: "لغة انجليزية متقدمة",
-      startPeriod: 1,
-      endPeriod: 4,
-      classType: "LAB",
-      day: "TUESDAY",
-    },
-  ]);
-
+  const [tableData, setTableData] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [levelCourses, setLevelCourses] = useState([]);
   const [levels, setLevels] = useState([]);
   const [cells, setCells] = useState({ occupied: [], available: [] });
   // eslint-disable-next-line
@@ -50,27 +24,56 @@ export const LevelSchedule = () => {
     add: { state: false, data: null },
     edit: { state: false, data: null },
   });
+  const navigate = useNavigate();
   const { levelId } = useParams();
   const authContext = useAuth();
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     // GET request to get table data by it's level and semester id
-    // axios
-    //   .get(
-    //     BASE_URL +
-    //       `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
-    //   )
-    //   .then((res) => {
-    //     console.log(res.data.classes);
-    //     setTableData(res.data.classes);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    axios
+      .get(
+        BASE_URL +
+          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
+      )
+      .then((res) => {
+        setTableData(res.data.classes);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setLevels(authContext.program.levels);
     // eslint-disable-next-line
   }, [authContext.program.id, levelId]);
+
+  useEffect(() => {
+    // GET request to get all program courses that are registered on the current level
+    axios
+      .get(
+        BASE_URL +
+          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
+      )
+      .then((res) => {
+        setCourses(res.data);
+        setLevelCourses(
+          res.data.filter((course) => course.levelId === levelId)
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (courses.length > 0) {
+      setLevelCourses(courses.filter((course) => course.levelId === levelId));
+    }
+  }, [levelId, courses]);
+
+  // useEffect(() => {
+  //   console.log(cells.available);
+  // }, [cells.available]);
 
   const handleCellsSetter = (occupiedCells, availableCells) => {
     setCells((current) => {
@@ -88,7 +91,7 @@ export const LevelSchedule = () => {
         ...current,
         add: {
           state: true,
-          data: { cellData: cell, availableCells: cells.available },
+          data: { cellData: cell },
         },
       };
     });
@@ -100,7 +103,7 @@ export const LevelSchedule = () => {
         ...current,
         edit: {
           state: true,
-          data: { cellData: subject, availableCells: cells.available },
+          data: { cellData: subject },
         },
       };
     });
@@ -131,55 +134,57 @@ export const LevelSchedule = () => {
   };
 
   return (
-    <>
-      <FormNavbarContainer>
-        <div className={styles.tableContainer_level}>
-          <Dropdown className="customDropMenu">
+    <FormNavbarContainer>
+      <div className={styles.tableContainer_level}>
+        <Dropdown className="customDropMenu">
+          {levels
+            .filter((item) => item.id === levelId)
+            .map((level) => {
+              return (
+                <Dropdown.Toggle key={level.id} className="customDropMenu-btn">
+                  {level.level}&nbsp;-&nbsp;
+                  {currentLanguageCode === "en"
+                    ? level.englishName
+                    : level.arabicName}
+                </Dropdown.Toggle>
+              );
+            })}
+          <Dropdown.Menu className="customDropMenu-list">
             {levels
-              .filter((item) => item.id === levelId)
+              .filter((item) => item.id !== levelId)
               .map((level) => {
                 return (
-                  <Dropdown.Toggle
+                  <Dropdown.Item
                     key={level.id}
-                    className="customDropMenu-btn"
+                    onClick={() => {
+                      navigate(
+                        `/admin_portal/study_schedules/tables/${level.id}`
+                      );
+                    }}
                   >
                     {level.level}&nbsp;-&nbsp;
                     {currentLanguageCode === "en"
                       ? level.englishName
                       : level.arabicName}
-                  </Dropdown.Toggle>
+                  </Dropdown.Item>
                 );
               })}
-            <Dropdown.Menu className="customDropMenu-list">
-              {levels
-                .filter((item) => item.id !== levelId)
-                .map((level) => {
-                  return (
-                    <Dropdown.Item key={level.id}>
-                      {level.level}&nbsp;-&nbsp;
-                      {currentLanguageCode === "en"
-                        ? level.englishName
-                        : level.arabicName}
-                    </Dropdown.Item>
-                  );
-                })}
-            </Dropdown.Menu>
-          </Dropdown>
-          <h6>
-            {currentLanguageCode === "en"
-              ? authContext.program.englishName
-              : authContext.program.arabicName}
-          </h6>
-        </div>
+          </Dropdown.Menu>
+        </Dropdown>
+        <h6>
+          {currentLanguageCode === "en"
+            ? authContext.program.englishName
+            : authContext.program.arabicName}
+        </h6>
+      </div>
 
-        <DayPeriodTable
-          cellsSetter={handleCellsSetter}
-          tableData={tableData}
-          emptyCellClick={emptyCellClick}
-          occupiedCellClick={occupiedCellClick}
-          saveTableData={saveTableData}
-        />
-      </FormNavbarContainer>
+      <DayPeriodTable
+        cellsSetter={handleCellsSetter}
+        tableData={tableData}
+        emptyCellClick={emptyCellClick}
+        occupiedCellClick={occupiedCellClick}
+        saveTableData={saveTableData}
+      />
       {showModal.add.state && (
         <TablePopup
           title={"table.add"}
@@ -193,6 +198,8 @@ export const LevelSchedule = () => {
           }}
           submit={handlePopupSubmit}
           cellData={showModal.add.data}
+          availableCells={cells.available}
+          courses={{ registered: tableData, notRegistered: levelCourses }}
         />
       )}
       {showModal.edit.state && (
@@ -209,8 +216,10 @@ export const LevelSchedule = () => {
           edit={true}
           submit={handlePopupSubmit}
           cellData={showModal.edit.data}
+          availableCells={cells.available}
+          courses={{ registered: tableData, notRegistered: levelCourses }}
         />
       )}
-    </>
+    </FormNavbarContainer>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -15,7 +15,6 @@ import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTabl
 import { CollapsibleTable } from "../../../../components/table/CollapsibleTable";
 
 export const ProgramCourses = () => {
-  const [updatedData, setUpdatedData] = useState({});
   const [programCourseData, setProgramCourseData] = useState([]);
   const [course, setCourse] = useState({});
   const [preCourses, setPreCourses] = useState([]);
@@ -26,12 +25,10 @@ export const ProgramCourses = () => {
     levelTableLoading: false,
     levelTableError: false,
     levelTableErrorMsg: "",
+    wrongCourseGradesError: false,
+    wrongCourseGradesErrorMsg: "",
   });
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
   const [editRowId, setEditRowId] = useState(null);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
   const authContext = useAuth();
   const { t } = useTranslation();
   const { programId } = useParams();
@@ -39,10 +36,6 @@ export const ProgramCourses = () => {
   const midtermRef = useRef();
   const finalExamRef = useRef();
   const addedToGpaRef = useRef();
-  const [wrongCourseGrades, setWrongCourseGrades] = useState({
-    error: false,
-    errorMessage: "",
-  });
   const currentLanguageCode = cookies.get("i18next") || "en";
   const maxGrade = 100;
 
@@ -52,10 +45,8 @@ export const ProgramCourses = () => {
       .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
         setCourses(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
     // eslint-disable-next-line
@@ -67,25 +58,14 @@ export const ProgramCourses = () => {
       .get(BASE_URL + `/programs/${programId}/program_courses`)
       .then((res) => {
         setProgramCourses(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
 
     setLevels(authContext.program.levels);
-    console.log(authContext.program);
     // eslint-disable-next-line
   }, [programId]);
-
-  useLayoutEffect(() => {
-    if (editRowId === null) {
-      return;
-    }
-    console.log(preCourses);
-    // eslint-disable-next-line
-  }, [preCourses]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -100,10 +80,12 @@ export const ProgramCourses = () => {
         +finalExamRef.current.value >
       maxGrade
     ) {
-      setWrongCourseGrades({
-        error: true,
-        errorMessage: "sum of grades must be equal to the max grade",
-      });
+      setUserUX((prev) => ({
+        ...prev,
+        wrongCourseGradesError: true,
+        wrongCourseGradesErrorMsg:
+          "sum of grades must be equal to the max grade",
+      }));
       setProgramCourseData((current) => {
         return { ...current, midTerm: "", finalExam: "", classWork: "" };
       });
@@ -112,66 +94,57 @@ export const ProgramCourses = () => {
       finalExamRef.current.value = "";
       return;
     } else {
-      setWrongCourseGrades({ error: false });
+      setUserUX((prev) => ({
+        ...prev,
+        wrongCourseGradesError: false,
+        wrongCourseGradesErrorMsg: "",
+      }));
     }
     const newProgramCourseData = { ...programCourseData };
     newProgramCourseData[fieldName] = fieldValue;
     setProgramCourseData(newProgramCourseData);
-    if (editRowId !== null) {
-      setUpdatedData((current) => {
-        return { ...current, [`${fieldName}`]: fieldValue };
-      });
-    }
   };
 
   const handleFormSubmit = (e) => {
-    console.log(addedToGpaRef.current.checked);
     e.preventDefault();
-    setLoading(true);
     const newProgramCourses = [...programCourses];
     newProgramCourses.push(programCourseData);
+
+    const newProgramCourse = {
+      ...programCourseData,
+      code: course.id,
+      programId: programId,
+      englishName: course?.englishName,
+      arabicName: course?.arabicName,
+      prerequisites: preCourses?.map((item) => item.id),
+    };
+
     if (editRowId === null) {
-      const newProgramCourse = {
-        ...programCourseData,
-        code: course.id,
-        programId: programId,
-        englishName: course?.englishName,
-        arabicName: course?.arabicName,
-        prerequisites: preCourses?.map((item) => item.id),
-      };
-      console.log(course);
-      console.log(newProgramCourse);
       // POST request to add a new program course to the database
-      // axios
-      //   .post(
-      //     BASE_URL + `/programs/${programId}/program_courses`,
-      //     programCourseData
-      //   )
-      //   .then((res) => {
-      //     console.log(res);
-      //     setProgramCourses(newProgramCourses);
-      //     setLoading(false);
-      //   })
-      //   .catch((error) => {
-      //     setLoading(false);
-      //     setError(error);
-      //     console.log(error);
-      //   });
+      axios
+        .post(
+          BASE_URL + `/programs/${programId}/program_courses`,
+          newProgramCourse
+        )
+        .then((res) => {
+          console.log(res);
+          setProgramCourses(newProgramCourses);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       // PUT request to update the current program course
       axios
         .put(
           BASE_URL + `/programs/${programId}/program_courses/${editRowId}`,
-          updatedData
+          newProgramCourse
         )
         .then((res) => {
           console.log(res);
           setProgramCourses(newProgramCourses);
-          setLoading(false);
         })
         .catch((error) => {
-          setLoading(false);
-          setError(error);
           console.log(error);
         });
     }
@@ -194,7 +167,6 @@ export const ProgramCourses = () => {
   const handleFormEditSwitch = (item) => {
     setEditRowId(item.id);
     setCourse(item);
-    setLoading(true);
     axios
       .get(BASE_URL + `/programs/${programId}/program_courses/${item.id}`)
       .then((res) => {
@@ -202,27 +174,22 @@ export const ProgramCourses = () => {
         if (res.data.prerequisites) {
           setPreCourses(res.data.prerequisites);
         }
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
   };
 
   const deleteProgramCourse = (e) => {
     e.preventDefault();
-    setLoading(true);
     // DELETE request to delete the current program course
     axios
       .delete(BASE_URL + `/programs/${programId}/program_courses/${course.id}`)
       .then((res) => {
         console.log(res);
-        setLoading(false);
         setEditRowId(null);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
   };
@@ -250,11 +217,10 @@ export const ProgramCourses = () => {
                 <input disabled className="form-control" value={course.code} />
               ) : (
                 <DropdownSearch
-                  specialData={course}
-                  menuData={courses}
+                  listData={{ type: "courseWithCode", data: courses }}
+                  dropDownTitle={course}
                   inputPlaceholder={"courses.progCode"}
                   handleListClick={handleCourseSelection}
-                  codeEqualsId={true}
                 />
               )}
             </div>
@@ -412,8 +378,8 @@ export const ProgramCourses = () => {
                 <option value="TRUE">{t("common.choice_yes")}</option>
               </select>
             </div>
-            {wrongCourseGrades.error && (
-              <div>{wrongCourseGrades.errorMessage}</div>
+            {userUX.wrongCourseGradesError && (
+              <div>{userUX.wrongCourseGradesErrorMsg}</div>
             )}
           </div>
           {/* {authContext.program.credit === "CREDIT" && <></>} */}
@@ -423,7 +389,7 @@ export const ProgramCourses = () => {
                 {t("courses.prereqCourses")}
               </label>
               <DropdownSearch
-                menuData={programCourses}
+                listData={{ type: "selectCourse", data: programCourses }}
                 inputPlaceholder={"courses.progCode"}
                 handleListClick={addToPrerequisite}
               />

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-// import { CurrentLanguage } from "../../../shared/Language";
 import cookies from "js-cookie";
 import styles from "./DayPeriodTable.module.scss";
 import { ScheduleTableBody, ScheduleTableHeader } from "./DayPeriodData";
@@ -125,10 +124,24 @@ export const DayPeriodTable = (props) => {
                             }
                           >
                             <h6 key={cellFilter[0].id}>
+                              {t(
+                                `common.${cellFilter[0].classType.toLowerCase()}`
+                              )}
+                              &nbsp;-&nbsp;
                               {currentLanguageCode === "en"
                                 ? cellFilter[0].englishName
                                 : cellFilter[0].arabicName}
                             </h6>
+                            <span>
+                              {currentLanguageCode === "en"
+                                ? "Professor Name"
+                                : "اسم الدكتور"}
+                            </span>
+                            <span>
+                              {currentLanguageCode === "en"
+                                ? "Place"
+                                : "المكان"}
+                            </span>
                           </td>
                         ) : (
                           <td

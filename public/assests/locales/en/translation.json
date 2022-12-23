@@ -281,6 +281,7 @@
     "end": "End Period",
     "place": "Place",
     "studentNo": "Number of Students",
-    "classType": "Class Type"
+    "classType": "Class Type",
+    "deleteClass": "Remove from Table"
   }
 }

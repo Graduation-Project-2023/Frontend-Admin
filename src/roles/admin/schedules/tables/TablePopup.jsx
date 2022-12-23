@@ -187,7 +187,7 @@ export const TablePopup = (props) => {
           courseInstanceId: cellData.id,
           endDate: null,
           startDate: null,
-          id: Date.now(),
+          id: crypto.randomUUID(),
         };
         props.submit(newCourse, "add");
         props.close();
@@ -230,12 +230,11 @@ export const TablePopup = (props) => {
               />
             ) : (
               <DropdownSearch
-                name={{
-                  englishName: cellData.englishName,
-                  arabicName: cellData.arabicName,
+                dropDownTitle={cellData}
+                listData={{
+                  type: "tableSelectCourse",
+                  data: courses.notRegistered,
                 }}
-                menuData={courses.notRegistered}
-                label={"courses.name"}
                 inputPlaceholder={"common.select"}
                 handleListClick={handleSubjectSelection}
               />
@@ -376,7 +375,7 @@ export const TablePopup = (props) => {
             onClick={handleFormSubmit}
             className="form-card-button-save"
           >
-            Add Subject Here
+            {props.edit ? t("common.save") : t("common.add")}
           </button>
           <button
             type="button"
@@ -385,18 +384,18 @@ export const TablePopup = (props) => {
               props.close();
             }}
           >
-            exit
+            {t("common.cancel")}
           </button>
           {props.edit && (
             <button
               type="button"
-              className="form-card-button-cancel"
+              className="form-card-button-delete"
               onClick={(event) => {
                 props.subjectDelete(cellData.id);
                 props.close();
               }}
             >
-              delete subject from table
+              {t("table.deleteClass")}
             </button>
           )}
         </div>

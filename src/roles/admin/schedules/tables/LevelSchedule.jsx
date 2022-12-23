@@ -160,6 +160,10 @@ export const LevelSchedule = () => {
     }
   };
 
+  const handleSubjectDelete = (id) => {
+    setTableData(tableData.filter((obj) => obj.id !== id));
+  };
+
   const handleDropDownClick = (event, id) => {
     event.preventDefault();
     setUserUX((prev) => ({
@@ -324,6 +328,7 @@ export const LevelSchedule = () => {
             });
           }}
           submit={handlePopupSubmit}
+          subjectDelete={handleSubjectDelete}
           cellData={showModal.add.data}
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}
@@ -342,6 +347,7 @@ export const LevelSchedule = () => {
           }}
           edit={true}
           submit={handlePopupSubmit}
+          subjectDelete={handleSubjectDelete}
           cellData={showModal.edit.data}
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}

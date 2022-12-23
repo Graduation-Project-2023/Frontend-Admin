@@ -71,7 +71,6 @@ export const TablePopup = (props) => {
 
   useEffect(() => {
     setCourses(props.courses);
-    console.log(props.courses);
   }, [props.courses]);
 
   const findCellAvailable = (value, classHrs) => {
@@ -188,6 +187,7 @@ export const TablePopup = (props) => {
           courseInstanceId: cellData.id,
           endDate: null,
           startDate: null,
+          id: Date.now(),
         };
         props.submit(newCourse, "add");
         props.close();
@@ -378,24 +378,27 @@ export const TablePopup = (props) => {
           >
             Add Subject Here
           </button>
-          <button type="button" className="form-card-button-cancel">
+          <button
+            type="button"
+            className="form-card-button-cancel"
+            onClick={() => {
+              props.close();
+            }}
+          >
             exit
           </button>
           {props.edit && (
-            <button type="button" className="form-card-button-cancel">
+            <button
+              type="button"
+              className="form-card-button-cancel"
+              onClick={(event) => {
+                props.subjectDelete(cellData.id);
+                props.close();
+              }}
+            >
               delete subject from table
             </button>
           )}
-
-          <button
-            type="button"
-            onClick={() => {
-              console.log(cellData);
-              console.log(courses.registered);
-            }}
-          >
-            check new subject data
-          </button>
         </div>
       </form>
     </ModalPopup>

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../shared/API";
 import axios from "axios";
+
+// Reusable Components
 import { ModalPopup } from "../../components/popups/ModalPopup";
-import { useTranslation } from "react-i18next";
 
 export const AdminPortal = () => {
   const [colleges, setColleges] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [userUX, setUserUX] = useState({ error: false, errorMsg: "" });
-  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -25,25 +25,16 @@ export const AdminPortal = () => {
   }, []);
 
   return (
-    <>
-      <div
-        onClick={() => {
-          setShowModal(true);
-        }}
-      >
-        {t("اظهار قائمة الكليات")}
-      </div>
-      {showModal && (
-        <ModalPopup
-          error={{ state: userUX.error, message: userUX.errorMsg }}
-          title={"academicMain.faculty"}
-          searchable={true}
-          list={{ state: true, data: colleges, path: "academic_programs" }}
-          closeModal={() => {
-            setShowModal(false);
-          }}
-        />
-      )}
-    </>
+    <ModalPopup
+      error={{ state: userUX.error, message: userUX.errorMsg }}
+      title={"academicMain.faculty"}
+      searchable={true}
+      list={{ state: true, data: colleges, path: "academic_programs" }}
+      closeModal={() => {
+        // FORCE THE USE TO SELECT A COLLEGE
+        // setShowModal(false);
+        console.log("hhhhhhhhh");
+      }}
+    />
   );
 };

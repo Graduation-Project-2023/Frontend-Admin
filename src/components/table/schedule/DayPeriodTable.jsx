@@ -49,7 +49,7 @@ export const DayPeriodTable = (props) => {
   return (
     <form
       onSubmit={(event) => {
-        props.saveTableData(event, tableData);
+        props.saveTableData(event);
       }}
     >
       <div className={styles.tableContainer_tableCard}>

@@ -13,13 +13,24 @@ import { FormNavbarContainer } from "../../../../components/other/FormNavbarCont
 import { TablePopup } from "./TablePopup";
 
 export const LevelSchedule = () => {
+  const [tableId, setTableId] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [courses, setCourses] = useState([]);
   const [levelCourses, setLevelCourses] = useState([]);
   const [levels, setLevels] = useState([]);
   const [cells, setCells] = useState({ occupied: [], available: [] });
   // eslint-disable-next-line
-  const [userUX, setUserUX] = useState(true);
+  const [userUX, setUserUX] = useState({
+    tableLoading: false,
+    tableError: false,
+    tableErrorMsg: "",
+    regCoursesLoading: false,
+    regCoursesError: false,
+    regCoursesErrorMsg: "",
+    levelsLoading: true,
+    levelsError: false,
+    levelsErrorMsg: "",
+  });
   const [showModal, setShowModal] = useState({
     add: { state: false, data: null },
     edit: { state: false, data: null },
@@ -30,6 +41,12 @@ export const LevelSchedule = () => {
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      tableLoading: true,
+      tableError: false,
+      tableErrorMsg: "",
+    }));
     // GET request to get table data by it's level and semester id
     axios
       .get(
@@ -37,16 +54,33 @@ export const LevelSchedule = () => {
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
       )
       .then((res) => {
+        setUserUX((prev) => ({
+          ...prev,
+          tableLoading: false,
+        }));
         setTableData(res.data.classes);
+        setTableId(res.data.id);
       })
       .catch((error) => {
         console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          tableLoading: false,
+          tableError: true,
+          tableErrorMsg: "table error",
+        }));
       });
     setLevels(authContext.program.levels);
     // eslint-disable-next-line
   }, [authContext.program.id, levelId]);
 
   useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      regCoursesLoading: true,
+      regCoursesError: false,
+      regCoursesErrorMsg: "",
+    }));
     // GET request to get all program courses that are registered on the current level
     axios
       .get(
@@ -54,12 +88,22 @@ export const LevelSchedule = () => {
           `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
       )
       .then((res) => {
+        setUserUX((prev) => ({
+          ...prev,
+          regCoursesLoading: false,
+        }));
         setCourses(res.data);
         setLevelCourses(
           res.data.filter((course) => course.levelId === levelId)
         );
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          regCoursesLoading: false,
+          regCoursesError: true,
+          regCoursesErrorMsg: "courses error",
+        }));
         console.log(error);
       });
     // eslint-disable-next-line
@@ -70,10 +114,6 @@ export const LevelSchedule = () => {
       setLevelCourses(courses.filter((course) => course.levelId === levelId));
     }
   }, [levelId, courses]);
-
-  // useEffect(() => {
-  //   console.log(cells.available);
-  // }, [cells.available]);
 
   const handleCellsSetter = (occupiedCells, availableCells) => {
     setCells((current) => {
@@ -109,28 +149,117 @@ export const LevelSchedule = () => {
     });
   };
 
-  const handlePopupSubmit = (subject) => {
-    const subjectExists = tableData.find(
-      (element) =>
-        element.englishName === subject.englishName &&
-        element.classType === subject.classType
-    );
-    if (subjectExists) {
+  const handlePopupSubmit = (subject, state) => {
+    if (state === "edit") {
       setTableData(
-        tableData.map((obj) =>
-          obj.englishName === subject.englishName &&
-          obj.classType === subject.classType
-            ? subject
-            : obj
-        )
+        tableData.map((obj) => (obj.id === subject.id ? subject : obj))
       );
-    } else {
-      setTableData((prev) => [...prev, subject]);
+    }
+    if (state === "add") {
+      setTableData([...tableData, subject]);
     }
   };
 
-  const saveTableData = (event, item) => {
+  const handleDropDownClick = (event, id) => {
     event.preventDefault();
+    setUserUX((prev) => ({
+      ...prev,
+      levelsLoading: true,
+      levelsError: false,
+      levelsErrorMsg: "",
+    }));
+    // GET request to get all levels that have a table created
+    axios
+      .get(
+        BASE_URL +
+          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
+      )
+      .then((res) => {
+        setUserUX((prev) => ({
+          ...prev,
+          levelsLoading: false,
+        }));
+        if (res.data.map((obj) => obj.level.id).includes(id)) {
+          navigate(`/admin_portal/study_schedules/tables/${id}`);
+        } else {
+          setUserUX((prev) => ({
+            ...prev,
+            levelTableCreateLoading: true,
+            levelTableCreateError: false,
+            levelTableCreateMsg: "",
+          }));
+          const levelTableData = {
+            academicSemesterId: "decc46ba-7d4b-11ed-a1eb-0242ac120002",
+            programId: authContext.program.id,
+            levelId: id,
+            classes: [],
+          };
+          axios
+            .post(
+              BASE_URL +
+                `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
+              levelTableData
+            )
+            .then((res) => {
+              setUserUX((prev) => ({
+                ...prev,
+                levelTableCreateLoading: false,
+              }));
+              console.log(res);
+              navigate(`/admin_portal/study_schedules/tables/${id}`);
+            })
+            .catch((error) => {
+              console.log(error);
+              setUserUX((prev) => ({
+                ...prev,
+                levelTableCreateLoading: false,
+                levelTableCreateError: true,
+                levelTableCreateMsg: "level table create error",
+              }));
+            });
+        }
+      })
+      .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          levelsLoading: false,
+          levelsError: true,
+          levelsErrorMsg: "levels error",
+        }));
+        console.log(error);
+      });
+  };
+
+  const saveTableData = (event) => {
+    event.preventDefault();
+    const levelTableData = {
+      classes: tableData.map(
+        ({
+          id,
+          levelId,
+          lectureCount,
+          labCount,
+          englishName,
+          arabicName,
+          ...rest
+        }) => rest
+      ),
+    };
+
+    console.log(levelTableData);
+    // PUT request to update the table data by it's level and semester id
+    axios
+      .put(
+        BASE_URL +
+          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${tableId}`,
+        levelTableData
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -156,10 +285,8 @@ export const LevelSchedule = () => {
                 return (
                   <Dropdown.Item
                     key={level.id}
-                    onClick={() => {
-                      navigate(
-                        `/admin_portal/study_schedules/tables/${level.id}`
-                      );
+                    onClick={(event) => {
+                      handleDropDownClick(event, level.id);
                     }}
                   >
                     {level.level}&nbsp;-&nbsp;

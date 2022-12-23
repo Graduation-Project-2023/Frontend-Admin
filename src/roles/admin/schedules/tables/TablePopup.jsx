@@ -14,7 +14,10 @@ export const TablePopup = (props) => {
   const [cellData, setCellData] = useState(props.cellData.cellData);
   const [courses, setCourses] = useState({ registered: [], notRegistered: [] });
   const [period, setPeriod] = useState({ startPeriod: 0, endPeriod: 0 });
-  const [userUX, setUserUX] = useState({ cellOccupied: false });
+  const [userUX, setUserUX] = useState({
+    error: false,
+    errorMsg: "",
+  });
   const [availableCells, setAvailableCells] = useState([]);
   const { t } = useTranslation();
   const currentLanguageCode = cookies.get("i18next") || "en";
@@ -60,6 +63,7 @@ export const TablePopup = (props) => {
       });
       setPeriod({
         startPeriod: props.cellData.cellData.cellNo,
+        endPeriod: 0,
       });
     }
     // eslint-disable-next-line
@@ -70,13 +74,48 @@ export const TablePopup = (props) => {
     console.log(props.courses);
   }, [props.courses]);
 
+  const findCellAvailable = (value, classHrs) => {
+    const dayAvailableCells = availableCells.filter(
+      (item) => item.day === cellData.day
+    );
+    let cellOccupied = false;
+    for (let i = 0; i < classHrs + 1; i++) {
+      const cellFound = dayAvailableCells.some((cell) => {
+        if (cell.period === +value + i) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (!cellFound) {
+        cellOccupied = true;
+        break;
+      }
+    }
+    if (cellOccupied) {
+      setUserUX({
+        error: true,
+        errorMsg: "This Cell is Occupied",
+      });
+    } else {
+      setUserUX({ error: false, errorMsg: "" });
+      setPeriod({
+        startPeriod: +value,
+        endPeriod: +value + +classHrs,
+      });
+    }
+  };
+
   const handleEditFormChange = (e) => {
     const { name, value } = e.target;
     if (name === "day") {
       setPeriod({
-        startPeriod: null,
-        endPeriod: null,
+        startPeriod: 0,
+        endPeriod: 0,
       });
+    } else if (name === "classType") {
+      const classHrs = value === "LECTURE" ? 3 * 2 - 1 : 2 * 2 - 1;
+      findCellAvailable(cellData.startPeriod, classHrs);
     }
     setCellData((prev) => {
       return {
@@ -88,31 +127,27 @@ export const TablePopup = (props) => {
 
   const handlePeriodChange = (e) => {
     const value = +e.target.value;
-    if (
-      availableCells
-        .filter((item) => item.day === cellData.day)
-        .find(
-          (cell) =>
-            cell.period === value + cellData.endPeriod - cellData.startPeriod
-        ) === undefined
-    ) {
-      setUserUX({ cellOccupied: true });
+    if (props.edit) {
+      findCellAvailable(value, cellData.endPeriod - cellData.startPeriod);
     } else {
-      setUserUX({ cellOccupied: false });
-      setPeriod({
-        startPeriod: value,
-        endPeriod: value + cellData.endPeriod - cellData.startPeriod,
-      });
+      if (cellData.classType === "LECTURE" || cellData.classType === "LAB") {
+        const classHrs =
+          cellData.classType === "LECTURE" ? 3 * 2 - 1 : 2 * 2 - 1;
+        findCellAvailable(value, classHrs);
+      } else {
+        setUserUX({
+          error: true,
+          errorMsg: "Select a Class Type First",
+        });
+      }
     }
   };
+
   const handleSubjectSelection = (item) => {
     setCellData((prev) => {
       return {
         ...prev,
-        englishName: item.englishName,
-        arabicName: item.arabicName,
-        labCount: item.labCount,
-        lectureCount: item.lectureCount,
+        ...item,
       };
     });
   };
@@ -121,10 +156,10 @@ export const TablePopup = (props) => {
     e.preventDefault();
     if (
       userUX.cellOccupied ||
-      period.startPeriod === null ||
-      period.endPeriod === null
+      period.startPeriod === 0 ||
+      period.endPeriod === 0
     ) {
-      console.log("error");
+      setUserUX({ error: true, errorMsg: "please select valid inputs" });
       return;
     }
     if (props.edit) {
@@ -133,10 +168,35 @@ export const TablePopup = (props) => {
         startPeriod: period.startPeriod,
         endPeriod: period.endPeriod,
       };
-      props.submit(editedData);
+      props.submit(editedData, "edit");
       props.close();
     } else {
-      console.log(cellData);
+      const courseCount = courses.registered.filter(
+        (item) =>
+          item.courseInstanceId === cellData.id &&
+          item.classType === cellData.classType
+      ).length;
+      const maxCourseCount =
+        cellData.classType === "LECTURE"
+          ? cellData.lectureCount
+          : cellData.labCount;
+      if (courseCount < maxCourseCount) {
+        const newCourse = {
+          ...cellData,
+          startPeriod: period.startPeriod,
+          endPeriod: period.endPeriod,
+          courseInstanceId: cellData.id,
+          endDate: null,
+          startDate: null,
+        };
+        props.submit(newCourse, "add");
+        props.close();
+      } else {
+        setUserUX({
+          error: true,
+          errorMsg: "Course Count is Full",
+        });
+      }
     }
   };
 
@@ -246,7 +306,6 @@ export const TablePopup = (props) => {
           </div>
           <div className="col-md-4">
             <label>{t(`table.start`)}</label>
-
             <select
               type="text"
               className="form-select"
@@ -255,10 +314,9 @@ export const TablePopup = (props) => {
               onChange={handlePeriodChange}
               value={period.startPeriod || ""}
             >
-              {period.startPeriod === null && (
+              {period.startPeriod === 0 && (
                 <option value={null}>{t(`common.select`)}</option>
               )}
-
               {availableCells
                 .filter((item) => item.day === cellData.day)
                 .sort(function (a, b) {
@@ -282,7 +340,7 @@ export const TablePopup = (props) => {
               className="form-control"
               name="endPeriod"
               value={
-                period.endPeriod === null
+                period.endPeriod === 0
                   ? "choose start period first"
                   : ScheduleTableHeader.find(
                       (item) => item.period === period?.endPeriod
@@ -308,9 +366,7 @@ export const TablePopup = (props) => {
             <input type="number" className="form-control" />
           </div>
         </div>
-        {userUX.cellOccupied && (
-          <h1>CHOOSE ANOTHER CELL THIS CELL IS OCCUPIED</h1>
-        )}
+        {userUX.error && <h1>{userUX.errorMsg}</h1>}
         <div
 
         // onClick={TestingAddSubject}
@@ -321,6 +377,24 @@ export const TablePopup = (props) => {
             className="form-card-button-save"
           >
             Add Subject Here
+          </button>
+          <button type="button" className="form-card-button-cancel">
+            exit
+          </button>
+          {props.edit && (
+            <button type="button" className="form-card-button-cancel">
+              delete subject from table
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={() => {
+              console.log(cellData);
+              console.log(courses.registered);
+            }}
+          >
+            check new subject data
           </button>
         </div>
       </form>

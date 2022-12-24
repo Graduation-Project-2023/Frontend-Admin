@@ -557,6 +557,11 @@ export const ProgramCourses = () => {
               (course) => course.levelId === item.id
             )}
             onRowClick={handleFormEditSwitch}
+            userUX={{
+              loading: userUX.programCoursesLoading,
+              error: userUX.programCoursesError,
+              errorMsg: userUX.programCoursesErrorMsg,
+            }}
           />
         );
       })}

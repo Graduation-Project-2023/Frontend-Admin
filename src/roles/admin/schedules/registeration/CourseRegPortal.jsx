@@ -12,23 +12,30 @@ import { CourseRegister } from "./CourseRegister";
 export const CoursesRegPortal = () => {
   const [courses, setCourses] = useState([]);
   const [levels, setLevels] = useState([]);
-  const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    errorMsg: "",
+  });
   const authContext = useAuth();
   const { courseId } = useParams();
 
   useEffect(() => {
-    setLoading(true);
+    setUserUX((prev) => ({ ...prev, loading: true }));
+    // Get request to get all program courses to display it in the menu
     axios
       .get(BASE_URL + `/programs/${authContext.program.id}/program_courses`)
       .then((res) => {
-        setLoading(false);
         setCourses(res.data);
+        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
+        setUserUX({
+          loading: false,
+          error: true,
+          errorMsg: "there is an error getting prog courses",
+        });
       });
 
     setLevels(authContext.program.levels);
@@ -41,13 +48,13 @@ export const CoursesRegPortal = () => {
         <CoursesRegisteration
           programCourses={courses}
           levels={levels}
-          loading={loading}
+          userUX={userUX}
         />
       ) : (
         <CourseRegister
           programCourses={courses}
           levels={levels}
-          loading={loading}
+          userUX={userUX}
         />
       )}
     </FormNavbarContainer>

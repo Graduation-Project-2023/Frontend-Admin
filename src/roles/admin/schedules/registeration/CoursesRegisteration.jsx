@@ -7,10 +7,19 @@ import { Accordion } from "react-bootstrap";
 import { SearchContainer } from "../../../../components/other/SearchContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
 
+// Component Props
+// userUX: object {loading, error, errorMsg}
+// levels: array of objects
+// programCourses: array of objects
+
 export const CoursesRegisteration = (props) => {
   const [programCourses, setProgramCourses] = useState([]);
   const [levels, setLevels] = useState([]);
-  const [loading, setLoading] = useState();
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    errorMsg: "",
+  });
   const currentLanguageCode = cookies.get("i18next") || "en";
   const navigate = useNavigate();
 
@@ -23,8 +32,8 @@ export const CoursesRegisteration = (props) => {
   }, [props.programCourses]);
 
   useEffect(() => {
-    setLoading(props.loading);
-  }, [props.loading]);
+    setUserUX(props.userUX);
+  }, [props.userUX]);
 
   const handleCourseSelect = (course) => {
     navigate(`/admin_portal/study_schedules/register_course/add/${course.id}`);
@@ -48,19 +57,13 @@ export const CoursesRegisteration = (props) => {
               <Accordion.Body>
                 <SearchContainer
                   title={"adminNavbarkeys.choose"}
-                  placeholder={"courses.name"}
-                  emptyListPlaceholder={
-                    programCourses.filter((course) => {
-                      return course.levelId === item.id;
-                    }).length === 0
-                      ? "la yooogd courses"
-                      : ""
-                  }
-                  listLoading={loading}
+                  inputPlaceholder={"courses.name"}
+                  emptyPlaceholder={"la yoogd courses"}
                   listData={programCourses.filter((course) => {
                     return course.levelId === item.id;
                   })}
                   handleListClick={handleCourseSelect}
+                  userUX={userUX}
                 />
               </Accordion.Body>
             </Accordion.Item>

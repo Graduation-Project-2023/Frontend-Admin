@@ -22,23 +22,23 @@ export const CourseRegister = (props) => {
   const [profData, setProfData] = useState({ englishName: "", arabicName: "" });
   const [levels, setLevels] = useState([]);
 
+  // ay error lazm yb2a leh message mo3yna unless el error msg deh f nfs el mkan b nfs el shakl zy msln el form submit swa2 kan msln edit aw add
   const [userUX, setUserUX] = useState({
     totalHours: false,
     siderbarLoading: false,
     siderbarError: false,
+    // momkn hna tktbeha regCoursesLoading bas msh mstahala kol da 34an hya mwgoda f 7aga wa7da elly hya el sidebar
     registeredSiderbarBodyLoading: false,
     registeredSiderbarBodyError: false,
+    // errrorMsg deh mashofhash ella lw da el error el wa7ed
     errorMsg: "",
     submitLoading: false,
     formLoading: false,
     formError: false,
+    progCoursesLoading: false,
+    progCoursesError: false,
+    progCoursesErrorMsg: "",
   });
-  useEffect(() => {
-    setUserUX((prev) => ({
-      ...prev,
-      formLoading: props.loading,
-    }));
-  }, [props.loading]);
 
   const lectureHrsRef = useRef();
   const labHrsRef = useRef();
@@ -61,6 +61,16 @@ export const CourseRegister = (props) => {
   useEffect(() => {
     setProgramCourses(props.programCourses);
   }, [props.programCourses]);
+
+  useEffect(() => {
+    // dol gayeen mn course reg portal >> el ux elly hyt7t fl siderbar bta3 el prog courses
+    setUserUX((prev) => ({
+      ...prev,
+      progCoursesLoading: props.userUX.loading,
+      progCoursesError: props.userUX.error,
+      progCoursesErrorMsg: props.userUX.errorMsg,
+    }));
+  }, [props.userUX]);
 
   useEffect(() => {
     if (currentLocation === "add") {

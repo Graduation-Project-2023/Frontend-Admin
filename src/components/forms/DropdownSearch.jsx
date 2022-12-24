@@ -5,15 +5,19 @@ import cookies from "js-cookie";
 
 // Component Props:
 // listData: object {type: string ,data: array of objects}
-// inputPlaceholder: object {state, message}
-// error: object {state, message}
+// inputPlaceholder: string
+// userUX: object {loading, error, errorMsg}
 
 export const DropdownSearch = (props) => {
   const { t } = useTranslation();
   const [listData, setListData] = useState({ title: "", data: [] });
   const [searchValue, setSearchValue] = useState("");
   const [filteredMenu, setFilteredMenu] = useState([]);
-  const [userUX, setUserUX] = useState({ state: false, message: "" });
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    errorMsg: "",
+  });
   const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
@@ -63,30 +67,40 @@ export const DropdownSearch = (props) => {
           className="form-control"
         />
         <ul className="progCourses_menu_searchList">
-          {filteredMenu.map((item) => {
-            return (
-              <Dropdown.Item
-                key={item.id ? item.id : item.code}
-                onClick={(event) => {
-                  props.handleListClick(item);
-                }}
-              >
-                <div>
-                  {listData?.type === "courseWithCode" && (
-                    <span>{item.id}</span>
-                  )}
-                  {listData?.type === "selectCourse" && (
-                    <span>{item.code}</span>
-                  )}
-                  <span>
-                    {currentLanguageCode === "en"
-                      ? item.englishName
-                      : item.arabicName}
-                  </span>
-                </div>
-              </Dropdown.Item>
-            );
-          })}
+          {listData.data.length === 0 ? (
+            userUX.loading ? (
+              <h1>loading</h1>
+            ) : userUX.error ? (
+              <h1>{userUX.errorMsg}</h1>
+            ) : (
+              <h1>list is empty</h1>
+            )
+          ) : (
+            filteredMenu.map((item) => {
+              return (
+                <Dropdown.Item
+                  key={item.id ? item.id : item.code}
+                  onClick={(event) => {
+                    props.handleListClick(item);
+                  }}
+                >
+                  <div>
+                    {listData?.type === "courseWithCode" && (
+                      <span>{item.id}</span>
+                    )}
+                    {listData?.type === "selectCourse" && (
+                      <span>{item.code}</span>
+                    )}
+                    <span>
+                      {currentLanguageCode === "en"
+                        ? item.englishName
+                        : item.arabicName}
+                    </span>
+                  </div>
+                </Dropdown.Item>
+              );
+            })
+          )}
         </ul>
       </Dropdown.Menu>
     </Dropdown>

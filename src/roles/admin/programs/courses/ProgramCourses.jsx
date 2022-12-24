@@ -21,13 +21,6 @@ export const ProgramCourses = () => {
   const [courses, setCourses] = useState([]);
   const [programCourses, setProgramCourses] = useState([]);
   const [levels, setLevels] = useState([]);
-  const [userUX, setUserUX] = useState({
-    levelTableLoading: false,
-    levelTableError: false,
-    levelTableErrorMsg: "",
-    wrongCourseGradesError: false,
-    wrongCourseGradesErrorMsg: "",
-  });
   const [editRowId, setEditRowId] = useState(null);
   const authContext = useAuth();
   const { t } = useTranslation();
@@ -38,28 +31,62 @@ export const ProgramCourses = () => {
   const addedToGpaRef = useRef();
   const currentLanguageCode = cookies.get("i18next") || "en";
   const maxGrade = 100;
+  const [userUX, setUserUX] = useState({
+    levelTableLoading: false,
+    levelTableError: false,
+    levelTableErrorMsg: "",
+    coursesLoading: false,
+    coursesError: false,
+    coursesErrorMsg: "",
+    programCoursesLoading: false,
+    programCoursesError: false,
+    programCoursesErrorMsg: "",
+    programCourseLoading: false,
+    programCourseError: false,
+    programCourseErrorMsg: "",
+    formSubmitLoading: false,
+    formSubmitError: false,
+    formSubmitErrorMsg: "",
+    programCourseDeleteLoading: false,
+  });
 
   useEffect(() => {
+    setUserUX((prev) => ({ ...prev, coursesLoading: true }));
     // GET request to get all college cousres
     axios
       .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
+        setUserUX((prev) => ({ ...prev, coursesLoading: false }));
         setCourses(res.data);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          coursesLoading: false,
+          coursesError: true,
+          coursesErrorMsg: "courses error",
+        }));
         console.log(error);
       });
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
+    setUserUX((prev) => ({ ...prev, programCoursesLoading: true }));
     // GET request to get all the program cousres to display it in the tables
     axios
       .get(BASE_URL + `/programs/${programId}/program_courses`)
       .then((res) => {
+        setUserUX((prev) => ({ ...prev, programCoursesLoading: false }));
         setProgramCourses(res.data);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          programCoursesLoading: false,
+          programCoursesError: true,
+          programCoursesErrorMsg: "error in program courses",
+        }));
         console.log(error);
       });
 
@@ -82,9 +109,8 @@ export const ProgramCourses = () => {
     ) {
       setUserUX((prev) => ({
         ...prev,
-        wrongCourseGradesError: true,
-        wrongCourseGradesErrorMsg:
-          "sum of grades must be equal to the max grade",
+        formSubmitError: true,
+        formSubmitErrorMsg: "sum of grades must be equal to the max grade",
       }));
       setProgramCourseData((current) => {
         return { ...current, midTerm: "", finalExam: "", classWork: "" };
@@ -96,8 +122,8 @@ export const ProgramCourses = () => {
     } else {
       setUserUX((prev) => ({
         ...prev,
-        wrongCourseGradesError: false,
-        wrongCourseGradesErrorMsg: "",
+        formSubmitError: false,
+        formSubmitErrorMsg: "",
       }));
     }
     const newProgramCourseData = { ...programCourseData };
@@ -107,8 +133,13 @@ export const ProgramCourses = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const newProgramCourses = [...programCourses];
-    newProgramCourses.push(programCourseData);
+
+    setUserUX((prev) => ({
+      ...prev,
+      formSubmitLoading: true,
+      formSubmitError: false,
+      formSubmitErrorMsg: "",
+    }));
 
     const newProgramCourse = {
       ...programCourseData,
@@ -128,10 +159,20 @@ export const ProgramCourses = () => {
         )
         .then((res) => {
           console.log(res);
-          setProgramCourses(newProgramCourses);
+          setUserUX((prev) => ({
+            ...prev,
+            formSubmitLoading: false,
+          }));
+          setProgramCourses((prev) => [...prev, res.data]);
         })
         .catch((error) => {
           console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            formSubmitLoading: false,
+            formSubmitError: true,
+            formSubmitErrorMsg: "error in adding a new program",
+          }));
         });
     } else {
       // PUT request to update the current program course
@@ -142,9 +183,24 @@ export const ProgramCourses = () => {
         )
         .then((res) => {
           console.log(res);
-          setProgramCourses(newProgramCourses);
+          setUserUX((prev) => ({
+            ...prev,
+            formSubmitLoading: false,
+          }));
+          const newPorgramCourses = [...programCourses];
+          const index = newPorgramCourses.findIndex(
+            (obj) => obj.id === editRowId
+          );
+          newPorgramCourses[index] = res.data;
+          setProgramCourses(newPorgramCourses);
         })
         .catch((error) => {
+          setUserUX((prev) => ({
+            ...prev,
+            formSubmitLoading: false,
+            formSubmitError: true,
+            formSubmitErrorMsg: "error in updating the course program",
+          }));
           console.log(error);
         });
     }
@@ -167,30 +223,67 @@ export const ProgramCourses = () => {
   const handleFormEditSwitch = (item) => {
     setEditRowId(item.id);
     setCourse(item);
+    setUserUX((prev) => ({
+      ...prev,
+      programCourseLoading: true,
+      programCourseError: false,
+      programCourseErrorMsg: "",
+    }));
+    // GET request to get the current program course to display it in the form
     axios
       .get(BASE_URL + `/programs/${programId}/program_courses/${item.id}`)
       .then((res) => {
+        setUserUX((prev) => ({
+          ...prev,
+          programCourseLoading: false,
+        }));
         setProgramCourseData(res.data);
         if (res.data.prerequisites) {
           setPreCourses(res.data.prerequisites);
         }
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          programCourseLoading: false,
+          programCourseError: false,
+          programCourseErrorMsg: "failed to fetch program course data",
+        }));
         console.log(error);
       });
   };
 
   const deleteProgramCourse = (e) => {
     e.preventDefault();
+    setUserUX((prev) => ({
+      ...prev,
+      programCourseDeleteLoading: true,
+      formSubmitError: false,
+      formSubmitErrorMsg: "",
+    }));
     // DELETE request to delete the current program course
     axios
       .delete(BASE_URL + `/programs/${programId}/program_courses/${course.id}`)
       .then((res) => {
         console.log(res);
         setEditRowId(null);
+        setCourse([]);
+        setProgramCourseData([]);
+        setPreCourses([]);
+        setUserUX((prev) => ({
+          ...prev,
+          programCourseDeleteLoading: false,
+        }));
+        setProgramCourses((prev) => prev.filter((obj) => obj.id !== course.id));
       })
       .catch((error) => {
         console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          programCourseDeleteLoading: false,
+          formSubmitError: true,
+          formSubmitErrorMsg: "couldnt delete course",
+        }));
       });
   };
 
@@ -221,6 +314,11 @@ export const ProgramCourses = () => {
                   dropDownTitle={course}
                   inputPlaceholder={"courses.progCode"}
                   handleListClick={handleCourseSelection}
+                  userUX={{
+                    loading: userUX.coursesLoading,
+                    error: userUX.coursesError,
+                    errorMsg: userUX.coursesErrorMsg,
+                  }}
                 />
               )}
             </div>
@@ -359,12 +457,7 @@ export const ProgramCourses = () => {
             </div>
             <div className="form-group col-xl-3 mb-4">
               <label className="col-form-label">{t("academicMain.type")}</label>
-              <select
-                className="form-select"
-                name="test"
-                // onChange={handleEditFormChange}
-                // value={programCourseData["requirement"] || ""}
-              >
+              <select className="form-select" name="test">
                 <option value={null}>{t("common.select")}</option>
                 <option value="FIRST">{t("courses.department")}</option>
                 <option value="SECOND">{t("courses.faculty")}</option>
@@ -378,13 +471,10 @@ export const ProgramCourses = () => {
                 <option value="TRUE">{t("common.choice_yes")}</option>
               </select>
             </div>
-            {userUX.wrongCourseGradesError && (
-              <div>{userUX.wrongCourseGradesErrorMsg}</div>
-            )}
+            {userUX.formSubmitError && <div>{userUX.formSubmitErrorMsg}</div>}
           </div>
-          {/* {authContext.program.credit === "CREDIT" && <></>} */}
           <div className={styles.formLine}>
-            <div className="form-group mb-4">
+            <div className="form-group mb-4 col-md-6">
               <label className="col-form-label">
                 {t("courses.prereqCourses")}
               </label>
@@ -392,6 +482,11 @@ export const ProgramCourses = () => {
                 listData={{ type: "selectCourse", data: programCourses }}
                 inputPlaceholder={"courses.progCode"}
                 handleListClick={addToPrerequisite}
+                userUX={{
+                  loading: userUX.programCoursesLoading,
+                  error: userUX.programCoursesError,
+                  errorMsg: userUX.programCoursesErrorMsg,
+                }}
               />
             </div>
             {preCourses.length !== 0 && (
@@ -411,25 +506,35 @@ export const ProgramCourses = () => {
           <button
             type="submit"
             className="form-card-button form-card-button-save"
+            disabled={userUX.formSubmitLoading}
           >
-            {editRowId ? t(`common.save`) : t(`common.add`)}
+            {userUX.formSubmitLoading ? (
+              <h1>loading</h1>
+            ) : editRowId ? (
+              t(`common.save`)
+            ) : (
+              t(`common.add`)
+            )}
           </button>
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"
+            disabled={userUX.formSubmitLoading}
           >
             {t(`common.cancel`)}
           </button>
           {editRowId && (
             <>
               <button
-                onClick={deleteProgramCourse}
                 className="form-card-button form-card-button-delete"
+                disabled={userUX.formSubmitLoading}
+                onClick={deleteProgramCourse}
               >
-                {t(`common.7azf el mokarar`)}
+                {t(`common.delete`)}
               </button>
               <button
                 className="form-card-button form-card-button-save"
+                disabled={userUX.formSubmitLoading}
                 onClick={addProgramCourse}
               >
                 {t(`common.add mokrar gded`)}

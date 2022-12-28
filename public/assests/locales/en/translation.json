@@ -283,5 +283,12 @@
     "studentNo": "Number of Students",
     "classType": "Class Type",
     "deleteClass": "Remove from Table"
+  },
+  "button": {
+    "edit": "Edit",
+    "add": "Add",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Reset"
   }
 }

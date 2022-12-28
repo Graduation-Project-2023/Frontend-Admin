@@ -120,14 +120,14 @@ export const AcademicFormData = [
         name: "allowedHrs",
         options: [
           { id: 0, title: "common.select", value: null },
-          { id: 1, title: "academicMain.c_gpa", value: "SEMESTER" },
-          { id: 2, title: "academicMain.gpa", value: "CUMULATIVE" },
-          { id: 3, title: "academicMain.s_gpa", value: "INCLUDESUMMER" },
+          { id: 1, title: "academicMain.c_gpa", value: "CUMULATIVE" },
           {
-            id: 4,
+            id: 2,
             title: "academicMain.semester_fixed",
             value: "SEMESTERFIXED",
           },
+          { id: 3, title: "academicMain.gpa", value: "SEMESTER" },
+          { id: 4, title: "academicMain.s_gpa", value: "INCLUDESUMMER" },
         ],
         row: true,
       },

@@ -10,11 +10,21 @@ import cookies from "js-cookie";
 import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 
+// Component Props:
+// cellData: object {cellData: object, cellNo: number, day: string}
+// availableCells: array of objects {period: number, day: string}
+// courses: {registered: array of objects, notRegistered: array of objects}
+// edit: boolean
+// userUX: object {loading, error, errorMsg}
+// handleSave: function
+// handleClose: function
+
 export const TablePopup = (props) => {
   const [cellData, setCellData] = useState(props.cellData.cellData);
   const [courses, setCourses] = useState({ registered: [], notRegistered: [] });
   const [period, setPeriod] = useState({ startPeriod: 0, endPeriod: 0 });
   const [userUX, setUserUX] = useState({
+    loading: false,
     error: false,
     errorMsg: "",
   });
@@ -73,12 +83,17 @@ export const TablePopup = (props) => {
     setCourses(props.courses);
   }, [props.courses]);
 
+  useEffect(() => {
+    setUserUX(props.userUX);
+  }, [props.userUX]);
+
   const findCellAvailable = (value, classHrs) => {
+    console.log(value, classHrs);
     const dayAvailableCells = availableCells.filter(
       (item) => item.day === cellData.day
     );
     let cellOccupied = false;
-    for (let i = 0; i < classHrs + 1; i++) {
+    for (let i = 0; i < classHrs; i++) {
       const cellFound = dayAvailableCells.some((cell) => {
         if (cell.period === +value + i) {
           return true;
@@ -100,7 +115,7 @@ export const TablePopup = (props) => {
       setUserUX({ error: false, errorMsg: "" });
       setPeriod({
         startPeriod: +value,
-        endPeriod: +value + +classHrs,
+        endPeriod: +value + +classHrs - 1,
       });
     }
   };
@@ -113,7 +128,8 @@ export const TablePopup = (props) => {
         endPeriod: 0,
       });
     } else if (name === "classType") {
-      const classHrs = value === "LECTURE" ? 3 * 2 - 1 : 2 * 2 - 1;
+      const classHrs =
+        value === "LECTURE" ? cellData.lectureHrs * 2 : cellData.labHrs * 2;
       findCellAvailable(cellData.startPeriod, classHrs);
     }
     setCellData((prev) => {
@@ -131,7 +147,9 @@ export const TablePopup = (props) => {
     } else {
       if (cellData.classType === "LECTURE" || cellData.classType === "LAB") {
         const classHrs =
-          cellData.classType === "LECTURE" ? 3 * 2 - 1 : 2 * 2 - 1;
+          cellData.classType === "LECTURE"
+            ? cellData.lectureHrs * 2
+            : cellData.labHrs * 2;
         findCellAvailable(value, classHrs);
       } else {
         setUserUX({
@@ -237,6 +255,7 @@ export const TablePopup = (props) => {
                 }}
                 inputPlaceholder={"common.select"}
                 handleListClick={handleSubjectSelection}
+                userUX={userUX}
               />
             )}
           </div>

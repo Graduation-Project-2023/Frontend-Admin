@@ -290,5 +290,12 @@
     "studentNo": "عدد الطلاب",
     "classType": "نوع الدراسة",
     "deleteClass": "حذف من الجدول"
+  },
+  "button": {
+    "edit": "تعديل",
+    "add": "اضافة",
+    "delete": "حذف",
+    "save": "حفظ",
+    "cancel": "الغاء"
   }
 }

@@ -332,6 +332,11 @@ export const LevelSchedule = () => {
           cellData={showModal.add.data}
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}
+          userUX={{
+            loading: userUX.regCoursesLoading,
+            error: userUX.regCoursesError,
+            errorMsg: userUX.regCoursesErrorMsg,
+          }}
         />
       )}
       {showModal.edit.state && (
@@ -351,6 +356,11 @@ export const LevelSchedule = () => {
           cellData={showModal.edit.data}
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}
+          userUX={{
+            loading: userUX.regCoursesLoading,
+            error: userUX.regCoursesError,
+            errorMsg: userUX.regCoursesErrorMsg,
+          }}
         />
       )}
     </FormNavbarContainer>

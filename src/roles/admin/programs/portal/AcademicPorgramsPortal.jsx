@@ -44,8 +44,7 @@ export const AcademicPorgramsPortal = () => {
     // eslint-disable-next-line
   }, []);
 
-  const handleProgramSelect = (event, item) => {
-    event.preventDefault();
+  const handleProgramSelect = (item) => {
     authContext.changeProgram(item);
     navigate(`${item.id}/main`);
   };

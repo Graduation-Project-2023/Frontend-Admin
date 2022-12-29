@@ -15,6 +15,7 @@ export const FormInput = (props) => {
               className="form-select"
               name={inputData.name}
               onChange={props.handleEditFormChange}
+              required={inputData.req}
               value={valueData[inputData.name] || ""}
               disabled={inputData.disabled}
             >
@@ -55,12 +56,13 @@ export const FormInput = (props) => {
       <div className="row">
         {inputData.splitRow.map((item) => {
           return (
-            <div className=" col-lg-6 mb-4" key={item.id}>
+            <div className="col-lg-6 mb-4" key={item.id}>
               <label className="form-label">{t(item.title)}</label>
               {item.options ? (
                 <select
                   className="form-select"
                   name={item.name}
+                  required={inputData.req}
                   onChange={props.handleEditFormChange}
                   value={valueData[item.name] || ""}
                   disabled={item.disabled}

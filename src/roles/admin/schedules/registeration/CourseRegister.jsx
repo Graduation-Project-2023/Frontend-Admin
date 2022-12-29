@@ -1,16 +1,15 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-
-// eslint-disable-next-line
 import { BASE_URL } from "../../../../shared/API";
-// eslint-disable-next-line
 import axios from "axios";
 import cookies from "js-cookie";
+import { CourseRegisterData } from "./CourseRegisterData";
 
 // Reusable Components
 import { CoursesSidebar } from "./CoursesSidebar";
+import { FormInput } from "../../../../components/forms/FormInput";
 // eslint-disable-next-line
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 
@@ -21,27 +20,13 @@ export const CourseRegister = (props) => {
   // eslint-disable-next-line
   const [profData, setProfData] = useState({ englishName: "", arabicName: "" });
   const [levels, setLevels] = useState([]);
-
-  // ay error lazm yb2a leh message mo3yna unless el error msg deh f nfs el mkan b nfs el shakl zy msln el form submit swa2 kan msln edit aw add
+  const [lectureGrps, setLectureGrps] = useState(false);
   const [userUX, setUserUX] = useState({
-    totalHours: false,
-    siderbarLoading: false,
-    siderbarError: false,
-    // momkn hna tktbeha regCoursesLoading bas msh mstahala kol da 34an hya mwgoda f 7aga wa7da elly hya el sidebar
-    registeredSiderbarBodyLoading: false,
-    registeredSiderbarBodyError: false,
-    // errrorMsg deh mashofhash ella lw da el error el wa7ed
-    errorMsg: "",
-    submitLoading: false,
-    formLoading: false,
-    formError: false,
-    progCoursesLoading: false,
-    progCoursesError: false,
-    progCoursesErrorMsg: "",
+    progCourses: { loading: false, error: false, errorMsg: "" },
+    regCourses: { loading: false, error: false, errorMsg: "" },
+    form: { submit: false, delete: false, error: false, errorMsg: "" },
+    course: { loading: false, error: false, errorMsg: "" },
   });
-
-  const lectureHrsRef = useRef();
-  const labHrsRef = useRef();
   const authContext = useAuth();
   const { courseId } = useParams();
   const location = useLocation();
@@ -49,8 +34,8 @@ export const CourseRegister = (props) => {
   const navigate = useNavigate();
   const currentLanguageCode = cookies.get("i18next") || "en";
   const currentLocation = location.pathname.split("/").at(-2);
-  const menus = [
-    { id: "0", title: "common.coursesNotReg" },
+  const Sidebars = [
+    { id: "0", title: "common.coursesNotReg", registered: false },
     { id: "1", title: "common.regCourses", registered: true },
   ];
 
@@ -63,12 +48,13 @@ export const CourseRegister = (props) => {
   }, [props.programCourses]);
 
   useEffect(() => {
-    // dol gayeen mn course reg portal >> el ux elly hyt7t fl siderbar bta3 el prog courses
     setUserUX((prev) => ({
       ...prev,
-      progCoursesLoading: props.userUX.loading,
-      progCoursesError: props.userUX.error,
-      progCoursesErrorMsg: props.userUX.errorMsg,
+      progCourses: {
+        loading: props.userUX.loading,
+        error: props.userUX.error,
+        errorMsg: props.userUX.errorMsg,
+      },
     }));
   }, [props.userUX]);
 
@@ -81,7 +67,10 @@ export const CourseRegister = (props) => {
       );
     } else if (currentLocation === "edit") {
       if (props.programCourses.length !== 0) {
-        setUserUX((prev) => ({ ...prev, formLoading: true }));
+        setUserUX((prev) => ({
+          ...prev,
+          course: { ...userUX.course, loading: true },
+        }));
         // GET request to get the registered course data by it's id
         axios
           .get(
@@ -91,14 +80,19 @@ export const CourseRegister = (props) => {
           .then((res) => {
             console.log(res.data);
             setCourseData(res.data);
-            setUserUX((prev) => ({ ...prev, formLoading: false }));
+            setUserUX((prev) => ({
+              ...prev,
+              course: { ...userUX.course, loading: false },
+            }));
           })
           .catch((error) => {
             setUserUX((prev) => ({
               ...prev,
-              formLoading: false,
-              formError: true,
-              errorMsg: "There is an error in form Data",
+              course: {
+                loading: false,
+                error: true,
+                errorMsg: "error fetching course data",
+              },
             }));
             console.log(error);
           });
@@ -109,7 +103,10 @@ export const CourseRegister = (props) => {
 
   useEffect(() => {
     // GET request to get all registered program courses on the current semester
-    setUserUX((prev) => ({ ...prev, registeredSiderbarBodyLoading: true }));
+    setUserUX((prev) => ({
+      ...prev,
+      regCourses: { ...userUX.regCourses, loading: true },
+    }));
     axios
       .get(
         BASE_URL +
@@ -119,16 +116,19 @@ export const CourseRegister = (props) => {
         setRegisteredCourses(res.data);
         setUserUX((prev) => ({
           ...prev,
-          registeredSiderbarBodyLoading: false,
+          regCourses: { ...userUX.regCourses, loading: false },
         }));
       })
       .catch((error) => {
         console.log(error);
         setUserUX((prev) => ({
           ...prev,
-          registeredSiderbarBodyLoading: false,
-          siderbarBodyError: true,
-          errorMsg: "there is an error in Regitered course",
+          regCourses: {
+            ...userUX.regCourses,
+            loading: false,
+            error: true,
+            errorMsg: "error fetching registered courses",
+          },
         }));
       });
     // eslint-disable-next-line
@@ -146,46 +146,42 @@ export const CourseRegister = (props) => {
     }
   };
 
-  const handleFormChange = (event) => {
+  const handleEditFormChange = (event) => {
     const fieldName = event.target.getAttribute("name");
     let fieldValue = event.target.value;
     if (event.target.type === "number") {
       fieldValue = +fieldValue;
     }
-    if (
-      +lectureHrsRef.current.value + +labHrsRef.current.value >
-      courseData.creditHours
-    ) {
-      setUserUX((prev) => ({ ...prev, totalHours: true }));
-      setCourseData((prev) => ({
-        ...prev,
-        lectureHrs: 0,
-        labHrs: 0,
-      }));
-      return;
+    if (fieldName === "lectureGroups") {
+      if (fieldValue === "TRUE") {
+        setLectureGrps(true);
+        return;
+      } else if (fieldValue === "FALSE") {
+        setLectureGrps(false);
+        setCourseData((prev) => ({
+          ...prev,
+          lectureGroupsCount: 0,
+        }));
+        return;
+      }
     }
-    setUserUX((prev) => ({ ...prev, totalHours: false }));
-    const course = { ...courseData };
-    course[fieldName] = fieldValue;
-    setCourseData(course);
+    setCourseData((prev) => ({
+      ...prev,
+      [fieldName]: fieldValue,
+    }));
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (
-      userUX.totalHours ||
-      +lectureHrsRef.current.value + +labHrsRef.current.value !==
-        courseData.creditHours
-    ) {
-      setUserUX((prev) => ({ ...prev, totalHours: true }));
-      return;
-    }
     const course = {
       ...courseData,
       academicSemesterId: "decc46ba-7d4b-11ed-a1eb-0242ac120002",
     };
     delete course.semester;
-    setUserUX((prev) => ({ ...prev, submitLoading: true }));
+    setUserUX((prev) => ({
+      ...prev,
+      form: { submit: true, error: false, delete: false, errorMsg: "" },
+    }));
     if (currentLocation === "add") {
       course["programCourseId"] = courseData.id;
       delete course.id;
@@ -199,16 +195,22 @@ export const CourseRegister = (props) => {
         )
         .then((res) => {
           console.log(res);
-          setUserUX((prev) => ({ ...prev, submitLoading: false }));
-        })
-        .catch((error) => {
           setUserUX((prev) => ({
             ...prev,
-            submitLoading: false,
-            submitError: true,
-            errorMsg: "there is an error in submit",
+            form: { ...userUX.form, submit: false },
           }));
+        })
+        .catch((error) => {
           console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              ...userUX.form,
+              submit: false,
+              error: true,
+              errorMsg: "error in submit",
+            },
+          }));
         });
     } else if (currentLocation === "edit") {
       // PUT request to update the registered course data
@@ -221,16 +223,32 @@ export const CourseRegister = (props) => {
         )
         .then((res) => {
           console.log(res);
-
+          setUserUX((prev) => ({
+            ...prev,
+            form: { ...userUX.form, submit: false },
+          }));
           // navigate("/admin_portal/study_schedules/register_course");
         })
         .catch((error) => {
           console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              ...userUX.form,
+              submit: false,
+              error: true,
+              errorMsg: "error in submit",
+            },
+          }));
         });
     }
   };
 
   const handleCourseDelete = () => {
+    setUserUX((prev) => ({
+      ...prev,
+      form: { delete: true, error: false, submit: false, errorMsg: "" },
+    }));
     // DELETE request to delete the registered course
     axios
       .delete(
@@ -239,16 +257,29 @@ export const CourseRegister = (props) => {
       )
       .then((res) => {
         console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { ...userUX.form, delete: false },
+        }));
       })
       .catch((error) => {
         console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          form: {
+            ...userUX.form,
+            delete: false,
+            error: true,
+            errorMsg: "error in delete",
+          },
+        }));
       });
   };
 
   return (
     <div className="registerationContainer-body">
       <div className={`registerationContainer-menu `}>
-        {menus.map((menu) => (
+        {Sidebars.map((menu) => (
           <CoursesSidebar
             key={menu.id}
             title={menu.title}
@@ -256,12 +287,19 @@ export const CourseRegister = (props) => {
             handleListClick={handleListClick}
             registered={menu.registered}
             eventKey={menu.id}
-            userUX={{
-              levelsLoading: userUX.siderbarLoading,
-              registertedCoursesLoading: userUX.registeredSiderbarBodyLoading,
-              levelsError: userUX.siderbarError,
-              registeredCoursesError: userUX.registeredSiderbarBodyError,
-            }}
+            userUX={
+              menu.registered
+                ? {
+                    loading: userUX.regCourses.loading,
+                    error: userUX.regCourses.error,
+                    errorMsg: userUX.regCourses.errorMsg,
+                  }
+                : {
+                    loading: userUX.progCourses.loading,
+                    error: userUX.progCourses.error,
+                    errorMsg: userUX.progCourses.errorMsg,
+                  }
+            }
           />
         ))}
       </div>
@@ -273,171 +311,104 @@ export const CourseRegister = (props) => {
         </h3>
         <form onSubmit={handleFormSubmit}>
           <div className="registerationContainer-form-inputs">
-            <div className="row mb-4">
-              <label className="form-label">{t(`courses.name`)}</label>
-              {userUX.formError ? (
-                userUX.errorMsg
-              ) : userUX.formLoading ? (
-                "loading"
-              ) : (
-                <input
-                  className="form-control"
-                  value={
-                    currentLanguageCode === "en"
-                      ? courseData?.englishName || ""
-                      : courseData?.arabicName || ""
-                  }
-                  readOnly
-                  disabled
-                />
-              )}
-            </div>
-            <div className=" row mb-4">
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.code`)}</label>
-                {userUX.formError ? (
-                  userUX.errorMsg
-                ) : userUX.formLoading ? (
-                  <h1>loading</h1>
-                ) : (
-                  <input
-                    className="form-control"
-                    value={courseData?.code || ""}
-                    readOnly
-                    disabled
+            {CourseRegisterData.map((data) => {
+              if (data.levels) {
+                return (
+                  <div className="row" key={data.id}>
+                    <div className="col-lg-12 mb-4">
+                      <label className="form-label">{t(`levels.level`)}</label>
+                      <select
+                        className="form-select"
+                        name="levelId"
+                        value={courseData?.levelId || ""}
+                        onChange={handleEditFormChange}
+                      >
+                        <option value={null}>{t(`common.select`)}</option>
+                        {levels.map((level) => (
+                          <option key={level.id} value={level.id}>
+                            {level.level}&nbsp;-&nbsp;
+                            {currentLanguageCode === "en"
+                              ? level.englishName
+                              : level.arabicName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                );
+              } else if (data.lectureGroups) {
+                return (
+                  <div className="row" key={data.id}>
+                    <div className="col-lg-6 mb-4">
+                      <label className="form-label">{t(`lec groups?`)}</label>
+                      <select
+                        className="form-select"
+                        name="lectureGroups"
+                        value={lectureGrps ? "TRUE" : "FALSE"}
+                        onChange={handleEditFormChange}
+                      >
+                        <option value={"FALSE"}>{t(`common.choice_no`)}</option>
+                        <option value={"TRUE"}>{t(`common.choice_yes`)}</option>
+                      </select>
+                    </div>
+                    <div className="col-lg-6 mb-4">
+                      <label className="form-label">{t(`group count`)}</label>
+                      <input
+                        className="form-control"
+                        name="lectureGroupsCount"
+                        value={courseData?.lectureGroupsCount || 0}
+                        onChange={handleEditFormChange}
+                        disabled={!lectureGrps}
+                        type="number"
+                      />
+                    </div>
+                  </div>
+                  //  <div className="row" key={data.id}>
+                  //    <div className="col-lg-12 mb-4">
+                  //      <label className="form-label">{t(`esm el moshrf`)}</label>
+                  //      <DropdownSearch
+                  //        name={profData}
+                  //        menuData={[]}
+                  //        label={"esm moshrf el mada"}
+                  //        inputPlaceholder={"ektb esm el moshrf"}
+                  //      />
+                  //    </div>
+                  //  </div>
+                );
+              } else if (data.prof) {
+                return (
+                  <div key={data.id}></div>
+                  //  <div className="row" key={data.id}>
+                  //    <div className="col-lg-12 mb-4">
+                  //      <label className="form-label">{t(`esm el moshrf`)}</label>
+                  //      <DropdownSearch
+                  //        name={profData}
+                  //        menuData={[]}
+                  //        label={"esm moshrf el mada"}
+                  //        inputPlaceholder={"ektb esm el moshrf"}
+                  //      />
+                  //    </div>
+                  // </div>
+                );
+              } else {
+                return (
+                  <FormInput
+                    inputData={data}
+                    handleEditFormChange={handleEditFormChange}
+                    valueData={courseData}
+                    key={data.id}
                   />
-                )}
-              </div>
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.hours`)}</label>
-                {userUX.formError ? (
-                  userUX.errorMsg
-                ) : userUX.formLoading ? (
-                  <h1>loading</h1>
-                ) : (
-                  <input
-                    className="form-control"
-                    value={courseData?.creditHours || ""}
-                    readOnly
-                    disabled
-                  />
-                )}
-              </div>
-            </div>
-            <div className=" row mb-4">
-              <label className="form-label">{t(`levels.level`)}</label>
-              {userUX.formError ? (
-                userUX.errorMsg
-              ) : userUX.formLoading ? (
-                "loading"
-              ) : (
-                <select
-                  className="form-select"
-                  name="levelId"
-                  value={courseData?.levelId || ""}
-                  onChange={handleFormChange}
-                >
-                  <option value={null}>{t(`common.select`)}</option>
-                  {levels.map((level) => (
-                    <option key={level.id} value={level.id}>
-                      {level.level}&nbsp;-&nbsp;
-                      {currentLanguageCode === "en"
-                        ? level.englishName
-                        : level.arabicName}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
-            {/* <div className="mb-4">
-                <label className="form-label">{t(`esm el moshrf`)}</label>
-                <DropdownSearch
-                  name={profData}
-                  menuData={[]}
-                  label={"esm moshrf el mada"}
-                  inputPlaceholder={"ektb esm el moshrf"}
-                />
-              </div> */}
-            <div className="row mb-4">
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.lecture`)}</label>
-                {userUX.formError ? (
-                  userUX.errorMsg
-                ) : userUX.formLoading ? (
-                  <h1>loading</h1>
-                ) : (
-                  <input
-                    className="form-control"
-                    type="number"
-                    name="lectureHrs"
-                    ref={lectureHrsRef}
-                    value={courseData?.lectureHrs || ""}
-                    onChange={handleFormChange}
-                    required
-                  />
-                )}
-              </div>
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.lectures`)}</label>
-                {userUX.formError ? (
-                  userUX.errorMsg
-                ) : userUX.formLoading ? (
-                  <h1>loading</h1>
-                ) : (
-                  <input
-                    className="form-control"
-                    name="lectureCount"
-                    type="number"
-                    value={courseData?.lectureCount || ""}
-                    onChange={handleFormChange}
-                  />
-                )}
-              </div>
-            </div>
-            <div className=" row mb-4">
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.section`)}</label>
-                {userUX.formError ? (
-                  userUX.errorMsg
-                ) : userUX.formLoading ? (
-                  <h1>loading</h1>
-                ) : (
-                  <input
-                    className="form-control"
-                    name="labHrs"
-                    type="number"
-                    value={courseData?.labHrs || ""}
-                    ref={labHrsRef}
-                    onChange={handleFormChange}
-                  />
-                )}
-              </div>
-              <div className="col-sm-6">
-                <label className="form-label">{t(`courses.sections`)}</label>
-                {userUX.formError ? (
-                  userUX.errorMsg
-                ) : userUX.formLoading ? (
-                  <h1>loading</h1>
-                ) : (
-                  <input
-                    className="form-control"
-                    name="labCount"
-                    type="number"
-                    value={courseData?.labCount || ""}
-                    onChange={handleFormChange}
-                  />
-                )}
-              </div>
-            </div>
+                );
+              }
+            })}
           </div>
-
           <button
             type="submit"
             className="form-card-button form-card-button-save"
           >
             {userUX.submitLoading
               ? "loading"
-              : location.pathname.split("/").at(-2) === "add"
+              : currentLocation === "add"
               ? t(`common.add`)
               : t(`common.save`)}
           </button>
@@ -457,7 +428,6 @@ export const CourseRegister = (props) => {
               {t(`common.delete`)}
             </button>
           )}
-
           {userUX.totalHours && <div>TOTAL HOURS IS WRONG</div>}
         </form>
       </div>

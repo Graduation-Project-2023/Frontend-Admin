@@ -17,7 +17,7 @@ export const AddStudents = () => {
   const authContext = useAuth();
   const [files, setFiles] = useState();
   const [userUX, setUserUX] = useState({
-    CSV: { loading: false, success: false, error: false, error_msg: "" },
+    CSV: { loading: false, success: false, error: false, errorMsg: "" },
     table: true,
   });
   const { t } = useTranslation();
@@ -45,7 +45,7 @@ export const AddStudents = () => {
             ...prev.CSV,
             loading: false,
             error: true,
-            error_msg: "not csv",
+            errorMsg: "not csv",
           },
         }));
       } else {
@@ -75,7 +75,7 @@ export const AddStudents = () => {
                 loading: false,
                 success: false,
                 error: true,
-                error_msg: "uploadingerror",
+                errorMsg: "uploadingerror",
               },
             }));
           });
@@ -86,7 +86,7 @@ export const AddStudents = () => {
   return (
     <FormNavbarContainer>
       <div className={styles.addform}>
-        {userUX.CSV.error && <h1>{userUX.CSV.error_msg}</h1>}
+        {userUX.CSV.error && <h1>{userUX.CSV.errorMsg}</h1>}
         {userUX.CSV.loading ? (
           <h1>loading</h1>
         ) : (

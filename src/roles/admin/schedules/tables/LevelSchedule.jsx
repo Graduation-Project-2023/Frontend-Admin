@@ -21,15 +21,11 @@ export const LevelSchedule = () => {
   const [cells, setCells] = useState({ occupied: [], available: [] });
   // eslint-disable-next-line
   const [userUX, setUserUX] = useState({
-    tableLoading: false,
-    tableError: false,
-    tableErrorMsg: "",
-    regCoursesLoading: false,
-    regCoursesError: false,
-    regCoursesErrorMsg: "",
-    levelsLoading: true,
-    levelsError: false,
-    levelsErrorMsg: "",
+    table: { loading: false, error: false, errorMsg: "" },
+    regCourses: { loading: false, error: false, errorMsg: "" },
+    levels: { loading: false, error: false, errorMsg: "" },
+    levelTableCreate: { loading: false, error: false, errorMsg: "" },
+    form: { loading: false, error: false, errorMsg: "" },
   });
   const [showModal, setShowModal] = useState({
     add: { state: false, data: null },
@@ -43,9 +39,7 @@ export const LevelSchedule = () => {
   useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
-      tableLoading: true,
-      tableError: false,
-      tableErrorMsg: "",
+      table: { loading: true, error: false, errorMsg: "" },
     }));
     // GET request to get table data by it's level and semester id
     axios
@@ -54,20 +48,18 @@ export const LevelSchedule = () => {
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
       )
       .then((res) => {
-        setUserUX((prev) => ({
-          ...prev,
-          tableLoading: false,
-        }));
         setTableData(res.data.classes);
         setTableId(res.data.id);
+        setUserUX((prev) => ({
+          ...prev,
+          table: { ...prev.table, loading: false },
+        }));
       })
       .catch((error) => {
         console.log(error);
         setUserUX((prev) => ({
           ...prev,
-          tableLoading: false,
-          tableError: true,
-          tableErrorMsg: "table error",
+          table: { loading: false, error: true, errorMsg: "table error" },
         }));
       });
     setLevels(authContext.program.levels);
@@ -77,9 +69,7 @@ export const LevelSchedule = () => {
   useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
-      regCoursesLoading: true,
-      regCoursesError: false,
-      regCoursesErrorMsg: "",
+      regCourses: { loading: true, error: false, errorMsg: "" },
     }));
     // GET request to get all program courses that are registered on the current level
     axios
@@ -88,21 +78,23 @@ export const LevelSchedule = () => {
           `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
       )
       .then((res) => {
-        setUserUX((prev) => ({
-          ...prev,
-          regCoursesLoading: false,
-        }));
         setCourses(res.data);
         setLevelCourses(
           res.data.filter((course) => course.levelId === levelId)
         );
+        setUserUX((prev) => ({
+          ...prev,
+          regCourses: { ...prev.regCourses, loading: false },
+        }));
       })
       .catch((error) => {
         setUserUX((prev) => ({
           ...prev,
-          regCoursesLoading: false,
-          regCoursesError: true,
-          regCoursesErrorMsg: "courses error",
+          regCourses: {
+            loading: false,
+            error: true,
+            errorMsg: "courses error",
+          },
         }));
         console.log(error);
       });
@@ -168,9 +160,7 @@ export const LevelSchedule = () => {
     event.preventDefault();
     setUserUX((prev) => ({
       ...prev,
-      levelsLoading: true,
-      levelsError: false,
-      levelsErrorMsg: "",
+      levels: { loading: true, error: false, errorMsg: "" },
     }));
     // GET request to get all levels that have a table created
     axios
@@ -181,16 +171,14 @@ export const LevelSchedule = () => {
       .then((res) => {
         setUserUX((prev) => ({
           ...prev,
-          levelsLoading: false,
+          levels: { ...prev.levels, loading: false },
         }));
         if (res.data.map((obj) => obj.level.id).includes(id)) {
           navigate(`/admin_portal/study_schedules/tables/${id}`);
         } else {
           setUserUX((prev) => ({
             ...prev,
-            levelTableCreateLoading: true,
-            levelTableCreateError: false,
-            levelTableCreateMsg: "",
+            levelTableCreate: { loading: true, error: false, errorMsg: "" },
           }));
           const levelTableData = {
             academicSemesterId: "decc46ba-7d4b-11ed-a1eb-0242ac120002",
@@ -205,20 +193,22 @@ export const LevelSchedule = () => {
               levelTableData
             )
             .then((res) => {
+              console.log(res);
               setUserUX((prev) => ({
                 ...prev,
-                levelTableCreateLoading: false,
+                levelTableCreate: { ...prev.levelTableCreate, loading: false },
               }));
-              console.log(res);
               navigate(`/admin_portal/study_schedules/tables/${id}`);
             })
             .catch((error) => {
               console.log(error);
               setUserUX((prev) => ({
                 ...prev,
-                levelTableCreateLoading: false,
-                levelTableCreateError: true,
-                levelTableCreateMsg: "level table create error",
+                levelTableCreate: {
+                  loading: false,
+                  error: true,
+                  errorMsg: "level table create error",
+                },
               }));
             });
         }
@@ -226,9 +216,11 @@ export const LevelSchedule = () => {
       .catch((error) => {
         setUserUX((prev) => ({
           ...prev,
-          levelsLoading: false,
-          levelsError: true,
-          levelsErrorMsg: "levels error",
+          levels: {
+            loading: false,
+            error: true,
+            errorMsg: "levels erro",
+          },
         }));
         console.log(error);
       });
@@ -249,7 +241,10 @@ export const LevelSchedule = () => {
         }) => rest
       ),
     };
-
+    setUserUX((prev) => ({
+      ...prev,
+      form: { loading: true, error: false, errorMsg: "" },
+    }));
     console.log(levelTableData);
     // PUT request to update the table data by it's level and semester id
     axios
@@ -260,8 +255,16 @@ export const LevelSchedule = () => {
       )
       .then((res) => {
         console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { ...prev.form, loading: false },
+        }));
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: true, errorMsg: "table save error" },
+        }));
         console.log(error);
       });
   };
@@ -332,11 +335,7 @@ export const LevelSchedule = () => {
           cellData={showModal.add.data}
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}
-          userUX={{
-            loading: userUX.regCoursesLoading,
-            error: userUX.regCoursesError,
-            errorMsg: userUX.regCoursesErrorMsg,
-          }}
+          userUX={userUX.regCourses}
         />
       )}
       {showModal.edit.state && (
@@ -356,11 +355,7 @@ export const LevelSchedule = () => {
           cellData={showModal.edit.data}
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}
-          userUX={{
-            loading: userUX.regCoursesLoading,
-            error: userUX.regCoursesError,
-            errorMsg: userUX.regCoursesErrorMsg,
-          }}
+          userUX={userUX.regCourses}
         />
       )}
     </FormNavbarContainer>

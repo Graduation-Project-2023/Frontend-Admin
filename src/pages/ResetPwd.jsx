@@ -13,14 +13,14 @@ export const ResetPwd = () => {
     confirmPassword: "",
   });
   const [userUX, setUserUX] = useState({
-    submitLoading: false,
+    loading: false,
     error: false,
     errorMsg: "",
   });
   const [pwd, setPwd] = useState(false);
-  const [error, setError]= useState({
-    password:"",
-    confirmPassword:"",
+  const [error, setError] = useState({
+    password: "",
+    confirmPassword: "",
   });
 
   const onInputChange = (e) => {
@@ -65,7 +65,7 @@ export const ResetPwd = () => {
 
   const handlePwdReset = (e) => {
     e.preventDefault();
-    setUserUX((prev) => ({ ...prev, submitLoading: true, error: false }));
+    setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     axios
       .post(BASE_URL + "api/reset_password/" + token, {
         password: input.password,
@@ -73,7 +73,7 @@ export const ResetPwd = () => {
       })
       .then((res) => {
         console.log(res);
-        setUserUX((prev) => ({ ...prev, submitLoading: false }));
+        setUserUX((prev) => ({ ...prev, loading: false }));
         setPwd(true);
         setTimeout(() => {
           navigate("/login");
@@ -82,10 +82,10 @@ export const ResetPwd = () => {
       .catch((error) => {
         console.log(error);
         setUserUX({
-          submitLoading: false,
+          loading: false,
           error: true,
           errorMsg: error.response.data.message,
-           });
+        });
       });
   };
 
@@ -124,7 +124,7 @@ export const ResetPwd = () => {
             )}
           </div>
           <div className="login_form_button">
-            {userUX.submitLoading ? (
+            {userUX.loading ? (
               <h1>LOADING</h1>
             ) : (
               <button>{t(`resetpwd.reset_btn`)}</button>

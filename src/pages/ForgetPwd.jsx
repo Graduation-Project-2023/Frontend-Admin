@@ -8,30 +8,29 @@ export const ForgetPwd = () => {
   const { t } = useTranslation();
   const emailRef = useRef();
   const [userUX, setUserUX] = useState({
-    submitLoading: false,
+    loading: false,
     error: false,
     errorMsg: "",
   });
 
-
   const handlePwdFrgt = (e) => {
     e.preventDefault();
-    setUserUX((prev) => ({ ...prev, submitLoading: true, error: false }));
+    setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     axios
       .post(BASE_URL + "api/forgot_password", {
         email: emailRef.current.value,
       })
       .then((res) => {
         console.log(res);
-        setUserUX((prev) => ({ ...prev, submitLoading: false }));
+        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
         setUserUX({
-          submitLoading: false,
+          loading: false,
           error: true,
           errorMsg: error.response.data.message,
-           });
+        });
       });
   };
 
@@ -55,7 +54,7 @@ export const ForgetPwd = () => {
             ></input>
           </div>
           <div className="login_form_button">
-            {userUX.submitLoading ? (
+            {userUX.loading ? (
               <h1>LOADING</h1>
             ) : (
               <button>{t(`common.done`)}</button>

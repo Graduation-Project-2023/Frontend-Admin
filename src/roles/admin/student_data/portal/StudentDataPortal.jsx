@@ -25,12 +25,9 @@ export const StudentDataPortal = () => {
   const [searchValue, setSearchValue] = useState("");
   const [genderMale, setGenderMale] = useState(false);
   const [userUX, setUserUX] = useState({
-    list: { loading: false, error: false, error_msg: "" },
-    studentData: { loading: false, error: false, error_msg: "" },
-    form: {
-      submit: { loading: false, error: false, error_msg: "" },
-      delete: { loading: false },
-    },
+    list: { loading: false, error: false, errorMsg: "" },
+    studentData: { loading: false, error: false, errorMsg: "" },
+    form: { submit: false, delete: false, error: false, errorMsg: "" },
     searchClicked: false,
   });
 
@@ -44,7 +41,7 @@ export const StudentDataPortal = () => {
       // GET request to get student data by it's id
       setUserUX((prev) => ({
         ...prev,
-        form: { ...prev.form, submit: { ...prev.submit, loading: true } },
+        form: { ...prev.form, submit: true },
       }));
       axios
         .get(BASE_URL + `/student/${studentId}`)
@@ -52,7 +49,7 @@ export const StudentDataPortal = () => {
           setStudentData(res.data);
           setUserUX((prev) => ({
             ...prev,
-            form: { ...prev.form, submit: { ...prev.submit, loading: false } },
+            form: { ...prev.form, submit: false },
           }));
         })
         .catch((error) => {
@@ -61,11 +58,9 @@ export const StudentDataPortal = () => {
             ...prev,
             form: {
               ...prev.form,
-              submit: {
-                loading: false,
-                error: true,
-                error_msg: "student data error",
-              },
+              submit: false,
+              error: true,
+              errorMsg: "student data error",
             },
           }));
         });
@@ -120,7 +115,7 @@ export const StudentDataPortal = () => {
     console.log(newStudent);
     setUserUX((prev) => ({
       ...prev,
-      form: { ...prev.form, submit: { ...prev.submit, loading: true } },
+      form: { ...prev.form, submit: true },
     }));
     // Condition to check whether it's adding a new student or updating the current
     studentId !== "register" && studentId !== undefined
@@ -133,7 +128,7 @@ export const StudentDataPortal = () => {
               ...prev,
               form: {
                 ...prev.form,
-                submit: { ...prev.submit, loading: false },
+                submit: false,
               },
             }));
           })
@@ -143,11 +138,9 @@ export const StudentDataPortal = () => {
               ...prev,
               form: {
                 ...prev.form,
-                submit: {
-                  loading: false,
-                  error: true,
-                  error_msg: "student data error",
-                },
+                submit: false,
+                error: true,
+                errorMsg: "student data error",
               },
             }));
           })
@@ -161,7 +154,7 @@ export const StudentDataPortal = () => {
               ...prev,
               form: {
                 ...prev.form,
-                submit: { ...prev.submit, loading: false },
+                submit: false,
               },
             }));
           })
@@ -171,11 +164,9 @@ export const StudentDataPortal = () => {
               ...prev,
               form: {
                 ...prev.form,
-                submit: {
-                  loading: false,
-                  error: true,
-                  error_msg: "student data error",
-                },
+                submit: false,
+                error: true,
+                errorMsg: "student data error",
               },
             }));
           });
@@ -185,7 +176,7 @@ export const StudentDataPortal = () => {
     setUserUX((prev) => ({
       ...prev,
       searchClicked: true,
-      list: { loading: true, error: false, error_msg: "" },
+      list: { loading: true, error: false, errorMsg: "" },
     }));
     searchValue === ""
       ? axios
@@ -198,7 +189,7 @@ export const StudentDataPortal = () => {
               list: {
                 loading: false,
                 error: res.data === 0 ? true : false,
-                error_msg: res.data === 0 ? "No Students Found" : "",
+                errorMsg: res.data === 0 ? "No Students Found" : "",
               },
             }));
           })
@@ -206,7 +197,7 @@ export const StudentDataPortal = () => {
             console.log(error);
             setUserUX((prev) => ({
               ...prev,
-              list: { loading: false, error: true, error_msg: "error" },
+              list: { loading: false, error: true, errorMsg: "error" },
             }));
           })
       : console.log("search");
@@ -226,7 +217,7 @@ export const StudentDataPortal = () => {
       ...prev,
       form: {
         ...prev.form,
-        delete: { loading: true },
+        delete: true,
       },
     }));
     axios
@@ -237,7 +228,7 @@ export const StudentDataPortal = () => {
           ...prev,
           form: {
             ...prev.form,
-            delete: { loading: false },
+            delete: false,
           },
         }));
       })
@@ -246,16 +237,11 @@ export const StudentDataPortal = () => {
         setUserUX((prev) => ({
           ...prev,
           form: {
-            submit: {
-              ...prev.submit,
-              error: true,
-              error_msg: "error in deleting student",
-            },
-            delete: { loading: false },
+            ...prev.form,
+            error: true,
+            errorMsg: "error in deleting student",
+            delete: false,
           },
-          formDeleteLoading: false,
-          formSubmitError: true,
-          formSubmitErrorMsg: "error in deleting student",
         }));
       });
   };
@@ -288,7 +274,7 @@ export const StudentDataPortal = () => {
                 <div>{t(`registeration.type`)}</div>
               </>
             )}
-            {userUX.list.error && userUX.list.error_msg}
+            {userUX.list.error && userUX.list.errorMsg}
             {userUX.list.loading && "LOADING"}
           </h1>
           {students.length === 0 && (
@@ -349,14 +335,12 @@ export const StudentDataPortal = () => {
                 className="form-card-button form-card-button-save"
               >
                 {" "}
-                {userUX.form.submit.loading
-                  ? "Loading..."
-                  : `${t(`common.save`)}`}
+                {userUX.form.submit ? "Loading..." : `${t(`common.save`)}`}
               </button>
               <button
                 type="reset"
                 className="form-card-button form-card-button-cancel"
-                disabled={userUX.form.submit.loading}
+                disabled={userUX.form.submit}
               >
                 {t(`common.cancel`)}
               </button>
@@ -365,9 +349,7 @@ export const StudentDataPortal = () => {
                   className="form-card-button form-card-button-delete"
                   onClick={handleStudentDelete}
                 >
-                  {userUX.form.delete.loading
-                    ? "Loading..."
-                    : t(`common.delete`)}
+                  {userUX.form.delete ? "Loading..." : t(`common.delete`)}
                 </button>
               )}
             </Accordion>

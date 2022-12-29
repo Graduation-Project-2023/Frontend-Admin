@@ -23,7 +23,6 @@ export const TablePopup = (props) => {
   const [cellData, setCellData] = useState(props.cellData.cellData);
   const [courses, setCourses] = useState({ registered: [], notRegistered: [] });
   const [period, setPeriod] = useState({ startPeriod: 0, endPeriod: 0 });
-  const [editToAdd, setEditToAdd] = useState(false);
   const [userUX, setUserUX] = useState({
     loading: false,
     error: false,
@@ -170,18 +169,6 @@ export const TablePopup = (props) => {
     });
   };
 
-  const handleEditToAdd = () => {
-    setEditToAdd(true);
-    setCellData({
-      startPeriod: cellData.startPeriod,
-      day: cellData.day,
-    });
-    setPeriod({
-      startPeriod: cellData.startPeriod,
-      endPeriod: 0,
-    });
-  };
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (
@@ -192,7 +179,7 @@ export const TablePopup = (props) => {
       setUserUX({ error: true, errorMsg: "please select valid inputs" });
       return;
     }
-    if (props.edit && !editToAdd) {
+    if (props.edit) {
       const editedData = {
         ...cellData,
         startPeriod: period.startPeriod,
@@ -247,7 +234,7 @@ export const TablePopup = (props) => {
         <div className="row mb-3">
           <div className="col-md-6">
             <label>{t(`courses.name`)}</label>
-            {props.edit && !editToAdd ? (
+            {props.edit ? (
               <input
                 type="text"
                 className="form-control"
@@ -274,7 +261,7 @@ export const TablePopup = (props) => {
           </div>
           <div className="col-md-6">
             <label>{t(`table.classType`)}</label>
-            {props.edit && !editToAdd ? (
+            {props.edit ? (
               <input
                 type="text"
                 className="form-control"
@@ -310,7 +297,7 @@ export const TablePopup = (props) => {
         <div className="row mb-3">
           <div className="col-md-4">
             <label>{t(`common.day`)}</label>
-            {props.edit && !editToAdd ? (
+            {props.edit ? (
               <select
                 type="text"
                 className="form-select"
@@ -339,12 +326,11 @@ export const TablePopup = (props) => {
             <label>{t(`table.start`)}</label>
             <select
               type="text"
-              className={editToAdd ? "form-control" : "form-select"}
+              className="form-select"
               name="startPeriod"
               required
               onChange={handlePeriodChange}
               value={period.startPeriod || ""}
-              disabled={editToAdd}
             >
               {period.startPeriod === 0 && (
                 <option value={null}>{t(`common.select`)}</option>
@@ -373,9 +359,7 @@ export const TablePopup = (props) => {
               name="endPeriod"
               value={
                 period.endPeriod === 0
-                  ? editToAdd
-                    ? "choose a subject and class type"
-                    : "choose start period first"
+                  ? "choose start period first"
                   : ScheduleTableHeader.find(
                       (item) => item.period === period?.endPeriod
                     )
@@ -410,7 +394,7 @@ export const TablePopup = (props) => {
             onClick={handleFormSubmit}
             className="form-card-button-save"
           >
-            {props.edit && !editToAdd ? t("common.save") : t("common.add")}
+            {props.edit ? t("common.save") : t("common.add")}
           </button>
           <button
             type="button"
@@ -421,26 +405,17 @@ export const TablePopup = (props) => {
           >
             {t("common.cancel")}
           </button>
-          {props.edit && !editToAdd && (
-            <>
-              <button
-                type="button"
-                className="form-card-button-delete"
-                onClick={(event) => {
-                  props.subjectDelete(cellData.id);
-                  props.close();
-                }}
-              >
-                {t("table.deleteClass")}
-              </button>
-              <button
-                type="button"
-                className="form-card-button-save"
-                onClick={handleEditToAdd}
-              >
-                {t("table.add")}
-              </button>
-            </>
+          {props.edit && (
+            <button
+              type="button"
+              className="form-card-button-delete"
+              onClick={(event) => {
+                props.subjectDelete(cellData.id);
+                props.close();
+              }}
+            >
+              {t("table.deleteClass")}
+            </button>
           )}
         </div>
       </form>

@@ -147,7 +147,9 @@ export const DayPeriodTable = (props) => {
                           <td
                             key={cell.period}
                             colSpan={
-                              cellFilter[0].endPeriod -
+                              Math.max(
+                                ...cellFilter.map((el) => el.endPeriod)
+                              ) -
                               cellFilter[0].startPeriod +
                               1
                             }

@@ -287,19 +287,7 @@ export const CourseRegister = (props) => {
             handleListClick={handleListClick}
             registered={menu.registered}
             eventKey={menu.id}
-            userUX={
-              menu.registered
-                ? {
-                    loading: userUX.regCourses.loading,
-                    error: userUX.regCourses.error,
-                    errorMsg: userUX.regCourses.errorMsg,
-                  }
-                : {
-                    loading: userUX.progCourses.loading,
-                    error: userUX.progCourses.error,
-                    errorMsg: userUX.progCourses.errorMsg,
-                  }
-            }
+            userUX={menu.registered ? userUX.regCourses : userUX.progCourses}
           />
         ))}
       </div>

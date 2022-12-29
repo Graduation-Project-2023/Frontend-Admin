@@ -354,7 +354,15 @@ export const CourseRegister = (props) => {
                 );
               } else if (data.prof) {
                 return (
-                  <div key={data.id}></div>
+                  <div className="row" key={data.id}>
+                    <div className="col-lg-12 mb-4">
+                      <label className="form-label">{t(`esm el moshrf`)}</label>
+                      <select className="form-select" name="lectureGroups">
+                        <option value={"FALSE"}>{t(`hhhhhh`)}</option>
+                        <option value={"TRUE"}>{t(`hhhhhhh`)}</option>
+                      </select>
+                    </div>
+                  </div>
                   //  <div className="row" key={data.id}>
                   //    <div className="col-lg-12 mb-4">
                   //      <label className="form-label">{t(`esm el moshrf`)}</label>

@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { StudentFormData } from "./StudentFormData";
 import { BASE_URL } from "../../../../shared/API";
+import { useAuth } from "../../../../hooks/useAuth";
 import cookies from "js-cookie";
 import axios from "axios";
 import styles from "./StudentDataPortal.module.scss";
@@ -14,6 +15,7 @@ import { FormNavbarContainer } from "../../../../components/other/FormNavbarCont
 import { FormInput } from "../../../../components/forms/FormInput";
 
 export const StudentDataPortal = () => {
+  const authContext = useAuth();
   const [studentData, setStudentData] = useState([]);
   // eslint-disable-next-line
   const [students, setStudents] = useState([]);
@@ -23,13 +25,15 @@ export const StudentDataPortal = () => {
   const [searchValue, setSearchValue] = useState("");
   const [genderMale, setGenderMale] = useState(false);
   const [userUX, setUserUX] = useState({
-    listLoading: false,
+    list: { loading: false, error: false, error_msg: "" },
+    studentData: { loading: false, error: false, error_msg: "" },
+    form: {
+      submit: { loading: false, error: false, error_msg: "" },
+      delete: { loading: false },
+    },
     searchClicked: false,
-    studentDataLoading: false,
-    emptyState: { state: false, message: "" },
   });
-  // eslint-disable-next-line
-  const nationalIdRef = useRef();
+
   const { studentId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -38,18 +42,36 @@ export const StudentDataPortal = () => {
   useEffect(() => {
     if (studentId !== "register" && studentId !== undefined) {
       // GET request to get student data by it's id
+      setUserUX((prev) => ({
+        ...prev,
+        form: { ...prev.form, submit: { ...prev.submit, loading: true } },
+      }));
       axios
-        .get(BASE_URL + `/students/${studentId}`)
+        .get(BASE_URL + `/student/${studentId}`)
         .then((res) => {
           setStudentData(res.data);
+          setUserUX((prev) => ({
+            ...prev,
+            form: { ...prev.form, submit: { ...prev.submit, loading: false } },
+          }));
         })
         .catch((error) => {
           console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              ...prev.form,
+              submit: {
+                loading: false,
+                error: true,
+                error_msg: "student data error",
+              },
+            },
+          }));
         });
     } else {
       setStudentData([]);
     }
-    // eslint-disable-next-line
   }, [studentId]);
 
   useEffect(() => {
@@ -70,7 +92,10 @@ export const StudentDataPortal = () => {
     const fieldName = event.target.getAttribute("name");
     let fieldValue = event.target.value;
     if (event.target.type === "number") {
-      fieldValue = +fieldValue;
+      if (fieldName === "nationalId") {
+      } else {
+        fieldValue = +fieldValue;
+      }
     }
     if (fieldName === "gender") {
       if (fieldValue === "MALE") {
@@ -92,50 +117,147 @@ export const StudentDataPortal = () => {
     const newStudent = {
       ...studentData,
     };
+    console.log(newStudent);
+    setUserUX((prev) => ({
+      ...prev,
+      form: { ...prev.form, submit: { ...prev.submit, loading: true } },
+    }));
     // Condition to check whether it's adding a new student or updating the current
     studentId !== "register" && studentId !== undefined
       ? // PUT request to update the current student data
         axios
-          .put(BASE_URL + `/students/${newStudent.id}`, newStudent)
+          .put(BASE_URL + `/student/${newStudent.id}`, newStudent)
           .then((res) => {
             setStudentData(res.data);
+            setUserUX((prev) => ({
+              ...prev,
+              form: {
+                ...prev.form,
+                submit: { ...prev.submit, loading: false },
+              },
+            }));
           })
           .catch((error) => {
             console.log(error);
+            setUserUX((prev) => ({
+              ...prev,
+              form: {
+                ...prev.form,
+                submit: {
+                  loading: false,
+                  error: true,
+                  error_msg: "student data error",
+                },
+              },
+            }));
           })
       : // POST request to create a new student
         axios
-          .post(BASE_URL + `/students`, newStudent)
+          .post(BASE_URL + `/student`, newStudent)
           .then((res) => {
             console.log(res);
             navigate(`/student_data/${res.data.id}`);
+            setUserUX((prev) => ({
+              ...prev,
+              form: {
+                ...prev.form,
+                submit: { ...prev.submit, loading: false },
+              },
+            }));
           })
           .catch((error) => {
             console.log(error);
+            setUserUX((prev) => ({
+              ...prev,
+              form: {
+                ...prev.form,
+                submit: {
+                  loading: false,
+                  error: true,
+                  error_msg: "student data error",
+                },
+              },
+            }));
           });
   };
 
   const handleSearchButtonClick = () => {
-    setUserUX((current) => {
-      return {
-        ...current,
-        searchClicked: true,
-        listLoading: true,
-        emptyState: { state: false, message: "" },
-      };
-    });
-    // Condition to check whether the search input is empty or not
-    // GET request to get all students by the search value (if its empty)
-    // res => setStudents(res.data) setFilteredStudents(res.data)
-    // if (res.data.length === 0) {
-    // setUserUX((current) => {
-    //   return { ...current, listLoading: false, emptyState: {state: true, message:"la yoogd tolaab"} };
-    // })}
-    // GET/POST request to get all students by the search value
-    // res => setStudents(res.data) setFilteredStudents(res.data)
-    // setUserUX((current) => {
-    //   return { ...current, listLoading: false };
-    // });
+    setUserUX((prev) => ({
+      ...prev,
+      searchClicked: true,
+      list: { loading: true, error: false, error_msg: "" },
+    }));
+    searchValue === ""
+      ? axios
+          .get(BASE_URL + `/student/all/${authContext.college}`)
+          .then((res) => {
+            setStudentData(res.data);
+            setFilteredStudents(res.data);
+            setUserUX((prev) => ({
+              ...prev,
+              list: {
+                loading: false,
+                error: res.data === 0 ? true : false,
+                error_msg: res.data === 0 ? "No Students Found" : "",
+              },
+            }));
+          })
+          .catch((error) => {
+            console.log(error);
+            setUserUX((prev) => ({
+              ...prev,
+              list: { loading: false, error: true, error_msg: "error" },
+            }));
+          })
+      : console.log("search");
+
+    // : axios.get(BASE_URL + `/student/${searchValue}`).then((res) => {
+    //     setStudentData(res.data);
+    //     setFilteredStudents(res.data);
+    //     setUserUX((prev) => ({
+    //       ...prev,
+    //       listLoading: false,
+    //     }));
+    //   });
+  };
+  const handleStudentDelete = (e) => {
+    e.preventDefault();
+    setUserUX((prev) => ({
+      ...prev,
+      form: {
+        ...prev.form,
+        delete: { loading: true },
+      },
+    }));
+    axios
+      .delete(BASE_URL + `/student/${studentId}`)
+      .then((res) => {
+        console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          form: {
+            ...prev.form,
+            delete: { loading: false },
+          },
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          form: {
+            submit: {
+              ...prev.submit,
+              error: true,
+              error_msg: "error in deleting student",
+            },
+            delete: { loading: false },
+          },
+          formDeleteLoading: false,
+          formSubmitError: true,
+          formSubmitErrorMsg: "error in deleting student",
+        }));
+      });
   };
 
   return (
@@ -166,8 +288,8 @@ export const StudentDataPortal = () => {
                 <div>{t(`registeration.type`)}</div>
               </>
             )}
-            {userUX.listLoading && "LOADING"}
-            {userUX.emptyState.state && `${userUX.emptyState.message}`}
+            {userUX.list.error && userUX.list.error_msg}
+            {userUX.list.loading && "LOADING"}
           </h1>
           {students.length === 0 && (
             <div className={styles.studentBody_students_list}>
@@ -202,16 +324,22 @@ export const StudentDataPortal = () => {
                   <Accordion.Item eventKey={item.id} key={item.id}>
                     <Accordion.Header>{t(item.title)}</Accordion.Header>
                     <Accordion.Body>
-                      {item.formData.map((data) => {
-                        return (
-                          <FormInput
-                            inputData={data}
-                            handleEditFormChange={handleEditFormChange}
-                            valueData={studentData}
-                            key={data.id}
-                          />
-                        );
-                      })}
+                      {userUX.loading ? (
+                        "loading..."
+                      ) : (
+                        <>
+                          {item.formData.map((data) => {
+                            return (
+                              <FormInput
+                                inputData={{ ...data, disabled: true }}
+                                handleEditFormChange={handleEditFormChange}
+                                valueData={{ studentData }}
+                                key={data.id}
+                              />
+                            );
+                          })}
+                        </>
+                      )}
                     </Accordion.Body>
                   </Accordion.Item>
                 );
@@ -220,14 +348,28 @@ export const StudentDataPortal = () => {
                 type="submit"
                 className="form-card-button form-card-button-save"
               >
-                {t(`common.save`)}
+                {" "}
+                {userUX.form.submit.loading
+                  ? "Loading..."
+                  : `${t(`common.save`)}`}
               </button>
               <button
                 type="reset"
                 className="form-card-button form-card-button-cancel"
+                disabled={userUX.form.submit.loading}
               >
                 {t(`common.cancel`)}
               </button>
+              {studentId !== "register" && studentId !== undefined && (
+                <button
+                  className="form-card-button form-card-button-delete"
+                  onClick={handleStudentDelete}
+                >
+                  {userUX.form.delete.loading
+                    ? "Loading..."
+                    : t(`common.delete`)}
+                </button>
+              )}
             </Accordion>
           </form>
         </div>

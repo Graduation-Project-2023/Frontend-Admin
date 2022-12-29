@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./AddStudents.module.scss";
 import { StudentsWrongData } from "./StudentsWrongData";
+import { useAuth } from "../../../../hooks/useAuth";
 
 // Reusable Components and Icons
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
@@ -9,11 +10,14 @@ import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { TbFileUpload } from "react-icons/tb";
 import { MdErrorOutline } from "react-icons/md";
 import { BsFillPersonCheckFill } from "react-icons/bs";
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
 
 export const AddStudents = () => {
+  const authContext = useAuth();
+  const [files, setFiles] = useState();
   const [userUX, setUserUX] = useState({
-    error: true,
-    success: false,
+    CSV: { loading: false, success: false, error: false, error_msg: "" },
     table: true,
   });
   const { t } = useTranslation();
@@ -26,15 +30,55 @@ export const AddStudents = () => {
 
   const handleDrop = (event) => {
     event.preventDefault();
+    setFiles(event.dataTransfer.files);
+    console.log(files);
+    setUserUX((prev) => ({ ...prev, CSV: { ...prev.CSV, loading: true } }));
     if (event.dataTransfer.files.length > 1) {
       console.log("more than one file");
+      setUserUX((prev) => ({ ...prev, csvLoading: false }));
     } else {
       if (event.dataTransfer.files[0].type !== "text/csv") {
         console.log("not csv");
+        setUserUX((prev) => ({
+          ...prev,
+          CSV: {
+            ...prev.CSV,
+            loading: false,
+            error: true,
+            error_msg: "not csv",
+          },
+        }));
       } else {
         console.log("everything ok");
         console.log(event.dataTransfer.files[0]);
-        // backend logic
+        setUserUX((prev) => ({
+          ...prev,
+          CSV: { ...prev.CSV, loading: false },
+        }));
+        axios
+          .post(
+            BASE_URL + `student/bulk?collegeId=${authContext.college.id}`,
+            files
+          )
+          .then((res) => {
+            setUserUX((prev) => ({
+              ...prev,
+              CSV: { ...prev.CSV, loading: false, success: true },
+            }));
+            console.log(res.data);
+          })
+          .catch((err) => {
+            setUserUX((prev) => ({
+              ...prev,
+              CSV: {
+                ...prev.CSV,
+                loading: false,
+                success: false,
+                error: true,
+                error_msg: "uploadingerror",
+              },
+            }));
+          });
       }
     }
   };
@@ -42,16 +86,21 @@ export const AddStudents = () => {
   return (
     <FormNavbarContainer>
       <div className={styles.addform}>
-        <div
-          className={styles.dashform}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <div className={styles.dashform_icon}>
-            <TbFileUpload />
+        {userUX.CSV.error && <h1>{userUX.CSV.error_msg}</h1>}
+        {userUX.CSV.loading ? (
+          <h1>loading</h1>
+        ) : (
+          <div
+            className={styles.dashform}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
+            <div className={styles.dashform_icon}>
+              <TbFileUpload />
+            </div>
+            <h4 className={styles.dashform_text}>{t("common.drag")}</h4>
           </div>
-          <h4 className={styles.dashform_text}>{t("common.drag")}</h4>
-        </div>
+        )}
       </div>
 
       {/* Table */}
@@ -83,7 +132,7 @@ export const AddStudents = () => {
       )}
 
       {/* Success Modal */}
-      {userUX.success && (
+      {userUX.CSV.success && (
         <ModalPopup
           message={{
             state: true,
@@ -93,20 +142,20 @@ export const AddStudents = () => {
             button: "common.save",
             handleClick: () => {
               setUserUX((prev) => {
-                return { ...prev, success: false };
+                return { ...prev, CSV: { ...prev.CSV, success: false } };
               });
             },
           }}
           closeModal={() => {
             setUserUX((prev) => {
-              return { ...prev, success: false };
+              return { ...prev, CSV: { ...prev.CSV, success: false } };
             });
           }}
         />
       )}
 
       {/* Error Modal */}
-      {userUX.error && (
+      {userUX.CSV.error && (
         <ModalPopup
           message={{
             state: true,
@@ -116,14 +165,14 @@ export const AddStudents = () => {
             button: "common.continue",
             handleClick: () => {
               setUserUX((prev) => {
-                return { ...prev, error: false };
+                return { ...prev, CSV: { ...prev.CSV, error: false } };
               });
             },
           }}
           error={true}
           closeModal={() => {
             setUserUX((prev) => {
-              return { ...prev, error: false };
+              return { ...prev, CSV: { ...prev.CSV, error: false } };
             });
           }}
         />

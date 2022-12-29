@@ -7,22 +7,31 @@ import { useTranslation } from "react-i18next";
 export const ForgetPwd = () => {
   const { t } = useTranslation();
   const emailRef = useRef();
-  const [loading, setLoading] = useState(false);
+  const [userUX, setUserUX] = useState({
+    submitLoading: false,
+    error: false,
+    errorMsg: "",
+  });
+
 
   const handlePwdFrgt = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setUserUX((prev) => ({ ...prev, submitLoading: true, error: false }));
     axios
       .post(BASE_URL + "api/forgot_password", {
         email: emailRef.current.value,
       })
       .then((res) => {
         console.log(res);
-        setLoading(false);
+        setUserUX((prev) => ({ ...prev, submitLoading: false }));
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
+        setUserUX({
+          submitLoading: false,
+          error: true,
+          errorMsg: error.response.data.message,
+           });
       });
   };
 
@@ -46,16 +55,15 @@ export const ForgetPwd = () => {
             ></input>
           </div>
           <div className="login_form_button">
-            {loading ? (
-              <button disabled>
-                <span className="small_loader"></span>
-              </button>
+            {userUX.submitLoading ? (
+              <h1>LOADING</h1>
             ) : (
               <button>{t(`common.done`)}</button>
             )}
           </div>
           <div>
             <Link to="/login">{t(`forgetpwd.back`)}</Link>
+            {userUX.error && <h1>errorrrrrrrr</h1>}
           </div>
         </form>
       </div>

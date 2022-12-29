@@ -363,17 +363,6 @@ export const CourseRegister = (props) => {
                       />
                     </div>
                   </div>
-                  //  <div className="row" key={data.id}>
-                  //    <div className="col-lg-12 mb-4">
-                  //      <label className="form-label">{t(`esm el moshrf`)}</label>
-                  //      <DropdownSearch
-                  //        name={profData}
-                  //        menuData={[]}
-                  //        label={"esm moshrf el mada"}
-                  //        inputPlaceholder={"ektb esm el moshrf"}
-                  //      />
-                  //    </div>
-                  //  </div>
                 );
               } else if (data.prof) {
                 return (

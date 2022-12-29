@@ -69,7 +69,7 @@ export const CourseRegister = (props) => {
       if (props.programCourses.length !== 0) {
         setUserUX((prev) => ({
           ...prev,
-          course: { ...userUX.course, loading: true },
+          course: { ...prev.course, loading: true },
         }));
         // GET request to get the registered course data by it's id
         axios
@@ -82,7 +82,7 @@ export const CourseRegister = (props) => {
             setCourseData(res.data);
             setUserUX((prev) => ({
               ...prev,
-              course: { ...userUX.course, loading: false },
+              course: { ...prev.course, loading: false },
             }));
           })
           .catch((error) => {
@@ -105,7 +105,7 @@ export const CourseRegister = (props) => {
     // GET request to get all registered program courses on the current semester
     setUserUX((prev) => ({
       ...prev,
-      regCourses: { ...userUX.regCourses, loading: true },
+      regCourses: { ...prev.regCourses, loading: true },
     }));
     axios
       .get(
@@ -116,7 +116,7 @@ export const CourseRegister = (props) => {
         setRegisteredCourses(res.data);
         setUserUX((prev) => ({
           ...prev,
-          regCourses: { ...userUX.regCourses, loading: false },
+          regCourses: { ...prev.regCourses, loading: false },
         }));
       })
       .catch((error) => {
@@ -124,7 +124,7 @@ export const CourseRegister = (props) => {
         setUserUX((prev) => ({
           ...prev,
           regCourses: {
-            ...userUX.regCourses,
+            ...prev.regCourses,
             loading: false,
             error: true,
             errorMsg: "error fetching registered courses",
@@ -197,7 +197,7 @@ export const CourseRegister = (props) => {
           console.log(res);
           setUserUX((prev) => ({
             ...prev,
-            form: { ...userUX.form, submit: false },
+            form: { ...prev.form, submit: false },
           }));
         })
         .catch((error) => {
@@ -205,7 +205,7 @@ export const CourseRegister = (props) => {
           setUserUX((prev) => ({
             ...prev,
             form: {
-              ...userUX.form,
+              ...prev.form,
               submit: false,
               error: true,
               errorMsg: "error in submit",
@@ -225,7 +225,7 @@ export const CourseRegister = (props) => {
           console.log(res);
           setUserUX((prev) => ({
             ...prev,
-            form: { ...userUX.form, submit: false },
+            form: { ...prev.form, submit: false },
           }));
           // navigate("/admin_portal/study_schedules/register_course");
         })
@@ -234,7 +234,7 @@ export const CourseRegister = (props) => {
           setUserUX((prev) => ({
             ...prev,
             form: {
-              ...userUX.form,
+              ...prev.form,
               submit: false,
               error: true,
               errorMsg: "error in submit",
@@ -259,7 +259,7 @@ export const CourseRegister = (props) => {
         console.log(res);
         setUserUX((prev) => ({
           ...prev,
-          form: { ...userUX.form, delete: false },
+          form: { ...prev.form, delete: false },
         }));
       })
       .catch((error) => {
@@ -267,7 +267,7 @@ export const CourseRegister = (props) => {
         setUserUX((prev) => ({
           ...prev,
           form: {
-            ...userUX.form,
+            ...prev.form,
             delete: false,
             error: true,
             errorMsg: "error in delete",

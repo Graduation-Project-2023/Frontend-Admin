@@ -60,11 +60,14 @@ export const CourseRegister = (props) => {
 
   useEffect(() => {
     if (currentLocation === "add") {
-      setCourseData(
-        props.programCourses.find((course) => {
-          return course.id === courseId;
-        })
-      );
+      if (props.programCourses.length !== 0) {
+        setCourseData({
+          ...props.programCourses.find((course) => {
+            return course.id === courseId;
+          }),
+          hasLectureGroups: false,
+        });
+      }
     } else if (currentLocation === "edit") {
       if (props.programCourses.length !== 0) {
         setUserUX((prev) => ({
@@ -80,6 +83,7 @@ export const CourseRegister = (props) => {
           .then((res) => {
             console.log(res.data);
             setCourseData(res.data);
+            setLectureGrps(res.data.hasLectureGroups);
             setUserUX((prev) => ({
               ...prev,
               course: { ...prev.course, loading: false },
@@ -155,12 +159,17 @@ export const CourseRegister = (props) => {
     if (fieldName === "lectureGroups") {
       if (fieldValue === "TRUE") {
         setLectureGrps(true);
+        setCourseData((prev) => ({
+          ...prev,
+          hasLectureGroups: true,
+        }));
         return;
       } else if (fieldValue === "FALSE") {
         setLectureGrps(false);
         setCourseData((prev) => ({
           ...prev,
-          lectureGroupsCount: 0,
+          lectureGroupCount: 0,
+          hasLectureGroups: false,
         }));
         return;
       }
@@ -199,6 +208,7 @@ export const CourseRegister = (props) => {
             ...prev,
             form: { ...prev.form, submit: false },
           }));
+          setRegisteredCourses((prev) => [...prev, res.data]);
         })
         .catch((error) => {
           console.log(error);
@@ -343,8 +353,8 @@ export const CourseRegister = (props) => {
                       <label className="form-label">{t(`group count`)}</label>
                       <input
                         className="form-control"
-                        name="lectureGroupsCount"
-                        value={courseData?.lectureGroupsCount || 0}
+                        name="lectureGroupCount"
+                        value={courseData?.lectureGroupCount || 0}
                         onChange={handleEditFormChange}
                         disabled={!lectureGrps}
                         type="number"

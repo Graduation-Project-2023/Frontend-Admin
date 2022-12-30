@@ -68,7 +68,7 @@ export const CourseRegisterData = [
       {
         id: 2,
         title: "courses.sections",
-        name: "sectionCount",
+        name: "sectionGroupCount",
         type: "number",
       },
     ],
@@ -85,7 +85,7 @@ export const CourseRegisterData = [
       {
         id: 2,
         title: "courses.labs",
-        name: "labCount",
+        name: "labGroupCount",
         type: "number",
       },
     ],

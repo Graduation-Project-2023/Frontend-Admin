@@ -15,18 +15,23 @@ export const DayPeriodTable = (props) => {
   }, [props.tableData]);
 
   useEffect(() => {
-    if (tableData.length === 0) return;
     const occupiedCells = [];
-    tableData.forEach((item) => {
-      for (let i = item.startPeriod; i <= item.endPeriod; i++) {
-        occupiedCells.push({ period: i, day: item.day });
-      }
-    });
-
     let availableCells = [];
+
     ScheduleTableBody.forEach((item) => {
       for (let i = 1; i <= 20; i++) {
         availableCells.push({ period: i, day: item.day });
+      }
+    });
+
+    if (tableData.length === 0) {
+      props.cellsSetter(occupiedCells, availableCells);
+      return;
+    }
+
+    tableData.forEach((item) => {
+      for (let i = item.startPeriod; i <= item.endPeriod; i++) {
+        occupiedCells.push({ period: i, day: item.day });
       }
     });
     availableCells = availableCells.filter((item) => {

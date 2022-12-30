@@ -48,6 +48,7 @@ export const LevelSchedule = () => {
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
       )
       .then((res) => {
+        console.log(res.data);
         setTableData(res.data.classes);
         setTableId(res.data.id);
         setUserUX((prev) => ({
@@ -233,10 +234,16 @@ export const LevelSchedule = () => {
         ({
           id,
           levelId,
-          lectureCount,
-          labCount,
           englishName,
           arabicName,
+          hasLectureGroups,
+          lectureCount,
+          lectureGroupCount,
+          labGroupCount,
+          sectionGroupCount,
+          lectureHrs,
+          labHrs,
+          sectionHrs,
           ...rest
         }) => rest
       ),

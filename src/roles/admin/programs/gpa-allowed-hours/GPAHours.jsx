@@ -20,6 +20,11 @@ export const GPAHours = () => {
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    errorMsg: "",
+  });
 
   useEffect(() => {
     // GET request to get all GPA allowed hours to display it in the table
@@ -49,6 +54,7 @@ export const GPAHours = () => {
   };
 
   const handleFormSubmit = (e) => {
+    setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     e.preventDefault();
     const rows = [...allGPAData];
     const gpaAllowedHour = {
@@ -66,11 +72,15 @@ export const GPAHours = () => {
         console.log(res);
         rows.push(gpaAllowedHour);
         setAllGPAData(rows);
-        setLoading(false);
+        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
+        setUserUX({
+          loading: false,
+          error: true,
+          errorMsg: error.response.data.message,
+        });
       });
   };
 
@@ -92,12 +102,17 @@ export const GPAHours = () => {
               />
             );
           })}
-          <button
+          {userUX.loading ? (
+              <h1>LOADING</h1>
+            ) : (
+              <button
             type="submit"
             className="form-card-button form-card-button-save"
           >
             {t(`common.add`)}
-          </button>
+          </button>   
+            )}
+        
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"

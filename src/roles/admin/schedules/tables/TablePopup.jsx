@@ -352,7 +352,7 @@ export const TablePopup = (props) => {
               <input
                 type="text"
                 className="form-control"
-                value={"pls select a subject"}
+                value={t("table.selectSubject")}
                 disabled
                 readOnly
               />
@@ -405,7 +405,7 @@ export const TablePopup = (props) => {
             )}
           </div>
           <div className="col-md-6">
-            <label>{t(`common.group`)}</label>
+            <label>{t(`table.group`)}</label>
             {props.edit && !editToAdd ? (
               <input
                 type="text"
@@ -425,7 +425,7 @@ export const TablePopup = (props) => {
                 type="text"
                 name="group"
                 className="form-control"
-                value="mlhash group"
+                value={t("table.hasNoGroup")}
                 disabled
                 readOnly
               />
@@ -434,7 +434,7 @@ export const TablePopup = (props) => {
                 type="text"
                 name="group"
                 className="form-control"
-                value="pls select a class type first"
+                value={t("error.selectClass")}
                 disabled
                 readOnly
               />
@@ -497,8 +497,8 @@ export const TablePopup = (props) => {
               value={
                 period.endPeriod === 0
                   ? editToAdd
-                    ? "choose a subject and class type"
-                    : "choose start period first"
+                    ? t("table.selectSubjectAndType")
+                    : t("table.selectStartPeriod")
                   : ScheduleTableHeader.find(
                       (item) => item.period === period?.endPeriod
                     )

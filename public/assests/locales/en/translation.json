@@ -283,7 +283,12 @@
     "place": "Place",
     "studentNo": "Number of Students",
     "classType": "Class Type",
-    "deleteClass": "Remove from Table"
+    "deleteClass": "Remove from Table",
+    "group": "Group",
+    "hasNoGroup": "This course has no groups",
+    "selectSubject": "Select a Subject",
+    "selectStartPeriod": "Select a Start Period",
+    "selectSubjectAndType": "Select a subject and it's class type"
   },
   "button": {
     "edit": "Edit",

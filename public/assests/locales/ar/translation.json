@@ -290,7 +290,12 @@
     "place": "المكان",
     "studentNo": "عدد الطلاب",
     "classType": "نوع الدراسة",
-    "deleteClass": "حذف من الجدول"
+    "deleteClass": "حذف من الجدول",
+    "group": "المجموعة",
+    "hasNoGroup": "لا يوجد مجموعة",
+    "selectSubject": "اختر المقرر",
+    "selectStartPeriod": "اختر فترة البداية",
+    "selectSubjectAndType": "اختر المقرر ونوع الدراسة"
   },
   "button": {
     "edit": "تعديل",

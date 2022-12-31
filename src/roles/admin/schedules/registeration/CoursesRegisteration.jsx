@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import cookies from "js-cookie";
+import i18next from "i18next";
 
 // Reusable Components
 import { Accordion } from "react-bootstrap";
@@ -20,7 +20,6 @@ export const CoursesRegisteration = (props) => {
     error: false,
     errorMsg: "",
   });
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,9 +49,7 @@ export const CoursesRegisteration = (props) => {
             >
               <Accordion.Header>
                 {item.level}&nbsp;-&nbsp;
-                {currentLanguageCode === "en"
-                  ? item.englishName
-                  : item.arabicName}
+                {i18next.language === "en" ? item.englishName : item.arabicName}
               </Accordion.Header>
               <Accordion.Body>
                 <SearchContainer

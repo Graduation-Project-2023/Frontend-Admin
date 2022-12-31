@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
+import i18next from "i18next";
 import { BASE_URL } from "../../../../shared/API";
-import cookies from "js-cookie";
 import styles from "../../../../components/table/schedule/DayPeriodTable.module.scss";
 
 // Reusable Components
@@ -37,7 +37,6 @@ export const LevelSchedule = () => {
   const navigate = useNavigate();
   const { levelId } = useParams();
   const authContext = useAuth();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -300,7 +299,7 @@ export const LevelSchedule = () => {
               return (
                 <Dropdown.Toggle key={level.id} className="customDropMenu-btn">
                   {level.level}&nbsp;-&nbsp;
-                  {currentLanguageCode === "en"
+                  {i18next.language === "en"
                     ? level.englishName
                     : level.arabicName}
                 </Dropdown.Toggle>
@@ -318,7 +317,7 @@ export const LevelSchedule = () => {
                     }}
                   >
                     {level.level}&nbsp;-&nbsp;
-                    {currentLanguageCode === "en"
+                    {i18next.language === "en"
                       ? level.englishName
                       : level.arabicName}
                   </Dropdown.Item>
@@ -327,7 +326,7 @@ export const LevelSchedule = () => {
           </Dropdown.Menu>
         </Dropdown>
         <h6>
-          {currentLanguageCode === "en"
+          {i18next.language === "en"
             ? authContext.program.englishName
             : authContext.program.arabicName}
         </h6>

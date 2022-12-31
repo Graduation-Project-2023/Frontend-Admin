@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
-import cookies from "js-cookie";
+import i18next from "i18next";
 
 export const Sidebar = (props) => {
   const sidebarData = props.sideData;
@@ -12,7 +12,6 @@ export const Sidebar = (props) => {
     error: true,
     errorMsg: "",
   });
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -75,7 +74,7 @@ export const Sidebar = (props) => {
                   >
                     {props.backendData
                       ? `${
-                          currentLanguageCode === "en"
+                          i18next.language === "en"
                             ? item.englishName
                             : item.arabicName
                         }`
@@ -85,7 +84,7 @@ export const Sidebar = (props) => {
                   <Link to={item.path}>
                     {props.backendData
                       ? `${
-                          currentLanguageCode === "en"
+                          i18next.language === "en"
                             ? item.englishName
                             : item.arabicName
                         }`

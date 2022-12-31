@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 import Dropdown from "react-bootstrap/Dropdown";
-import cookies from "js-cookie";
 
 // Component Props:
 // listData: object {type: string ,data: array of objects}
@@ -18,7 +18,6 @@ export const DropdownSearch = (props) => {
     error: false,
     errorMsg: "",
   });
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setListData(props.listData);
@@ -51,7 +50,7 @@ export const DropdownSearch = (props) => {
         {listData?.type === "courseWithCode" &&
           (props.dropDownTitle?.id || t("courses.chooseCode"))}
         {listData?.type === "tableSelectCourse" &&
-          (currentLanguageCode === "en"
+          (i18next.language === "en"
             ? props.dropDownTitle?.englishName || t("common.select")
             : props.dropDownTitle?.arabicName || t("common.select"))}
         {(listData?.type === "selectCourse" || listData?.type === "") &&
@@ -92,7 +91,7 @@ export const DropdownSearch = (props) => {
                       <span>{item.code}</span>
                     )}
                     <span>
-                      {currentLanguageCode === "en"
+                      {i18next.language === "en"
                         ? item.englishName
                         : item.arabicName}
                     </span>

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
+import i18next from "i18next";
 import { CourseRegisterData } from "./CourseRegisterData";
 
 // Reusable Components
@@ -32,7 +32,6 @@ export const CourseRegister = (props) => {
   const location = useLocation();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const currentLocation = location.pathname.split("/").at(-2);
   const Sidebars = [
     { id: "0", title: "common.coursesNotReg", registered: false },
@@ -325,7 +324,7 @@ export const CourseRegister = (props) => {
                         {levels.map((level) => (
                           <option key={level.id} value={level.id}>
                             {level.level}&nbsp;-&nbsp;
-                            {currentLanguageCode === "en"
+                            {i18next.language === "en"
                               ? level.englishName
                               : level.arabicName}
                           </option>

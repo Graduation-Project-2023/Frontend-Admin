@@ -5,7 +5,7 @@ import {
   ScheduleTableHeader,
   ScheduleTableGroups,
 } from "../../../../components/table/schedule/DayPeriodData";
-import cookies from "js-cookie";
+import i18next from "i18next";
 
 // Reusable Components
 import { ModalPopup } from "../../../../components/popups/ModalPopup";
@@ -33,7 +33,6 @@ export const TablePopup = (props) => {
   const [availableCells, setAvailableCells] = useState([]);
   const [classCount, setClassCount] = useState(25);
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     let cellsAvailable = [...props.availableCells];
@@ -317,7 +316,7 @@ export const TablePopup = (props) => {
                 type="text"
                 className="form-control"
                 value={
-                  currentLanguageCode === "en"
+                  i18next.language === "en"
                     ? cellData.englishName || ""
                     : cellData.arabicName || ""
                 }

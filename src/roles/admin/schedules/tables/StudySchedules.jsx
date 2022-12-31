@@ -1,11 +1,11 @@
-import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from "../../../../shared/API";
 import { useAuth } from "../../../../hooks/useAuth";
-import { useState, useEffect } from "react";
+import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
+import i18next from "i18next";
+import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 
 export const StudySchedules = () => {
   const [levels, setLevels] = useState([]);
@@ -21,7 +21,6 @@ export const StudySchedules = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const authContext = useAuth();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -121,7 +120,7 @@ export const StudySchedules = () => {
                     handleLevelClick(event, item.id);
                   }}
                 >
-                  {currentLanguageCode === "en"
+                  {i18next.language === "en"
                     ? item.englishName
                     : item.arabicName}
                 </li>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import cookies from "js-cookie";
+import i18next from "i18next";
 import Accordion from "react-bootstrap/Accordion";
 
 export const CollapsibleTable = (props) => {
@@ -12,7 +12,6 @@ export const CollapsibleTable = (props) => {
     errorMsg: "",
   });
   const [rowItems, setRowItems] = useState([]);
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
 
   const semesters = [
@@ -32,9 +31,7 @@ export const CollapsibleTable = (props) => {
       <Accordion.Item eventKey={title.id}>
         <Accordion.Header>
           {title?.level} -{" "}
-          {currentLanguageCode === "en"
-            ? title?.englishName
-            : title?.arabicName}
+          {i18next.language === "en" ? title?.englishName : title?.arabicName}
         </Accordion.Header>
         <Accordion.Body>
           {semesters.length === 0 ? (

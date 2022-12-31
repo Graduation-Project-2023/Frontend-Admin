@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import cookies from "js-cookie";
 import { AiOutlineClose } from "react-icons/ai";
+import i18next from "i18next";
 import Modal from "react-bootstrap/Modal";
 
 // Component Props:
@@ -20,7 +20,6 @@ export const ModalPopup = (props) => {
   const [filteredData, setFilteredData] = useState([]);
   const authContext = useAuth();
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setFilteredData(props.list?.data);
@@ -91,7 +90,7 @@ export const ModalPopup = (props) => {
                     }}
                     to={props.list.path}
                   >
-                    {currentLanguageCode === "en"
+                    {i18next.language === "en"
                       ? item.englishName
                       : item.arabicName}
                   </Link>

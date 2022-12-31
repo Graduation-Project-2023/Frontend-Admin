@@ -5,7 +5,7 @@ import { useAuth } from "../../../../hooks/useAuth";
 import styles from "./ProgramCourses.module.scss";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
+import i18next from "i18next";
 
 // Reusable Components
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
@@ -29,7 +29,6 @@ export const ProgramCourses = () => {
   const midtermRef = useRef();
   const finalExamRef = useRef();
   const addedToGpaRef = useRef();
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const maxGrade = 100;
   const [userUX, setUserUX] = useState({
     levelTable: { loading: false, error: false, errorMsg: "" },
@@ -335,7 +334,7 @@ export const ProgramCourses = () => {
                 disabled
                 className="form-control"
                 value={
-                  currentLanguageCode === "en"
+                  i18next.language === "en"
                     ? course.englishName || ""
                     : course.arabicName || ""
                 }
@@ -355,7 +354,7 @@ export const ProgramCourses = () => {
                 {levels.map((item) => {
                   return (
                     <option key={item.id} value={item.id}>
-                      {currentLanguageCode === "en"
+                      {i18next.language === "en"
                         ? item.englishName || ""
                         : item.arabicName || ""}
                     </option>

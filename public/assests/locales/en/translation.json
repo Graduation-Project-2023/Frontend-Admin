@@ -291,5 +291,12 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Reset"
+  },
+  "error": {
+    "courseFull": "The course maximum number has been reached",
+    "groupFull": "This group has been already added",
+    "cellOccupied": "This cell is already occupied",
+    "selectClass": "Select a class type first",
+    "validInputs": "Please fill all inputs with valid data"
   }
 }

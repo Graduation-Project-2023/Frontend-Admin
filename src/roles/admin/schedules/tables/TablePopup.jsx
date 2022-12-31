@@ -110,7 +110,7 @@ export const TablePopup = (props) => {
     if (cellOccupied) {
       setUserUX({
         error: true,
-        errorMsg: "This Cell is Occupied",
+        errorMsg: t("error.cellOccupied"),
       });
     } else {
       setUserUX({ error: false, errorMsg: "" });
@@ -177,7 +177,7 @@ export const TablePopup = (props) => {
       } else {
         setUserUX({
           error: true,
-          errorMsg: "Select a Class Type First",
+          errorMsg: t("error.selectClass"),
         });
       }
     }
@@ -232,7 +232,7 @@ export const TablePopup = (props) => {
         (cellData.classType === "LECTURE" && cellData.hasLectureGroups)) &&
         (cellData.group === "NULL" || cellData.group === undefined))
     ) {
-      setUserUX({ error: true, errorMsg: "please select valid inputs" });
+      setUserUX({ error: true, errorMsg: t("error.validInputs") });
       return;
     }
     if (props.edit && !editToAdd) {
@@ -284,13 +284,13 @@ export const TablePopup = (props) => {
         } else {
           setUserUX({
             error: true,
-            errorMsg: "Group Count is Full",
+            errorMsg: t("courses.groupFull"),
           });
         }
       } else {
         setUserUX({
           error: true,
-          errorMsg: "Course Count is Full",
+          errorMsg: t("courses.courseFull"),
         });
       }
     }

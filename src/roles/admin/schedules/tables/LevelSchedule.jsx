@@ -10,7 +10,10 @@ import styles from "../../../../components/table/schedule/DayPeriodTable.module.
 import { Dropdown } from "react-bootstrap";
 import { DayPeriodTable } from "../../../../components/table/schedule/DayPeriodTable";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
+import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { TablePopup } from "./TablePopup";
+import { BsFillPersonCheckFill } from "react-icons/bs";
+import { MdErrorOutline } from "react-icons/md";
 
 export const LevelSchedule = () => {
   const [tableId, setTableId] = useState(null);
@@ -25,7 +28,7 @@ export const LevelSchedule = () => {
     regCourses: { loading: false, error: false, errorMsg: "" },
     levels: { loading: false, error: false, errorMsg: "" },
     levelTableCreate: { loading: false, error: false, errorMsg: "" },
-    form: { loading: false, error: false, errorMsg: "" },
+    form: { loading: false, success: false, error: false, errorMsg: "" },
   });
   const [showModal, setShowModal] = useState({
     add: { state: false, data: null },
@@ -48,7 +51,6 @@ export const LevelSchedule = () => {
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
       )
       .then((res) => {
-        console.log(res.data);
         setTableData(res.data.classes);
         setTableId(res.data.id);
         setUserUX((prev) => ({
@@ -194,7 +196,6 @@ export const LevelSchedule = () => {
               levelTableData
             )
             .then((res) => {
-              console.log(res);
               setUserUX((prev) => ({
                 ...prev,
                 levelTableCreate: { ...prev.levelTableCreate, loading: false },
@@ -232,6 +233,9 @@ export const LevelSchedule = () => {
     const levelTableData = {
       classes: tableData.map(
         ({
+          labCount,
+          startDate,
+          endDate,
           id,
           levelId,
           englishName,
@@ -250,9 +254,8 @@ export const LevelSchedule = () => {
     };
     setUserUX((prev) => ({
       ...prev,
-      form: { loading: true, error: false, errorMsg: "" },
+      form: { loading: true, success: false, error: false, errorMsg: "" },
     }));
-    console.log(levelTableData);
     // PUT request to update the table data by it's level and semester id
     axios
       .put(
@@ -261,19 +264,30 @@ export const LevelSchedule = () => {
         levelTableData
       )
       .then((res) => {
-        console.log(res);
         setUserUX((prev) => ({
           ...prev,
-          form: { ...prev.form, loading: false },
+          form: { ...prev.form, loading: false, success: true },
         }));
       })
       .catch((error) => {
         setUserUX((prev) => ({
           ...prev,
-          form: { loading: false, error: true, errorMsg: "table save error" },
+          form: {
+            ...prev.form,
+            loading: false,
+            error: true,
+            errorMsg: "table save error",
+          },
         }));
-        console.log(error);
+        console.log(error.response.data.message);
       });
+  };
+
+  const closeFormSubmitModal = () => {
+    setUserUX((prev) => ({
+      ...prev,
+      form: { ...prev.form, success: false, error: false, errorMsg: "" },
+    }));
   };
 
   return (
@@ -363,6 +377,33 @@ export const LevelSchedule = () => {
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}
           userUX={userUX.regCourses}
+        />
+      )}
+      {userUX.form.success && (
+        <ModalPopup
+          message={{
+            state: true,
+            icon: <BsFillPersonCheckFill />,
+            title: "popup.success",
+            text: "popup.message_success",
+            button: "common.save",
+            handleClick: closeFormSubmitModal,
+          }}
+          closeModal={closeFormSubmitModal}
+        />
+      )}
+      {userUX.form.error && (
+        <ModalPopup
+          message={{
+            state: true,
+            icon: <MdErrorOutline />,
+            title: "popup.error",
+            text: userUX.form.errorMsg,
+            button: "common.continue",
+            handleClick: closeFormSubmitModal,
+          }}
+          error={true}
+          closeModal={closeFormSubmitModal}
         />
       )}
     </FormNavbarContainer>

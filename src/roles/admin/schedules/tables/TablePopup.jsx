@@ -90,7 +90,6 @@ export const TablePopup = (props) => {
   }, [props.userUX]);
 
   const findCellAvailable = (value, classHrs) => {
-    console.log(value, classHrs);
     const dayAvailableCells = availableCells.filter(
       (item) => item.day === cellData.day
     );
@@ -227,7 +226,11 @@ export const TablePopup = (props) => {
     if (
       userUX.cellOccupied ||
       period.startPeriod === 0 ||
-      period.endPeriod === 0
+      period.endPeriod === 0 ||
+      ((cellData.classType === "SECTION" ||
+        cellData.classType === "LAB" ||
+        (cellData.classType === "LECTURE" && cellData.hasLectureGroups)) &&
+        (cellData.group === "NULL" || cellData.group === undefined))
     ) {
       setUserUX({ error: true, errorMsg: "please select valid inputs" });
       return;
@@ -275,7 +278,6 @@ export const TablePopup = (props) => {
           }
         }
       }
-      console.log(courseCount, maxCourseCount);
       if (courseCount < maxCourseCount) {
         if (groupAvailable) {
           addNewCourse();
@@ -566,13 +568,6 @@ export const TablePopup = (props) => {
           )}
         </div>
       </form>
-      <button
-        onClick={() => {
-          console.log(cellData);
-        }}
-      >
-        click for ooooooo
-      </button>
     </ModalPopup>
   );
 };

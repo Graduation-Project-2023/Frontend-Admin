@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import cookies from "js-cookie";
 import { AiOutlineClose } from "react-icons/ai";
-
-// Reusable Components
 import Modal from "react-bootstrap/Modal";
 
 // Component Props:
@@ -114,8 +112,10 @@ export const ModalPopup = (props) => {
             <h4 className="popup-msg-title">{t(props.message.title)}</h4>
             <h5 className="popup-msg-text">{t(props.message.text)}</h5>
             <button
-              className={`popup-msg-button ${
-                props.error ? "popup-msg-button-error" : ""
+              className={`form-card-button ${
+                props.error
+                  ? "form-card-button-delete"
+                  : "form-card-button-save"
               }`}
               onClick={props.message.handleClick}
             >

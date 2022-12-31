@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
+import { useTranslation } from "react-i18next";
 import axios from "axios";
 import i18next from "i18next";
 import { BASE_URL } from "../../../../shared/API";
@@ -36,6 +37,7 @@ export const LevelSchedule = () => {
   });
   const navigate = useNavigate();
   const { levelId } = useParams();
+  const { t } = useTranslation();
   const authContext = useAuth();
 
   useEffect(() => {
@@ -227,6 +229,55 @@ export const LevelSchedule = () => {
       });
   };
 
+  const tableErrorHandler = (code, error) => {
+    switch (code) {
+      case 400:
+        if (error[0] === "Invalid") {
+          const invalidClassId = error.slice(-1);
+          const invalidClass = levelCourses.find(
+            (course) => course.id === invalidClassId[0]
+          );
+          if (error.includes("lecture")) {
+            return (
+              <span>
+                {t("error.lectureError")}
+                <br />
+                <br />
+                {i18next.language === "en"
+                  ? invalidClass.englishName
+                  : invalidClass.arabicName}{" "}
+                &#45; &#32;{t("courses.lectures")} &#58; &#32;
+                {invalidClass.hasLectureGroups
+                  ? invalidClass.lectureCount * invalidClass.lectureGroupCount
+                  : invalidClass.lectureCount}
+              </span>
+            );
+          } else {
+            return (
+              <span>
+                {t("error.sectionError")}
+                <br />
+                <br />
+                {t("courses.name")}&#58; &#32;{" "}
+                {i18next.language === "en"
+                  ? invalidClass.englishName
+                  : invalidClass.arabicName}
+                <br />
+                {t("courses.sections")}&#58; &#32;{" "}
+                {invalidClass.sectionGroupCount}
+                <br />
+                {t("courses.labs")}&#58; &#32; {invalidClass.labGroupCount}
+              </span>
+            );
+          }
+        } else {
+          return <span>{t("error.common")}</span>;
+        }
+      default:
+        return <span>{t("error.common")}</span>;
+    }
+  };
+
   const saveTableData = (event) => {
     event.preventDefault();
     const levelTableData = {
@@ -269,16 +320,17 @@ export const LevelSchedule = () => {
         }));
       })
       .catch((error) => {
+        console.log(error);
+        const errorArr = error.response.data.message.split(" ");
         setUserUX((prev) => ({
           ...prev,
           form: {
             ...prev.form,
             loading: false,
             error: true,
-            errorMsg: "table save error",
+            errorMsg: tableErrorHandler(error.response.status, errorArr),
           },
         }));
-        console.log(error.response.data.message);
       });
   };
 

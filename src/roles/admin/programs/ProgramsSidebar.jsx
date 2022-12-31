@@ -60,6 +60,7 @@ export const ProgramsSidebar = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
+            {userUX.loading && <Dropdown.Item>Loading...</Dropdown.Item>}
             {programs.map((item) => {
               if (authContext.program.id === item.id) {
                 return null;

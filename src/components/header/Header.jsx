@@ -6,6 +6,7 @@ import classNames from "classnames";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
+// eslint-disable-next-line
 import { FaRegUserCircle } from "react-icons/fa";
 
 const languages = [

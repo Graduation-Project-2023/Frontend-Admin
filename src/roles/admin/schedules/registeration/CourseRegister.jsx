@@ -337,7 +337,9 @@ export const CourseRegister = (props) => {
                 return (
                   <div className="row" key={data.id}>
                     <div className="col-lg-6 mb-4">
-                      <label className="form-label">{t(`lec groups?`)}</label>
+                      <label className="form-label">
+                        {t(`courses.hasGroups`)}
+                      </label>
                       <select
                         className="form-select"
                         name="lectureGroups"
@@ -349,7 +351,9 @@ export const CourseRegister = (props) => {
                       </select>
                     </div>
                     <div className="col-lg-6 mb-4">
-                      <label className="form-label">{t(`group count`)}</label>
+                      <label className="form-label">
+                        {t(`courses.groups`)}
+                      </label>
                       <input
                         className="form-control"
                         name="lectureGroupCount"
@@ -365,7 +369,9 @@ export const CourseRegister = (props) => {
                 return (
                   <div className="row" key={data.id}>
                     <div className="col-lg-12 mb-4">
-                      <label className="form-label">{t(`esm el moshrf`)}</label>
+                      <label className="form-label">
+                        {t(`courses.supervisor`)}
+                      </label>
                       <select className="form-select" name="lectureGroups">
                         <option value={"FALSE"}>{t(`hhhhhh`)}</option>
                         <option value={"TRUE"}>{t(`hhhhhhh`)}</option>

@@ -28,6 +28,7 @@ export const ProgramCourses = () => {
   const classWorkRef = useRef();
   const midtermRef = useRef();
   const finalExamRef = useRef();
+  // eslint-disable-next-line
   const addedToGpaRef = useRef();
   const maxGrade = 100;
   const [userUX, setUserUX] = useState({

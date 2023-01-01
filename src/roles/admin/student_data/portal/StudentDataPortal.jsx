@@ -4,23 +4,21 @@ import { useTranslation } from "react-i18next";
 import { StudentFormData } from "./StudentFormData";
 import { BASE_URL } from "../../../../shared/API";
 import { useAuth } from "../../../../hooks/useAuth";
-import cookies from "js-cookie";
 import axios from "axios";
+import i18next from "i18next";
 import styles from "./StudentDataPortal.module.scss";
-import { FcSearch } from "react-icons/fc";
 
 // Reusable Components
 import { Accordion } from "react-bootstrap";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { FormInput } from "../../../../components/forms/FormInput";
+import { FcSearch } from "react-icons/fc";
 
 export const StudentDataPortal = () => {
   const authContext = useAuth();
   const [studentData, setStudentData] = useState([]);
-  // eslint-disable-next-line
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
-  // eslint-disable-next-line
   const [updatedData, setUpdatedData] = useState({});
   const [searchValue, setSearchValue] = useState("");
   const [genderMale, setGenderMale] = useState(false);
@@ -34,7 +32,6 @@ export const StudentDataPortal = () => {
   const { studentId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     if (studentId !== "register" && studentId !== undefined) {
@@ -71,7 +68,7 @@ export const StudentDataPortal = () => {
 
   useEffect(() => {
     setFilteredStudents(
-      currentLanguageCode === "en"
+      i18next.language === "en"
         ? students.filter((item) =>
             item.englishName?.toLowerCase().includes(searchValue.toLowerCase())
           )
@@ -109,6 +106,17 @@ export const StudentDataPortal = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    if (studentData.nationalId.split("").length !== 14) {
+      setUserUX((prev) => ({
+        ...prev,
+        form: {
+          ...prev.form,
+          error: true,
+          errorMsg: "National ID must be 14 digits",
+        },
+      }));
+      return;
+    }
     const newStudent = {
       ...studentData,
     };
@@ -121,7 +129,7 @@ export const StudentDataPortal = () => {
     studentId !== "register" && studentId !== undefined
       ? // PUT request to update the current student data
         axios
-          .put(BASE_URL + `/student/${newStudent.id}`, newStudent)
+          .put(BASE_URL + `/student/${newStudent.id}`, updatedData)
           .then((res) => {
             setStudentData(res.data);
             setUserUX((prev) => ({
@@ -281,7 +289,7 @@ export const StudentDataPortal = () => {
             <div className={styles.studentBody_students_list}>
               {filteredStudents.map((item) => (
                 <li key={item.id}>
-                  {currentLanguageCode === "en"
+                  {i18next.language === "en"
                     ? item.englishName
                     : item.arabicName}
                 </li>

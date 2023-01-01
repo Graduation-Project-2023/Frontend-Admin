@@ -1,32 +1,36 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import cookies from "js-cookie";
-import styles from "./DayPeriodTable.module.scss";
 import { ScheduleTableBody, ScheduleTableHeader } from "./DayPeriodData";
+import i18next from "i18next";
+import styles from "./DayPeriodTable.module.scss";
 
 export const DayPeriodTable = (props) => {
   const [tableData, setTableData] = useState(props.tableData);
   const [cells, setCells] = useState({ occupied: [], available: [] });
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setTableData(props.tableData);
   }, [props.tableData]);
 
   useEffect(() => {
-    if (tableData.length === 0) return;
     const occupiedCells = [];
-    tableData.forEach((item) => {
-      for (let i = item.startPeriod; i <= item.endPeriod; i++) {
-        occupiedCells.push({ period: i, day: item.day });
-      }
-    });
-
     let availableCells = [];
+
     ScheduleTableBody.forEach((item) => {
       for (let i = 1; i <= 20; i++) {
         availableCells.push({ period: i, day: item.day });
+      }
+    });
+
+    if (tableData.length === 0) {
+      props.cellsSetter(occupiedCells, availableCells);
+      return;
+    }
+
+    tableData.forEach((item) => {
+      for (let i = item.startPeriod; i <= item.endPeriod; i++) {
+        occupiedCells.push({ period: i, day: item.day });
       }
     });
     availableCells = availableCells.filter((item) => {
@@ -128,19 +132,17 @@ export const DayPeriodTable = (props) => {
                                 `common.${cellFilter[0].classType.toLowerCase()}`
                               )}
                               &nbsp;-&nbsp;
-                              {currentLanguageCode === "en"
+                              {i18next.language === "en"
                                 ? cellFilter[0].englishName
                                 : cellFilter[0].arabicName}
                             </h6>
                             <span>
-                              {currentLanguageCode === "en"
+                              {i18next.language === "en"
                                 ? "Professor Name"
                                 : "اسم الدكتور"}
                             </span>
                             <span>
-                              {currentLanguageCode === "en"
-                                ? "Place"
-                                : "المكان"}
+                              {i18next.language === "en" ? "Place" : "المكان"}
                             </span>
                           </td>
                         ) : (

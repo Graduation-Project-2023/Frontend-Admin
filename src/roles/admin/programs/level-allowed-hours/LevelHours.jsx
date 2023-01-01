@@ -20,6 +20,11 @@ export const LevelHours = () => {
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    errorMsg: "",
+  });
 
   useEffect(() => {
     // GET request to get all level allowed hours to display it in the table
@@ -50,6 +55,7 @@ export const LevelHours = () => {
   };
 
   const handleFormSubmit = (e) => {
+    setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     e.preventDefault();
     const rows = [...levelHours];
     const levelAllowedHour = {
@@ -68,11 +74,15 @@ export const LevelHours = () => {
         console.log(res);
         rows.push(levelAllowedHour);
         setLevelHours(rows);
-        setLoading(false);
+        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
+        setUserUX({
+          loading: false,
+          error: true,
+          errorMsg: error.response.data.message,
+        });
       });
   };
 
@@ -111,12 +121,16 @@ export const LevelHours = () => {
               />
             );
           })}
-          <button
+           {userUX.loading ? (
+              <h1>LOADING</h1>
+            ) : (
+              <button
             type="submit"
             className="form-card-button form-card-button-save"
           >
             {t(`common.add`)}
-          </button>
+          </button>   
+            )}
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"

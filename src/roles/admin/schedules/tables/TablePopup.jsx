@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import {
   ScheduleTableDays,
   ScheduleTableHeader,
+  ScheduleTableGroups,
 } from "../../../../components/table/schedule/DayPeriodData";
-import cookies from "js-cookie";
+import i18next from "i18next";
 
 // Reusable Components
 import { ModalPopup } from "../../../../components/popups/ModalPopup";
@@ -30,8 +31,8 @@ export const TablePopup = (props) => {
     errorMsg: "",
   });
   const [availableCells, setAvailableCells] = useState([]);
+  const [classCount, setClassCount] = useState(25);
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     let cellsAvailable = [...props.availableCells];
@@ -55,7 +56,6 @@ export const TablePopup = (props) => {
         }
       }
     }
-
     setAvailableCells(cellsAvailable);
     // eslint-disable-next-line
   }, [props.cellData.cellData]);
@@ -89,7 +89,6 @@ export const TablePopup = (props) => {
   }, [props.userUX]);
 
   const findCellAvailable = (value, classHrs) => {
-    console.log(value, classHrs);
     const dayAvailableCells = availableCells.filter(
       (item) => item.day === cellData.day
     );
@@ -110,7 +109,7 @@ export const TablePopup = (props) => {
     if (cellOccupied) {
       setUserUX({
         error: true,
-        errorMsg: "This Cell is Occupied",
+        errorMsg: t("error.cellOccupied"),
       });
     } else {
       setUserUX({ error: false, errorMsg: "" });
@@ -123,6 +122,11 @@ export const TablePopup = (props) => {
 
   const handleEditFormChange = (e) => {
     const { name, value } = e.target;
+    if (e.target.type === "select-one") {
+      if (value === "NULL") {
+        return;
+      }
+    }
     if (name === "day") {
       setPeriod({
         startPeriod: 0,
@@ -130,8 +134,19 @@ export const TablePopup = (props) => {
       });
     } else if (name === "classType") {
       const classHrs =
-        value === "LECTURE" ? cellData.lectureHrs * 2 : cellData.labHrs * 2;
+        value === "LECTURE"
+          ? cellData.lectureHrs * 2
+          : value === "LAB"
+          ? cellData.labHrs * 2
+          : cellData.sectionHrs * 2;
       findCellAvailable(cellData.startPeriod, classHrs);
+      const classCount =
+        value === "LECTURE"
+          ? cellData.lectureGroupCount
+          : value === "LAB"
+          ? cellData.labGroupCount
+          : cellData.sectionGroupCount;
+      setClassCount(classCount);
     }
     setCellData((prev) => {
       return {
@@ -146,27 +161,36 @@ export const TablePopup = (props) => {
     if (props.edit) {
       findCellAvailable(value, cellData.endPeriod - cellData.startPeriod);
     } else {
-      if (cellData.classType === "LECTURE" || cellData.classType === "LAB") {
+      if (
+        cellData.classType === "LECTURE" ||
+        cellData.classType === "LAB" ||
+        cellData.classType === "SECTION"
+      ) {
         const classHrs =
-          cellData.classType === "LECTURE"
+          value === "LECTURE"
             ? cellData.lectureHrs * 2
-            : cellData.labHrs * 2;
+            : value === "LAB"
+            ? cellData.labHrs * 2
+            : cellData.sectionHrs * 2;
         findCellAvailable(value, classHrs);
       } else {
         setUserUX({
           error: true,
-          errorMsg: "Select a Class Type First",
+          errorMsg: t("error.selectClass"),
         });
       }
     }
   };
 
   const handleSubjectSelection = (item) => {
-    setCellData((prev) => {
-      return {
-        ...prev,
-        ...item,
-      };
+    setCellData({
+      ...item,
+      day: cellData.day,
+      startPeriod: cellData.startPeriod,
+    });
+    setPeriod({
+      startPeriod: cellData.startPeriod,
+      endPeriod: 0,
     });
   };
 
@@ -182,14 +206,32 @@ export const TablePopup = (props) => {
     });
   };
 
+  const addNewCourse = () => {
+    const newCourse = {
+      ...cellData,
+      startPeriod: period.startPeriod,
+      endPeriod: period.endPeriod,
+      courseInstanceId: cellData.id,
+      endDate: null,
+      startDate: null,
+      id: crypto.randomUUID(),
+    };
+    props.submit(newCourse, "add");
+    props.close();
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (
       userUX.cellOccupied ||
       period.startPeriod === 0 ||
-      period.endPeriod === 0
+      period.endPeriod === 0 ||
+      ((cellData.classType === "SECTION" ||
+        cellData.classType === "LAB" ||
+        (cellData.classType === "LECTURE" && cellData.hasLectureGroups)) &&
+        (cellData.group === "NULL" || cellData.group === undefined))
     ) {
-      setUserUX({ error: true, errorMsg: "please select valid inputs" });
+      setUserUX({ error: true, errorMsg: t("error.validInputs") });
       return;
     }
     if (props.edit && !editToAdd) {
@@ -201,31 +243,53 @@ export const TablePopup = (props) => {
       props.submit(editedData, "edit");
       props.close();
     } else {
-      const courseCount = courses.registered.filter(
+      const courseClassesRegistered = courses.registered.filter(
         (item) =>
           item.courseInstanceId === cellData.id &&
           item.classType === cellData.classType
-      ).length;
+      );
+      const courseCount = courseClassesRegistered.length;
       const maxCourseCount =
         cellData.classType === "LECTURE"
-          ? cellData.lectureCount
-          : cellData.labCount;
+          ? cellData.haslectureGroups
+            ? cellData.lectureGroupCount * cellData.lectureCount
+            : cellData.lectureCount
+          : cellData.classType === "LAB"
+          ? cellData.labGroupCount
+          : cellData.sectionGroupCount;
+      let groupAvailable = true;
+
+      if (cellData.hasLectureGroups) {
+        const groupCount = courseClassesRegistered.filter(
+          (el) => el.group === cellData.group
+        ).length;
+        if (groupCount > 0 && cellData.classType !== "LECTURE") {
+          groupAvailable = false;
+        } else {
+          if (cellData.lectureCount === groupCount) {
+            groupAvailable = false;
+          }
+          if (
+            courseClassesRegistered.find(
+              (el) => el.group === cellData.group
+            ) === undefined
+          ) {
+          }
+        }
+      }
       if (courseCount < maxCourseCount) {
-        const newCourse = {
-          ...cellData,
-          startPeriod: period.startPeriod,
-          endPeriod: period.endPeriod,
-          courseInstanceId: cellData.id,
-          endDate: null,
-          startDate: null,
-          id: crypto.randomUUID(),
-        };
-        props.submit(newCourse, "add");
-        props.close();
+        if (groupAvailable) {
+          addNewCourse();
+        } else {
+          setUserUX({
+            error: true,
+            errorMsg: t("courses.groupFull"),
+          });
+        }
       } else {
         setUserUX({
           error: true,
-          errorMsg: "Course Count is Full",
+          errorMsg: t("courses.courseFull"),
         });
       }
     }
@@ -252,7 +316,7 @@ export const TablePopup = (props) => {
                 type="text"
                 className="form-control"
                 value={
-                  currentLanguageCode === "en"
+                  i18next.language === "en"
                     ? cellData.englishName || ""
                     : cellData.arabicName || ""
                 }
@@ -287,7 +351,7 @@ export const TablePopup = (props) => {
               <input
                 type="text"
                 className="form-control"
-                value={"pls select a subject"}
+                value={t("table.selectSubject")}
                 disabled
                 readOnly
               />
@@ -297,18 +361,22 @@ export const TablePopup = (props) => {
                 className="form-select"
                 onChange={handleEditFormChange}
                 value={cellData?.classType || ""}
+                required
               >
-                <option value={null}>{t(`common.select`)}</option>
+                <option value="NULL">{t(`common.select`)}</option>
                 <option value="LECTURE">{t(`common.lecture`)}</option>
-                {cellData?.labCount > 0 && (
+                {cellData?.labGroupCount > 0 && (
                   <option value="LAB">{t(`common.lab`)}</option>
+                )}
+                {cellData?.sectionGroupCount > 0 && (
+                  <option value="SECTION">{t(`common.section`)}</option>
                 )}
               </select>
             )}
           </div>
         </div>
         <div className="row mb-3">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <label>{t(`common.day`)}</label>
             {props.edit && !editToAdd ? (
               <select
@@ -335,7 +403,61 @@ export const TablePopup = (props) => {
               />
             )}
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
+            <label>{t(`table.group`)}</label>
+            {props.edit && !editToAdd ? (
+              <input
+                type="text"
+                name="group"
+                className="form-control"
+                value={
+                  cellData.classType === "LECTURE" && !cellData.hasLectureGroups
+                    ? t("table.hasNoGroup")
+                    : cellData.group
+                }
+                disabled
+                readOnly
+              />
+            ) : cellData?.classType === "LECTURE" &&
+              !cellData.hasLectureGroups ? (
+              <input
+                type="text"
+                name="group"
+                className="form-control"
+                value={t("table.hasNoGroup")}
+                disabled
+                readOnly
+              />
+            ) : cellData.classType === undefined ? (
+              <input
+                type="text"
+                name="group"
+                className="form-control"
+                value={t("error.selectClass")}
+                disabled
+                readOnly
+              />
+            ) : (
+              <select
+                type="text"
+                className="form-select"
+                name="group"
+                required
+                onChange={handleEditFormChange}
+                value={cellData?.group || ""}
+              >
+                <option value="NULL">{t("common.select")}</option>
+                {ScheduleTableGroups.slice(0, classCount).map((group) => (
+                  <option key={group.id} value={group.title}>
+                    {group.title}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+        </div>
+        <div className="row mb-3">
+          <div className="col-md-6">
             <label>{t(`table.start`)}</label>
             <select
               type="text"
@@ -347,7 +469,7 @@ export const TablePopup = (props) => {
               disabled={editToAdd}
             >
               {period.startPeriod === 0 && (
-                <option value={null}>{t(`common.select`)}</option>
+                <option value="NULL">{t(`common.select`)}</option>
               )}
               {availableCells
                 .filter((item) => item.day === cellData.day)
@@ -365,7 +487,7 @@ export const TablePopup = (props) => {
                 ))}
             </select>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <label>{t(`table.end`)}</label>
             <input
               type="text"
@@ -374,8 +496,8 @@ export const TablePopup = (props) => {
               value={
                 period.endPeriod === 0
                   ? editToAdd
-                    ? "choose a subject and class type"
-                    : "choose start period first"
+                    ? t("table.selectSubjectAndType")
+                    : t("table.selectStartPeriod")
                   : ScheduleTableHeader.find(
                       (item) => item.period === period?.endPeriod
                     )
@@ -386,11 +508,12 @@ export const TablePopup = (props) => {
             />
           </div>
         </div>
+
         <div className="row mb-3">
           <div className="col-md-6">
             <label>{t(`table.place`)}</label>
             <select name="place" className="form-select">
-              <option value="1">{t(`common.select`)}</option>
+              <option value="NULL">{t(`common.select`)}</option>
               <option value="2">{t(`el mkaan`)}</option>
               <option value="3">{t(`el mkaan`)}</option>
             </select>
@@ -408,13 +531,13 @@ export const TablePopup = (props) => {
           <button
             type="submit"
             onClick={handleFormSubmit}
-            className="form-card-button-save"
+            className="form-card-button form-card-button-save"
           >
             {props.edit && !editToAdd ? t("common.save") : t("common.add")}
           </button>
           <button
             type="button"
-            className="form-card-button-cancel"
+            className="form-card-button form-card-button-cancel"
             onClick={() => {
               props.close();
             }}
@@ -425,7 +548,7 @@ export const TablePopup = (props) => {
             <>
               <button
                 type="button"
-                className="form-card-button-delete"
+                className="form-card-button form-card-button-delete"
                 onClick={(event) => {
                   props.subjectDelete(cellData.id);
                   props.close();
@@ -435,7 +558,7 @@ export const TablePopup = (props) => {
               </button>
               <button
                 type="button"
-                className="form-card-button-save"
+                className="form-card-button form-card-button-save"
                 onClick={handleEditToAdd}
               >
                 {t("table.add")}

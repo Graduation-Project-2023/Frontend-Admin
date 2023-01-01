@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
+import { useTranslation } from "react-i18next";
 import axios from "axios";
+import i18next from "i18next";
 import { BASE_URL } from "../../../../shared/API";
-import cookies from "js-cookie";
 import styles from "../../../../components/table/schedule/DayPeriodTable.module.scss";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
 import { DayPeriodTable } from "../../../../components/table/schedule/DayPeriodTable";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
+import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { TablePopup } from "./TablePopup";
+import { BsFillPersonCheckFill } from "react-icons/bs";
+import { MdErrorOutline } from "react-icons/md";
 
 export const LevelSchedule = () => {
   const [tableId, setTableId] = useState(null);
@@ -25,7 +29,7 @@ export const LevelSchedule = () => {
     regCourses: { loading: false, error: false, errorMsg: "" },
     levels: { loading: false, error: false, errorMsg: "" },
     levelTableCreate: { loading: false, error: false, errorMsg: "" },
-    form: { loading: false, error: false, errorMsg: "" },
+    form: { loading: false, success: false, error: false, errorMsg: "" },
   });
   const [showModal, setShowModal] = useState({
     add: { state: false, data: null },
@@ -33,8 +37,8 @@ export const LevelSchedule = () => {
   });
   const navigate = useNavigate();
   const { levelId } = useParams();
+  const { t } = useTranslation();
   const authContext = useAuth();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -193,7 +197,6 @@ export const LevelSchedule = () => {
               levelTableData
             )
             .then((res) => {
-              console.log(res);
               setUserUX((prev) => ({
                 ...prev,
                 levelTableCreate: { ...prev.levelTableCreate, loading: false },
@@ -226,26 +229,109 @@ export const LevelSchedule = () => {
       });
   };
 
+  const tableErrorHandler = (code, error) => {
+    switch (code) {
+      case 400:
+        if (error[0] === "Invalid") {
+          const invalidClassId = error.slice(-1);
+          const invalidClass = levelCourses.find(
+            (course) => course.id === invalidClassId[0]
+          );
+          const addedClasses = tableData.filter(
+            (obj) => obj.arabicName === invalidClass.arabicName
+          );
+          if (error.includes("lecture")) {
+            const lecturesCount = addedClasses.filter(
+              (obj) => obj.classType === "LECTURE"
+            ).length;
+            return (
+              <span>
+                {t("error.lectureError")}
+                <br />
+                <br />
+                {t("courses.name")}&#58; &#32;{" "}
+                {i18next.language === "en"
+                  ? invalidClass.englishName
+                  : invalidClass.arabicName}
+                <br />
+                {t("error.lecturesLeft")}{" "}
+                {invalidClass.hasLectureGroups
+                  ? invalidClass.lectureCount * invalidClass.lectureGroupCount -
+                    lecturesCount
+                  : invalidClass.lectureCount - lecturesCount}
+              </span>
+            );
+          } else {
+            const sectionsCount = addedClasses.filter(
+              (obj) => obj.classType === "SECTION"
+            ).length;
+            const labsCount = addedClasses.filter(
+              (obj) => obj.classType === "LAB"
+            ).length;
+            return (
+              <span>
+                {t("error.sectionError")}
+                <br />
+                <br />
+                {t("courses.name")}&#58; &#32;{" "}
+                {i18next.language === "en"
+                  ? invalidClass.englishName
+                  : invalidClass.arabicName}
+                {invalidClass.sectionGroupCount !== 0 &&
+                  invalidClass.sectionGroupCount - sectionsCount !== 0 && (
+                    <>
+                      <br />
+                      {t("error.sectionsLeft")}{" "}
+                      {invalidClass.sectionGroupCount - sectionsCount}
+                    </>
+                  )}
+                {invalidClass.labGroupCount !== 0 &&
+                  invalidClass.labGroupCount - labsCount !== 0 && (
+                    <>
+                      <br />
+                      {t("error.labsLeft")}{" "}
+                      {invalidClass.labGroupCount - labsCount}
+                    </>
+                  )}
+              </span>
+            );
+          }
+        } else {
+          return <span>{t("error.common")}</span>;
+        }
+      default:
+        return <span>{t("error.common")}</span>;
+    }
+  };
+
   const saveTableData = (event) => {
     event.preventDefault();
     const levelTableData = {
       classes: tableData.map(
         ({
+          labCount,
+          startDate,
+          endDate,
           id,
           levelId,
-          lectureCount,
-          labCount,
           englishName,
           arabicName,
+          hasLectureGroups,
+          lectureCount,
+          lectureGroupCount,
+          labGroupCount,
+          sectionGroupCount,
+          lectureHrs,
+          labHrs,
+          sectionHrs,
           ...rest
         }) => rest
       ),
     };
     setUserUX((prev) => ({
       ...prev,
-      form: { loading: true, error: false, errorMsg: "" },
+      form: { loading: true, success: false, error: false, errorMsg: "" },
     }));
-    console.log(levelTableData);
     // PUT request to update the table data by it's level and semester id
     axios
       .put(
@@ -254,19 +340,31 @@ export const LevelSchedule = () => {
         levelTableData
       )
       .then((res) => {
-        console.log(res);
         setUserUX((prev) => ({
           ...prev,
-          form: { ...prev.form, loading: false },
+          form: { ...prev.form, loading: false, success: true },
         }));
       })
       .catch((error) => {
+        console.log(error);
+        const errorArr = error.response.data.message.split(" ");
         setUserUX((prev) => ({
           ...prev,
-          form: { loading: false, error: true, errorMsg: "table save error" },
+          form: {
+            ...prev.form,
+            loading: false,
+            error: true,
+            errorMsg: tableErrorHandler(error.response.status, errorArr),
+          },
         }));
-        console.log(error);
       });
+  };
+
+  const closeFormSubmitModal = () => {
+    setUserUX((prev) => ({
+      ...prev,
+      form: { ...prev.form, success: false, error: false, errorMsg: "" },
+    }));
   };
 
   return (
@@ -279,7 +377,7 @@ export const LevelSchedule = () => {
               return (
                 <Dropdown.Toggle key={level.id} className="customDropMenu-btn">
                   {level.level}&nbsp;-&nbsp;
-                  {currentLanguageCode === "en"
+                  {i18next.language === "en"
                     ? level.englishName
                     : level.arabicName}
                 </Dropdown.Toggle>
@@ -297,7 +395,7 @@ export const LevelSchedule = () => {
                     }}
                   >
                     {level.level}&nbsp;-&nbsp;
-                    {currentLanguageCode === "en"
+                    {i18next.language === "en"
                       ? level.englishName
                       : level.arabicName}
                   </Dropdown.Item>
@@ -306,7 +404,7 @@ export const LevelSchedule = () => {
           </Dropdown.Menu>
         </Dropdown>
         <h6>
-          {currentLanguageCode === "en"
+          {i18next.language === "en"
             ? authContext.program.englishName
             : authContext.program.arabicName}
         </h6>
@@ -356,6 +454,33 @@ export const LevelSchedule = () => {
           availableCells={cells.available}
           courses={{ registered: tableData, notRegistered: levelCourses }}
           userUX={userUX.regCourses}
+        />
+      )}
+      {userUX.form.success && (
+        <ModalPopup
+          message={{
+            state: true,
+            icon: <BsFillPersonCheckFill />,
+            title: "popup.success",
+            text: "popup.message_success",
+            button: "common.save",
+            handleClick: closeFormSubmitModal,
+          }}
+          closeModal={closeFormSubmitModal}
+        />
+      )}
+      {userUX.form.error && (
+        <ModalPopup
+          message={{
+            state: true,
+            icon: <MdErrorOutline />,
+            title: "popup.error",
+            text: userUX.form.errorMsg,
+            button: "common.continue",
+            handleClick: closeFormSubmitModal,
+          }}
+          error={true}
+          closeModal={closeFormSubmitModal}
         />
       )}
     </FormNavbarContainer>

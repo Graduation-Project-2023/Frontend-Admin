@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import styles from "./AddStudents.module.scss";
-import { StudentsWrongData } from "./StudentsWrongData";
 import { useAuth } from "../../../../hooks/useAuth";
+import axios from "axios";
+import { BASE_URL } from "../../../../shared/API";
+import styles from "./AddStudents.module.scss";
 
 // Reusable Components and Icons
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
@@ -10,74 +11,64 @@ import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { TbFileUpload } from "react-icons/tb";
 import { MdErrorOutline } from "react-icons/md";
 import { BsFillPersonCheckFill } from "react-icons/bs";
-import axios from "axios";
-import { BASE_URL } from "../../../../shared/API";
 
 export const AddStudents = () => {
   const authContext = useAuth();
-  const [files, setFiles] = useState();
   const [userUX, setUserUX] = useState({
-    CSV: { loading: false, success: false, error: false, errorMsg: "" },
-    table: true,
+    loading: false,
+    success: false,
+    error: false,
+    errorMsg: "",
   });
   const { t } = useTranslation();
 
   const handleDragOver = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    console.log("hello drag");
   };
 
   const handleDrop = (event) => {
     event.preventDefault();
-    setFiles(event.dataTransfer.files);
-    console.log(files);
-    setUserUX((prev) => ({ ...prev, CSV: { ...prev.CSV, loading: true } }));
+    setUserUX((prev) => ({ ...prev, loading: true }));
     if (event.dataTransfer.files.length > 1) {
-      console.log("more than one file");
-      setUserUX((prev) => ({ ...prev, csvLoading: false }));
+      setUserUX((prev) => ({
+        ...prev,
+        loading: false,
+        error: true,
+        errorMsg: t("studentsData.error.moreThanOne"),
+      }));
     } else {
       if (event.dataTransfer.files[0].type !== "text/csv") {
-        console.log("not csv");
         setUserUX((prev) => ({
           ...prev,
-          CSV: {
-            ...prev.CSV,
-            loading: false,
-            error: true,
-            errorMsg: "not csv",
-          },
+          loading: false,
+          error: true,
+          errorMsg: t("studentsData.error.notCSV"),
         }));
       } else {
-        console.log("everything ok");
-        console.log(event.dataTransfer.files[0]);
-        setUserUX((prev) => ({
-          ...prev,
-          CSV: { ...prev.CSV, loading: false },
-        }));
+        const csvData = new FormData();
+        csvData.append("csv", event.dataTransfer.files[0]);
         axios
           .post(
-            BASE_URL + `student/bulk?collegeId=${authContext.college.id}`,
-            files
+            BASE_URL + `/student/many?collegeId=${authContext.college.id}`,
+            csvData
           )
           .then((res) => {
             setUserUX((prev) => ({
               ...prev,
-              CSV: { ...prev.CSV, loading: false, success: true },
+              loading: false,
+              success: true,
             }));
             console.log(res.data);
           })
           .catch((err) => {
-            setUserUX((prev) => ({
-              ...prev,
-              CSV: {
-                ...prev.CSV,
-                loading: false,
-                success: false,
-                error: true,
-                errorMsg: "uploadingerror",
-              },
-            }));
+            console.log(err);
+            setUserUX({
+              loading: false,
+              success: false,
+              error: true,
+              errorMsg: "uploadingerror",
+            });
           });
       }
     }
@@ -86,9 +77,8 @@ export const AddStudents = () => {
   return (
     <FormNavbarContainer>
       <div className={styles.addform}>
-        {userUX.CSV.error && <h1>{userUX.CSV.errorMsg}</h1>}
-        {userUX.CSV.loading ? (
-          <h1>loading</h1>
+        {userUX.loading ? (
+          <h1>loading </h1>
         ) : (
           <div
             className={styles.dashform}
@@ -103,36 +93,7 @@ export const AddStudents = () => {
         )}
       </div>
 
-      {/* Table */}
-      {userUX.table && (
-        <table
-          className={styles.tableHead}
-          child={true}
-          closeModal={() => {
-            setUserUX({ table: false });
-          }}
-        >
-          <thead>
-            <tr>
-              <th className={styles.tableHead_title}>الاسم</th>
-              <th className={styles.tableHead_title}>الرقم القومى</th>
-            </tr>
-          </thead>
-          <tbody>
-            {StudentsWrongData.map((value, key) => {
-              return (
-                <tr key={key}>
-                  <td className={styles.tableHead_data}>{value.name}</td>
-                  <td className={styles.tableHead_error}>{value.nationalId}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-
-      {/* Success Modal */}
-      {userUX.CSV.success && (
+      {userUX.success && (
         <ModalPopup
           message={{
             state: true,
@@ -142,37 +103,36 @@ export const AddStudents = () => {
             button: "common.save",
             handleClick: () => {
               setUserUX((prev) => {
-                return { ...prev, CSV: { ...prev.CSV, success: false } };
+                return { ...prev, success: false };
               });
             },
           }}
           closeModal={() => {
             setUserUX((prev) => {
-              return { ...prev, CSV: { ...prev.CSV, success: false } };
+              return { ...prev, success: false };
             });
           }}
         />
       )}
 
-      {/* Error Modal */}
-      {userUX.CSV.error && (
+      {userUX.error && (
         <ModalPopup
           message={{
             state: true,
             icon: <MdErrorOutline />,
             title: "popup.error",
-            text: "popup.message_error",
+            text: userUX.errorMsg,
             button: "common.continue",
             handleClick: () => {
               setUserUX((prev) => {
-                return { ...prev, CSV: { ...prev.CSV, error: false } };
+                return { ...prev, error: false, errorMsg: "" };
               });
             },
           }}
           error={true}
           closeModal={() => {
             setUserUX((prev) => {
-              return { ...prev, CSV: { ...prev.CSV, error: false } };
+              return { ...prev, error: false, errorMsg: "" };
             });
           }}
         />

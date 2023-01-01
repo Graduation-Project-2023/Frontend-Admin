@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../hooks/useAuth";
 import i18next from "i18next";
-import cookies from "js-cookie";
 import classNames from "classnames";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
+// eslint-disable-next-line
 import { FaRegUserCircle } from "react-icons/fa";
 
 const languages = [
@@ -24,10 +24,8 @@ const languages = [
 export const Header = () => {
   const { t } = useTranslation();
   const authContext = useAuth();
-
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const currentLanguage = languages.find(
-    (lang) => lang.code === currentLanguageCode
+    (lang) => lang.code === i18next.language
   );
 
   useEffect(() => {
@@ -55,7 +53,7 @@ export const Header = () => {
       <div className="main-header-item">
         {t("header.uni")}
         {authContext.college?.id && ` - `}
-        {currentLanguageCode === "en"
+        {i18next.language === "en"
           ? authContext.college?.englishName
           : authContext.college?.arabicName}
       </div>
@@ -72,7 +70,7 @@ export const Header = () => {
                 <Dropdown.Item key={code}>
                   <span
                     className={classNames("dropdown-item", {
-                      disabled: currentLanguageCode === code,
+                      disabled: i18next.language === code,
                     })}
                     onClick={() => {
                       i18next.changeLanguage(code);

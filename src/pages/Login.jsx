@@ -1,6 +1,8 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// eslint-disable-next-line
 import axios from "axios";
+// eslint-disable-next-line
 import { BASE_URL } from "../shared/API";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";

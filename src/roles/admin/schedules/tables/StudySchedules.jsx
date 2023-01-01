@@ -1,34 +1,30 @@
-import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from "../../../../shared/API";
 import { useAuth } from "../../../../hooks/useAuth";
-import { useState, useEffect } from "react";
+import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
+import i18next from "i18next";
+
+// Reusable Components
+import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
+import { Alert } from "react-bootstrap";
 
 export const StudySchedules = () => {
   const [levels, setLevels] = useState([]);
   const [filteredLevels, setFilteredLevels] = useState([]);
   const [userUX, setUserUX] = useState({
-    levelClick: false,
-    levelError: false,
-    levelErrorMsg: "",
-    listLoading: false,
-    listError: false,
-    listErrorMsg: "",
+    list: { loading: false, error: false, errorMsg: "" },
+    level: { loading: false, error: false, errorMsg: "" },
   });
   const navigate = useNavigate();
   const { t } = useTranslation();
   const authContext = useAuth();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
-      listLoading: true,
-      listError: false,
-      listErrorMsg: "",
+      list: { loading: true, error: false, errorMsg: "" },
     }));
     // GET request to get all levels that have a table created
     axios
@@ -44,16 +40,14 @@ export const StudySchedules = () => {
         );
         setUserUX((prev) => ({
           ...prev,
-          listLoading: false,
+          list: { ...prev.list, loading: false },
         }));
       })
       .catch((error) => {
         console.log(error);
         setUserUX((prev) => ({
           ...prev,
-          listLoading: false,
-          listError: true,
-          listErrorMsg: "level tables error",
+          list: { loading: true, error: true, errorMsg: t("error.common") },
         }));
       });
 
@@ -67,9 +61,7 @@ export const StudySchedules = () => {
     if (filteredLevels.map((item) => item.id).includes(id)) {
       setUserUX((prev) => ({
         ...prev,
-        levelClick: true,
-        levelError: false,
-        levelErrorMsg: "",
+        level: { loading: true, error: false, errorMsg: "" },
       }));
       const levelTableData = {
         academicSemesterId: "decc46ba-7d4b-11ed-a1eb-0242ac120002",
@@ -87,9 +79,7 @@ export const StudySchedules = () => {
           console.log(res);
           setUserUX((prev) => ({
             ...prev,
-            levelClick: false,
-            levelError: false,
-            levelErrorMsg: "",
+            level: { ...prev.level, loading: false },
           }));
           navigate(`/admin_portal/study_schedules/tables/${id}`);
         })
@@ -97,9 +87,11 @@ export const StudySchedules = () => {
           console.log(error);
           setUserUX((prev) => ({
             ...prev,
-            levelClick: false,
-            levelError: true,
-            levelErrorMsg: "level table error",
+            level: {
+              loading: false,
+              error: true,
+              errorMsg: t("error.common"),
+            },
           }));
         });
     } else {
@@ -109,26 +101,41 @@ export const StudySchedules = () => {
 
   return (
     <FormNavbarContainer>
-      <div className="portal-body">
-        <h5 className="portal-title">{t("levels.table")}</h5>
-        <div className="portal-list">
-          {!userUX.listLoading &&
-            levels.map((item) => {
-              return (
-                <li
-                  key={item.id}
-                  onClick={(event) => {
-                    handleLevelClick(event, item.id);
-                  }}
-                >
-                  {currentLanguageCode === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </li>
-              );
-            })}
-        </div>
-      </div>
+      {userUX.list.error ? (
+        <Alert variant="danger" className="m-5">
+          <Alert.Heading>{t("error.programLevels")}</Alert.Heading>
+          <p>{t("error.programLevelsMsg")}</p>
+        </Alert>
+      ) : (
+        <>
+          <div className="portal-body">
+            <h5 className="portal-title">{t("levels.table")}</h5>
+            <div className="portal-list">
+              {!userUX.list.loading &&
+                levels.map((item) => {
+                  return (
+                    <li
+                      key={item.id}
+                      onClick={(event) => {
+                        handleLevelClick(event, item.id);
+                      }}
+                    >
+                      {i18next.language === "en"
+                        ? item.englishName
+                        : item.arabicName}
+                    </li>
+                  );
+                })}
+            </div>
+          </div>
+          {userUX.level.error && (
+            <Alert variant="danger" className="m-5">
+              <Alert.Heading>{t("error.programLevels")}</Alert.Heading>
+              <p>{t("error.programLevelsMsg")}</p>
+            </Alert>
+          )}
+        </>
+      )}
     </FormNavbarContainer>
   );
 };

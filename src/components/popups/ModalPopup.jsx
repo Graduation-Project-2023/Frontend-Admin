@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import cookies from "js-cookie";
 import { AiOutlineClose } from "react-icons/ai";
-
-// Reusable Components
+import i18next from "i18next";
 import Modal from "react-bootstrap/Modal";
 
 // Component Props:
@@ -22,7 +20,6 @@ export const ModalPopup = (props) => {
   const [filteredData, setFilteredData] = useState([]);
   const authContext = useAuth();
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setFilteredData(props.list?.data);
@@ -93,7 +90,7 @@ export const ModalPopup = (props) => {
                     }}
                     to={props.list.path}
                   >
-                    {currentLanguageCode === "en"
+                    {i18next.language === "en"
                       ? item.englishName
                       : item.arabicName}
                   </Link>
@@ -112,10 +109,12 @@ export const ModalPopup = (props) => {
               {props.message.icon}
             </div>
             <h4 className="popup-msg-title">{t(props.message.title)}</h4>
-            <h5 className="popup-msg-text">{t(props.message.text)}</h5>
+            <h5 className="popup-msg-text">{props.message.text}</h5>
             <button
-              className={`popup-msg-button ${
-                props.error ? "popup-msg-button-error" : ""
+              className={`form-card-button ${
+                props.error
+                  ? "form-card-button-delete"
+                  : "form-card-button-save"
               }`}
               onClick={props.message.handleClick}
             >

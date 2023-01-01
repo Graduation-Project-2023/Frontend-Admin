@@ -31,7 +31,8 @@
     "choice_yes": "Yes",
     "choice_no": "No",
     "lecture": "Lecture",
-    "lab": "Lab / Section",
+    "lab": "Lab",
+    "section": "Section",
     "day": "Day",
     "period": "Period",
     "time": "Time",
@@ -242,9 +243,14 @@
     "add": "Add New Course",
     "lecture": "Lecture Hours",
     "section": "Section Hours",
+    "lab": "Lab Hours",
     "lectures": "Number of Lectures",
     "sections": "Number of Sections",
-    "preTable": "Prerequisite Courses Table"
+    "labs": "Number of Labs",
+    "groups": "Number of Groups",
+    "preTable": "Prerequisite Courses Table",
+    "supervisor": "Supervisor",
+    "hasGroups": "Has Groups?"
   },
   "levels": {
     "level": "Level",
@@ -272,7 +278,11 @@
     "section6": "Print Cards",
     "formhead": "Main Data",
     "data": "Students Data",
-    "add": "Students Enrollment"
+    "add": "Students Enrollment",
+    "error": {
+      "notCSV": "The file must be in CSV form",
+      "moreThanOne": "You can only upload one file at a time"
+    }
   },
   "table": {
     "add": "Add Course to the Schedule",
@@ -282,7 +292,12 @@
     "place": "Place",
     "studentNo": "Number of Students",
     "classType": "Class Type",
-    "deleteClass": "Remove from Table"
+    "deleteClass": "Remove from Table",
+    "group": "Group",
+    "hasNoGroup": "This course has no groups",
+    "selectSubject": "Select a Subject",
+    "selectStartPeriod": "Select a Start Period",
+    "selectSubjectAndType": "Select a subject and it's class type"
   },
   "button": {
     "edit": "Edit",
@@ -290,5 +305,20 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Reset"
+  },
+  "error": {
+    "courseFull": "The course maximum number has been reached",
+    "groupFull": "This group has been already added",
+    "cellOccupied": "This cell is already occupied",
+    "selectClass": "Select a class type first",
+    "validInputs": "Please fill all inputs with valid data",
+    "common": "An error has occurred, please try again later",
+    "programLevels": "Something went wrong in program's levels data...",
+    "programLevelsMsg": "An error has occurred, please try refreshing the page again or try again later",
+    "lectureError": "An error has occurred adding this course lecture to the table, please add the correct number of lectures",
+    "lecturesLeft": "Number of lectures left to add: ",
+    "sectionsLeft": "Number of sections left to add: ",
+    "labsLeft": "Number of labs left to add: ",
+    "sectionError": "An error has occurred adding this course section/lab to the table, please add the correct number of sections/labs"
   }
 }

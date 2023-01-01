@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../../hooks/useAuth";
-import { BASE_URL } from "../../../../shared/API";
+import { useAuth } from "../../../hooks/useAuth";
+import { BASE_URL } from "../../../shared/API";
 import axios from "axios";
 
 // Reusable Components
-import { SearchContainer } from "../../../../components/other/SearchContainer";
+import { SearchContainer } from "../../../components/other/SearchContainer";
 import { FaPlusCircle } from "react-icons/fa";
 
 export const AcademicPorgramsPortal = () => {

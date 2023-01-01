@@ -1,4 +1,3 @@
-import React from "react";
 import { FaRobot } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { CommonPage } from "../components/other/CommonPage";

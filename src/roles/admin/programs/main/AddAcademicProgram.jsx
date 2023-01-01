@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
+import i18next from "i18next";
 import { AcademicFormData } from "./AcademicFormData";
 
 // Reusable Components
@@ -12,7 +13,6 @@ import { FormCard } from "../../../../components/forms/FormCard";
 import { FormInput } from "../../../../components/forms/FormInput";
 import { Sidebar } from "../../../../components/sidebar/Sidebar";
 import { Accordion } from "react-bootstrap";
-import cookies from "js-cookie";
 
 export const AddAcademicProgram = () => {
   const [programsData, setProrgramsData] = useState([]);
@@ -30,7 +30,6 @@ export const AddAcademicProgram = () => {
     siderbarErrorMsg: "",
   });
   const navigate = useNavigate();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, siderbarLoading: true }));
@@ -155,7 +154,7 @@ export const AddAcademicProgram = () => {
                               id: item.id,
                               value: item.id,
                               title:
-                                currentLanguageCode === "en"
+                                i18next.language === "en"
                                   ? item.englishName
                                   : item.arabicName,
                             };

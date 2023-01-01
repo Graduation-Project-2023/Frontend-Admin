@@ -9,8 +9,9 @@ import { Sidebar } from "../../../components/sidebar/Sidebar";
 export const CoursesSidebar = () => {
   const [courses, setCourses] = useState([]);
   const [userUX, setUserUX] = useState({
-    listLoading: false,
-    emptyList: false,
+    loading: false,
+    error: false,
+    errorMsg: "",
   });
   const { t } = useTranslation();
   const authContext = useAuth();
@@ -20,20 +21,17 @@ export const CoursesSidebar = () => {
     location.pathname.split("/").pop() !== "courses";
 
   useEffect(() => {
-    setUserUX({ ...userUX, listLoading: true });
+    setUserUX((prev) => ({ ...prev, loading: true }));
     // GET request to get all college courses to display it in the sidebar
     axios
       .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
         setCourses(res.data);
-        if (res.data.length === 0) {
-          setUserUX({ ...userUX, emptyList: true, listLoading: false });
-        } else {
-          setUserUX({ ...userUX, listLoading: false });
-        }
+        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
+        setUserUX({ loading: false, error: true, errorMsg: "erirrr" });
       });
 
     // eslint-disable-next-line

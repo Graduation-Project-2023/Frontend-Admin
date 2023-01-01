@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import cookies from "js-cookie";
+import i18next from "i18next";
 import { Accordion } from "react-bootstrap";
 
 // Component Props:
@@ -21,7 +21,6 @@ export const CoursesSidebar = (props) => {
   const [filteredList, setFilteredList] = useState(listData);
   const authContext = useAuth();
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     setLevels(authContext.program.levels);
@@ -80,7 +79,7 @@ export const CoursesSidebar = (props) => {
                   className="registerationContainer-menu-collapse-item"
                 >
                   <Accordion.Header>
-                    {currentLanguageCode === "en"
+                    {i18next.language === "en"
                       ? item.englishName || ""
                       : item.arabicName || ""}{" "}
                   </Accordion.Header>
@@ -107,7 +106,7 @@ export const CoursesSidebar = (props) => {
                                   : props.handleListClick("add", item);
                               }}
                             >
-                              {currentLanguageCode === "en"
+                              {i18next.language === "en"
                                 ? item.englishName
                                 : item.arabicName}
                             </li>
@@ -130,7 +129,7 @@ export const CoursesSidebar = (props) => {
                       : props.handleListClick("add", item);
                   }}
                 >
-                  {currentLanguageCode === "en"
+                  {i18next.language === "en"
                     ? item.englishName
                     : item.arabicName}
                 </li>

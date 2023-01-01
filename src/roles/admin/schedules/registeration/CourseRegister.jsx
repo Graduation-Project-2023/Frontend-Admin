@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
+import i18next from "i18next";
 import { CourseRegisterData } from "./CourseRegisterData";
 
 // Reusable Components
@@ -32,7 +32,6 @@ export const CourseRegister = (props) => {
   const location = useLocation();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const currentLocation = location.pathname.split("/").at(-2);
   const Sidebars = [
     { id: "0", title: "common.coursesNotReg", registered: false },
@@ -60,11 +59,14 @@ export const CourseRegister = (props) => {
 
   useEffect(() => {
     if (currentLocation === "add") {
-      setCourseData(
-        props.programCourses.find((course) => {
-          return course.id === courseId;
-        })
-      );
+      if (props.programCourses.length !== 0) {
+        setCourseData({
+          ...props.programCourses.find((course) => {
+            return course.id === courseId;
+          }),
+          hasLectureGroups: false,
+        });
+      }
     } else if (currentLocation === "edit") {
       if (props.programCourses.length !== 0) {
         setUserUX((prev) => ({
@@ -80,6 +82,7 @@ export const CourseRegister = (props) => {
           .then((res) => {
             console.log(res.data);
             setCourseData(res.data);
+            setLectureGrps(res.data.hasLectureGroups);
             setUserUX((prev) => ({
               ...prev,
               course: { ...prev.course, loading: false },
@@ -155,12 +158,17 @@ export const CourseRegister = (props) => {
     if (fieldName === "lectureGroups") {
       if (fieldValue === "TRUE") {
         setLectureGrps(true);
+        setCourseData((prev) => ({
+          ...prev,
+          hasLectureGroups: true,
+        }));
         return;
       } else if (fieldValue === "FALSE") {
         setLectureGrps(false);
         setCourseData((prev) => ({
           ...prev,
-          lectureGroupsCount: 0,
+          lectureGroupCount: 0,
+          hasLectureGroups: false,
         }));
         return;
       }
@@ -199,6 +207,7 @@ export const CourseRegister = (props) => {
             ...prev,
             form: { ...prev.form, submit: false },
           }));
+          setRegisteredCourses((prev) => [...prev, res.data]);
         })
         .catch((error) => {
           console.log(error);
@@ -315,7 +324,7 @@ export const CourseRegister = (props) => {
                         {levels.map((level) => (
                           <option key={level.id} value={level.id}>
                             {level.level}&nbsp;-&nbsp;
-                            {currentLanguageCode === "en"
+                            {i18next.language === "en"
                               ? level.englishName
                               : level.arabicName}
                           </option>
@@ -328,7 +337,9 @@ export const CourseRegister = (props) => {
                 return (
                   <div className="row" key={data.id}>
                     <div className="col-lg-6 mb-4">
-                      <label className="form-label">{t(`lec groups?`)}</label>
+                      <label className="form-label">
+                        {t(`courses.hasGroups`)}
+                      </label>
                       <select
                         className="form-select"
                         name="lectureGroups"
@@ -340,11 +351,13 @@ export const CourseRegister = (props) => {
                       </select>
                     </div>
                     <div className="col-lg-6 mb-4">
-                      <label className="form-label">{t(`group count`)}</label>
+                      <label className="form-label">
+                        {t(`courses.groups`)}
+                      </label>
                       <input
                         className="form-control"
-                        name="lectureGroupsCount"
-                        value={courseData?.lectureGroupsCount || 0}
+                        name="lectureGroupCount"
+                        value={courseData?.lectureGroupCount || 0}
                         onChange={handleEditFormChange}
                         disabled={!lectureGrps}
                         type="number"
@@ -356,7 +369,9 @@ export const CourseRegister = (props) => {
                 return (
                   <div className="row" key={data.id}>
                     <div className="col-lg-12 mb-4">
-                      <label className="form-label">{t(`esm el moshrf`)}</label>
+                      <label className="form-label">
+                        {t(`courses.supervisor`)}
+                      </label>
                       <select className="form-select" name="lectureGroups">
                         <option value={"FALSE"}>{t(`hhhhhh`)}</option>
                         <option value={"TRUE"}>{t(`hhhhhhh`)}</option>

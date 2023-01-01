@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import { BASE_URL } from "../../../../shared/API";
 import axios from "axios";
-import cookies from "js-cookie";
+import i18next from "i18next";
 import { AcademicFormData } from "./AcademicFormData";
 
 // Reusable Components
@@ -27,7 +27,6 @@ export const AcademicMain = () => {
   const [error, setError] = useState(null);
   const { programId } = useParams();
   const navigate = useNavigate();
-  const currentLanguageCode = cookies.get("i18next") || "en";
 
   useEffect(() => {
     // Get request to get a program by it's id
@@ -143,7 +142,7 @@ export const AcademicMain = () => {
                               id: item.id,
                               value: item.id,
                               title:
-                                currentLanguageCode === "en"
+                                i18next.language === "en"
                                   ? item.englishName
                                   : item.arabicName,
                             };

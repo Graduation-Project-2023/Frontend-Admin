@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import cookies from "js-cookie";
+import i18next from "i18next";
 
 // Component Props:
 // title: string
@@ -20,7 +20,6 @@ export const SearchContainer = (props) => {
     error: false,
     errorMsg: "",
   });
-  const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -91,7 +90,7 @@ export const SearchContainer = (props) => {
                         props.handleListClick(item);
                       }}
                     >
-                      {currentLanguageCode === "en"
+                      {i18next.language === "en"
                         ? item.englishName
                         : item.arabicName}
                     </li>

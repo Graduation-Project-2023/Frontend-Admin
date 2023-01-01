@@ -7,7 +7,8 @@
   &_students {
     border: 0.5px solid #bbbdc0;
     border-radius: 10px;
-    max-height: 20.2rem;
+    max-height: 25rem;
+
     &_alertBox {
       text-align: center;
       font: normal 400 2rem/2.3rem "inter";
@@ -34,6 +35,7 @@
       justify-content: space-between;
 
       & input {
+        width: 64%;
         border: none;
         padding-right: 1rem;
 
@@ -58,6 +60,7 @@
       margin-top: 0.2rem;
       list-style: none;
       max-height: 10rem;
+
       overflow-y: scroll;
       font: normal 400 1rem/1.3rem "intern";
       color: #858d97;

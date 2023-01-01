@@ -412,7 +412,7 @@ export const TablePopup = (props) => {
                 className="form-control"
                 value={
                   cellData.classType === "LECTURE" && !cellData.hasLectureGroups
-                    ? "mlhash group"
+                    ? t("table.hasNoGroup")
                     : cellData.group
                 }
                 disabled

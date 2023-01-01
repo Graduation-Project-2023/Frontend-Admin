@@ -153,14 +153,14 @@ export const StudentFormData = [
       {
         id: 1,
         title: "common.guardianName",
-        name: "guardianName ",
+        name: "guardianName",
         type: "text",
         row: true,
       },
       {
         id: 2,
         title: "common.guardianAddress",
-        name: "guardianAddress ",
+        name: "guardianAddress",
         type: "textarea",
         row: true,
       },
@@ -170,7 +170,7 @@ export const StudentFormData = [
           {
             id: 1,
             title: "common.guardianNationality",
-            name: "guardianNationality ",
+            name: "guardianNationality",
             type: "text",
             row: true,
           },
@@ -195,14 +195,14 @@ export const StudentFormData = [
           {
             id: 1,
             title: "common.prevQualification",
-            name: "PreviousQualification",
+            name: "previousQualification",
             type: "text",
             row: true,
           },
           {
             id: 2,
             title: "common.prevQualificationInstitute",
-            name: "InstitutePreviousQualification",
+            name: "institutePreviousQualification",
             type: "text",
             row: true,
           },
@@ -230,7 +230,7 @@ export const StudentFormData = [
       {
         id: 3,
         title: "common.totalPrevQualification",
-        name: "TotalPreviousQualification",
+        name: "totalPreviousQualification",
         type: "number",
         row: true,
       },
@@ -255,7 +255,6 @@ export const StudentFormData = [
       },
     ],
   },
-  // render only when the gender is MALE
   {
     id: 4,
     title: "studentsData.section5",
@@ -265,8 +264,8 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Recruitment State ",
-            name: "recruitmentState ",
+            title: "Recruitment State",
+            name: "recruitmentState",
             type: "text",
             row: true,
           },
@@ -284,8 +283,8 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Army Number ",
-            name: "armyNumber ",
+            title: "Army Number",
+            name: "armyNumber",
             type: "number",
             row: true,
           },
@@ -301,7 +300,6 @@ export const StudentFormData = [
     ],
     male: true,
   },
-  // place it in the portal file
   {
     id: 5,
     title: "studentsData.section6",

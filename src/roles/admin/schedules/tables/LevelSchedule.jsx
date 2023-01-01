@@ -237,22 +237,37 @@ export const LevelSchedule = () => {
           const invalidClass = levelCourses.find(
             (course) => course.id === invalidClassId[0]
           );
+          const addedClasses = tableData.filter(
+            (obj) => obj.arabicName === invalidClass.arabicName
+          );
           if (error.includes("lecture")) {
+            const lecturesCount = addedClasses.filter(
+              (obj) => obj.classType === "LECTURE"
+            ).length;
             return (
               <span>
                 {t("error.lectureError")}
                 <br />
                 <br />
+                {t("courses.name")}&#58; &#32;{" "}
                 {i18next.language === "en"
                   ? invalidClass.englishName
-                  : invalidClass.arabicName}{" "}
-                &#45; &#32;{t("courses.lectures")} &#58; &#32;
+                  : invalidClass.arabicName}
+                <br />
+                {t("error.lecturesLeft")}{" "}
                 {invalidClass.hasLectureGroups
-                  ? invalidClass.lectureCount * invalidClass.lectureGroupCount
-                  : invalidClass.lectureCount}
+                  ? invalidClass.lectureCount * invalidClass.lectureGroupCount -
+                    lecturesCount
+                  : invalidClass.lectureCount - lecturesCount}
               </span>
             );
           } else {
+            const sectionsCount = addedClasses.filter(
+              (obj) => obj.classType === "SECTION"
+            ).length;
+            const labsCount = addedClasses.filter(
+              (obj) => obj.classType === "LAB"
+            ).length;
             return (
               <span>
                 {t("error.sectionError")}
@@ -262,11 +277,22 @@ export const LevelSchedule = () => {
                 {i18next.language === "en"
                   ? invalidClass.englishName
                   : invalidClass.arabicName}
-                <br />
-                {t("courses.sections")}&#58; &#32;{" "}
-                {invalidClass.sectionGroupCount}
-                <br />
-                {t("courses.labs")}&#58; &#32; {invalidClass.labGroupCount}
+                {invalidClass.sectionGroupCount !== 0 &&
+                  invalidClass.sectionGroupCount - sectionsCount !== 0 && (
+                    <>
+                      <br />
+                      {t("error.sectionsLeft")}{" "}
+                      {invalidClass.sectionGroupCount - sectionsCount}
+                    </>
+                  )}
+                {invalidClass.labGroupCount !== 0 &&
+                  invalidClass.labGroupCount - labsCount !== 0 && (
+                    <>
+                      <br />
+                      {t("error.labsLeft")}{" "}
+                      {invalidClass.labGroupCount - labsCount}
+                    </>
+                  )}
               </span>
             );
           }

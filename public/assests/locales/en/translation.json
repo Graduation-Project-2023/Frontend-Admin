@@ -278,7 +278,11 @@
     "section6": "Print Cards",
     "formhead": "Main Data",
     "data": "Students Data",
-    "add": "Students Enrollment"
+    "add": "Students Enrollment",
+    "error": {
+      "notCSV": "The file must be in CSV form",
+      "moreThanOne": "You can only upload one file at a time"
+    }
   },
   "table": {
     "add": "Add Course to the Schedule",
@@ -312,6 +316,9 @@
     "programLevels": "Something went wrong in program's levels data...",
     "programLevelsMsg": "An error has occurred, please try refreshing the page again or try again later",
     "lectureError": "An error has occurred adding this course lecture to the table, please add the correct number of lectures",
+    "lecturesLeft": "Number of lectures left to add: ",
+    "sectionsLeft": "Number of sections left to add: ",
+    "labsLeft": "Number of labs left to add: ",
     "sectionError": "An error has occurred adding this course section/lab to the table, please add the correct number of sections/labs"
   }
 }

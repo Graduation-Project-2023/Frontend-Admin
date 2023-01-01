@@ -26,12 +26,29 @@ export const StudentDataPortal = () => {
     list: { loading: false, error: false, errorMsg: "" },
     studentData: { loading: false, error: false, errorMsg: "" },
     form: { submit: false, delete: false, error: false, errorMsg: "" },
-    searchClicked: false,
   });
-
   const { studentId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const studentDataSetter = (data) => {
+    let dates = {
+      birthDate: data.birthDate,
+      enrollmentYear: data.enrollmentYear,
+      enrollmentYearEndDate: data.enrollmentYearEndDate,
+      recruitmentDate: data.recruitmentDate,
+    };
+    Object.keys(dates).forEach(function (key, index) {
+      if (dates[key] !== null) {
+        dates[key] = dates[key].split("T")[0];
+      }
+    });
+    Object.assign(data, dates);
+    setStudentData(data);
+    if (data.gender === "MALE") {
+      setGenderMale(true);
+    }
+  };
 
   useEffect(() => {
     if (studentId !== "register" && studentId !== undefined) {
@@ -43,7 +60,8 @@ export const StudentDataPortal = () => {
       axios
         .get(BASE_URL + `/student/${studentId}`)
         .then((res) => {
-          setStudentData(res.data);
+          console.log(res.data);
+          studentDataSetter(res.data);
           setUserUX((prev) => ({
             ...prev,
             form: { ...prev.form, submit: false },
@@ -83,11 +101,8 @@ export const StudentDataPortal = () => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
     let fieldValue = event.target.value;
-    if (event.target.type === "number") {
-      if (fieldName === "nationalId") {
-      } else {
-        fieldValue = +fieldValue;
-      }
+    if (event.target.type === "number" && fieldName !== "nationalId") {
+      fieldValue = +fieldValue;
     }
     if (fieldName === "gender") {
       if (fieldValue === "MALE") {
@@ -117,70 +132,104 @@ export const StudentDataPortal = () => {
       }));
       return;
     }
-    const newStudent = {
-      ...studentData,
+    let dates = {
+      birthDate: studentData.birthDate,
+      enrollmentYear: studentData.enrollmentYear,
+      enrollmentYearEndDate: studentData.enrollmentYearEndDate,
+      recruitmentDate: studentData.recruitmentDate,
     };
-    console.log(newStudent);
+    Object.keys(dates).forEach(function (key, index) {
+      if (dates[key] !== null && dates[key] !== undefined) {
+        dates[key] = dates[key].split("-").reverse().join("-");
+      }
+    });
     setUserUX((prev) => ({
       ...prev,
       form: { ...prev.form, submit: true },
     }));
     // Condition to check whether it's adding a new student or updating the current
-    studentId !== "register" && studentId !== undefined
-      ? // PUT request to update the current student data
-        axios
-          .put(BASE_URL + `/student/${newStudent.id}`, updatedData)
-          .then((res) => {
-            setStudentData(res.data);
-            setUserUX((prev) => ({
-              ...prev,
-              form: {
-                ...prev.form,
-                submit: false,
-              },
-            }));
-          })
-          .catch((error) => {
-            console.log(error);
-            setUserUX((prev) => ({
-              ...prev,
-              form: {
-                ...prev.form,
-                submit: false,
-                error: true,
-                errorMsg: "student data error",
-              },
-            }));
-          })
-      : // POST request to create a new student
-        axios
-          .post(BASE_URL + `/student`, newStudent)
-          .then((res) => {
-            console.log(res);
-            navigate(`/student_data/${res.data.id}`);
-            setUserUX((prev) => ({
-              ...prev,
-              form: {
-                ...prev.form,
-                submit: false,
-              },
-            }));
-          })
-          .catch((error) => {
-            console.log(error);
-            setUserUX((prev) => ({
-              ...prev,
-              form: {
-                ...prev.form,
-                submit: false,
-                error: true,
-                errorMsg: "student data error",
-              },
-            }));
-          });
+    if (studentId !== "register" && studentId !== undefined) {
+      const newUpdatedData = {
+        ...updatedData,
+        ...dates,
+      };
+      if (Object.keys(updatedData).length === 0) {
+        setUserUX((prev) => ({
+          ...prev,
+          form: {
+            ...prev.form,
+            submit: false,
+            error: true,
+            errorMsg: "No updated data",
+          },
+        }));
+        return;
+      }
+      // PUT request to update the current student data
+      axios
+        .put(BASE_URL + `/student/${studentId}`, newUpdatedData)
+        .then((res) => {
+          console.log(res.data);
+          studentDataSetter(res.data);
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              ...prev.form,
+              submit: false,
+            },
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              ...prev.form,
+              submit: false,
+              error: true,
+              errorMsg: "student data error",
+            },
+          }));
+        });
+    } else {
+      const newStudent = {
+        ...studentData,
+        ...dates,
+        collegeId: authContext.college.id,
+      };
+      // POST request to create a new student
+      axios
+        .post(BASE_URL + `/student`, newStudent)
+        .then((res) => {
+          console.log(res);
+          setUpdatedData({});
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              ...prev.form,
+              submit: false,
+            },
+          }));
+          navigate(`/admin_portal/student_data/${res.data.id}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              ...prev.form,
+              submit: false,
+              error: true,
+              errorMsg: "student data error",
+            },
+          }));
+        });
+    }
   };
 
   const handleSearchButtonClick = () => {
+    const date1 = new Date();
+    console.log(date1);
     setUserUX((prev) => ({
       ...prev,
       searchClicked: true,
@@ -188,8 +237,10 @@ export const StudentDataPortal = () => {
     }));
     searchValue === ""
       ? axios
-          .get(BASE_URL + `/student/all/${authContext.college}`)
+          .get(BASE_URL + `/student?college_id=${authContext.college}`)
           .then((res) => {
+            const date2 = new Date();
+            console.log(date2);
             setStudentData(res.data);
             setFilteredStudents(res.data);
             setUserUX((prev) => ({
@@ -318,22 +369,41 @@ export const StudentDataPortal = () => {
                   <Accordion.Item eventKey={item.id} key={item.id}>
                     <Accordion.Header>{t(item.title)}</Accordion.Header>
                     <Accordion.Body>
-                      {userUX.loading ? (
-                        "loading..."
-                      ) : (
-                        <>
-                          {item.formData.map((data) => {
-                            return (
-                              <FormInput
-                                inputData={{ ...data, disabled: true }}
-                                handleEditFormChange={handleEditFormChange}
-                                valueData={{ studentData }}
-                                key={data.id}
-                              />
-                            );
+                      {userUX.loading
+                        ? "loading..."
+                        : item.formData.map((data) => {
+                            if (
+                              studentId !== "register" &&
+                              studentId !== undefined &&
+                              data.name === "password"
+                            ) {
+                              return null;
+                            } else {
+                              if (
+                                studentId !== "register" &&
+                                studentId !== undefined &&
+                                data.name === "email"
+                              ) {
+                                return (
+                                  <FormInput
+                                    inputData={{ ...data, disabled: true }}
+                                    handleEditFormChange={handleEditFormChange}
+                                    valueData={studentData}
+                                    key={data.id}
+                                  />
+                                );
+                              } else {
+                                return (
+                                  <FormInput
+                                    inputData={data}
+                                    handleEditFormChange={handleEditFormChange}
+                                    valueData={studentData}
+                                    key={data.id}
+                                  />
+                                );
+                              }
+                            }
                           })}
-                        </>
-                      )}
                     </Accordion.Body>
                   </Accordion.Item>
                 );

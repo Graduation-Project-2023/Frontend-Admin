@@ -20,13 +20,37 @@ export const StudentFormData = [
       },
       {
         id: 3,
+        title: "common.nationalId",
+        req: true,
+        name: "nationalId",
+        type: "number",
+        row: true,
+      },
+      {
+        id: 4,
+        title: "login.email",
+        req: true,
+        name: "email",
+        type: "email",
+        row: true,
+      },
+      {
+        id: 5,
+        title: "login.password",
+        req: true,
+        name: "password",
+        type: "password",
+        row: true,
+      },
+      {
+        id: 6,
         title: "common.schoolSeat",
         name: "SeatId",
         type: "number",
         row: true,
       },
       {
-        id: 4,
+        id: 7,
         splitRow: [
           {
             id: 1,
@@ -51,7 +75,7 @@ export const StudentFormData = [
         ],
       },
       {
-        id: 5,
+        id: 8,
         splitRow: [
           {
             id: 1,
@@ -74,14 +98,14 @@ export const StudentFormData = [
         ],
       },
       {
-        id: 6,
+        id: 9,
         title: "common.birthplace",
         name: "birthPlace",
         type: "text",
         row: true,
       },
       {
-        id: 7,
+        id: 10,
         splitRow: [
           {
             id: 1,
@@ -96,14 +120,6 @@ export const StudentFormData = [
             type: "text",
           },
         ],
-      },
-      {
-        id: 8,
-        title: "common.nationalId",
-        req: true,
-        name: "nationalId",
-        type: "number",
-        row: true,
       },
     ],
   },

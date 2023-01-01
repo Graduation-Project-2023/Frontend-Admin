@@ -67,6 +67,10 @@
     "enrollmentYear": "تاريخ التسجيل",
     "enrollmentEndDate": "تاريخ انتهاء التسجيل",
     "totalPrevQualification": "مجموع المؤهل السابق",
+    "recruitmentState": "حالة التجنيد",
+    "recruitmentNumber": "رقم التجنيد",
+    "recruitmentDate": "تاريخ التجنيد",
+    "armyNumber": "رقم الجيش",
     "schoolMarks": "درجات المدرسة",
     "schoolSeat": "رقم الجلوس",
     "regCourses": "المقررات المسجلة",
@@ -286,6 +290,7 @@
     "formhead": "البيانات الاساسية",
     "data": "بيانات الطلاب",
     "add": "تسجيل الطلاب",
+    "number": "عدد الطلاب ",
     "error": {
       "notCSV": "الملف المرفوع ليس بصيغة CSV",
       "moreThanOne": "لا يمكن رفع اكثر من ملف واحد"

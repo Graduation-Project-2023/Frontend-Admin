@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { StudentFormData } from "./StudentFormData";
 import { BASE_URL } from "../../../../shared/API";
@@ -12,7 +12,6 @@ import styles from "./StudentDataPortal.module.scss";
 import { Accordion } from "react-bootstrap";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { FormInput } from "../../../../components/forms/FormInput";
-import { FcSearch } from "react-icons/fc";
 
 export const StudentDataPortal = () => {
   const authContext = useAuth();
@@ -50,9 +49,46 @@ export const StudentDataPortal = () => {
     }
   };
 
+  //Get request to get all students data
+  useEffect(() => {
+    const date1 = new Date();
+    console.log(date1);
+    setUserUX((prev) => ({
+      ...prev,
+
+      list: { loading: true, error: false, errorMsg: "" },
+    }));
+    axios
+      .get(BASE_URL + `/student?college_id=${authContext.college}`)
+      .then((res) => {
+        const date2 = new Date();
+        console.log(date2);
+        setStudentData(res.data);
+        setStudents(res.data);
+        setFilteredStudents(res.data);
+        setUserUX((prev) => ({
+          ...prev,
+          list: {
+            loading: false,
+            error: res.data === 0 ? true : false,
+            errorMsg: res.data === 0 ? "No Students Found" : "",
+          },
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          list: { loading: false, error: true, errorMsg: "error" },
+        }));
+      });
+
+    // eslint-disable-next-line
+  }, []);
+
+  // GET request to get student data by it's id
   useEffect(() => {
     if (studentId !== "register" && studentId !== undefined) {
-      // GET request to get student data by it's id
       setUserUX((prev) => ({
         ...prev,
         form: { ...prev.form, submit: true },
@@ -166,6 +202,7 @@ export const StudentDataPortal = () => {
         return;
       }
       // PUT request to update the current student data
+
       axios
         .put(BASE_URL + `/student/${studentId}`, newUpdatedData)
         .then((res) => {
@@ -210,7 +247,7 @@ export const StudentDataPortal = () => {
               submit: false,
             },
           }));
-          navigate(`/admin_portal/student_data/${res.data.id}`);
+          navigate(`/admin_portal/student_data/${studentId}`);
         })
         .catch((error) => {
           console.log(error);
@@ -224,52 +261,10 @@ export const StudentDataPortal = () => {
             },
           }));
         });
+      console.log(newStudent);
     }
   };
 
-  const handleSearchButtonClick = () => {
-    const date1 = new Date();
-    console.log(date1);
-    setUserUX((prev) => ({
-      ...prev,
-      searchClicked: true,
-      list: { loading: true, error: false, errorMsg: "" },
-    }));
-    searchValue === ""
-      ? axios
-          .get(BASE_URL + `/student?college_id=${authContext.college}`)
-          .then((res) => {
-            const date2 = new Date();
-            console.log(date2);
-            setStudentData(res.data);
-            setFilteredStudents(res.data);
-            setUserUX((prev) => ({
-              ...prev,
-              list: {
-                loading: false,
-                error: res.data === 0 ? true : false,
-                errorMsg: res.data === 0 ? "No Students Found" : "",
-              },
-            }));
-          })
-          .catch((error) => {
-            console.log(error);
-            setUserUX((prev) => ({
-              ...prev,
-              list: { loading: false, error: true, errorMsg: "error" },
-            }));
-          })
-      : console.log("search");
-
-    // : axios.get(BASE_URL + `/student/${searchValue}`).then((res) => {
-    //     setStudentData(res.data);
-    //     setFilteredStudents(res.data);
-    //     setUserUX((prev) => ({
-    //       ...prev,
-    //       listLoading: false,
-    //     }));
-    //   });
-  };
   const handleStudentDelete = (e) => {
     e.preventDefault();
     setUserUX((prev) => ({
@@ -312,7 +307,9 @@ export const StudentDataPortal = () => {
           <h3>
             {t(`registeration.all`)}
             {filteredStudents.length > 0 && (
-              <span>3dd el tolab : {filteredStudents.length}</span>
+              <span>
+                {t(`studentsData.number`)}:{filteredStudents.length}
+              </span>
             )}
           </h3>
           <div className={styles.studentBody_students_search}>
@@ -324,29 +321,21 @@ export const StudentDataPortal = () => {
                 setSearchValue(e.target.value);
               }}
             />
-            <button onClick={handleSearchButtonClick}>Search</button>
           </div>
-          <h1 className={styles.studentBody_students_alertBox}>
-            {!userUX.searchClicked && students.length === 0 && (
-              <>
-                <FcSearch />
-                <div>{t(`registeration.type`)}</div>
-              </>
-            )}
-            {userUX.list.error && userUX.list.errorMsg}
-            {userUX.list.loading && "LOADING"}
-          </h1>
-          {students.length === 0 && (
-            <div className={styles.studentBody_students_list}>
-              {filteredStudents.map((item) => (
-                <li key={item.id}>
+          {userUX.list.error && userUX.list.errorMsg}
+          {userUX.list.loading && "LOADING"}
+
+          <div className={styles.studentBody_students_list}>
+            {filteredStudents.map((item) => (
+              <li key={item.id}>
+                <Link to={`/admin_portal/student_data/${item.id}`}>
                   {i18next.language === "en"
                     ? item.englishName
                     : item.arabicName}
-                </li>
-              ))}
-            </div>
-          )}
+                </Link>
+              </li>
+            ))}
+          </div>
         </div>
         <div className={styles.studentBody_data}>
           <form onSubmit={handleFormSubmit}>

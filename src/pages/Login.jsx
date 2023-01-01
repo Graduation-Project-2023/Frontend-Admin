@@ -26,7 +26,7 @@ export const Login = () => {
     authContext.login("ssss", "ADMIN");
     navigate("/admin_portal");
     // axios
-    //   .post(BASE_URL + "api/login", {
+    //   .post(BASE_URL + "/login", {
     //     email: emailRef.current.value,
     //     password: pwdRef.current.value,
     //   })

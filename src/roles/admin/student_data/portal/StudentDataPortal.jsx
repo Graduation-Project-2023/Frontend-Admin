@@ -49,20 +49,15 @@ export const StudentDataPortal = () => {
     }
   };
 
-  //Get request to get all students data
   useEffect(() => {
-    const date1 = new Date();
-    console.log(date1);
     setUserUX((prev) => ({
       ...prev,
-
       list: { loading: true, error: false, errorMsg: "" },
     }));
+    // GET request to get all students data
     axios
       .get(BASE_URL + `/student?college_id=${authContext.college}`)
       .then((res) => {
-        const date2 = new Date();
-        console.log(date2);
         setStudentData(res.data);
         setStudents(res.data);
         setFilteredStudents(res.data);
@@ -84,11 +79,11 @@ export const StudentDataPortal = () => {
       });
 
     // eslint-disable-next-line
-  }, []);
+  }, [authContext.college.id]);
 
   // GET request to get student data by it's id
   useEffect(() => {
-    if (studentId !== "register" && studentId !== undefined) {
+    if (studentId !== undefined) {
       setUserUX((prev) => ({
         ...prev,
         form: { ...prev.form, submit: true },
@@ -118,17 +113,17 @@ export const StudentDataPortal = () => {
     } else {
       setStudentData([]);
     }
+    // eslint-disable-next-line
   }, [studentId]);
 
   useEffect(() => {
     setFilteredStudents(
-      i18next.language === "en"
-        ? students.filter((item) =>
-            item.englishName?.toLowerCase().includes(searchValue.toLowerCase())
-          )
-        : students.filter((item) =>
-            item.arabicName?.toLowerCase().includes(searchValue.toLowerCase())
-          )
+      students.filter(
+        (item) =>
+          item.englishName?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.arabicName?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.nationalId?.toLowerCase().includes(searchValue.toLowerCase())
+      )
     );
     // eslint-disable-next-line
   }, [searchValue]);
@@ -184,7 +179,7 @@ export const StudentDataPortal = () => {
       form: { ...prev.form, submit: true },
     }));
     // Condition to check whether it's adding a new student or updating the current
-    if (studentId !== "register" && studentId !== undefined) {
+    if (studentId !== undefined) {
       const newUpdatedData = {
         ...updatedData,
         ...dates,
@@ -202,7 +197,6 @@ export const StudentDataPortal = () => {
         return;
       }
       // PUT request to update the current student data
-
       axios
         .put(BASE_URL + `/student/${studentId}`, newUpdatedData)
         .then((res) => {
@@ -328,7 +322,7 @@ export const StudentDataPortal = () => {
           <div className={styles.studentBody_students_list}>
             {filteredStudents.map((item) => (
               <li key={item.id}>
-                <Link to={`/admin_portal/student_data/${item.id}`}>
+                <Link to={`/admin_portal/student_data/info/${item.id}`}>
                   {i18next.language === "en"
                     ? item.englishName
                     : item.arabicName}
@@ -345,10 +339,7 @@ export const StudentDataPortal = () => {
               className="collapseSection"
             >
               {StudentFormData.map((item) => {
-                if (
-                  (studentId === "register" || studentId === undefined) &&
-                  item.addStudent
-                ) {
+                if (studentId === undefined && item.addStudent) {
                   return null;
                 }
                 if (item.male && !genderMale) {
@@ -362,14 +353,12 @@ export const StudentDataPortal = () => {
                         ? "loading..."
                         : item.formData.map((data) => {
                             if (
-                              studentId !== "register" &&
                               studentId !== undefined &&
                               data.name === "password"
                             ) {
                               return null;
                             } else {
                               if (
-                                studentId !== "register" &&
                                 studentId !== undefined &&
                                 data.name === "email"
                               ) {
@@ -411,7 +400,7 @@ export const StudentDataPortal = () => {
               >
                 {t(`common.cancel`)}
               </button>
-              {studentId !== "register" && studentId !== undefined && (
+              {studentId !== undefined && (
                 <button
                   className="form-card-button form-card-button-delete"
                   onClick={handleStudentDelete}

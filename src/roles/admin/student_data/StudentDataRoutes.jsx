@@ -12,7 +12,7 @@ export function StudentDataRoutes() {
           {
             id: 0,
             title: "studentsData.data",
-            path: "register",
+            path: "info",
             locationIndex: "student_data",
           },
           { id: 1, title: "studentsData.add", path: "add" },
@@ -20,7 +20,8 @@ export function StudentDataRoutes() {
       />
       <Routes>
         <Route path="" element={<StudentDataPortal />} />
-        <Route path="/:studentId" element={<StudentDataPortal />} />
+        <Route path="info" element={<StudentDataPortal />} />
+        <Route path="info/:studentId" element={<StudentDataPortal />} />
         <Route path="add" element={<AddStudents />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

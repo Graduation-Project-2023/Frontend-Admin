@@ -36,11 +36,6 @@ export const ProgramsSidebarData = [
   },
   {
     id: "8",
-    title: "academicSidebar.control",
-    path: "control",
-  },
-  {
-    id: "9",
     title: "academicSidebar.graduation",
     path: "graduation",
   },

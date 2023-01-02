@@ -1,4 +1,4 @@
-name: deploy frontend-admin
+name: publish
 
 # https://stackoverflow.com/questions/58139406/only-run-job-on-specific-branch-with-github-actions
 on:
@@ -7,7 +7,7 @@ on:
       - publish
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: SSH key & git
@@ -24,4 +24,4 @@ jobs:
             npm i
             npm run build
             npm run start
-            
+

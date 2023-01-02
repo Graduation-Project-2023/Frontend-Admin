@@ -280,14 +280,14 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Recruitment State",
+            title: "common.recruitmentState",
             name: "recruitmentState",
             type: "text",
             row: true,
           },
           {
             id: 2,
-            title: "Recruitment Number ",
+            title: "common.recruitmentNumber",
             name: "recruitmentNumber",
             type: "number",
             row: true,
@@ -299,14 +299,14 @@ export const StudentFormData = [
         splitRow: [
           {
             id: 1,
-            title: "Army Number",
+            title: "common.armyNumber",
             name: "armyNumber",
             type: "number",
             row: true,
           },
           {
             id: 2,
-            title: "Recruitment Date ",
+            title: "common.recruitmentDate",
             name: "recruitmentDate",
             type: "date",
             row: true,

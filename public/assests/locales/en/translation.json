@@ -67,6 +67,10 @@
     "enrollmentYear": "Enrollment Year",
     "enrollmentEndDate": "Enrollment End Date",
     "totalPrevQualification": "Total Previous Qualification",
+    "recruitmentState": "Recruitment State",
+    "recruitmentNumber": "Recruitment Number",
+    "recruitmentDate": "Recruitment Date",
+    "armyNumber": "Army Number",
     "schoolMarks": "School Marks",
     "schoolSeat": "Seat ID",
     "regCourses": "Registered Courses",
@@ -262,7 +266,7 @@
   "registeration": {
     "formhead": "Academic Registeration",
     "advisor": "Academic Advisor",
-    "number": "Number of Students",
+    "number": "Number of level students",
     "form": "Selecting Academic Advisor",
     "menu": "Level Students",
     "all": "College Students",
@@ -278,6 +282,7 @@
     "section6": "Print Cards",
     "formhead": "Main Data",
     "data": "Students Data",
+    "number": "Number of Students",
     "add": "Students Enrollment",
     "error": {
       "notCSV": "The file must be in CSV form",

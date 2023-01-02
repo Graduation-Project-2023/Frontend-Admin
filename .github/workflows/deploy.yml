@@ -1,0 +1,27 @@
+name: deploy frontend-admin
+
+# https://stackoverflow.com/questions/58139406/only-run-job-on-specific-branch-with-github-actions
+on:
+  push:
+    branches:
+      - publish
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH key & git
+      - uses: actions/checkout@v2
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd admin
+            rm -r *
+            git pull origin publish
+            npm i
+            npm run build
+            npm run start
+            

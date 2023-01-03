@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm i
       - run: CI=false npm run build
+      - run: zip -r -q build.zip build
       - uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}

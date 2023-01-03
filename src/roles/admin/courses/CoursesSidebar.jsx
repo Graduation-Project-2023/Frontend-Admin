@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
-import { BASE_URL } from "../../../shared/API";
+import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 
@@ -24,7 +24,7 @@ export const CoursesSidebar = () => {
     setUserUX((prev) => ({ ...prev, loading: true }));
     // GET request to get all college courses to display it in the sidebar
     axios
-      .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
         setCourses(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import styles from "./ProgramCourses.module.scss";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import axios from "axios";
 import i18next from "i18next";
 
@@ -46,7 +46,7 @@ export const ProgramCourses = () => {
     }));
     // GET request to get all college cousres
     axios
-      .get(BASE_URL + `/courses?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
         setCourses(res.data);
         setUserUX((prev) => ({
@@ -71,7 +71,7 @@ export const ProgramCourses = () => {
     }));
     // GET request to get all the program cousres to display it in the tables
     axios
-      .get(BASE_URL + `/programs/${programId}/program_courses`)
+      .get(ADMIN_URL + `/programs/${programId}/program_courses`)
       .then((res) => {
         setProgramCourses(res.data);
         setUserUX((prev) => ({
@@ -158,7 +158,7 @@ export const ProgramCourses = () => {
       // POST request to add a new program course to the database
       axios
         .post(
-          BASE_URL + `/programs/${programId}/program_courses`,
+          ADMIN_URL + `/programs/${programId}/program_courses`,
           newProgramCourse
         )
         .then((res) => {
@@ -185,7 +185,7 @@ export const ProgramCourses = () => {
       // PUT request to update the current program course
       axios
         .put(
-          BASE_URL + `/programs/${programId}/program_courses/${editRowId}`,
+          ADMIN_URL + `/programs/${programId}/program_courses/${editRowId}`,
           newProgramCourse
         )
         .then((res) => {
@@ -239,7 +239,7 @@ export const ProgramCourses = () => {
     }));
     // GET request to get the current program course to display it in the form
     axios
-      .get(BASE_URL + `/programs/${programId}/program_courses/${item.id}`)
+      .get(ADMIN_URL + `/programs/${programId}/program_courses/${item.id}`)
       .then((res) => {
         setProgramCourseData(res.data);
         if (res.data.prerequisites) {
@@ -271,7 +271,7 @@ export const ProgramCourses = () => {
     }));
     // DELETE request to delete the current program course
     axios
-      .delete(BASE_URL + `/programs/${programId}/program_courses/${course.id}`)
+      .delete(ADMIN_URL + `/programs/${programId}/program_courses/${course.id}`)
       .then((res) => {
         console.log(res);
         setEditRowId(null);

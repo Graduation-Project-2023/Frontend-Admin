@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import styles from "./AddStudents.module.scss";
 
 // Reusable Components and Icons
@@ -50,7 +50,7 @@ export const AddStudents = () => {
         csvData.append("csv", event.dataTransfer.files[0]);
         axios
           .post(
-            BASE_URL + `/student/many?collegeId=${authContext.college.id}`,
+            ADMIN_URL + `/student/many?collegeId=${authContext.college.id}`,
             csvData
           )
           .then((res) => {

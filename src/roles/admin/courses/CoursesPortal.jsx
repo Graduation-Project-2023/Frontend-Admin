@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from "../../../shared/API";
+import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
 import { CoursesFormData } from "./CoursesFormData";
 
@@ -29,7 +29,7 @@ export const CoursesPortal = () => {
       // GET request to get college course by it's id
       setUserUX((prev) => ({ ...prev, loading: true }));
       axios
-        .get(BASE_URL + `/courses/${courseCode}`)
+        .get(ADMIN_URL + `/courses/${courseCode}`)
         .then((res) => {
           console.log(res);
           setCourseData(res.data);
@@ -74,7 +74,7 @@ export const CoursesPortal = () => {
     courseCode !== "add" && courseCode !== undefined
       ? // PUT request to update the current college course
         axios
-          .put(BASE_URL + `/courses/${newCourse.id}`, newCourse)
+          .put(ADMIN_URL + `/courses/${newCourse.id}`, newCourse)
           .then((res) => {
             setCourseData(res.data);
             navigate("/admin_portal/courses");
@@ -91,7 +91,7 @@ export const CoursesPortal = () => {
           })
       : // POST request to create a new college course
         axios
-          .post(BASE_URL + `/courses`, newCourse)
+          .post(ADMIN_URL + `/courses`, newCourse)
           .then((res) => {
             console.log(res);
             setUserUX((prev) => ({ ...prev, loading: false }));
@@ -112,7 +112,7 @@ export const CoursesPortal = () => {
     // DELETE request to delete the current college course
     setUserUX((prev) => ({ ...prev, delete: true }));
     axios
-      .delete(BASE_URL + `/courses/${courseData.id}`)
+      .delete(ADMIN_URL + `/courses/${courseData.id}`)
       .then((res) => {
         console.log(res);
         navigate("/admin_portal/courses");

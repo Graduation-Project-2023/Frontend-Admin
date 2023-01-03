@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../hooks/useAuth";
 import i18next from "i18next";
 import classNames from "classnames";
+import axios from "axios";
+import { BASE_URL } from "../../shared/API";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
@@ -22,6 +24,11 @@ const languages = [
 ];
 
 export const Header = () => {
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    errorMsg: "",
+  });
   const { t } = useTranslation();
   const authContext = useAuth();
   const currentLanguage = languages.find(
@@ -33,18 +40,32 @@ export const Header = () => {
     document.title = t("common.app_title");
   }, [currentLanguage, t]);
 
+  const handleLogout = () => {
+    setUserUX((prev) => ({ ...prev, loading: true }));
+    axios
+      .post(BASE_URL + "/auth/logout")
+      .then((res) => {
+        console.log(res);
+        authContext.logout();
+        setUserUX((prev) => ({ ...prev, loading: false }));
+      })
+      .catch((error) => {
+        setUserUX({
+          loading: false,
+          error: true,
+          errorMsg: error.response.data.message,
+        });
+        console.log(error);
+      });
+  };
+
   return (
     <nav className="main-header">
       <div className="main-header-item">
         {authContext.isLoggedIn && (
           <>
             {/* <FaRegUserCircle /> */}
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                authContext.logout();
-              }}
-            >
+            <button className="btn btn-primary" onClick={handleLogout}>
               {t("common.logout")}
             </button>
           </>

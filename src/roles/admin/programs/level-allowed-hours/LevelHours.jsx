@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import axios from "axios";
 import { LevelHoursData } from "./LevelHoursData";
 
@@ -29,7 +29,7 @@ export const LevelHours = () => {
   useEffect(() => {
     // GET request to get all level allowed hours to display it in the table
     axios
-      .get(BASE_URL + `/programs/${programId}/level_allowed_hours`)
+      .get(ADMIN_URL + `/programs/${programId}/level_allowed_hours`)
       .then((res) => {
         console.log(res.data);
         setLevelHours(res.data);
@@ -67,7 +67,7 @@ export const LevelHours = () => {
     // POST request to create a new level allowed hours
     axios
       .post(
-        BASE_URL + `/programs/${programId}/level_allowed_hours`,
+        ADMIN_URL + `/programs/${programId}/level_allowed_hours`,
         levelAllowedHour
       )
       .then((res) => {

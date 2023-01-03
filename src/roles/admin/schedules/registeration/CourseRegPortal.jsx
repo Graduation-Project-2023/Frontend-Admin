@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 
 // Reusable Components
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
@@ -24,7 +24,7 @@ export const CoursesRegPortal = () => {
     setUserUX((prev) => ({ ...prev, loading: true }));
     // Get request to get all program courses to display it in the menu
     axios
-      .get(BASE_URL + `/programs/${authContext.program.id}/program_courses`)
+      .get(ADMIN_URL + `/programs/${authContext.program.id}/program_courses`)
       .then((res) => {
         setCourses(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));

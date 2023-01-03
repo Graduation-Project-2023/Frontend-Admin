@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import axios from "axios";
 import i18next from "i18next";
 import { CourseRegisterData } from "./CourseRegisterData";
@@ -76,7 +76,7 @@ export const CourseRegister = (props) => {
         // GET request to get the registered course data by it's id
         axios
           .get(
-            BASE_URL +
+            ADMIN_URL +
               `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseId}`
           )
           .then((res) => {
@@ -112,7 +112,7 @@ export const CourseRegister = (props) => {
     }));
     axios
       .get(
-        BASE_URL +
+        ADMIN_URL +
           `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
       )
       .then((res) => {
@@ -197,7 +197,7 @@ export const CourseRegister = (props) => {
       // POST request to add a new course to the current semester
       axios
         .post(
-          BASE_URL +
+          ADMIN_URL +
             `/course_instances/semesters/{{academic_semester_id}}/programs/${authContext.program.id}`,
           course
         )
@@ -226,7 +226,7 @@ export const CourseRegister = (props) => {
       delete course.id;
       axios
         .put(
-          BASE_URL +
+          ADMIN_URL +
             `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseData.id}`,
           course
         )
@@ -261,7 +261,7 @@ export const CourseRegister = (props) => {
     // DELETE request to delete the registered course
     axios
       .delete(
-        BASE_URL +
+        ADMIN_URL +
           `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseData.id}`
       )
       .then((res) => {

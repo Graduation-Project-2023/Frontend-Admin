@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
-import { BASE_URL } from "../../../shared/API";
+import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
 
 // Reusable Components
@@ -27,7 +27,7 @@ export const AcademicPorgramsPortal = () => {
       setUserUX((prev) => ({ ...prev, loading: true }));
       // Get request to get all programs to display it in the menu
       axios
-        .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+        .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
         .then((res) => {
           setUserUX((prev) => ({ ...prev, loading: false }));
           setPrograms(res.data);

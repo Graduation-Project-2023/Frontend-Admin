@@ -30,7 +30,7 @@ const loadingMarkup = <div>LOADINGGGGGGGGGGGGGGGGG..................</div>;
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Suspense fallback={loadingMarkup}>
-    <BrowserRouter basename="/admin-panel">
+    <BrowserRouter basename="/portal">
       <AuthContextProvider>
         <App />
       </AuthContextProvider>

@@ -38,12 +38,12 @@ function App() {
 
         {/* Staff Routes (Private) */}
         <Route element={<LoginRoute allowedRoles={"STAFF"} />}>
-          <Route path="staff_portal/*" element={<StaffRoutes />} />
+          <Route path="staff/*" element={<StaffRoutes />} />
         </Route>
 
         {/* Admin Routes (Private) */}
         <Route element={<LoginRoute allowedRoles={"ADMIN"} />}>
-          <Route path="admin_portal/*" element={<AdminRoutes />} />
+          <Route path="admin/*" element={<AdminRoutes />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

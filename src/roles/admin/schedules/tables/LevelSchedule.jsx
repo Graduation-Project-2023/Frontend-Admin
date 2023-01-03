@@ -178,7 +178,7 @@ export const LevelSchedule = () => {
           levels: { ...prev.levels, loading: false },
         }));
         if (res.data.map((obj) => obj.level.id).includes(id)) {
-          navigate(`/admin_portal/study_schedules/tables/${id}`);
+          navigate(`/portal/admin/study_schedules/tables/${id}`);
         } else {
           setUserUX((prev) => ({
             ...prev,
@@ -201,7 +201,7 @@ export const LevelSchedule = () => {
                 ...prev,
                 levelTableCreate: { ...prev.levelTableCreate, loading: false },
               }));
-              navigate(`/admin_portal/study_schedules/tables/${id}`);
+              navigate(`/portal/admin/study_schedules/tables/${id}`);
             })
             .catch((error) => {
               console.log(error);

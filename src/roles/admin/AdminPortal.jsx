@@ -7,6 +7,7 @@ import { ModalPopup } from "../../components/popups/ModalPopup";
 
 export const AdminPortal = () => {
   const [colleges, setColleges] = useState([]);
+  // eslint-disable-next-line
   const [showModal, setShowModal] = useState(true);
   const [userUX, setUserUX] = useState({ error: false, errorMsg: "" });
 
@@ -14,6 +15,7 @@ export const AdminPortal = () => {
     axios
       .get(ADMIN_URL + "/colleges")
       .then((res) => {
+        console.log(res.data);
         setUserUX({ error: false, errorMsg: "" });
         setColleges(res.data);
       })
@@ -25,17 +27,15 @@ export const AdminPortal = () => {
   }, []);
 
   return (
-    showModal && (
-      <ModalPopup
-        error={{ state: userUX.error, message: userUX.errorMsg }}
-        title={"academicMain.faculty"}
-        searchable={true}
-        list={{ state: true, data: colleges, path: "academic_programs" }}
-        closeModal={() => {
-          // FORCE THE USE TO SELECT A COLLEGE
-          setShowModal(false);
-        }}
-      />
-    )
+    <ModalPopup
+      error={{ state: userUX.error, message: userUX.errorMsg }}
+      title={"academicMain.faculty"}
+      searchable={true}
+      list={{ state: true, data: colleges, path: "academic_programs" }}
+      closeModal={() => {
+        // FORCE THE USE TO SELECT A COLLEGE
+        // setShowModal(false);
+      }}
+    />
   );
 };

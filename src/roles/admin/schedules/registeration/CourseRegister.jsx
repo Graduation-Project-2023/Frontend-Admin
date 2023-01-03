@@ -140,11 +140,11 @@ export const CourseRegister = (props) => {
   const handleListClick = (state, course) => {
     if (state === "add") {
       navigate(
-        `/admin_portal/study_schedules/register_course/add/${course.id}`
+        `/portal/admin/study_schedules/register_course/add/${course.id}`
       );
     } else if (state === "edit") {
       navigate(
-        `/admin_portal/study_schedules/register_course/edit/${course.id}`
+        `/portal/admin/study_schedules/register_course/edit/${course.id}`
       );
     }
   };
@@ -236,7 +236,7 @@ export const CourseRegister = (props) => {
             ...prev,
             form: { ...prev.form, submit: false },
           }));
-          // navigate("/admin_portal/study_schedules/register_course");
+          // navigate("/portal/admin/study_schedules/register_course");
         })
         .catch((error) => {
           console.log(error);

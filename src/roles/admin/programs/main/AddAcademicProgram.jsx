@@ -95,7 +95,7 @@ export const AddAcademicProgram = () => {
       .post(ADMIN_URL + `/programs`, program)
       .then((res) => {
         setUserUX((prev) => ({ ...prev, submitLoading: false }));
-        navigate(`/admin_portal/academic_programs/${res.data.id}/main`);
+        navigate(`/portal/admin/academic_programs/${res.data.id}/main`);
       })
       .catch((error) => {
         setUserUX((prev) => ({
@@ -113,7 +113,7 @@ export const AddAcademicProgram = () => {
       <Sidebar
         sideData={programsData.map((obj) => ({
           ...obj,
-          path: `/admin_portal/academic_programs/${obj.id}/main`,
+          path: `/portal/admin/academic_programs/${obj.id}/main`,
         }))}
         backendData={true}
         activeNav={false}

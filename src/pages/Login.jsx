@@ -31,7 +31,7 @@ export const Login = () => {
         console.log(res);
         setUserUX((prev) => ({ ...prev, submitLoading: false }));
         authContext.login("ssss", "ADMIN");
-        navigate("/admin_portal");
+        navigate("/portal/admin");
       })
       .catch((error) => {
         setUserUX({

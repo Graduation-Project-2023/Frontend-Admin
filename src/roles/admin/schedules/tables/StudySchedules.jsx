@@ -81,7 +81,7 @@ export const StudySchedules = () => {
             ...prev,
             level: { ...prev.level, loading: false },
           }));
-          navigate(`/admin_portal/study_schedules/tables/${id}`);
+          navigate(`/portal/admin/study_schedules/tables/${id}`);
         })
         .catch((error) => {
           console.log(error);
@@ -95,7 +95,7 @@ export const StudySchedules = () => {
           }));
         });
     } else {
-      navigate(`/admin_portal/study_schedules/tables/${id}`);
+      navigate(`/portal/admin/study_schedules/tables/${id}`);
     }
   };
 

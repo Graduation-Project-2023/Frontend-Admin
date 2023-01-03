@@ -31,4 +31,4 @@ jobs:
             cd admin
             git pull origin publish
             npm i
-            npm run build
+            unzip build.zip

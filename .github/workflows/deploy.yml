@@ -38,4 +38,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd admin
-            unzip -o /var/www/project-io.engineer/build.zip -d /var/www/project-io.engineer/build
+            unzip -o /var/www/project-io.engineer/build.zip -d /var/www/project-io.engineer/

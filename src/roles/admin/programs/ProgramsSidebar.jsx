@@ -67,7 +67,7 @@ export const ProgramsSidebar = () => {
               }
               return (
                 <Link
-                  to={`/admin_portal/academic_programs/${item.id}/main`}
+                  to={`/portal/admin/academic_programs/${item.id}/main`}
                   onClick={() => {
                     authContext.changeProgram(item);
                   }}

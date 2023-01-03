@@ -241,7 +241,7 @@ export const StudentDataPortal = () => {
               submit: false,
             },
           }));
-          navigate(`/admin_portal/student_data/${studentId}`);
+          navigate(`/portal/admin/student_data/${studentId}`);
         })
         .catch((error) => {
           console.log(error);
@@ -322,7 +322,7 @@ export const StudentDataPortal = () => {
           <div className={styles.studentBody_students_list}>
             {filteredStudents.map((item) => (
               <li key={item.id}>
-                <Link to={`/admin_portal/student_data/info/${item.id}`}>
+                <Link to={`/portal/admin/student_data/info/${item.id}`}>
                   {i18next.language === "en"
                     ? item.englishName
                     : item.arabicName}

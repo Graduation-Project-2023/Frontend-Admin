@@ -7,7 +7,7 @@ import { ModalPopup } from "../../components/popups/ModalPopup";
 
 export const AdminPortal = () => {
   const [colleges, setColleges] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [userUX, setUserUX] = useState({ error: false, errorMsg: "" });
 
   useEffect(() => {

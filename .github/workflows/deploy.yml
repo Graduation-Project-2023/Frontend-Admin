@@ -28,8 +28,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: "build.zip"
-          target: "admin"
-      
+          target: "/var/www/project-io.engineer/"
+
       - name: unzip the file on the destination server
         uses: appleboy/ssh-action@master
         with:
@@ -38,4 +38,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd admin
-            unzip -o build.zip
+            unzip -o /var/www/project-io.engineer/build.zip -d /var/www/project-io.engineer/build

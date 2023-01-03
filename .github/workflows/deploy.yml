@@ -1,6 +1,6 @@
 name: publish
 
-# https://stackoverflow.com/questions/58139406/only-run-job-on-specific-branch-with-github-actions
+# https://stackoverflow.com/questions/57762452/react-scripts-build-is-using-1-gb-of-ram
 on:
   push:
     branches:
@@ -11,10 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: install dependencies
       - run: npm i
+
+      - name: run the build script and ignore warnings
       - run: CI=false npm run build
+
+      - name: zip the build folder
       - run: zip -r -q build.zip build
-      - name: copy file via ssh password
+
+      - name: send the zip file via ssh
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -22,6 +29,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "build.zip"
           target: "admin"
+      
+      - name: unzip the file on the destination server
       - uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}

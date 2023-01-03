@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { LoginRoute } from "./routes/PrivateRoutes";
+import axios from "axios";
 ////////// Styles //////////
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
@@ -20,6 +21,7 @@ import { TestingPage } from "./common/TestingPage";
 import { TableSkeletonLoader } from "./components/loaders/TableSkeletonLoader";
 
 function App() {
+  axios.defaults.withCredentials = true;
   return (
     <div className="App">
       <Header />

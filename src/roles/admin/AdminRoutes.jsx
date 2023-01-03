@@ -8,7 +8,6 @@ import { StudentDataRoutes } from "./student_data/StudentDataRoutes";
 import { RegisterationPortal } from "./registeration/RegisterationPortal";
 import { RegisterationRoutes } from "./registeration/RegisterationRoutes";
 import { StudySchedulesRoutes } from "./schedules/StudySchedulesRoutes";
-import { LevelHours } from "./programs/level-allowed-hours/LevelHours";
 import { NotFound } from "../../pages/NotFound";
 import { CoursesRoutes } from "./courses/CoursesRoutes";
 
@@ -29,12 +28,54 @@ export function AdminRoutes() {
         <Route path="study_schedules/*" element={<StudySchedulesRoutes />} />
         <Route path="registeration" element={<RegisterationPortal />} />
         <Route path="registeration/*" element={<RegisterationRoutes />} />
-        <Route path="exams" element={<LevelHours />} />
-        <Route path="results" element={<LevelHours />} />
-        <Route path="finance" element={<LevelHours />} />
-        <Route path="absence" element={<LevelHours />} />
-        <Route path="supervision" element={<LevelHours />} />
-        <Route path="control_system" element={<LevelHours />} />
+        <Route
+          path="exams"
+          element={
+            <h1 className="text-center alert alert-info m-5" role="alert">
+              FUTURE WORK
+            </h1>
+          }
+        />
+        <Route
+          path="results"
+          element={
+            <h1 className="text-center alert alert-info m-5" role="alert">
+              FUTURE WORK
+            </h1>
+          }
+        />
+        <Route
+          path="finance"
+          element={
+            <h1 className="text-center alert alert-info m-5" role="alert">
+              FUTURE WORK
+            </h1>
+          }
+        />
+        <Route
+          path="absence"
+          element={
+            <h1 className="text-center alert alert-info m-5" role="alert">
+              FUTURE WORK
+            </h1>
+          }
+        />
+        <Route
+          path="supervision"
+          element={
+            <h1 className="text-center alert alert-info m-5" role="alert">
+              FUTURE WORK
+            </h1>
+          }
+        />
+        <Route
+          path="control_system"
+          element={
+            <h1 className="text-center alert alert-info m-5" role="alert">
+              FUTURE WORK
+            </h1>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

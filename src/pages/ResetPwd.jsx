@@ -76,7 +76,7 @@ export const ResetPwd = () => {
         setUserUX((prev) => ({ ...prev, loading: false }));
         setPwd(true);
         setTimeout(() => {
-          navigate("/login");
+          navigate("/admin/login");
         }, 2000);
       })
       .catch((error) => {

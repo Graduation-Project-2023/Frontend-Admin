@@ -1,10 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../shared/API";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import Cookies from "js-cookie";
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -17,6 +16,13 @@ export const Login = () => {
     error: false,
     errorMsg: "",
   });
+
+  useEffect(() => {
+    if (authContext.isLoggedIn) {
+      navigate("/admin");
+    }
+    //eslint-disable-next-line
+  }, [authContext.isLoggedIn]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -37,7 +43,7 @@ export const Login = () => {
         setUserUX({
           submitLoading: false,
           error: true,
-          errorMsg: "hhhhhhhhhhh",
+          errorMsg: "erorrrrrrrrrrr",
         });
         console.log(error);
       });

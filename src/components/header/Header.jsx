@@ -8,8 +8,6 @@ import { BASE_URL } from "../../shared/API";
 
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
-// eslint-disable-next-line
-import { FaRegUserCircle } from "react-icons/fa";
 
 const languages = [
   {
@@ -63,12 +61,10 @@ export const Header = () => {
     <nav className="main-header">
       <div className="main-header-item">
         {authContext.isLoggedIn && (
-          <>
-            {/* <FaRegUserCircle /> */}
-            <button className="btn btn-primary" onClick={handleLogout}>
-              {t("common.logout")}
-            </button>
-          </>
+          <button className="btn btn-primary" onClick={handleLogout}>
+            {t("common.logout")}
+            {userUX.loading && <h1>loading</h1>}
+          </button>
         )}
       </div>
       <div className="main-header-item">

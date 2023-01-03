@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../shared/API";
+import { ADMIN_URL } from "../shared/API";
 import { useTranslation } from "react-i18next";
 
 export const ResetPwd = () => {
@@ -67,7 +67,7 @@ export const ResetPwd = () => {
     e.preventDefault();
     setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     axios
-      .post(BASE_URL + "api/reset_password/" + token, {
+      .post(ADMIN_URL + "api/reset_password/" + token, {
         password: input.password,
         confpassword: input.confirmPassword,
       })

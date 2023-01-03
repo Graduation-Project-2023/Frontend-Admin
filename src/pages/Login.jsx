@@ -1,12 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// eslint-disable-next-line
 import axios from "axios";
-// eslint-disable-next-line
 import { BASE_URL } from "../shared/API";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import Cookies from "js-cookie";
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -23,27 +21,26 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setUserUX((prev) => ({ ...prev, submitLoading: true, error: false }));
-    authContext.login("ssss", "ADMIN");
-    navigate("/admin_portal");
-    // axios
-    //   .post(BASE_URL + "/login", {
-    //     email: emailRef.current.value,
-    //     password: pwdRef.current.value,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setUserUX((prev) => ({ ...prev, submitLoading: false }));
-    //     // authContext.login("ssss", "STUDENT");
-    //     // navigate("/student_portal");
-    //   })
-    //   .catch((error) => {
-    //     setUserUX({
-    //       submitLoading: false,
-    //       error: true,
-    //       errorMsg: error.response.data.message,
-    //     });
-    //     console.log(error);
-    //   });
+    const userCredentials = {
+      email: emailRef.current.value,
+      password: pwdRef.current.value,
+    };
+    axios
+      .post(BASE_URL + "/auth/admin_login", userCredentials)
+      .then((res) => {
+        console.log(res);
+        setUserUX((prev) => ({ ...prev, submitLoading: false }));
+        authContext.login("ssss", "ADMIN");
+        navigate("/admin_portal");
+      })
+      .catch((error) => {
+        setUserUX({
+          submitLoading: false,
+          error: true,
+          errorMsg: "hhhhhhhhhhh",
+        });
+        console.log(error);
+      });
   };
 
   return (

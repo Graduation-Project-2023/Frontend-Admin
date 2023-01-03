@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import { Link } from "react-router-dom";
-import { BASE_URL } from "../../../shared/API";
+import { ADMIN_URL } from "../../../shared/API";
 import i18next from "i18next";
 import axios from "axios";
 import { ProgramsSidebarData } from "./ProgramsSidebarData";
@@ -21,7 +21,7 @@ export const ProgramsSidebar = () => {
   useEffect(() => {
     setUserUX({ loading: true, error: false, errorMsg: "" });
     axios
-      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
         setPrograms(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));

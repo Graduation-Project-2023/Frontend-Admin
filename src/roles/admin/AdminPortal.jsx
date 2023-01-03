@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BASE_URL } from "../../shared/API";
+import { ADMIN_URL } from "../../shared/API";
 import axios from "axios";
 
 // Reusable Components
@@ -12,7 +12,7 @@ export const AdminPortal = () => {
 
   useEffect(() => {
     axios
-      .get(BASE_URL + "/colleges")
+      .get(ADMIN_URL + "/colleges")
       .then((res) => {
         setUserUX({ error: false, errorMsg: "" });
         setColleges(res.data);
@@ -25,16 +25,17 @@ export const AdminPortal = () => {
   }, []);
 
   return (
-    <ModalPopup
-      error={{ state: userUX.error, message: userUX.errorMsg }}
-      title={"academicMain.faculty"}
-      searchable={true}
-      list={{ state: true, data: colleges, path: "academic_programs" }}
-      closeModal={() => {
-        // FORCE THE USE TO SELECT A COLLEGE
-        // setShowModal(false);
-        console.log("hhhhhhhhh");
-      }}
-    />
+    showModal && (
+      <ModalPopup
+        error={{ state: userUX.error, message: userUX.errorMsg }}
+        title={"academicMain.faculty"}
+        searchable={true}
+        list={{ state: true, data: colleges, path: "academic_programs" }}
+        closeModal={() => {
+          // FORCE THE USE TO SELECT A COLLEGE
+          setShowModal(false);
+        }}
+      />
+    )
   );
 };

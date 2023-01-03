@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import axios from "axios";
 import { AcademicGradesData } from "./AcademicGradesData";
 
@@ -26,7 +26,7 @@ export const AcademicGrades = () => {
   useEffect(() => {
     // GET request to get all GPA allowed hours to display it in the table
     axios
-      .get(BASE_URL + `/programs/${programId}/grades`)
+      .get(ADMIN_URL + `/programs/${programId}/grades`)
       .then((res) => {
         setGrades(res.data);
         setLoading(false);
@@ -56,7 +56,7 @@ export const AcademicGrades = () => {
 
     // POST request to create a new academic grade
     axios
-      .post(BASE_URL + `/programs/${programId}/grades`, grade)
+      .post(ADMIN_URL + `/programs/${programId}/grades`, grade)
       .then((res) => {
         console.log(res);
         rows.push(grade);

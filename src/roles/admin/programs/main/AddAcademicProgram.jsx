@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import axios from "axios";
 import i18next from "i18next";
 import { AcademicFormData } from "./AcademicFormData";
@@ -35,7 +35,7 @@ export const AddAcademicProgram = () => {
     setUserUX((prev) => ({ ...prev, siderbarLoading: true }));
     // GET request to get all programs to display it in the sidebar
     axios
-      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
         setUserUX((prev) => ({ ...prev, siderbarLoading: false }));
         setProrgramsData(res.data);
@@ -92,7 +92,7 @@ export const AddAcademicProgram = () => {
     const program = { ...newProgram, collegeId: authContext.college.id };
     // POST request to create a new program
     axios
-      .post(BASE_URL + `/programs`, program)
+      .post(ADMIN_URL + `/programs`, program)
       .then((res) => {
         setUserUX((prev) => ({ ...prev, submitLoading: false }));
         navigate(`/admin_portal/academic_programs/${res.data.id}/main`);

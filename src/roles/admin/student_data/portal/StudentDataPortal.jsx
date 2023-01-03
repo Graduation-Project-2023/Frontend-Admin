@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { StudentFormData } from "./StudentFormData";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
 import i18next from "i18next";
@@ -56,7 +56,7 @@ export const StudentDataPortal = () => {
     }));
     // GET request to get all students data
     axios
-      .get(BASE_URL + `/student?college_id=${authContext.college}`)
+      .get(ADMIN_URL + `/student?college_id=${authContext.college}`)
       .then((res) => {
         setStudentData(res.data);
         setStudents(res.data);
@@ -89,7 +89,7 @@ export const StudentDataPortal = () => {
         form: { ...prev.form, submit: true },
       }));
       axios
-        .get(BASE_URL + `/student/${studentId}`)
+        .get(ADMIN_URL + `/student/${studentId}`)
         .then((res) => {
           console.log(res.data);
           studentDataSetter(res.data);
@@ -198,7 +198,7 @@ export const StudentDataPortal = () => {
       }
       // PUT request to update the current student data
       axios
-        .put(BASE_URL + `/student/${studentId}`, newUpdatedData)
+        .put(ADMIN_URL + `/student/${studentId}`, newUpdatedData)
         .then((res) => {
           console.log(res.data);
           studentDataSetter(res.data);
@@ -230,7 +230,7 @@ export const StudentDataPortal = () => {
       };
       // POST request to create a new student
       axios
-        .post(BASE_URL + `/student`, newStudent)
+        .post(ADMIN_URL + `/student`, newStudent)
         .then((res) => {
           console.log(res);
           setUpdatedData({});
@@ -269,7 +269,7 @@ export const StudentDataPortal = () => {
       },
     }));
     axios
-      .delete(BASE_URL + `/student/${studentId}`)
+      .delete(ADMIN_URL + `/student/${studentId}`)
       .then((res) => {
         console.log(res);
         setUserUX((prev) => ({

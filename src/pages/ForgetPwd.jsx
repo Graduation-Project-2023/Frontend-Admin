@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../shared/API";
+import { ADMIN_URL } from "../shared/API";
 import { useTranslation } from "react-i18next";
 
 export const ForgetPwd = () => {
@@ -17,7 +17,7 @@ export const ForgetPwd = () => {
     e.preventDefault();
     setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     axios
-      .post(BASE_URL + "api/forgot_password", {
+      .post(ADMIN_URL + "api/forgot_password", {
         email: emailRef.current.value,
       })
       .then((res) => {

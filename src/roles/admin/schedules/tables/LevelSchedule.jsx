@@ -4,7 +4,7 @@ import { useAuth } from "../../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import i18next from "i18next";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import styles from "../../../../components/table/schedule/DayPeriodTable.module.scss";
 
 // Reusable Components
@@ -48,7 +48,7 @@ export const LevelSchedule = () => {
     // GET request to get table data by it's level and semester id
     axios
       .get(
-        BASE_URL +
+        ADMIN_URL +
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
       )
       .then((res) => {
@@ -78,7 +78,7 @@ export const LevelSchedule = () => {
     // GET request to get all program courses that are registered on the current level
     axios
       .get(
-        BASE_URL +
+        ADMIN_URL +
           `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
       )
       .then((res) => {
@@ -169,7 +169,7 @@ export const LevelSchedule = () => {
     // GET request to get all levels that have a table created
     axios
       .get(
-        BASE_URL +
+        ADMIN_URL +
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
       )
       .then((res) => {
@@ -192,7 +192,7 @@ export const LevelSchedule = () => {
           };
           axios
             .post(
-              BASE_URL +
+              ADMIN_URL +
                 `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
               levelTableData
             )
@@ -335,7 +335,7 @@ export const LevelSchedule = () => {
     // PUT request to update the table data by it's level and semester id
     axios
       .put(
-        BASE_URL +
+        ADMIN_URL +
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${tableId}`,
         levelTableData
       )

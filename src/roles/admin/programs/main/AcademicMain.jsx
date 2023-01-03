@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import axios from "axios";
 import i18next from "i18next";
 import { AcademicFormData } from "./AcademicFormData";
@@ -31,7 +31,7 @@ export const AcademicMain = () => {
   useEffect(() => {
     // Get request to get a program by it's id
     axios
-      .get(BASE_URL + `/programs/${programId}`)
+      .get(ADMIN_URL + `/programs/${programId}`)
       .then((res) => {
         setProgramData(res.data);
         res.data.system === "CREDIT"
@@ -49,7 +49,7 @@ export const AcademicMain = () => {
   useEffect(() => {
     // GET request to get all programs to display it in the pre programs selection
     axios
-      .get(BASE_URL + `/programs?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
         setAllPrograms(res.data);
         setLoading(false);
@@ -98,7 +98,7 @@ export const AcademicMain = () => {
     // PUT request to update the current program
     setLoading(true);
     axios
-      .put(BASE_URL + `/programs/${programId}`, updatedData)
+      .put(ADMIN_URL + `/programs/${programId}`, updatedData)
       .then((res) => {
         setLoading(false);
         navigate("/admin_portal/academic_programs");

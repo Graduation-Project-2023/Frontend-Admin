@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from "../../../../shared/API";
+import { ADMIN_URL } from "../../../../shared/API";
 import axios from "axios";
 import { AcademicLevelsData } from "./AcademicLevelsData";
 
@@ -26,7 +26,7 @@ export const AcademicLevels = () => {
   useEffect(() => {
     // GET request to get all levels of a specific program
     axios
-      .get(BASE_URL + `/programs/${programId}/levels`)
+      .get(ADMIN_URL + `/programs/${programId}/levels`)
       .then((res) => {
         setLevels(res.data);
         setLoading(false);
@@ -60,7 +60,7 @@ export const AcademicLevels = () => {
     };
     // POST request to add a new academic level to the database
     axios
-      .post(BASE_URL + `/programs/${programId}/levels`, acadmicLevel)
+      .post(ADMIN_URL + `/programs/${programId}/levels`, acadmicLevel)
       .then((res) => {
         console.log(res.data);
         rows.push(res.data);

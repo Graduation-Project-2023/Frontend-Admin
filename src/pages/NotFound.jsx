@@ -10,7 +10,7 @@ export const NotFound = () => {
       mainText={t("common.notfound_main")}
       secondaryText={t("common.notfound_secondary")}
       btnText={t("common.notfound_button")}
-      navigateTo={"/login"}
+      navigateTo={"/admin/login"}
     />
   );
 };

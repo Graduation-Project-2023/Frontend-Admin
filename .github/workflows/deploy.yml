@@ -14,6 +14,15 @@ jobs:
       - run: npm i
       - run: CI=false npm run build
       - run: zip -r -q build.zip build
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: "build.zip"
+          target: "admin"
       - uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}

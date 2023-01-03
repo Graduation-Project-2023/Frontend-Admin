@@ -1,4 +1,5 @@
 {
+  "homepage": ".",
   "name": "grad-first-version",
   "version": "0.1.0",
   "private": true,

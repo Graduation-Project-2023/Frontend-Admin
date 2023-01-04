@@ -13,11 +13,20 @@ export const Table = (props) => {
   const deletableItems = props.deletableItems;
   const { t } = useTranslation();
   const [data, setData] = useState(props.rowItems);
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    erroeMsg: "",
+  });
   const [editRowData, setEditRowData] = useState({
     ...data[0],
   });
 
   const [editRowId, setEditRowId] = useState(null);
+
+  useEffect(() => {
+    setUserUX(props.userUX);
+  }, [props.userUX]);
 
   useEffect(() => {
     setData(props.rowItems);
@@ -44,6 +53,7 @@ export const Table = (props) => {
     const object = editRowData;
     delete object.id;
     // PUT request to update the current object
+    setUserUX((prev) => ({ ...prev, loading: true }));
     axios
       .put(BASE_URL + props.requestPath + editRowId, object)
       .then((res) => {
@@ -57,9 +67,16 @@ export const Table = (props) => {
         newData[index] = editedRow;
         setData(newData);
         setEditRowId(null);
+        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          errorMsg: "error",
+        }));
       });
   };
 
@@ -81,6 +98,7 @@ export const Table = (props) => {
   const handleDeleteClick = (rowId) => {
     const newData = [...data];
     // DELETE request to delete the current object
+    setUserUX((prev) => ({ ...prev, loading: true }));
     axios
       .delete(BASE_URL + props.requestPath + rowId)
       .then((res) => {
@@ -88,9 +106,16 @@ export const Table = (props) => {
         const index = data.findIndex((item) => item.id === rowId);
         newData.splice(index, 1);
         setData(newData);
+        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          errorMsg: "error",
+        }));
       });
   };
 
@@ -119,31 +144,38 @@ export const Table = (props) => {
             </tr>
           </thead>
 
-          <tbody>
-            {data.map((item) => {
-              return (
-                <tr
-                  key={item.id || (Math.random() + 1).toString(36).substring(7)}
-                >
-                  {editRowId === item.id ? (
-                    <EditableRow
-                      editRowData={editRowData}
-                      handleEditFormChange={handleEditFormChange}
-                      handleCancelClick={handleCancelClick}
-                    />
-                  ) : (
-                    <ReadOnlyRow
-                      rowData={item}
-                      handleEditClick={handleEditClick}
-                      handleDeleteClick={handleDeleteClick}
-                      editableRow={editableItems}
-                      deletableRow={deletableItems}
-                    />
-                  )}
-                </tr>
-              );
-            })}
-          </tbody>
+          {userUX.error && userUX.errorMsg}
+          {userUX.loading ? (
+            "loading...'"
+          ) : (
+            <tbody>
+              {data.map((item) => {
+                return (
+                  <tr
+                    key={
+                      item.id || (Math.random() + 1).toString(36).substring(7)
+                    }
+                  >
+                    {editRowId === item.id ? (
+                      <EditableRow
+                        editRowData={editRowData}
+                        handleEditFormChange={handleEditFormChange}
+                        handleCancelClick={handleCancelClick}
+                      />
+                    ) : (
+                      <ReadOnlyRow
+                        rowData={item}
+                        handleEditClick={handleEditClick}
+                        handleDeleteClick={handleDeleteClick}
+                        editableRow={editableItems}
+                        deletableRow={deletableItems}
+                      />
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
         </table>
       </form>
     </div>

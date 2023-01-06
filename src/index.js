@@ -22,7 +22,7 @@ i18n
       order: ["path", "cookie", "htmlTag"],
       caches: ["cookie"],
     },
-    backend: { loadPath: "/assests/locales/{{lng}}/translation.json" },
+    backend: { loadPath: "/portal/assests/locales/{{lng}}/translation.json" },
   });
 
 const loadingMarkup = <div>LOADINGGGGGGGGGGGGGGGGG..................</div>;
@@ -30,7 +30,7 @@ const loadingMarkup = <div>LOADINGGGGGGGGGGGGGGGGG..................</div>;
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Suspense fallback={loadingMarkup}>
-    <BrowserRouter basename="/portal">
+    <BrowserRouter basename="portal">
       <AuthContextProvider>
         <App />
       </AuthContextProvider>

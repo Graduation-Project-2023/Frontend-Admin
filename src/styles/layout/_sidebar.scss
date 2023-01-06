@@ -75,15 +75,15 @@
     & div {
       width: 80%;
     }
-    & a {
-      display: block;
-      text-decoration: none;
-      text-align: start;
-      border-bottom: 1px solid $White5;
-      padding: 1rem;
-      @include font(1rem, 1.3rem);
-      &:hover {
-        @include hover($Blue2, white, "");
+    &-list {
+      padding: 0;
+      & a {
+        display: block;
+        text-decoration: none;
+        text-align: start;
+        border-bottom: 1px solid $White5;
+        padding: 1rem;
+        @include font(1rem, 1.3rem);
       }
     }
   }

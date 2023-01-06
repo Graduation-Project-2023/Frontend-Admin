@@ -53,8 +53,8 @@ export const ProgramsSidebar = () => {
       }
       sidebarTitle={"portal.programs"}
       options={
-        <Dropdown className="sidebarBtn">
-          <Dropdown.Toggle>
+        <Dropdown className="sidebarBtn" autoClose={true}>
+          <Dropdown.Toggle id="dropdown-autoclose-true">
             {i18next.language === "en"
               ? authContext.program.englishName
               : authContext.program.arabicName}
@@ -67,17 +67,19 @@ export const ProgramsSidebar = () => {
                 return null;
               }
               return (
-                <Link
-                  to={`/admin/academic_programs/${item.id}/main`}
-                  onClick={() => {
-                    authContext.changeProgram(item);
-                  }}
-                  key={item.id}
-                >
-                  {i18next.language === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </Link>
+                <Dropdown.Item className="sidebarBtn-list">
+                  <Link
+                    to={`/admin/academic_programs/${item.id}/main`}
+                    onClick={() => {
+                      authContext.changeProgram(item);
+                    }}
+                    key={item.id}
+                  >
+                    {i18next.language === "en"
+                      ? item.englishName
+                      : item.arabicName}
+                  </Link>
+                </Dropdown.Item>
               );
             })}
           </Dropdown.Menu>

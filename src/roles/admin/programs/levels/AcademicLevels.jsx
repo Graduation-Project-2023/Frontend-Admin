@@ -120,7 +120,7 @@ export const AcademicLevels = () => {
         rowItems={levels}
         editableItems={true}
         deletableItems={true}
-        requestPath={`/programs/${authContext.program.id}/levels/`}
+        requestPath={`/admin/programs/${authContext.program.id}/levels/`}
         userUX={userUX.table}
       />
     </SidebarContainer>

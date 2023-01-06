@@ -101,7 +101,7 @@ export const AcademicMain = () => {
       .put(ADMIN_URL + `/programs/${programId}`, updatedData)
       .then((res) => {
         setLoading(false);
-        navigate("/portal/admin/academic_programs");
+        navigate("/admin/academic_programs");
       })
       .catch((error) => {
         setLoading(false);

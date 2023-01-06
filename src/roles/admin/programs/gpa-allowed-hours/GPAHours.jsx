@@ -15,16 +15,13 @@ import { Table } from "../../../../components/table/Table";
 export const GPAHours = () => {
   const [gpaHoursData, setGPAHoursData] = useState([]);
   const [allGPAData, setAllGPAData] = useState([]);
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
+  const [userUX, setUserUX] = useState({
+    table: { loading: false, error: false, errorMsg: "" },
+    form: { loading: false, error: false, errorMsg: "" },
+  });
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
-  const [userUX, setUserUX] = useState({
-    loading: false,
-    error: false,
-    errorMsg: "",
-  });
 
   useEffect(() => {
     // GET request to get all GPA allowed hours to display it in the table
@@ -32,10 +29,8 @@ export const GPAHours = () => {
       .get(ADMIN_URL + `/programs/${programId}/gpa_allowed_hours`)
       .then((res) => {
         console.log(res);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
     // eslint-disable-next-line
@@ -54,7 +49,6 @@ export const GPAHours = () => {
   };
 
   const handleFormSubmit = (e) => {
-    setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     e.preventDefault();
     const rows = [...allGPAData];
     const gpaAllowedHour = {
@@ -72,15 +66,9 @@ export const GPAHours = () => {
         console.log(res);
         rows.push(gpaAllowedHour);
         setAllGPAData(rows);
-        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
-        setUserUX({
-          loading: false,
-          error: true,
-          errorMsg: error.response.data.message,
-        });
       });
   };
 
@@ -103,16 +91,16 @@ export const GPAHours = () => {
             );
           })}
           {userUX.loading ? (
-              <h1>LOADING</h1>
-            ) : (
-              <button
-            type="submit"
-            className="form-card-button form-card-button-save"
-          >
-            {t(`common.add`)}
-          </button>   
-            )}
-        
+            <h1>LOADING</h1>
+          ) : (
+            <button
+              type="submit"
+              className="form-card-button form-card-button-save"
+            >
+              {t(`common.add`)}
+            </button>
+          )}
+
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"
@@ -132,7 +120,8 @@ export const GPAHours = () => {
         rowItems={allGPAData}
         editableItems={true}
         deletableItems={true}
-        requestPath={`/programs/${authContext.program.id}/gpa_allowed_hours/`}
+        requestPath={`/admin/programs/${authContext.program.id}/gpa_allowed_hours/`}
+        userUX={userUX.table}
       />
     </SidebarContainer>
   );

@@ -81,7 +81,7 @@ export const StudySchedules = () => {
             ...prev,
             level: { ...prev.level, loading: false },
           }));
-          navigate(`/portal/admin/study_schedules/tables/${id}`);
+          navigate(`/admin/study_schedules/tables/${id}`);
         })
         .catch((error) => {
           console.log(error);

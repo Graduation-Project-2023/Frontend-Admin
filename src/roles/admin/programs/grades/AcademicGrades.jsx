@@ -15,10 +15,10 @@ import { Table } from "../../../../components/table/Table";
 export const AcademicGrades = () => {
   const [academicGradesData, setAcademicGradesData] = useState([]);
   const [grades, setGrades] = useState([]);
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
+  const [userUX, setUserUX] = useState({
+    table: { loading: false, error: false, errorMsg: "" },
+    form: { loading: false, error: false, errorMsg: "" },
+  });
   const authContext = useAuth();
   const { t } = useTranslation();
   const { programId } = useParams();
@@ -28,11 +28,10 @@ export const AcademicGrades = () => {
     axios
       .get(ADMIN_URL + `/programs/${programId}/grades`)
       .then((res) => {
+        console.log(res);
         setGrades(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
     // eslint-disable-next-line
@@ -61,10 +60,8 @@ export const AcademicGrades = () => {
         console.log(res);
         rows.push(grade);
         setGrades(rows);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
   };
@@ -113,7 +110,8 @@ export const AcademicGrades = () => {
         rowItems={grades}
         editableItems={true}
         deletableItems={true}
-        requestPath={`/programs/${authContext.program.id}/grades/`}
+        requestPath={`/admin/programs/${authContext.program.id}/grades/`}
+        userUX={userUX.table}
       />
     </SidebarContainer>
   );

@@ -45,7 +45,6 @@ export const AuthContextProvider = (props) => {
   const logoutHandler = () => {
     cookies.remove("token");
     cookies.remove("role");
-    cookies.remove("connect.sid");
     cookies.remove("college");
     cookies.remove("program");
     setRole(null);

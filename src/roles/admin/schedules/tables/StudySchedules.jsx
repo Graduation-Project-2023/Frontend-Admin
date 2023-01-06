@@ -95,7 +95,7 @@ export const StudySchedules = () => {
           }));
         });
     } else {
-      navigate(`/portal/admin/study_schedules/tables/${id}`);
+      navigate(`/admin/study_schedules/tables/${id}`);
     }
   };
 

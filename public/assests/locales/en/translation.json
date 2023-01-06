@@ -77,7 +77,8 @@
     "addCourse": "Add Course",
     "editCourse": "Edit Course",
     "coursesNotReg": "Courses Not Registered",
-    "enterValue": "Enter a Value.."
+    "enterValue": "Enter a Value..",
+    "invalidCred": "Invalid Credentials"
   },
   "popup": {
     "success": "Success!",

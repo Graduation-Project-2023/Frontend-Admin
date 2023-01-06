@@ -77,7 +77,7 @@ export const CoursesPortal = () => {
           .put(ADMIN_URL + `/courses/${newCourse.id}`, newCourse)
           .then((res) => {
             setCourseData(res.data);
-            navigate("/portal/admin/courses");
+            navigate("/admin/courses");
             setUserUX((prev) => ({ ...prev, loading: false }));
           })
           .catch((error) => {
@@ -115,7 +115,7 @@ export const CoursesPortal = () => {
       .delete(ADMIN_URL + `/courses/${courseData.id}`)
       .then((res) => {
         console.log(res);
-        navigate("/portal/admin/courses");
+        navigate("/admin/courses");
         setUserUX((prev) => ({ ...prev, delete: false }));
       })
       .catch((error) => {

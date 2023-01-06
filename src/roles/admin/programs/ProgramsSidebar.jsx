@@ -6,6 +6,7 @@ import i18next from "i18next";
 import axios from "axios";
 import { ProgramsSidebarData } from "./ProgramsSidebarData";
 
+// Reusable Components
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import { Dropdown } from "react-bootstrap";
 
@@ -67,7 +68,7 @@ export const ProgramsSidebar = () => {
               }
               return (
                 <Link
-                  to={`/portal/admin/academic_programs/${item.id}/main`}
+                  to={`/admin/academic_programs/${item.id}/main`}
                   onClick={() => {
                     authContext.changeProgram(item);
                   }}

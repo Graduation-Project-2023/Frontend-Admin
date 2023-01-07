@@ -15,16 +15,13 @@ import { Table } from "../../../../components/table/Table";
 export const LevelHours = () => {
   const [levelHoursData, setLevelHoursData] = useState([]);
   const [levelHours, setLevelHours] = useState([]);
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
+  const [userUX, setUserUX] = useState({
+    table: { loading: false, error: false, errorMsg: "" },
+    form: { loading: false, error: false, errorMsg: "" },
+  });
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
-  const [userUX, setUserUX] = useState({
-    loading: false,
-    error: false,
-    errorMsg: "",
-  });
 
   useEffect(() => {
     // GET request to get all level allowed hours to display it in the table
@@ -33,11 +30,9 @@ export const LevelHours = () => {
       .then((res) => {
         console.log(res.data);
         setLevelHours(res.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
     // eslint-disable-next-line
   }, [programId]);
@@ -74,15 +69,9 @@ export const LevelHours = () => {
         console.log(res);
         rows.push(levelAllowedHour);
         setLevelHours(rows);
-        setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
-        setUserUX({
-          loading: false,
-          error: true,
-          errorMsg: error.response.data.message,
-        });
       });
   };
 
@@ -121,16 +110,16 @@ export const LevelHours = () => {
               />
             );
           })}
-           {userUX.loading ? (
-              <h1>LOADING</h1>
-            ) : (
-              <button
-            type="submit"
-            className="form-card-button form-card-button-save"
-          >
-            {t(`common.add`)}
-          </button>   
-            )}
+          {userUX.loading ? (
+            <h1>LOADING</h1>
+          ) : (
+            <button
+              type="submit"
+              className="form-card-button form-card-button-save"
+            >
+              {t(`common.add`)}
+            </button>
+          )}
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"
@@ -151,7 +140,8 @@ export const LevelHours = () => {
         rowItems={levelHours}
         editableItems={true}
         deletableItems={true}
-        requestPath={`/programs/${authContext.program.id}/level_allowed_hours/`}
+        requestPath={`/admin/programs/${authContext.program.id}/level_allowed_hours/`}
+        userUX={userUX.table}
       />
     </SidebarContainer>
   );

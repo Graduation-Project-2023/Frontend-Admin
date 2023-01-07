@@ -113,7 +113,7 @@ export const AddAcademicProgram = () => {
       <Sidebar
         sideData={programsData.map((obj) => ({
           ...obj,
-          path: `/portal/admin/academic_programs/${obj.id}/main`,
+          path: `/admin/academic_programs/${obj.id}/main`,
         }))}
         backendData={true}
         activeNav={false}

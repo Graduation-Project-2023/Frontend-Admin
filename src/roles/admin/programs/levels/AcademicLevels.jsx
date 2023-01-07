@@ -15,6 +15,9 @@ import { Table } from "../../../../components/table/Table";
 export const AcademicLevels = () => {
   const [academicLevelsData, setAcademicLevelsData] = useState([]);
   const [levels, setLevels] = useState([]);
+  const [userUX, setUserUX] = useState({
+    table: { loading: false, error: false, errorMSG: "" },
+  });
   // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
@@ -117,7 +120,8 @@ export const AcademicLevels = () => {
         rowItems={levels}
         editableItems={true}
         deletableItems={true}
-        requestPath={`/programs/${authContext.program.id}/levels/`}
+        requestPath={`/admin/programs/${authContext.program.id}/levels/`}
+        userUX={userUX.table}
       />
     </SidebarContainer>
   );

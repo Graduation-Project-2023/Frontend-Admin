@@ -22,7 +22,7 @@ export const AcademicPorgramsPortal = () => {
 
   useEffect(() => {
     if (authContext.college === undefined) {
-      navigate("/portal/admin");
+      navigate("/admin");
     } else {
       setUserUX((prev) => ({ ...prev, loading: true }));
       // Get request to get all programs to display it in the menu

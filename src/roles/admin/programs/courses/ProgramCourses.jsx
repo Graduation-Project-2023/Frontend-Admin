@@ -48,6 +48,7 @@ export const ProgramCourses = () => {
     axios
       .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`)
       .then((res) => {
+        console.log(res);
         setCourses(res.data);
         setUserUX((prev) => ({
           ...prev,
@@ -73,6 +74,7 @@ export const ProgramCourses = () => {
     axios
       .get(ADMIN_URL + `/programs/${programId}/program_courses`)
       .then((res) => {
+        console.log(res);
         setProgramCourses(res.data);
         setUserUX((prev) => ({
           ...prev,

@@ -35,7 +35,7 @@ export const CoursesRegisteration = (props) => {
   }, [props.userUX]);
 
   const handleCourseSelect = (course) => {
-    navigate(`/portal/admin/study_schedules/register_course/add/${course.id}`);
+    navigate(`/admin/study_schedules/register_course/add/${course.id}`);
   };
 
   return (

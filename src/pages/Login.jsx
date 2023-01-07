@@ -36,14 +36,17 @@ export const Login = () => {
       .then((res) => {
         console.log(res);
         setUserUX((prev) => ({ ...prev, submitLoading: false }));
-        authContext.login("ssss", "ADMIN");
+        authContext.login(res.data.email, res.data.role);
         navigate("/admin");
       })
       .catch((error) => {
         setUserUX({
           submitLoading: false,
           error: true,
-          errorMsg: "erorrrrrrrrrrr",
+          errorMsg:
+            error.response.status === 400
+              ? t("common.invalidCred")
+              : t("common.error"),
         });
         console.log(error);
       });
@@ -86,7 +89,11 @@ export const Login = () => {
             )}
           </div>
           <Link to="/forgetpwd">{t(`login.forget`)}</Link>
-          {userUX.error && <h1>errorrrrrrrrrrrr</h1>}
+          {userUX.error && (
+            <div className="alert alert-danger mt-2" role="alert">
+              {userUX.errorMsg}
+            </div>
+          )}
         </form>
       </div>
     </div>

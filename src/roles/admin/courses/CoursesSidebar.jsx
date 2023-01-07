@@ -41,7 +41,7 @@ export const CoursesSidebar = () => {
     <Sidebar
       options={
         showOptions && (
-          <Link to={"/portal/admin/courses/add"}>
+          <Link to={"/admin/courses/add"}>
             <button className="coursesSidebarBtn">{t("courses.add")}</button>
           </Link>
         )

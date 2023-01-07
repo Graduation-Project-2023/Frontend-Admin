@@ -322,7 +322,7 @@ export const StudentDataPortal = () => {
           <div className={styles.studentBody_students_list}>
             {filteredStudents.map((item) => (
               <li key={item.id}>
-                <Link to={`/portal/admin/student_data/info/${item.id}`}>
+                <Link to={`/admin/student_data/info/${item.id}`}>
                   {i18next.language === "en"
                     ? item.englishName
                     : item.arabicName}

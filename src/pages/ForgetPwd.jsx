@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ADMIN_URL } from "../shared/API";
 import { useTranslation } from "react-i18next";
+import { BiError } from "react-icons/bi";
 
 export const ForgetPwd = () => {
   const { t } = useTranslation();
@@ -62,7 +63,14 @@ export const ForgetPwd = () => {
           </div>
           <div>
             <Link to="/login">{t(`forgetpwd.back`)}</Link>
-            {userUX.error && <h1>errorrrrrrrr</h1>}
+            {userUX.error && (
+              <div>
+                <span className="wrong" role="alert">
+                  <BiError />
+                  {userUX.errorMsg}
+                </span>
+              </div>
+            )}
           </div>
         </form>
       </div>

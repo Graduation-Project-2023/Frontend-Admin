@@ -11,7 +11,10 @@ import { AcademicFormData } from "./AcademicFormData";
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
 import { FormInput } from "../../../../components/forms/FormInput";
+import { FormButton } from "../../../../components/buttons/Buttons";
 import { Accordion } from "react-bootstrap";
+
+//TODO: edit ux for input fields loading and pre programs selection ux
 
 export const AcademicMain = () => {
   const [updatedData, setUpdatedData] = useState({});
@@ -19,12 +22,12 @@ export const AcademicMain = () => {
   const [allPrograms, setAllPrograms] = useState([]);
   const [creditHours, setCreditHours] = useState();
   const [summerSemester, setSummerSemester] = useState();
+  const [userUX, setUserUX] = useState({
+    form: { loading: false, error: false, errorMsg: "" },
+    prePrograms: { loading: false, error: false, errorMsg: "" },
+  });
   const authContext = useAuth();
   const { t } = useTranslation();
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
-  const [error, setError] = useState(null);
   const { programId } = useParams();
   const navigate = useNavigate();
 
@@ -37,10 +40,8 @@ export const AcademicMain = () => {
         res.data.system === "CREDIT"
           ? setCreditHours(true)
           : setCreditHours(false);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
     // eslint-disable-next-line
@@ -52,10 +53,8 @@ export const AcademicMain = () => {
       .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
         setAllPrograms(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
     // eslint-disable-next-line
@@ -95,16 +94,32 @@ export const AcademicMain = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setUserUX((prev) => {
+      return {
+        ...prev,
+        form: { loading: true, error: false, errorMsg: "" },
+      };
+    });
     // PUT request to update the current program
-    setLoading(true);
     axios
       .put(ADMIN_URL + `/programs/${programId}`, updatedData)
       .then((res) => {
-        setLoading(false);
+        console.log(res.data);
+        setUserUX((prev) => {
+          return {
+            ...prev,
+            form: { loading: false, error: false, errorMsg: "" },
+          };
+        });
         navigate("/admin/academic_programs");
       })
       .catch((error) => {
-        setLoading(false);
+        setUserUX((prev) => {
+          return {
+            ...prev,
+            form: { loading: false, error: true, errorMsg: "error" },
+          };
+        });
         console.log(error);
       });
   };
@@ -176,18 +191,12 @@ export const AcademicMain = () => {
               );
             })}
           </Accordion>
-          <button
-            type="submit"
-            className="form-card-button form-card-button-save"
-          >
-            {t(`common.save`)}
-          </button>
-          <button
-            type="reset"
-            className="form-card-button form-card-button-cancel"
-          >
-            {t(`common.cancel`)}
-          </button>
+          {userUX.form.loading ? (
+            <FormButton type="loading" label="common.loading" />
+          ) : (
+            <FormButton type="submit" styles="save" label="common.add" />
+          )}
+          <FormButton type="reset" styles="cancel" label="common.cancel" />
         </form>
       </FormCard>
     </SidebarContainer>

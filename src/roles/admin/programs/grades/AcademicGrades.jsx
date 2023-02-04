@@ -10,6 +10,7 @@ import { AcademicGradesData } from "./AcademicGradesData";
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
 import { FormInput } from "../../../../components/forms/FormInput";
+import { FormButton } from "../../../../components/buttons/Buttons";
 import { Table } from "../../../../components/table/Table";
 
 export const AcademicGrades = () => {
@@ -24,14 +25,26 @@ export const AcademicGrades = () => {
   const { programId } = useParams();
 
   useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      table: { loading: true, error: false, errorMsg: "" },
+    }));
     // GET request to get all GPA allowed hours to display it in the table
     axios
       .get(ADMIN_URL + `/programs/${programId}/grades`)
       .then((res) => {
         console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: false, errorMsg: "" },
+        }));
         setGrades(res.data);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
     // eslint-disable-next-line
@@ -50,6 +63,10 @@ export const AcademicGrades = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setUserUX((prev) => ({
+      ...prev,
+      form: { loading: true, error: false, errorMsg: "" },
+    }));
     const rows = [...grades];
     const grade = { ...academicGradesData, programId: authContext.program.id };
 
@@ -58,10 +75,18 @@ export const AcademicGrades = () => {
       .post(ADMIN_URL + `/programs/${programId}/grades`, grade)
       .then((res) => {
         console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: false, errorMsg: "" },
+        }));
         rows.push(grade);
         setGrades(rows);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
   };
@@ -84,18 +109,12 @@ export const AcademicGrades = () => {
               />
             );
           })}
-          <button
-            type="submit"
-            className="form-card-button form-card-button-save"
-          >
-            {t(`common.add`)}
-          </button>
-          <button
-            type="reset"
-            className="form-card-button form-card-button-cancel"
-          >
-            {t(`common.cancel`)}
-          </button>
+          {userUX.form.loading ? (
+            <FormButton type="loading" label="common.loading" />
+          ) : (
+            <FormButton type="submit" styles="save" label="common.add" />
+          )}
+          <FormButton type="reset" styles="cancel" label="common.cancel" />
         </form>
       </FormCard>
       <Table

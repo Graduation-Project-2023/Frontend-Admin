@@ -11,6 +11,7 @@ import { SidebarContainer } from "../../../../components/sidebar/SidebarContaine
 import { FormCard } from "../../../../components/forms/FormCard";
 import { FormInput } from "../../../../components/forms/FormInput";
 import { Table } from "../../../../components/table/Table";
+import { FormButton } from "../../../../components/buttons/Buttons";
 
 export const GPAHours = () => {
   const [gpaHoursData, setGPAHoursData] = useState([]);
@@ -24,13 +25,26 @@ export const GPAHours = () => {
   const authContext = useAuth();
 
   useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      table: { loading: true, error: false, errorMsg: "" },
+    }));
     // GET request to get all GPA allowed hours to display it in the table
     axios
       .get(ADMIN_URL + `/programs/${programId}/gpa_allowed_hours`)
       .then((res) => {
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: false, errorMsg: "" },
+        }));
+        setAllGPAData(res.data);
         console.log(res);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
     // eslint-disable-next-line
@@ -50,6 +64,10 @@ export const GPAHours = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setUserUX((prev) => ({
+      ...prev,
+      form: { loading: true, error: false, errorMsg: "" },
+    }));
     const rows = [...allGPAData];
     const gpaAllowedHour = {
       ...gpaHoursData,
@@ -64,10 +82,18 @@ export const GPAHours = () => {
       )
       .then((res) => {
         console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: false, errorMsg: "" },
+        }));
         rows.push(gpaAllowedHour);
         setAllGPAData(rows);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
   };
@@ -90,23 +116,12 @@ export const GPAHours = () => {
               />
             );
           })}
-          {userUX.loading ? (
-            <h1>LOADING</h1>
+          {userUX.form.loading ? (
+            <FormButton type="loading" label="common.loading" />
           ) : (
-            <button
-              type="submit"
-              className="form-card-button form-card-button-save"
-            >
-              {t(`common.add`)}
-            </button>
+            <FormButton type="submit" styles="save" label="common.add" />
           )}
-
-          <button
-            type="reset"
-            className="form-card-button form-card-button-cancel"
-          >
-            {t(`common.cancel`)}
-          </button>
+          <FormButton type="reset" styles="cancel" label="common.cancel" />
         </form>
       </FormCard>
       <Table

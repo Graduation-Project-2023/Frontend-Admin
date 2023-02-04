@@ -67,6 +67,7 @@ export const LevelHours = () => {
       )
       .then((res) => {
         console.log(res);
+        setUserUX((prev) => ({ ...prev, loading: false, error: false }));
         rows.push(levelAllowedHour);
         setLevelHours(rows);
       })
@@ -111,7 +112,9 @@ export const LevelHours = () => {
             );
           })}
           {userUX.loading ? (
-            <h1>LOADING</h1>
+            <button className="form-card-button form-card-button-save">
+              {t(`common.loading`)} <span className="loader"></span>
+            </button>
           ) : (
             <button
               type="submit"

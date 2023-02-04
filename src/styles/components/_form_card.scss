@@ -31,7 +31,7 @@
     padding: 0.5rem;
     border-radius: 2px;
     min-width: 5rem;
-    @include font(1rem, 1.3rem);
+    @include font(1.3rem, 1.5rem);
     transition-duration: 0.4s;
 
     &-save {

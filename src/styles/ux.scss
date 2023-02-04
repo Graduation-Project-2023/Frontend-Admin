@@ -1,0 +1,25 @@
+.loader {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  display: inline-block;
+  border: 3px solid;
+  border-color: rgba(255, 255, 255, 0.15) rgba(255, 255, 255, 0.25)
+    rgba(255, 255, 255, 0.35) rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.wrong {
+  color: #d65050;
+  @include font(1rem, 1.3rem);
+  text-decoration: underline;
+}

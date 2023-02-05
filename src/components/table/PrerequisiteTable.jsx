@@ -39,9 +39,14 @@ export const PrerequisiteTable = (props) => {
                 {Object.keys(item)?.map((key) => {
                   if (key === "id") return null;
                   if (key === "level") return null;
+                  if (key === "levels") return null;
+                  if (key === "system") return null;
+                  if (key === "maxGrade") return null;
                   if (key === "semester") return null;
                   if (key === "levelId") return null;
                   if (key === "creditHours") return null;
+                  if (key === "prerequisiteProgram") return null;
+
                   return (
                     <td className="collapsetable-items" key={key}>
                       {item[key] === 0 ? 0 : item[key] || ""}

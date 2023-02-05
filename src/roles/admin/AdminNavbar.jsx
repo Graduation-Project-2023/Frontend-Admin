@@ -15,40 +15,41 @@ const AdminNavbarData = [
   },
   {
     id: "3",
+    title: "adminNavbar.departments",
+    keyword: "adminNavbarkeys.departments",
+    path: "departments",
+  },
+  {
+    id: "4",
     title: "adminNavbar.academic",
     keyword: "adminNavbarkeys.academic",
     path: "academic_programs",
   },
   {
-    id: "4",
+    id: "5",
     title: "adminNavbar.schedule",
     keyword: "adminNavbarkeys.schedule",
     path: "study_schedules",
   },
   {
-    id: "5",
+    id: "6",
     title: "adminNavbar.registeration",
     keyword: "adminNavbarkeys.registeration",
     path: "registeration",
   },
   {
-    id: "6",
+    id: "7",
     title: "adminNavbar.exams",
     keyword: "adminNavbarkeys.exams",
     path: "exams",
   },
   {
-    id: "7",
+    id: "8",
     title: "adminNavbar.results",
     keyword: "adminNavbarkeys.results",
     path: "results",
   },
-  {
-    id: "8",
-    title: "adminNavbar.finance",
-    keyword: "adminNavbarkeys.finance",
-    path: "finance",
-  },
+
   {
     id: "9",
     title: "adminNavbar.absence",

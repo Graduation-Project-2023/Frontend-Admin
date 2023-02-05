@@ -88,7 +88,7 @@ export const DropdownSearch = (props) => {
                       <span>{item.id}</span>
                     )}
                     {listData?.type === "selectCourse" && (
-                      <span>{item.code}</span>
+                      <span>{item?.code || item?.programCode}</span>
                     )}
                     <span>
                       {i18next.language === "en"

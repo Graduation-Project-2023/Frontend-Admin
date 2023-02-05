@@ -17,7 +17,7 @@ export const CoursesPortal = () => {
     loading: false,
     delete: false,
     error: false,
-    error_msg: "",
+    errorMsg: "",
   });
   const { t } = useTranslation();
   const { courseCode } = useParams();
@@ -41,7 +41,7 @@ export const CoursesPortal = () => {
             ...prev,
             loading: false,
             error: true,
-            error_msg: error,
+            errorMsg: error,
           }));
         });
     } else {
@@ -86,7 +86,7 @@ export const CoursesPortal = () => {
               ...prev,
               loading: false,
               error: true,
-              error_msg: error,
+              errorMsg: error,
             }));
           })
       : // POST request to create a new college course
@@ -102,7 +102,7 @@ export const CoursesPortal = () => {
               ...prev,
               loading: false,
               error: true,
-              error_msg: error,
+              errorMsg: error,
             }));
           });
   };
@@ -124,7 +124,7 @@ export const CoursesPortal = () => {
           ...prev,
           delete: false,
           error: true,
-          error_msg: error,
+          errorMsg: error,
         }));
       });
   };

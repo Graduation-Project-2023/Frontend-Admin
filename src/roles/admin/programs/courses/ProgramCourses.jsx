@@ -141,7 +141,7 @@ export const ProgramCourses = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
+    
     setUserUX((prev) => ({
       ...prev,
       form: { ...prev.form, submit: true, error: false, errorMsg: "" },

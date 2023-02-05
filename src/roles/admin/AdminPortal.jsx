@@ -33,7 +33,7 @@ export const AdminPortal = () => {
       searchable={true}
       list={{ state: true, data: colleges, path: "academic_programs" }}
       closeModal={() => {
-        // FORCE THE USE TO SELECT A COLLEGE
+        // FORCE THE USER TO SELECT A COLLEGE
         // setShowModal(false);
       }}
     />

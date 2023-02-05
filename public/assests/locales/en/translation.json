@@ -126,7 +126,7 @@
     "registeration": "Academic Registeration",
     "exams": "Education and Exams",
     "results": "Control and Results",
-    "finance": "Financial Data",
+    "departments": "Departments Data",
     "absence": "Students Absence",
     "courses": "Courses Data",
     "supervision": "System Supervision",
@@ -140,7 +140,7 @@
     "registeration": "Registeration",
     "exams": "Exams",
     "results": "Results",
-    "finance": "Financial",
+    "departments": "Departments",
     "absence": "Absence",
     "courses": "Courses",
     "choose": "Choose academic course",
@@ -257,6 +257,17 @@
     "preTable": "Prerequisite Courses Table",
     "supervisor": "Supervisor",
     "hasGroups": "Has Groups?"
+  },
+  "departments": {
+    "name": "Department Name",
+    "ar_name": "Department Name in Arabic",
+    "eng_name": "Department Name in English",
+    "system": "System Type",
+    "programs": "Programs",
+    "tabletitle": "Academic Porgrams Table",
+    "formhead": "Department Data",
+    "sidebar": "College Departments",
+    "add": "Add New Department"
   },
   "levels": {
     "level": "Level",

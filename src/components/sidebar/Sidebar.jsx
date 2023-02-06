@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
 import i18next from "i18next";
+import { NoData } from "../NoData";
 
 export const Sidebar = (props) => {
   const sidebarData = props.sideData;
@@ -59,7 +60,7 @@ export const Sidebar = (props) => {
           ) : userUX.error ? (
             <h1>{userUX.errorMsg}</h1>
           ) : (
-            <h1>LIST IS EMPTY</h1>
+            <NoData />
           )
         ) : (
           filteredMenu.map((item) => {

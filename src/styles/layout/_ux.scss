@@ -23,3 +23,11 @@
   @include font(1rem, 1.3rem);
   text-decoration: underline;
 }
+.noData {
+  text-align: center;
+  color: #c3b8b8;
+  h4 {
+    @include font(2rem, 2.5rem);
+  }
+  margin: 15% 0;
+}

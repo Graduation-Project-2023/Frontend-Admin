@@ -54,7 +54,6 @@ export const AcademicPorgramsPortal = () => {
       <SearchContainer
         title={"portal.programs"}
         inputPlaceholder={"portal.search"}
-        emptyPlaceholder={"la yoogd programs"}
         listData={programs}
         handleListClick={handleProgramSelect}
         userUX={userUX}

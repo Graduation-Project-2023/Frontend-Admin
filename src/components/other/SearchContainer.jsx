@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
-import { NoData } from "../NoData";
+import { NoData } from "../UX/NoData";
+import { NoSearch } from "../UX/NoSearch";
 
 // Component Props:
 // title: string
@@ -80,7 +81,7 @@ export const SearchContainer = (props) => {
         ) : (
           <div className="portal-list">
             {filteredList.length === 0
-              ? listData.length !== 0 && <li>la yooogd mokrrat bhza el esm</li>
+              ? listData.length !== 0 && <NoSearch />
               : filteredList.map((item) => {
                   return (
                     <li

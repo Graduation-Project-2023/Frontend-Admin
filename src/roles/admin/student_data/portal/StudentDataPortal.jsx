@@ -7,11 +7,13 @@ import { useAuth } from "../../../../hooks/useAuth";
 import axios from "axios";
 import i18next from "i18next";
 import styles from "./StudentDataPortal.module.scss";
+import { NoSearch } from "../../../../components/UX/NoSearch";
 
 // Reusable Components
 import { Accordion } from "react-bootstrap";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { FormInput } from "../../../../components/forms/FormInput";
+import { NoData } from "../../../../components/UX/NoData";
 
 export const StudentDataPortal = () => {
   const authContext = useAuth();
@@ -300,11 +302,9 @@ export const StudentDataPortal = () => {
         <div className={styles.studentBody_students}>
           <h3>
             {t(`registeration.all`)}
-            {filteredStudents.length > 0 && (
-              <span>
-                {t(`studentsData.number`)}:{filteredStudents.length}
-              </span>
-            )}
+            <span>
+              {t(`studentsData.number`)}:{filteredStudents.length}
+            </span>
           </h3>
           <div className={styles.studentBody_students_search}>
             <input
@@ -316,20 +316,29 @@ export const StudentDataPortal = () => {
               }}
             />
           </div>
-          {userUX.list.error && userUX.list.errorMsg}
-          {userUX.list.loading && "LOADING"}
-
-          <div className={styles.studentBody_students_list}>
-            {filteredStudents.map((item) => (
-              <li key={item.id}>
-                <Link to={`/admin/student_data/info/${item.id}`}>
-                  {i18next.language === "en"
-                    ? item.englishName
-                    : item.arabicName}
-                </Link>
-              </li>
-            ))}
-          </div>
+          {filteredStudents.length === 0 ? (
+            userUX.list.loading ? (
+              "loading"
+            ) : userUX.list.error ? (
+              userUX.list.errorMsg
+            ) : studentData.length === 0 ? (
+              <NoData />
+            ) : (
+              <NoSearch />
+            )
+          ) : (
+            <div className={styles.studentBody_students_list}>
+              {filteredStudents.map((item) => (
+                <li key={item.id}>
+                  <Link to={`/admin/student_data/info/${item.id}`}>
+                    {i18next.language === "en"
+                      ? item.englishName
+                      : item.arabicName}
+                  </Link>
+                </li>
+              ))}
+            </div>
+          )}
         </div>
         <div className={styles.studentBody_data}>
           <form onSubmit={handleFormSubmit}>

@@ -2,7 +2,7 @@ import React from "react";
 import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import styles from "./RegisterationPortal.module.scss";
-import { NoData } from "../../../components/NoData";
+import { NoData } from "../../../components/UX/NoData";
 
 export const RegisterationPortal = () => {
   const { t } = useTranslation();
@@ -26,54 +26,54 @@ export const RegisterationPortal = () => {
     },
   ];
   const student = [
-    // {
-    //   id: 1,
-    //   title: "bob",
-    // },
-    // {
-    //   id: 2,
-    //   title: "john",
-    // },
-    // {
-    //   id: 3,
-    //   title: "layla",
-    // },
-    // {
-    //   id: 4,
-    //   title: "yasmeen",
-    // },
-    // {
-    //   id: 5,
-    //   title: "malak",
-    // },
-    // {
-    //   id: 6,
-    //   title: "malak",
-    // },
-    // {
-    //   id: 7,
-    //   title: "malak",
-    // },
-    // {
-    //   id: 8,
-    //   title: "malak",
-    // },
-    // {
-    //   id: 9,
-    //   title: "malak",
-    // },
-    // {
-    //   id: 10,
-    //   title: "malak",
-    // },
-    // {
-    //   id: 11,
-    //   title: "malak",
-    // },
-    // {
-    //   id: 12,
-    //   title: "malak",
-    // },
+    {
+      id: 1,
+      title: "bob",
+    },
+    {
+      id: 2,
+      title: "john",
+    },
+    {
+      id: 3,
+      title: "layla",
+    },
+    {
+      id: 4,
+      title: "yasmeen",
+    },
+    {
+      id: 5,
+      title: "malak",
+    },
+    {
+      id: 6,
+      title: "malak",
+    },
+    {
+      id: 7,
+      title: "malak",
+    },
+    {
+      id: 8,
+      title: "malak",
+    },
+    {
+      id: 9,
+      title: "malak",
+    },
+    {
+      id: 10,
+      title: "malak",
+    },
+    {
+      id: 11,
+      title: "malak",
+    },
+    {
+      id: 12,
+      title: "malak",
+    },
   ];
 
   return (

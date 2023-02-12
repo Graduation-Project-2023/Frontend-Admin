@@ -3,7 +3,7 @@ import { useAuth } from "../../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { Accordion } from "react-bootstrap";
-import { NoData } from "../../../../components/NoData";
+import { NoData } from "../../../../components/UX/NoData";
 
 // Component Props:
 // userUX: object {loading, error, errorMsg}

@@ -6,7 +6,7 @@ import i18next from "i18next";
 import { Accordion } from "react-bootstrap";
 import { SearchContainer } from "../../../../components/other/SearchContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
-import { NoData } from "../../../../components/NoData";
+import { NoData } from "../../../../components/UX/NoData";
 
 // Component Props
 // userUX: object {loading, error, errorMsg}

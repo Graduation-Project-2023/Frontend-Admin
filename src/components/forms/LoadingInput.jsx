@@ -1,7 +1,6 @@
-import { useTranslation } from "react-i18next";
-
 export const LoadingInput = (props) => {
   const row = props.row;
+  const splitRow = props.splitRow;
   const label = props.label;
 
   if (row) {
@@ -9,51 +8,18 @@ export const LoadingInput = (props) => {
       <div className="col-lg-12 mb-4">
         <label className="form-label">{label}</label>
         <div>
-          <input className="form-control" />
+          <input className="form-control loadingForm" disabled />
         </div>
       </div>
     );
   } else {
     return (
       <div className="row">
-        {inputData.splitRow.map((item) => {
+        {splitRow.map((item) => {
           return (
             <div className="col-lg-6 mb-4" key={item.id}>
-              <label className="form-label">{t(item.title)}</label>
-              {item.options ? (
-                <select
-                  className="form-select"
-                
-                >
-                  {item.options.map((option) => {
-                    return (
-                      <option key={option.id} value={option.value}>
-                        {t(option.title)}
-                      </option>
-                    );
-                  })}
-                </select>
-              ) : item.type === "textarea" ? (
-                <textarea
-                  name={item.name}
-                  type={item.type}
-                  required={item.req}
-                  className="form-control"
-                  onChange={props.handleEditFormChange}
-                  value={valueData[item.name] || ""}
-                  disabled={item.disabled}
-                />
-              ) : (
-                <input
-                  name={item.name}
-                  type={item.type}
-                  required={item.req}
-                  className="form-control"
-                  onChange={props.handleEditFormChange}
-                  value={valueData[item.name] || ""}
-                  disabled={item.disabled}
-                />
-              )}
+              <label className="form-label">{label}</label>
+              <input className="form-control loadingForm" disabled />
             </div>
           );
         })}

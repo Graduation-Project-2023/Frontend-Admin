@@ -153,6 +153,7 @@ export const CoursesPortal = () => {
                       handleEditFormChange={handleEditFormChange}
                       valueData={courseData}
                       key={data.id}
+                      loading={userUX.loading}
                     />
                   );
                 } else {

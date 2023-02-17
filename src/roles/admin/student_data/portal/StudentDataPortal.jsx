@@ -377,6 +377,7 @@ export const StudentDataPortal = () => {
                                     handleEditFormChange={handleEditFormChange}
                                     valueData={studentData}
                                     key={data.id}
+                                    loading={userUX.form.loading}
                                   />
                                 );
                               } else {

@@ -1,9 +1,18 @@
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { LoadingInput } from "./LoadingInput";
 
 export const FormInput = (props) => {
   const inputData = props.inputData;
   const valueData = props.valueData;
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(props.loading);
+  }, [props.loading]);
+  if (loading) {
+    return <LoadingInput />;
+  }
 
   if (inputData.row) {
     return (

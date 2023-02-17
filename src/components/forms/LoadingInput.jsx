@@ -1,7 +1,12 @@
+// Component Props:
+// row: boolean to determine if the input is a row or split row
+// label: string (for row)
+// splitLabel: array of objects (for split row {id, label})
+
 export const LoadingInput = (props) => {
   const row = props.row;
-  const splitRow = props.splitRow;
   const label = props.label;
+  const splitLabel = props.splitLabel;
 
   if (row) {
     return (
@@ -15,10 +20,10 @@ export const LoadingInput = (props) => {
   } else {
     return (
       <div className="row">
-        {splitRow.map((item) => {
+        {splitLabel.map((item) => {
           return (
             <div className="col-lg-6 mb-4" key={item.id}>
-              <label className="form-label">{label}</label>
+              <label className="form-label">{item.label}</label>
               <input className="form-control loadingForm" disabled />
             </div>
           );

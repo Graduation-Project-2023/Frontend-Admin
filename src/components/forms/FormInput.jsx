@@ -11,12 +11,12 @@ import { LoadingInput } from "./LoadingInput";
 export const FormInput = (props) => {
   const inputData = props.inputData;
   const valueData = props.valueData;
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    setLoading(props.loading);
-  }, [props.loading]);
+  // useEffect(() => {
+  //   setLoading(props.loading);
+  // }, [props.loading]);
 
   if (loading) {
     if (inputData.row) {

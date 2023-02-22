@@ -48,5 +48,18 @@
 
   &-item {
     @include flex(center, center, "");
+
+    .dropdown {
+      .btn-primary {
+        --bs-btn-active-bg: $Blue1 !important;
+      }
+      &-toggle::after {
+        display: none;
+      }
+      & button {
+        background-color: $Blue1;
+        border: none;
+      }
+    }
   }
 }

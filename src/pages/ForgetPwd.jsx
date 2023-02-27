@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ADMIN_URL } from "../shared/API";
 import { useTranslation } from "react-i18next";
+import { BiError } from "react-icons/bi";
+import { FormButton } from "../components/buttons/Buttons";
 
 export const ForgetPwd = () => {
   const { t } = useTranslation();
@@ -55,14 +57,21 @@ export const ForgetPwd = () => {
           </div>
           <div className="login_form_button">
             {userUX.loading ? (
-              <h1>LOADING</h1>
+              <FormButton type="loading" />
             ) : (
-              <button>{t(`common.done`)}</button>
+              <button>{t(`common.continue`)}</button>
             )}
           </div>
           <div>
             <Link to="/login">{t(`forgetpwd.back`)}</Link>
-            {userUX.error && <h1>errorrrrrrrr</h1>}
+            {userUX.error && (
+              <div>
+                <span className="wrong" role="alert">
+                  <BiError />
+                  {userUX.errorMsg}
+                </span>
+              </div>
+            )}
           </div>
         </form>
       </div>

@@ -3,6 +3,7 @@ import { useAuth } from "../../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { Accordion } from "react-bootstrap";
+import { NoData } from "../../../../components/UX/NoData";
 
 // Component Props:
 // userUX: object {loading, error, errorMsg}
@@ -93,7 +94,7 @@ export const CoursesSidebar = (props) => {
                     >
                       {filteredList.filter((obj) => obj.levelId === item.id)
                         .length === 0 ? (
-                        <h1>No Courses</h1>
+                        <NoData />
                       ) : (
                         filteredList
                           .filter((obj) => obj.levelId === item.id)
@@ -119,7 +120,7 @@ export const CoursesSidebar = (props) => {
             </Accordion>
           ) : (
             <>
-              {filteredList.length === 0 && <h1>No courses here</h1>}
+              {filteredList.length === 0 && <NoData />}
               {filteredList.map((item) => (
                 <li
                   key={item.id}

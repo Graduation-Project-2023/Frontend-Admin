@@ -39,7 +39,7 @@
 
 .main-header {
   color: white;
-  @include font(1.2rem, 1.4rem);
+  @include font(1.9rem, 2.2rem);
   background-color: $Blue1;
   text-align: center;
   padding: 1rem;
@@ -48,5 +48,18 @@
 
   &-item {
     @include flex(center, center, "");
+
+    .dropdown {
+      .btn-primary {
+        --bs-btn-active-bg: $Blue1 !important;
+      }
+      &-toggle::after {
+        display: none;
+      }
+      & button {
+        background-color: $Blue1;
+        border: none;
+      }
+    }
   }
 }

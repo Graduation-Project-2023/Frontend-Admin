@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import { NoData } from "../UX/NoData";
+import { NoSearch } from "../UX/NoSearch";
 
 // Component Props:
 // title: string
@@ -53,9 +55,7 @@ export const SearchContainer = (props) => {
             {userUX.errorMsg}
           </h5>
         ) : (
-          <h5 className="d-flex justify-content-center portal-title">
-            {t(props.emptyPlaceholder)}
-          </h5>
+          <NoData />
         )
       ) : (
         <h5 className="portal-title">{t(props.title)}</h5>
@@ -81,7 +81,7 @@ export const SearchContainer = (props) => {
         ) : (
           <div className="portal-list">
             {filteredList.length === 0
-              ? listData.length !== 0 && <li>la yooogd mokrrat bhza el esm</li>
+              ? listData.length !== 0 && <NoSearch />
               : filteredList.map((item) => {
                   return (
                     <li

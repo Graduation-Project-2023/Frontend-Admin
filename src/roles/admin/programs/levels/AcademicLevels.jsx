@@ -10,33 +10,40 @@ import { AcademicLevelsData } from "./AcademicLevelsData";
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
 import { FormInput } from "../../../../components/forms/FormInput";
+import { FormButton } from "../../../../components/buttons/Buttons";
 import { Table } from "../../../../components/table/Table";
 
 export const AcademicLevels = () => {
   const [academicLevelsData, setAcademicLevelsData] = useState([]);
   const [levels, setLevels] = useState([]);
   const [userUX, setUserUX] = useState({
-    table: { loading: false, error: false, errorMSG: "" },
+    form: { loading: false, error: false, errorMsg: "" },
+    table: { loading: false, error: false, errorMsg: "" },
   });
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
-  const [error, setError] = useState();
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
 
   useEffect(() => {
-    // GET request to get all levels of a specific program
+    setUserUX((prev) => ({
+      ...prev,
+      table: { loading: true, error: false, errorMsg: "" },
+    }));
+    // GET request to get all levels of a specific program and display in the table
     axios
       .get(ADMIN_URL + `/programs/${programId}/levels`)
       .then((res) => {
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: false, errorMsg: "" },
+        }));
         setLevels(res.data);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
-        setError(error);
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
     // eslint-disable-next-line
@@ -56,6 +63,10 @@ export const AcademicLevels = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setUserUX((prev) => ({
+      ...prev,
+      form: { loading: true, error: false, errorMsg: "" },
+    }));
     const rows = [...levels];
     const acadmicLevel = {
       ...academicLevelsData,
@@ -66,13 +77,18 @@ export const AcademicLevels = () => {
       .post(ADMIN_URL + `/programs/${programId}/levels`, acadmicLevel)
       .then((res) => {
         console.log(res.data);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: false, errorMsg: "" },
+        }));
         rows.push(res.data);
         setLevels(rows);
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
-        setError(error);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
   };
@@ -95,18 +111,12 @@ export const AcademicLevels = () => {
               />
             );
           })}
-          <button
-            type="submit"
-            className="form-card-button form-card-button-save"
-          >
-            {t(`common.add`)}
-          </button>
-          <button
-            type="reset"
-            className="form-card-button form-card-button-cancel"
-          >
-            {t(`common.cancel`)}
-          </button>
+          {userUX.form.loading ? (
+            <FormButton type="loading" label="common.loading" />
+          ) : (
+            <FormButton type="submit" styles="save" label="common.add" />
+          )}
+          <FormButton type="reset" styles="cancel" label="common.cancel" />
         </form>
       </FormCard>
       <Table

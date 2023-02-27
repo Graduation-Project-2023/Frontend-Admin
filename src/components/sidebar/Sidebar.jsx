@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
 import i18next from "i18next";
+import { NoData } from "../UX/NoData";
+import { NoSearch } from "../UX/NoSearch";
 
 export const Sidebar = (props) => {
   const sidebarData = props.sideData;
@@ -58,8 +60,10 @@ export const Sidebar = (props) => {
             <h1>list is loading</h1>
           ) : userUX.error ? (
             <h1>{userUX.errorMsg}</h1>
+          ) : sidebarData.length === 0 ? (
+            <NoData />
           ) : (
-            <h1>LIST IS EMPTY</h1>
+            <NoSearch />
           )
         ) : (
           filteredMenu.map((item) => {

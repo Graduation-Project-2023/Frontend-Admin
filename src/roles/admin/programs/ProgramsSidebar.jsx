@@ -67,13 +67,12 @@ export const ProgramsSidebar = () => {
                 return null;
               }
               return (
-                <Dropdown.Item className="sidebarBtn-list">
+                <Dropdown.Item className="sidebarBtn-list" key={item.id}>
                   <Link
                     to={`/admin/academic_programs/${item.id}/main`}
                     onClick={() => {
                       authContext.changeProgram(item);
                     }}
-                    key={item.id}
                   >
                     {i18next.language === "en"
                       ? item.englishName

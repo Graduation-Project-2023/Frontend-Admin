@@ -5,9 +5,11 @@ import i18next from "i18next";
 import classNames from "classnames";
 import axios from "axios";
 import { BASE_URL } from "../../shared/API";
-
+import { BiWorld } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
 // Reusable Components
 import { Dropdown } from "react-bootstrap";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 const languages = [
   {
@@ -61,10 +63,16 @@ export const Header = () => {
     <nav className="main-header">
       <div className="main-header-item">
         {authContext.isLoggedIn && (
-          <button className="btn btn-primary" onClick={handleLogout}>
-            {t("common.logout")}
-            {userUX.loading && <h1>loading</h1>}
-          </button>
+          <Dropdown>
+            <Dropdown.Toggle>
+              <CgProfile size={30} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <DropdownItem onClick={handleLogout}>
+                {t("common.logout")}
+              </DropdownItem>
+            </Dropdown.Menu>
+          </Dropdown>
         )}
       </div>
       <div className="main-header-item">
@@ -77,8 +85,8 @@ export const Header = () => {
       <div className="main-header-item">
         {authContext.isLoggedIn && (
           <Dropdown>
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
-              {t("header.title")}
+            <Dropdown.Toggle>
+              <BiWorld size={30} />
             </Dropdown.Toggle>
 
             <Dropdown.Menu>

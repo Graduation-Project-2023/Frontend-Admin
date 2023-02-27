@@ -2,6 +2,7 @@ import React from "react";
 import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import styles from "./RegisterationPortal.module.scss";
+import { NoData } from "../../../components/UX/NoData";
 
 export const RegisterationPortal = () => {
   const { t } = useTranslation();
@@ -85,70 +86,79 @@ export const RegisterationPortal = () => {
             alwaysOpen
             className="collapseSection"
           >
-            {Levels.map((item) => {
-              return (
-                <Accordion.Item eventKey={item.id} key={item.id}>
-                  <Accordion.Header>{item.title}</Accordion.Header>
-                  <Accordion.Body>
-                    <div className="registerationContainer-body">
-                      <div
-                        className={`registerationContainer-menu ${styles.studentList}`}
-                      >
-                        <h3>{t(`registeration.menu`)}</h3>
+            {Levels.length > 0 ? (
+              Levels.map((item) => {
+                return (
+                  <Accordion.Item eventKey={item.id} key={item.id}>
+                    <Accordion.Header>{item.title}</Accordion.Header>
+                    <Accordion.Body>
+                      <div className="registerationContainer-body">
                         <div
-                          className={`registerationContainer-menu-search ${styles.studentList_search}`}
+                          className={`registerationContainer-menu ${styles.studentList}`}
                         >
-                          <input
-                            type="text"
-                            placeholder={t("registeration.search")}
-                          />
-                        </div>
-                        <div className="registerationContainer-menu-list">
-                          {student.map((item) => (
-                            <li key={item.id}>{item.title}</li>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="registerationContainer-form">
-                        <h3>{t(`registeration.form`)}</h3>
-                        <form>
-                          <div className="registerationContainer-form-inputs">
-                            <div className="row mb-4">
-                              <label className="col-sm-4 col-form-label">
-                                {t(`registeration.advisor`)}
-                              </label>
-                              <div className="col-sm-8">
-                                <input className="form-control" />
-                              </div>
-                            </div>
-                            <div className="row mb-4">
-                              <label className="col-sm-4 col-form-label">
-                                {t(`registeration.number`)}
-                              </label>
-                              <div className="col-sm-8">
-                                <input className="form-control" disabled />
-                              </div>
-                            </div>
+                          <h3>{t(`registeration.menu`)}</h3>
+                          <div
+                            className={`registerationContainer-menu-search ${styles.studentList_search}`}
+                          >
+                            <input
+                              type="text"
+                              placeholder={t("registeration.search")}
+                            />
                           </div>
-                          <button
-                            type="submit"
-                            className="form-card-button form-card-button-save"
-                          >
-                            {t(`common.save`)}
-                          </button>
-                          <button
-                            type="reset"
-                            className="form-card-button form-card-button-cancel"
-                          >
-                            {t(`common.cancel`)}
-                          </button>
-                        </form>
+
+                          {student.length > 0 ? (
+                            <div className="registerationContainer-menu-list">
+                              {student.map((item) => (
+                                <li key={item.id}>{item.title}</li>
+                              ))}
+                            </div>
+                          ) : (
+                            <NoData />
+                          )}
+                        </div>
+                        <div className="registerationContainer-form">
+                          <h3>{t(`registeration.form`)}</h3>
+                          <form>
+                            <div className="registerationContainer-form-inputs">
+                              <div className="row mb-4">
+                                <label className="col-sm-4 col-form-label">
+                                  {t(`registeration.advisor`)}
+                                </label>
+                                <div className="col-sm-8">
+                                  <input className="form-control" />
+                                </div>
+                              </div>
+                              <div className="row mb-4">
+                                <label className="col-sm-4 col-form-label">
+                                  {t(`registeration.number`)}
+                                </label>
+                                <div className="col-sm-8">
+                                  <input className="form-control" disabled />
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              type="submit"
+                              className="form-card-button form-card-button-save"
+                            >
+                              {t(`common.save`)}
+                            </button>
+                            <button
+                              type="reset"
+                              className="form-card-button form-card-button-cancel"
+                            >
+                              {t(`common.cancel`)}
+                            </button>
+                          </form>
+                        </div>
                       </div>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              );
-            })}
+                    </Accordion.Body>
+                  </Accordion.Item>
+                );
+              })
+            ) : (
+              <NoData />
+            )}
           </Accordion>
         </div>
       </div>

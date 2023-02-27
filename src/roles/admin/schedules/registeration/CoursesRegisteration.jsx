@@ -6,6 +6,7 @@ import i18next from "i18next";
 import { Accordion } from "react-bootstrap";
 import { SearchContainer } from "../../../../components/other/SearchContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
+import { NoData } from "../../../../components/UX/NoData";
 
 // Component Props
 // userUX: object {loading, error, errorMsg}
@@ -41,6 +42,7 @@ export const CoursesRegisteration = (props) => {
   return (
     <FormCard>
       <Accordion defaultActiveKey="0" alwaysOpen className="collapseSection">
+        {levels?.length === 0 && <NoData />}
         {levels?.map((item) => {
           return (
             <Accordion.Item
@@ -55,7 +57,6 @@ export const CoursesRegisteration = (props) => {
                 <SearchContainer
                   title={"adminNavbarkeys.choose"}
                   inputPlaceholder={"courses.name"}
-                  emptyPlaceholder={"la yoogd courses"}
                   listData={programCourses.filter((course) => {
                     return course.levelId === item.id;
                   })}

@@ -12,7 +12,9 @@
   #{$prop}: #{$value};
 }
 @mixin font($fontSize, $lineHeight) {
-  font: normal 400 "Inter";
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
   font-size: $fontSize;
   line-height: $lineHeight;
 }

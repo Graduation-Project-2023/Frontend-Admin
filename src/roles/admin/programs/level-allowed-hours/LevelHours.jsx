@@ -11,6 +11,7 @@ import { SidebarContainer } from "../../../../components/sidebar/SidebarContaine
 import { FormCard } from "../../../../components/forms/FormCard";
 import { FormInput } from "../../../../components/forms/FormInput";
 import { Table } from "../../../../components/table/Table";
+import { FormButton } from "../../../../components/buttons/Buttons";
 
 export const LevelHours = () => {
   const [levelHoursData, setLevelHoursData] = useState([]);
@@ -24,14 +25,26 @@ export const LevelHours = () => {
   const authContext = useAuth();
 
   useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      table: { loading: true, error: false, errorMsg: "" },
+    }));
     // GET request to get all level allowed hours to display it in the table
     axios
       .get(ADMIN_URL + `/programs/${programId}/level_allowed_hours`)
       .then((res) => {
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: false, errorMsg: "" },
+        }));
         console.log(res.data);
         setLevelHours(res.data);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          table: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
     // eslint-disable-next-line
@@ -50,8 +63,11 @@ export const LevelHours = () => {
   };
 
   const handleFormSubmit = (e) => {
-    setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     e.preventDefault();
+    setUserUX((prev) => ({
+      ...prev,
+      form: { loading: true, error: false, errorMsg: "" },
+    }));
     const rows = [...levelHours];
     const levelAllowedHour = {
       ...levelHoursData,
@@ -67,10 +83,18 @@ export const LevelHours = () => {
       )
       .then((res) => {
         console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: false, errorMsg: "" },
+        }));
         rows.push(levelAllowedHour);
         setLevelHours(rows);
       })
       .catch((error) => {
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: true, errorMsg: "error" },
+        }));
         console.log(error);
       });
   };
@@ -110,22 +134,12 @@ export const LevelHours = () => {
               />
             );
           })}
-          {userUX.loading ? (
-            <h1>LOADING</h1>
+          {userUX.form.loading ? (
+            <FormButton type="loading" label="common.loading" />
           ) : (
-            <button
-              type="submit"
-              className="form-card-button form-card-button-save"
-            >
-              {t(`common.add`)}
-            </button>
+            <FormButton type="submit" styles="save" label="common.add" />
           )}
-          <button
-            type="reset"
-            className="form-card-button form-card-button-cancel"
-          >
-            {t(`common.cancel`)}
-          </button>
+          <FormButton type="reset" styles="cancel" label="common.cancel" />
         </form>
       </FormCard>
       <Table

@@ -14,10 +14,8 @@ import { FormInput } from "../../../components/forms/FormInput";
 export const CoursesPortal = () => {
   const [courseData, setCourseData] = useState([]);
   const [userUX, setUserUX] = useState({
-    loading: false,
-    delete: false,
-    error: false,
-    error_msg: "",
+    form: { loading: false, delete: false, error: false, errorMsg: "" },
+    formData: { loading: false, error: false, errorMsg: "" },
   });
   const { t } = useTranslation();
   const { courseCode } = useParams();
@@ -27,21 +25,29 @@ export const CoursesPortal = () => {
   useEffect(() => {
     if (courseCode !== "add" && courseCode !== undefined) {
       // GET request to get college course by it's id
-      setUserUX((prev) => ({ ...prev, loading: true }));
+      setUserUX((prev) => ({
+        ...prev,
+        formData: { loading: true, error: false, errorMsg: "" },
+      }));
       axios
         .get(ADMIN_URL + `/courses/${courseCode}`)
         .then((res) => {
           console.log(res);
           setCourseData(res.data);
-          setUserUX((prev) => ({ ...prev, loading: false }));
+          setUserUX((prev) => ({
+            ...prev,
+            formData: { loading: false, error: false, errorMsg: "" },
+          }));
         })
         .catch((error) => {
           console.log(error);
           setUserUX((prev) => ({
             ...prev,
-            loading: false,
-            error: true,
-            error_msg: error,
+            formData: {
+              loading: false,
+              error: true,
+              errorMsg: "error in course",
+            },
           }));
         });
     } else {
@@ -69,7 +75,15 @@ export const CoursesPortal = () => {
       id: courseData.id.replace(/\s/g, ""),
       collegeId: authContext.college.id,
     };
-    setUserUX((prev) => ({ ...prev, loading: true }));
+    setUserUX((prev) => ({
+      ...prev,
+      form: {
+        loading: true,
+        delete: false,
+        error: false,
+        errorMsg: "",
+      },
+    }));
     // Condition to check whether it's adding a new course or updating the current
     courseCode !== "add" && courseCode !== undefined
       ? // PUT request to update the current college course
@@ -78,15 +92,26 @@ export const CoursesPortal = () => {
           .then((res) => {
             setCourseData(res.data);
             navigate("/admin/courses");
-            setUserUX((prev) => ({ ...prev, loading: false }));
+            setUserUX((prev) => ({
+              ...prev,
+              form: {
+                loading: false,
+                delete: false,
+                error: false,
+                errorMsg: "",
+              },
+            }));
           })
           .catch((error) => {
             console.log(error);
             setUserUX((prev) => ({
               ...prev,
-              loading: false,
-              error: true,
-              error_msg: error,
+              form: {
+                loading: false,
+                delete: false,
+                error: true,
+                errorMsg: "error in submitting",
+              },
             }));
           })
       : // POST request to create a new college course
@@ -94,15 +119,26 @@ export const CoursesPortal = () => {
           .post(ADMIN_URL + `/courses`, newCourse)
           .then((res) => {
             console.log(res);
-            setUserUX((prev) => ({ ...prev, loading: false }));
+            setUserUX((prev) => ({
+              ...prev,
+              form: {
+                loading: false,
+                delete: false,
+                error: false,
+                errorMsg: "",
+              },
+            }));
           })
           .catch((error) => {
             console.log(error);
             setUserUX((prev) => ({
               ...prev,
-              loading: false,
-              error: true,
-              error_msg: error,
+              form: {
+                loading: false,
+                delete: false,
+                error: true,
+                errorMsg: "error in submitting",
+              },
             }));
           });
   };
@@ -110,21 +146,37 @@ export const CoursesPortal = () => {
   const handleCourseDelete = (e) => {
     e.preventDefault();
     // DELETE request to delete the current college course
-    setUserUX((prev) => ({ ...prev, delete: true }));
+    setUserUX((prev) => ({
+      ...prev,
+      form: {
+        ...prev.form,
+        delete: true,
+        error: false,
+      },
+    }));
     axios
       .delete(ADMIN_URL + `/courses/${courseData.id}`)
       .then((res) => {
         console.log(res);
         navigate("/admin/courses");
-        setUserUX((prev) => ({ ...prev, delete: false }));
+        setUserUX((prev) => ({
+          ...prev,
+          form: {
+            ...prev.form,
+            delete: false,
+          },
+        }));
       })
       .catch((error) => {
         console.log(error);
         setUserUX((prev) => ({
           ...prev,
-          delete: false,
-          error: true,
-          error_msg: error,
+          form: {
+            ...prev.form,
+            delete: false,
+            error: true,
+            errorMsg: "error in deleting",
+          },
         }));
       });
   };
@@ -153,6 +205,7 @@ export const CoursesPortal = () => {
                       handleEditFormChange={handleEditFormChange}
                       valueData={courseData}
                       key={data.id}
+                      loading={userUX.formData.loading}
                     />
                   );
                 } else {
@@ -162,6 +215,7 @@ export const CoursesPortal = () => {
                       handleEditFormChange={handleEditFormChange}
                       valueData={courseData}
                       key={data.id}
+                      loading={userUX.formData.loading}
                     />
                   );
                 }

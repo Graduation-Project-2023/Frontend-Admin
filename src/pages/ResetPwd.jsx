@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ADMIN_URL } from "../shared/API";
 import { useTranslation } from "react-i18next";
+import { BiError } from "react-icons/bi";
+import { FormButton } from "../components/buttons/Buttons";
 
 export const ResetPwd = () => {
   const { t } = useTranslation();
@@ -120,12 +122,17 @@ export const ResetPwd = () => {
               required
             ></input>
             {error.confirmPassword && (
-              <div className="err">{error.confirmPassword}</div>
+              <div>
+                <span className="wrong" role="alert">
+                  <BiError />
+                  {error.confirmPassword}
+                </span>
+              </div>
             )}
           </div>
           <div className="login_form_button">
             {userUX.loading ? (
-              <h1>LOADING</h1>
+              <FormButton type="loading" />
             ) : (
               <button>{t(`resetpwd.reset_btn`)}</button>
             )}

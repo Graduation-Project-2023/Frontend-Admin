@@ -8,6 +8,7 @@ import { ADMIN_URL } from "../../../../shared/API";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { CoursesRegisteration } from "./CoursesRegisteration";
 import { CourseRegister } from "./CourseRegister";
+import { NoData } from "../../../../components/UX/NoData";
 
 export const CoursesRegPortal = () => {
   const [courses, setCourses] = useState([]);
@@ -44,6 +45,7 @@ export const CoursesRegPortal = () => {
 
   return (
     <FormNavbarContainer>
+      {levels?.length === 0 && <NoData />}
       {courseId === undefined ? (
         <CoursesRegisteration
           programCourses={courses}

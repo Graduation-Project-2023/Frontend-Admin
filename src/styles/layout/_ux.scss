@@ -1,0 +1,63 @@
+.loader {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  display: inline-block;
+  border: 3px solid;
+  border-color: rgba(255, 255, 255, 0.15) rgba(255, 255, 255, 0.25)
+    rgba(255, 255, 255, 0.35) rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.wrong {
+  color: #d65050;
+  @include font(1rem, 1.3rem);
+  text-decoration: underline;
+}
+.noData {
+  text-align: center;
+  color: #c3b8b8;
+  h4 {
+    @include font(2rem, 2.5rem);
+  }
+  margin: 15% 0;
+}
+.loadingForm {
+  overflow: hidden;
+  padding: 0;
+  background-color: #e9ecef;
+  &-shimmer {
+    padding: 0;
+    height: 2rem;
+    background: linear-gradient(
+      99.72deg,
+      #f7f7f7 -56.2%,
+      #f7f7f7 36.73%,
+      #ffffff 46.37%,
+      #f7f7f7 51.87%,
+      #f7f7f7 61.58%,
+      #f7f7f7 81.5%,
+      #f7f7f7 157.01%
+    );
+
+    background-repeat: no-repeat;
+    animation: shimmer 1.5s infinite linear;
+  }
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-300%);
+    }
+    100% {
+      transform: translateX(300%);
+    }
+  }
+}

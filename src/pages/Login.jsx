@@ -4,6 +4,8 @@ import axios from "axios";
 import { BASE_URL } from "../shared/API";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { BiError } from "react-icons/bi";
+import { FormButton } from "../components/buttons/Buttons";
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -83,15 +85,18 @@ export const Login = () => {
           </div>
           <div className="login_form_button">
             {userUX.submitLoading ? (
-              <h1>LOADING</h1>
+              <FormButton type="loading" />
             ) : (
               <button>{t(`common.login`)}</button>
             )}
           </div>
           <Link to="/forgetpwd">{t(`login.forget`)}</Link>
           {userUX.error && (
-            <div className="alert alert-danger mt-2" role="alert">
-              {userUX.errorMsg}
+            <div>
+              <span className="wrong" role="alert">
+                <BiError />
+                {userUX.errorMsg}
+              </span>
             </div>
           )}
         </form>

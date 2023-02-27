@@ -11,6 +11,7 @@ import { AcademicFormData } from "./AcademicFormData";
 import { SidebarContainer } from "../../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../../components/forms/FormCard";
 import { FormInput } from "../../../../components/forms/FormInput";
+import { FormButton } from "../../../../components/buttons/Buttons";
 import { Sidebar } from "../../../../components/sidebar/Sidebar";
 import { Accordion } from "react-bootstrap";
 
@@ -22,30 +23,28 @@ export const AddAcademicProgram = () => {
   const authContext = useAuth();
   const { t } = useTranslation();
   const [userUX, setUserUX] = useState({
-    submitLoading: false,
-    sumbitError: false,
-    submitErrorMsg: "",
-    siderbarLoading: false,
-    siderbarError: false,
-    siderbarErrorMsg: "",
+    form: { loading: false, error: false, errorMsg: "" },
+    siderbar: { loading: false, error: false, errorMsg: "" },
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    setUserUX((prev) => ({ ...prev, siderbarLoading: true }));
+    setUserUX((prev) => ({ ...prev, siderbar: { loading: true } }));
     // GET request to get all programs to display it in the sidebar
     axios
       .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
       .then((res) => {
-        setUserUX((prev) => ({ ...prev, siderbarLoading: false }));
+        setUserUX((prev) => ({ ...prev, siderbar: { loading: false } }));
         setProrgramsData(res.data);
       })
       .catch((error) => {
         setUserUX((prev) => ({
           ...prev,
-          siderbarLoading: false,
-          siderbarError: true,
-          siderbarErrorMsg: "there is an error in sidebar",
+          siderbar: {
+            loading: false,
+            error: true,
+            errorMsg: "error in sidebar",
+          },
         }));
 
         console.log(error);
@@ -85,24 +84,23 @@ export const AddAcademicProgram = () => {
     e.preventDefault();
     setUserUX((prev) => ({
       ...prev,
-      submitLoading: true,
-      sumbitError: false,
-      submitErrorMsg: false,
+      form: { loading: true, error: false, errorMsg: "" },
     }));
     const program = { ...newProgram, collegeId: authContext.college.id };
     // POST request to create a new program
     axios
       .post(ADMIN_URL + `/programs`, program)
       .then((res) => {
-        setUserUX((prev) => ({ ...prev, submitLoading: false }));
+        setUserUX((prev) => ({
+          ...prev,
+          form: { loading: false, error: false, errorMsg: "" },
+        }));
         navigate(`/portal/admin/academic_programs/${res.data.id}/main`);
       })
       .catch((error) => {
         setUserUX((prev) => ({
           ...prev,
-          submitLoading: false,
-          sumbitError: true,
-          submitErrorMsg: "THERE WAS AN ERROR",
+          form: { loading: false, error: true, errorMsg: "error" },
         }));
         console.log(error);
       });
@@ -118,11 +116,7 @@ export const AddAcademicProgram = () => {
         backendData={true}
         activeNav={false}
         sidebarTitle={"portal.programs"}
-        userUX={{
-          error: userUX.siderbarError,
-          errorMsg: userUX.siderbarErrorMsg,
-          loading: userUX.siderbarLoading,
-        }}
+        userUX={userUX.siderbar}
       />
       <SidebarContainer>
         <FormCard cardTitle={"portal.add"}>
@@ -188,23 +182,12 @@ export const AddAcademicProgram = () => {
                 );
               })}
             </Accordion>
-            {userUX.submitLoading ? (
-              <h1>LOADING</h1>
+            {userUX.form.loading ? (
+              <FormButton type="loading" label="common.loading" />
             ) : (
-              <button
-                type="submit"
-                className="form-card-button form-card-button-save"
-              >
-                {t(`common.add`)}
-              </button>
+              <FormButton type="submit" styles="save" label="common.add" />
             )}
-            <button
-              type="reset"
-              className="form-card-button form-card-button-cancel"
-              disabled={userUX.submitLoading}
-            >
-              {t(`common.cancel`)}
-            </button>
+            <FormButton type="reset" styles="cancel" label="common.cancel" />
           </form>
         </FormCard>
       </SidebarContainer>

@@ -65,7 +65,7 @@ export const Header = () => {
         {authContext.isLoggedIn && (
           <Dropdown>
             <Dropdown.Toggle>
-              <CgProfile />
+              <CgProfile size={30} />
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
@@ -84,7 +84,7 @@ export const Header = () => {
         {authContext.isLoggedIn && (
           <Dropdown>
             <Dropdown.Toggle>
-              <BiWorld />
+              <BiWorld size={30} />
             </Dropdown.Toggle>
 
             <Dropdown.Menu>

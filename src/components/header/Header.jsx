@@ -68,7 +68,9 @@ export const Header = () => {
               <CgProfile size={30} />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+              <DropdownItem onClick={handleLogout}>
+                {t("common.logout")}
+              </DropdownItem>
             </Dropdown.Menu>
           </Dropdown>
         )}

@@ -214,6 +214,7 @@ export const DepartmentsPortal = () => {
                       handleEditFormChange={handleEditFormChange}
                       valueData={departmentData}
                       key={data.id}
+                      loading={userUX.formData.loading}
                     />
                   );
                 } else {
@@ -223,6 +224,7 @@ export const DepartmentsPortal = () => {
                       handleEditFormChange={handleEditFormChange}
                       valueData={departmentData}
                       key={data.id}
+                      loading={userUX.formData.loading}
                     />
                   );
                 }

@@ -88,7 +88,7 @@ export const StudentDataPortal = () => {
     if (studentId !== undefined) {
       setUserUX((prev) => ({
         ...prev,
-        form: { ...prev.form, submit: true },
+        studentData: { ...prev.studentData, loading: true },
       }));
       axios
         .get(ADMIN_URL + `/student/${studentId}`)
@@ -97,16 +97,16 @@ export const StudentDataPortal = () => {
           studentDataSetter(res.data);
           setUserUX((prev) => ({
             ...prev,
-            form: { ...prev.form, submit: false },
+            studentData: { ...prev.studentData, loading: false },
           }));
         })
         .catch((error) => {
           console.log(error);
           setUserUX((prev) => ({
             ...prev,
-            form: {
-              ...prev.form,
-              submit: false,
+            studentData: {
+              ...prev.studentData,
+              loading: false,
               error: true,
               errorMsg: "student data error",
             },
@@ -377,7 +377,7 @@ export const StudentDataPortal = () => {
                                     handleEditFormChange={handleEditFormChange}
                                     valueData={studentData}
                                     key={data.id}
-                                    loading={userUX.form.loading}
+                                    loading={userUX.studentData.loading}
                                   />
                                 );
                               } else {
@@ -387,6 +387,7 @@ export const StudentDataPortal = () => {
                                     handleEditFormChange={handleEditFormChange}
                                     valueData={studentData}
                                     key={data.id}
+                                    loading={userUX.studentData.loading}
                                   />
                                 );
                               }

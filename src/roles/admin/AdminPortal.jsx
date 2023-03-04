@@ -31,6 +31,7 @@ export const AdminPortal = () => {
       error={{ state: userUX.error, message: userUX.errorMsg }}
       title={"academicMain.faculty"}
       searchable={true}
+      contextValue={"COLLEGE"}
       list={{ state: true, data: colleges, path: "academic_programs" }}
       closeModal={() => {
         // FORCE THE USER TO SELECT A COLLEGE

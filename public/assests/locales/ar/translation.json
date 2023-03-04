@@ -101,7 +101,11 @@
   "header": {
     "title": "العربية",
     "uni": "جامعة قناة السويس",
-    "college": "كلية "
+    "college": "كلية ",
+    "changeCollege": "تغيير الكلية",
+    "changeProgram": "تغيير البرنامج",
+    "changeTerm": "تغيير الفصل الدراسي",
+    "profile": "الحساب الشخصي"
   },
   "login": {
     "email": "البريد الالكترونى",

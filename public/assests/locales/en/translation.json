@@ -344,5 +344,14 @@
     "sectionsLeft": "Number of sections left to add: ",
     "labsLeft": "Number of labs left to add: ",
     "sectionError": "An error has occurred adding this course section/lab to the table, please add the correct number of sections/labs"
+  },
+  "professor": {
+    "department": "Department",
+    "title": "Title",
+    "employees": "College Employees",
+    "add": "Add New Employee",
+    "formhead": "Employee Data",
+    "search": "Search with employee name",
+    "department_search": "Search with department name"
   }
 }

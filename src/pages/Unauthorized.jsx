@@ -10,7 +10,7 @@ export const Unauthorized = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("/portal/login");
+      navigate("/login");
     }, 2000);
   });
 

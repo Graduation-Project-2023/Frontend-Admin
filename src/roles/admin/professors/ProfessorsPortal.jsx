@@ -25,6 +25,9 @@ export const ProfessorsPortal = () => {
   const { professorId } = useParams();
   const navigate = useNavigate();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     if (professorId !== "add" && professorId !== undefined) {
@@ -34,7 +37,10 @@ export const ProfessorsPortal = () => {
         formData: { loading: true, error: false, errorMsg: "" },
       }));
       axios
-        .get(ADMIN_URL + `/professor?college_id=${authContext.college.id}`)
+        .get(
+          ADMIN_URL + `/professor?college_id=${authContext.college.id}`,
+          config
+        )
         .then((res) => {
           console.log(res);
           setProfessorData(res.data);
@@ -67,7 +73,10 @@ export const ProfessorsPortal = () => {
     }));
     // GET request to get all college departments to display it in the select menu
     axios
-      .get(ADMIN_URL + `/departments?college_id=${authContext.college.id}`)
+      .get(
+        ADMIN_URL + `/departments?college_id=${authContext.college.id}`,
+        config
+      )
       .then((res) => {
         setDepartments(res.data);
         setUserUX((prev) => ({
@@ -86,6 +95,7 @@ export const ProfessorsPortal = () => {
           },
         }));
       });
+    // eslint-disable-next-line
   }, [authContext.college.id]);
 
   const handleEditFormChange = (event) => {
@@ -120,7 +130,11 @@ export const ProfessorsPortal = () => {
     professorId !== "add" && professorId !== undefined
       ? // PUT request to update the current college professor
         axios
-          .put(ADMIN_URL + `/professor/${newProfessor.id}`, newProfessor)
+          .put(
+            ADMIN_URL + `/professor/${newProfessor.id}`,
+            newProfessor,
+            config
+          )
           .then((res) => {
             setProfessorData(res.data);
             navigate("/admin/professors");
@@ -148,7 +162,7 @@ export const ProfessorsPortal = () => {
           })
       : // POST request to create a new professor
         axios
-          .post(ADMIN_URL + `/professor`, newProfessor)
+          .post(ADMIN_URL + `/professor`, newProfessor, config)
           .then((res) => {
             console.log(res);
             setUserUX((prev) => ({
@@ -191,7 +205,7 @@ export const ProfessorsPortal = () => {
       },
     }));
     axios
-      .delete(ADMIN_URL + `/professor/${professorData.id}`)
+      .delete(ADMIN_URL + `/professor/${professorData.id}`, config)
       .then((res) => {
         console.log(res);
         navigate("/admin/control_system");

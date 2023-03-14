@@ -37,6 +37,9 @@ export const CourseRegister = (props) => {
     { id: "0", title: "common.coursesNotReg", registered: false },
     { id: "1", title: "common.regCourses", registered: true },
   ];
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setLevels(props.levels);
@@ -77,7 +80,8 @@ export const CourseRegister = (props) => {
         axios
           .get(
             ADMIN_URL +
-              `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseId}`
+              `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseId}`,
+            config
           )
           .then((res) => {
             console.log(res.data);
@@ -113,7 +117,8 @@ export const CourseRegister = (props) => {
     axios
       .get(
         ADMIN_URL +
-          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
+          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
+        config
       )
       .then((res) => {
         setRegisteredCourses(res.data);
@@ -195,7 +200,8 @@ export const CourseRegister = (props) => {
         .post(
           ADMIN_URL +
             `/course_instances/semesters/{{academic_semester_id}}/programs/${authContext.program.id}`,
-          course
+          course,
+          config
         )
         .then((res) => {
           console.log(res);
@@ -224,7 +230,8 @@ export const CourseRegister = (props) => {
         .put(
           ADMIN_URL +
             `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseData.id}`,
-          course
+          course,
+          config
         )
         .then((res) => {
           console.log(res);
@@ -258,7 +265,8 @@ export const CourseRegister = (props) => {
     axios
       .delete(
         ADMIN_URL +
-          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseData.id}`
+          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${courseData.id}`,
+        config
       )
       .then((res) => {
         console.log(res);

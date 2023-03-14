@@ -21,6 +21,9 @@ export const CoursesPortal = () => {
   const { courseCode } = useParams();
   const navigate = useNavigate();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     if (courseCode !== "add" && courseCode !== undefined) {
@@ -30,7 +33,7 @@ export const CoursesPortal = () => {
         formData: { loading: true, error: false, errorMsg: "" },
       }));
       axios
-        .get(ADMIN_URL + `/courses/${courseCode}`)
+        .get(ADMIN_URL + `/courses/${courseCode}`, config)
         .then((res) => {
           console.log(res);
           setCourseData(res.data);
@@ -88,7 +91,7 @@ export const CoursesPortal = () => {
     courseCode !== "add" && courseCode !== undefined
       ? // PUT request to update the current college course
         axios
-          .put(ADMIN_URL + `/courses/${newCourse.id}`, newCourse)
+          .put(ADMIN_URL + `/courses/${newCourse.id}`, newCourse, config)
           .then((res) => {
             setCourseData(res.data);
             navigate("/admin/courses");
@@ -116,7 +119,7 @@ export const CoursesPortal = () => {
           })
       : // POST request to create a new college course
         axios
-          .post(ADMIN_URL + `/courses`, newCourse)
+          .post(ADMIN_URL + `/courses`, newCourse, config)
           .then((res) => {
             console.log(res);
             setUserUX((prev) => ({
@@ -155,7 +158,7 @@ export const CoursesPortal = () => {
       },
     }));
     axios
-      .delete(ADMIN_URL + `/courses/${courseData.id}`)
+      .delete(ADMIN_URL + `/courses/${courseData.id}`, config)
       .then((res) => {
         console.log(res);
         navigate("/admin/courses");

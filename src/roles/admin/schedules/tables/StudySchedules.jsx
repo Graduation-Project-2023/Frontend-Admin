@@ -20,6 +20,9 @@ export const StudySchedules = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -30,7 +33,8 @@ export const StudySchedules = () => {
     axios
       .get(
         ADMIN_URL +
-          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
+          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
+        config
       )
       .then((res) => {
         setFilteredLevels(
@@ -73,7 +77,8 @@ export const StudySchedules = () => {
         .post(
           ADMIN_URL +
             `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
-          levelTableData
+          levelTableData,
+          config
         )
         .then((res) => {
           console.log(res);

@@ -20,12 +20,18 @@ export const CoursesRegPortal = () => {
   });
   const authContext = useAuth();
   const { courseId } = useParams();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, loading: true }));
     // Get request to get all program courses to display it in the menu
     axios
-      .get(ADMIN_URL + `/programs/${authContext.program.id}/program_courses`)
+      .get(
+        ADMIN_URL + `/programs/${authContext.program.id}/program_courses`,
+        config
+      )
       .then((res) => {
         setCourses(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));

@@ -30,11 +30,14 @@ export const AcademicMain = () => {
   const { t } = useTranslation();
   const { programId } = useParams();
   const navigate = useNavigate();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     // Get request to get a program by it's id
     axios
-      .get(ADMIN_URL + `/programs/${programId}`)
+      .get(ADMIN_URL + `/programs/${programId}`, config)
       .then((res) => {
         setProgramData(res.data);
         res.data.system === "CREDIT"
@@ -50,7 +53,7 @@ export const AcademicMain = () => {
   useEffect(() => {
     // GET request to get all programs to display it in the pre programs selection
     axios
-      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`, config)
       .then((res) => {
         setAllPrograms(res.data);
       })
@@ -102,7 +105,7 @@ export const AcademicMain = () => {
     });
     // PUT request to update the current program
     axios
-      .put(ADMIN_URL + `/programs/${programId}`, updatedData)
+      .put(ADMIN_URL + `/programs/${programId}`, updatedData, config)
       .then((res) => {
         console.log(res.data);
         setUserUX((prev) => {

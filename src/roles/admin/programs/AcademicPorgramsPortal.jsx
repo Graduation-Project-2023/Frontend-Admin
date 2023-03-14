@@ -19,6 +19,9 @@ export const AcademicPorgramsPortal = () => {
   const authContext = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     if (authContext.college === undefined) {
@@ -27,7 +30,10 @@ export const AcademicPorgramsPortal = () => {
       setUserUX((prev) => ({ ...prev, loading: true }));
       // Get request to get all programs to display it in the menu
       axios
-        .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
+        .get(
+          ADMIN_URL + `/programs?college_id=${authContext.college.id}`,
+          config
+        )
         .then((res) => {
           setUserUX((prev) => ({ ...prev, loading: false }));
           setPrograms(res.data);
@@ -36,7 +42,7 @@ export const AcademicPorgramsPortal = () => {
           setUserUX({
             loading: false,
             error: true,
-            errorMsg: "thgere is an error",
+            errorMsg: "there is an error",
           });
           console.log(error);
         });

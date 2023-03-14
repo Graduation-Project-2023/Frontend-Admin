@@ -38,6 +38,9 @@ export const ProgramCourses = () => {
     programCourse: { loading: false, error: false, errorMsg: "" },
     form: { submit: false, delete: false, error: false, errorMsg: "" },
   });
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -46,7 +49,7 @@ export const ProgramCourses = () => {
     }));
     // GET request to get all college cousres
     axios
-      .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`, config)
       .then((res) => {
         console.log(res);
         setCourses(res.data);
@@ -72,7 +75,7 @@ export const ProgramCourses = () => {
     }));
     // GET request to get all the program cousres to display it in the tables
     axios
-      .get(ADMIN_URL + `/programs/${programId}/program_courses`)
+      .get(ADMIN_URL + `/programs/${programId}/program_courses`, config)
       .then((res) => {
         console.log(res);
         setProgramCourses(res.data);
@@ -141,7 +144,7 @@ export const ProgramCourses = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    
+
     setUserUX((prev) => ({
       ...prev,
       form: { ...prev.form, submit: true, error: false, errorMsg: "" },
@@ -161,7 +164,8 @@ export const ProgramCourses = () => {
       axios
         .post(
           ADMIN_URL + `/programs/${programId}/program_courses`,
-          newProgramCourse
+          newProgramCourse,
+          config
         )
         .then((res) => {
           console.log(res);
@@ -188,7 +192,8 @@ export const ProgramCourses = () => {
       axios
         .put(
           ADMIN_URL + `/programs/${programId}/program_courses/${editRowId}`,
-          newProgramCourse
+          newProgramCourse,
+          config
         )
         .then((res) => {
           console.log(res);
@@ -241,7 +246,10 @@ export const ProgramCourses = () => {
     }));
     // GET request to get the current program course to display it in the form
     axios
-      .get(ADMIN_URL + `/programs/${programId}/program_courses/${item.id}`)
+      .get(
+        ADMIN_URL + `/programs/${programId}/program_courses/${item.id}`,
+        config
+      )
       .then((res) => {
         setProgramCourseData(res.data);
         if (res.data.prerequisites) {
@@ -273,7 +281,10 @@ export const ProgramCourses = () => {
     }));
     // DELETE request to delete the current program course
     axios
-      .delete(ADMIN_URL + `/programs/${programId}/program_courses/${course.id}`)
+      .delete(
+        ADMIN_URL + `/programs/${programId}/program_courses/${course.id}`,
+        config
+      )
       .then((res) => {
         console.log(res);
         setEditRowId(null);

@@ -18,11 +18,14 @@ export const ProgramsSidebar = () => {
     errorMsg: "",
   });
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX({ loading: true, error: false, errorMsg: "" });
     axios
-      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`, config)
       .then((res) => {
         setPrograms(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));

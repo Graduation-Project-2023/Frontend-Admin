@@ -19,12 +19,17 @@ export const ProfessorsSidebar = () => {
   const showOptions =
     location.pathname.split("/").pop() !== "add" &&
     location.pathname.split("/").pop() !== "control_system";
-
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, loading: true }));
     // GET request to get all college professors to display it in the sidebar
     axios
-      .get(ADMIN_URL + `/professor?college_id=${authContext.college.id}`)
+      .get(
+        ADMIN_URL + `/professor?college_id=${authContext.college.id}`,
+        config
+      )
       .then((res) => {
         setProfessors(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));

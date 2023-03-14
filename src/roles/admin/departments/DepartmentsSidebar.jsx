@@ -19,12 +19,17 @@ export const DepartmentsSidebar = () => {
   const showOptions =
     location.pathname.split("/").pop() !== "add" &&
     location.pathname.split("/").pop() !== "departments";
-
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, loading: true }));
     // GET request to get all college departments to display it in the sidebar
     axios
-      .get(ADMIN_URL + `/departments?college_id=${authContext.college.id}`)
+      .get(
+        ADMIN_URL + `/departments?college_id=${authContext.college.id}`,
+        config
+      )
       .then((res) => {
         setDepartments(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));

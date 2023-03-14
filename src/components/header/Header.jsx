@@ -44,6 +44,9 @@ export const Header = () => {
   const currentLanguage = languages.find(
     (lang) => lang.code === i18next.language
   );
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     document.body.dir = currentLanguage.dir || "ltr";
@@ -86,7 +89,7 @@ export const Header = () => {
     setShowModal({ colleges: true, programs: false });
 
     axios
-      .get(ADMIN_URL + "/colleges")
+      .get(ADMIN_URL + "/colleges", config)
       .then((res) => {
         console.log(res.data);
         setUserUX((prev) => ({
@@ -117,7 +120,10 @@ export const Header = () => {
     setShowModal({ colleges: false, programs: true });
 
     axios
-      .get(ADMIN_URL + `/programs?college_id=${authContext.college?.id}`)
+      .get(
+        ADMIN_URL + `/programs?college_id=${authContext.college?.id}`,
+        config
+      )
       .then((res) => {
         console.log(res.data);
         setUserUX((prev) => ({
@@ -154,9 +160,11 @@ export const Header = () => {
                 <DropdownItem onClick={getPrograms}>
                   {t("header.changeProgram")}
                 </DropdownItem>
-                <DropdownItem onClick={getColleges}>
-                  {t("header.changeCollege")}
-                </DropdownItem>
+                {authContext.role === "SUPER" && (
+                  <DropdownItem onClick={getColleges}>
+                    {t("header.changeCollege")}
+                  </DropdownItem>
+                )}
                 <DropdownItem onClick={handleLogout}>
                   {t("header.changeTerm")}
                 </DropdownItem>

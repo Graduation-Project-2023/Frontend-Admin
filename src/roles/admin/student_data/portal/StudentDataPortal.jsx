@@ -31,6 +31,9 @@ export const StudentDataPortal = () => {
   const { studentId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   const studentDataSetter = (data) => {
     let dates = {
@@ -58,7 +61,7 @@ export const StudentDataPortal = () => {
     }));
     // GET request to get all students data
     axios
-      .get(ADMIN_URL + `/student?college_id=${authContext.college}`)
+      .get(ADMIN_URL + `/student?college_id=${authContext.college}`, config)
       .then((res) => {
         setStudentData(res.data);
         setStudents(res.data);
@@ -91,7 +94,7 @@ export const StudentDataPortal = () => {
         studentData: { ...prev.studentData, loading: true },
       }));
       axios
-        .get(ADMIN_URL + `/student/${studentId}`)
+        .get(ADMIN_URL + `/student/${studentId}`, config)
         .then((res) => {
           console.log(res.data);
           studentDataSetter(res.data);
@@ -200,7 +203,7 @@ export const StudentDataPortal = () => {
       }
       // PUT request to update the current student data
       axios
-        .put(ADMIN_URL + `/student/${studentId}`, newUpdatedData)
+        .put(ADMIN_URL + `/student/${studentId}`, newUpdatedData, config)
         .then((res) => {
           console.log(res.data);
           studentDataSetter(res.data);
@@ -232,7 +235,7 @@ export const StudentDataPortal = () => {
       };
       // POST request to create a new student
       axios
-        .post(ADMIN_URL + `/student`, newStudent)
+        .post(ADMIN_URL + `/student`, newStudent, config)
         .then((res) => {
           console.log(res);
           setUpdatedData({});
@@ -271,7 +274,7 @@ export const StudentDataPortal = () => {
       },
     }));
     axios
-      .delete(ADMIN_URL + `/student/${studentId}`)
+      .delete(ADMIN_URL + `/student/${studentId}`, config)
       .then((res) => {
         console.log(res);
         setUserUX((prev) => ({

@@ -23,6 +23,9 @@ export const LevelHours = () => {
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -31,7 +34,7 @@ export const LevelHours = () => {
     }));
     // GET request to get all level allowed hours to display it in the table
     axios
-      .get(ADMIN_URL + `/programs/${programId}/level_allowed_hours`)
+      .get(ADMIN_URL + `/programs/${programId}/level_allowed_hours`, config)
       .then((res) => {
         setUserUX((prev) => ({
           ...prev,
@@ -79,7 +82,8 @@ export const LevelHours = () => {
     axios
       .post(
         ADMIN_URL + `/programs/${programId}/level_allowed_hours`,
-        levelAllowedHour
+        levelAllowedHour,
+        config
       )
       .then((res) => {
         console.log(res);

@@ -49,6 +49,8 @@ export const DropdownSearch = (props) => {
       <Dropdown.Toggle id="dropdown-autoclose-true">
         {listData?.type === "courseWithCode" &&
           (props.dropDownTitle?.id || t("courses.chooseCode"))}
+        {listData?.type === "departmentWithCode" &&
+          (props.dropDownTitle?.code || t("courses.chooseCode"))}
         {listData?.type === "tableSelectCourse" &&
           (i18next.language === "en"
             ? props.dropDownTitle?.englishName || t("common.select")

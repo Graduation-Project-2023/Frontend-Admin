@@ -38,6 +38,12 @@ const AdminNavbarData = [
     path: "registeration",
   },
   {
+    id: "11",
+    title: "adminNavbar.control",
+    keyword: "adminNavbarkeys.control",
+    path: "control_system",
+  },
+  {
     id: "7",
     title: "adminNavbar.exams",
     keyword: "adminNavbarkeys.exams",
@@ -61,12 +67,6 @@ const AdminNavbarData = [
     title: "adminNavbar.supervision",
     keyword: "adminNavbarkeys.supervision",
     path: "supervision",
-  },
-  {
-    id: "11",
-    title: "adminNavbar.control",
-    keyword: "adminNavbarkeys.control",
-    path: "control_system",
   },
 ];
 

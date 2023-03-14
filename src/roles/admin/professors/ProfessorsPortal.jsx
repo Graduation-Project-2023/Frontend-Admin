@@ -4,21 +4,25 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
-import { CoursesFormData } from "./CoursesFormData";
+import { ProfessorsFormData } from "./ProfessorsFormData";
 
 // Resuable Components
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../components/forms/FormCard";
 import { FormInput } from "../../../components/forms/FormInput";
+import { DropdownSearch } from "../../../components/forms/DropdownSearch";
 
-export const CoursesPortal = () => {
-  const [courseData, setCourseData] = useState([]);
+export const ProfessorsPortal = () => {
+  const [professorData, setProfessorData] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [profDep, setProfDep] = useState({});
   const [userUX, setUserUX] = useState({
     form: { loading: false, delete: false, error: false, errorMsg: "" },
     formData: { loading: false, error: false, errorMsg: "" },
+    departments: { loading: false, error: false, errorMsg: "" },
   });
   const { t } = useTranslation();
-  const { courseCode } = useParams();
+  const { professorId } = useParams();
   const navigate = useNavigate();
   const authContext = useAuth();
   const config = {
@@ -26,17 +30,20 @@ export const CoursesPortal = () => {
   };
 
   useEffect(() => {
-    if (courseCode !== "add" && courseCode !== undefined) {
-      // GET request to get college course by it's id
+    if (professorId !== "add" && professorId !== undefined) {
+      // GET request to get college professor by it's id
       setUserUX((prev) => ({
         ...prev,
         formData: { loading: true, error: false, errorMsg: "" },
       }));
       axios
-        .get(ADMIN_URL + `/courses/${courseCode}`, config)
+        .get(
+          ADMIN_URL + `/professor?college_id=${authContext.college.id}`,
+          config
+        )
         .then((res) => {
           console.log(res);
-          setCourseData(res.data);
+          setProfessorData(res.data);
           setUserUX((prev) => ({
             ...prev,
             formData: { loading: false, error: false, errorMsg: "" },
@@ -49,15 +56,47 @@ export const CoursesPortal = () => {
             formData: {
               loading: false,
               error: true,
-              errorMsg: "error in course",
+              errorMsg: "error in professor data",
             },
           }));
         });
     } else {
-      setCourseData([]);
+      setProfessorData([]);
     }
     // eslint-disable-next-line
-  }, [courseCode]);
+  }, [professorId]);
+
+  useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      departments: { loading: true, error: false, errorMsg: "" },
+    }));
+    // GET request to get all college departments to display it in the select menu
+    axios
+      .get(
+        ADMIN_URL + `/departments?college_id=${authContext.college.id}`,
+        config
+      )
+      .then((res) => {
+        setDepartments(res.data);
+        setUserUX((prev) => ({
+          ...prev,
+          departments: { loading: false, error: false, errorMsg: "" },
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          departments: {
+            loading: false,
+            error: true,
+            errorMsg: "error in departments data",
+          },
+        }));
+      });
+    // eslint-disable-next-line
+  }, [authContext.college.id]);
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -66,16 +105,16 @@ export const CoursesPortal = () => {
     if (event.target.type === "number") {
       fieldValue = +fieldValue;
     }
-    const newCourseData = { ...courseData };
-    newCourseData[fieldName] = fieldValue;
-    setCourseData(newCourseData);
+    const newProfessorData = { ...professorData };
+    newProfessorData[fieldName] = fieldValue;
+    setProfessorData(newProfessorData);
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const newCourse = {
-      ...courseData,
-      id: courseData.id.replace(/\s/g, ""),
+    const newProfessor = {
+      ...professorData,
+      id: professorData.id.replace(/\s/g, ""),
       collegeId: authContext.college.id,
     };
     setUserUX((prev) => ({
@@ -87,14 +126,18 @@ export const CoursesPortal = () => {
         errorMsg: "",
       },
     }));
-    // Condition to check whether it's adding a new course or updating the current
-    courseCode !== "add" && courseCode !== undefined
-      ? // PUT request to update the current college course
+    // Condition to check whether it's adding a new professor or updating the current
+    professorId !== "add" && professorId !== undefined
+      ? // PUT request to update the current college professor
         axios
-          .put(ADMIN_URL + `/courses/${newCourse.id}`, newCourse, config)
+          .put(
+            ADMIN_URL + `/professor/${newProfessor.id}`,
+            newProfessor,
+            config
+          )
           .then((res) => {
-            setCourseData(res.data);
-            navigate("/admin/courses");
+            setProfessorData(res.data);
+            navigate("/admin/professors");
             setUserUX((prev) => ({
               ...prev,
               form: {
@@ -117,9 +160,9 @@ export const CoursesPortal = () => {
               },
             }));
           })
-      : // POST request to create a new college course
+      : // POST request to create a new professor
         axios
-          .post(ADMIN_URL + `/courses`, newCourse, config)
+          .post(ADMIN_URL + `/professor`, newProfessor, config)
           .then((res) => {
             console.log(res);
             setUserUX((prev) => ({
@@ -146,9 +189,13 @@ export const CoursesPortal = () => {
           });
   };
 
-  const handleCourseDelete = (e) => {
+  const handleDepartmentSelection = (item) => {
+    setProfDep(item);
+  };
+
+  const handleProfessorDelete = (e) => {
     e.preventDefault();
-    // DELETE request to delete the current college course
+    // DELETE request to delete the current professor
     setUserUX((prev) => ({
       ...prev,
       form: {
@@ -158,10 +205,10 @@ export const CoursesPortal = () => {
       },
     }));
     axios
-      .delete(ADMIN_URL + `/courses/${courseData.id}`, config)
+      .delete(ADMIN_URL + `/professor/${professorData.id}`, config)
       .then((res) => {
         console.log(res);
-        navigate("/admin/courses");
+        navigate("/admin/control_system");
         setUserUX((prev) => ({
           ...prev,
           form: {
@@ -186,7 +233,7 @@ export const CoursesPortal = () => {
 
   return (
     <SidebarContainer>
-      <FormCard cardTitle={"courses.formhead"}>
+      <FormCard cardTitle={"professor.formhead"}>
         <form
           onSubmit={(event) => {
             handleFormSubmit(event);
@@ -196,17 +243,33 @@ export const CoursesPortal = () => {
             "loading..."
           ) : (
             <>
-              {CoursesFormData.map((data) => {
-                if (
+              {ProfessorsFormData.map((data) => {
+                if (data.name === "department") {
+                  return (
+                    <div className="col-lg-12 mb-4">
+                      <label className="form-label">{t(data.title)}</label>
+                      <DropdownSearch
+                        listData={{
+                          type: "departmentWithCode",
+                          data: departments,
+                        }}
+                        dropDownTitle={profDep}
+                        inputPlaceholder={"professor.department_search"}
+                        handleListClick={handleDepartmentSelection}
+                        userUX={userUX.departments}
+                      />
+                    </div>
+                  );
+                } else if (
                   data.name === "id" &&
-                  courseCode !== "add" &&
-                  courseCode !== undefined
+                  professorId !== "add" &&
+                  professorId !== undefined
                 ) {
                   return (
                     <FormInput
                       inputData={{ ...data, disabled: true }}
                       handleEditFormChange={handleEditFormChange}
-                      valueData={courseData}
+                      valueData={professorData}
                       key={data.id}
                       loading={userUX.formData.loading}
                     />
@@ -216,7 +279,7 @@ export const CoursesPortal = () => {
                     <FormInput
                       inputData={data}
                       handleEditFormChange={handleEditFormChange}
-                      valueData={courseData}
+                      valueData={professorData}
                       key={data.id}
                       loading={userUX.formData.loading}
                     />
@@ -232,7 +295,7 @@ export const CoursesPortal = () => {
           >
             {userUX.loading
               ? "loading..."
-              : courseCode !== "add" && courseCode !== undefined
+              : professorId !== "add" && professorId !== undefined
               ? t(`common.save`)
               : t(`common.add`)}
           </button>
@@ -244,10 +307,10 @@ export const CoursesPortal = () => {
             {t(`common.cancel`)}
           </button>
 
-          {courseCode !== "add" && courseCode !== undefined && (
+          {professorId !== "add" && professorId !== undefined && (
             <button
               className="form-card-button form-card-button-delete"
-              onClick={handleCourseDelete}
+              onClick={handleProfessorDelete}
             >
               {userUX.delete ? "loading..." : t(`common.delete`)}
             </button>

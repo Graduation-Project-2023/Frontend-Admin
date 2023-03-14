@@ -42,7 +42,7 @@ function App() {
         </Route>
 
         {/* Admin Routes (Private) */}
-        <Route element={<LoginRoute allowedRoles={"ADMIN"} />}>
+        <Route element={<LoginRoute allowedRoles={"ADMIN" || "SUPER"} />}>
           <Route path="admin/*" element={<AdminRoutes />} />
         </Route>
 

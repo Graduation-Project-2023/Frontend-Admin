@@ -13,6 +13,7 @@ import Modal from "react-bootstrap/Modal";
 // list: {state, data, path}
 // form: {state, children} (not a self-closing tag)
 // message: { state, icon: tag, title, text, button, handleClick}
+// contextValue: string
 
 export const ModalPopup = (props) => {
   const listData = props.list?.data;
@@ -39,6 +40,16 @@ export const ModalPopup = (props) => {
     }
     // eslint-disable-next-line
   }, [searchValue]);
+
+  const handleListClick = (item) => {
+    if (props.contextValue === "COLLEGE") {
+      authContext.changeCollege(item);
+      props.closeModal();
+    } else if (props.contextValue === "PROGRAM") {
+      authContext.changeProgram(item);
+      props.closeModal();
+    }
+  };
 
   const hideModal = () => {
     props.closeModal();
@@ -86,7 +97,7 @@ export const ModalPopup = (props) => {
                   <Link
                     key={item.id}
                     onClick={() => {
-                      authContext.changeCollege(item);
+                      handleListClick(item);
                     }}
                     to={props.list.path}
                   >

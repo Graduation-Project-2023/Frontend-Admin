@@ -26,6 +26,9 @@ export const DepartmentsPortal = () => {
   const { departmentCode } = useParams();
   const navigate = useNavigate();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     // GET request to get all programs
@@ -34,7 +37,7 @@ export const DepartmentsPortal = () => {
       programs: { loading: true, error: false, errorMsg: "" },
     }));
     axios
-      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`, config)
       .then((res) => {
         console.log(res);
         setPrograms(res.data);
@@ -61,7 +64,7 @@ export const DepartmentsPortal = () => {
         formData: { loading: true, error: false, errorMsg: "" },
       }));
       axios
-        .get(ADMIN_URL + `/departments/${departmentCode}`)
+        .get(ADMIN_URL + `/departments/${departmentCode}`, config)
         .then((res) => {
           console.log(res);
           setDepartmentData(res.data);
@@ -113,7 +116,7 @@ export const DepartmentsPortal = () => {
     departmentCode !== "add" && departmentCode !== undefined
       ? // PUT request to update the current college department
         axios
-          .put(ADMIN_URL + `/departments`, newDepartment)
+          .put(ADMIN_URL + `/departments`, newDepartment, config)
           .then((res) => {
             console.log(res);
             setDepartmentData(res.data);
@@ -132,7 +135,7 @@ export const DepartmentsPortal = () => {
           })
       : // POST request to create a new college department
         axios
-          .post(ADMIN_URL + `/departments`, newDepartment)
+          .post(ADMIN_URL + `/departments`, newDepartment, config)
           .then((res) => {
             console.log(res);
             setUserUX((prev) => ({
@@ -157,7 +160,7 @@ export const DepartmentsPortal = () => {
       form: { loading: false, delete: true, error: false, errorMsg: "" },
     }));
     axios
-      .delete(ADMIN_URL + `/departments/${departmentData.id}`)
+      .delete(ADMIN_URL + `/departments/${departmentData.id}`, config)
       .then((res) => {
         console.log(res);
         navigate("/admin/departments");

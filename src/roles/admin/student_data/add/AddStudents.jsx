@@ -13,7 +13,6 @@ import { MdErrorOutline } from "react-icons/md";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 
 export const AddStudents = () => {
-  const authContext = useAuth();
   const [userUX, setUserUX] = useState({
     loading: false,
     success: false,
@@ -21,7 +20,10 @@ export const AddStudents = () => {
     errorMsg: "",
   });
   const { t } = useTranslation();
-
+  const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
   const handleDragOver = (event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -51,7 +53,8 @@ export const AddStudents = () => {
         axios
           .post(
             ADMIN_URL + `/student/many?collegeId=${authContext.college.id}`,
-            csvData
+            csvData,
+            config
           )
           .then((res) => {
             setUserUX((prev) => ({

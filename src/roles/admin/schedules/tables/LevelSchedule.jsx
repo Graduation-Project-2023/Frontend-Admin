@@ -23,7 +23,6 @@ export const LevelSchedule = () => {
   const [levelCourses, setLevelCourses] = useState([]);
   const [levels, setLevels] = useState([]);
   const [cells, setCells] = useState({ occupied: [], available: [] });
-  // eslint-disable-next-line
   const [userUX, setUserUX] = useState({
     table: { loading: false, error: false, errorMsg: "" },
     regCourses: { loading: false, error: false, errorMsg: "" },
@@ -39,6 +38,9 @@ export const LevelSchedule = () => {
   const { levelId } = useParams();
   const { t } = useTranslation();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -49,7 +51,8 @@ export const LevelSchedule = () => {
     axios
       .get(
         ADMIN_URL +
-          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`
+          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${levelId}`,
+        config
       )
       .then((res) => {
         setTableData(res.data.classes);
@@ -79,7 +82,8 @@ export const LevelSchedule = () => {
     axios
       .get(
         ADMIN_URL +
-          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
+          `/course_instances/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
+        config
       )
       .then((res) => {
         setCourses(res.data);
@@ -170,7 +174,8 @@ export const LevelSchedule = () => {
     axios
       .get(
         ADMIN_URL +
-          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`
+          `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
+        config
       )
       .then((res) => {
         setUserUX((prev) => ({
@@ -194,7 +199,8 @@ export const LevelSchedule = () => {
             .post(
               ADMIN_URL +
                 `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
-              levelTableData
+              levelTableData,
+              config
             )
             .then((res) => {
               setUserUX((prev) => ({
@@ -337,7 +343,8 @@ export const LevelSchedule = () => {
       .put(
         ADMIN_URL +
           `/classes_tables/semesters/decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}/${tableId}`,
-        levelTableData
+        levelTableData,
+        config
       )
       .then((res) => {
         setUserUX((prev) => ({

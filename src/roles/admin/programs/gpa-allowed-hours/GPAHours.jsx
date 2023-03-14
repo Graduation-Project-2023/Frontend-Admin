@@ -23,6 +23,9 @@ export const GPAHours = () => {
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -31,7 +34,7 @@ export const GPAHours = () => {
     }));
     // GET request to get all GPA allowed hours to display it in the table
     axios
-      .get(ADMIN_URL + `/programs/${programId}/gpa_allowed_hours`)
+      .get(ADMIN_URL + `/programs/${programId}/gpa_allowed_hours`, config)
       .then((res) => {
         setUserUX((prev) => ({
           ...prev,
@@ -78,7 +81,8 @@ export const GPAHours = () => {
     axios
       .post(
         ADMIN_URL + `/programs/${programId}/gpa_allowed_hours`,
-        gpaAllowedHour
+        gpaAllowedHour,
+        config
       )
       .then((res) => {
         console.log(res);

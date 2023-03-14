@@ -23,6 +23,9 @@ export const AcademicGrades = () => {
   const authContext = useAuth();
   const { t } = useTranslation();
   const { programId } = useParams();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -31,7 +34,7 @@ export const AcademicGrades = () => {
     }));
     // GET request to get all GPA allowed hours to display it in the table
     axios
-      .get(ADMIN_URL + `/programs/${programId}/grades`)
+      .get(ADMIN_URL + `/programs/${programId}/grades`, config)
       .then((res) => {
         console.log(res);
         setUserUX((prev) => ({
@@ -72,7 +75,7 @@ export const AcademicGrades = () => {
 
     // POST request to create a new academic grade
     axios
-      .post(ADMIN_URL + `/programs/${programId}/grades`, grade)
+      .post(ADMIN_URL + `/programs/${programId}/grades`, grade, config)
       .then((res) => {
         console.log(res);
         setUserUX((prev) => ({

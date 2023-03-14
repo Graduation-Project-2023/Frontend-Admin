@@ -14,21 +14,21 @@ export const Login = () => {
   const authContext = useAuth();
   const navigate = useNavigate();
   const [userUX, setUserUX] = useState({
-    submitLoading: false,
+    loading: false,
     error: false,
     errorMsg: "",
   });
 
   useEffect(() => {
     if (authContext.isLoggedIn) {
-      navigate("/admin");
+      navigate(`/${authContext.role.toLowerCase()}`);
     }
     //eslint-disable-next-line
   }, [authContext.isLoggedIn]);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setUserUX((prev) => ({ ...prev, submitLoading: true, error: false }));
+    setUserUX((prev) => ({ ...prev, loading: true, error: false }));
     const userCredentials = {
       email: emailRef.current.value,
       password: pwdRef.current.value,
@@ -37,13 +37,13 @@ export const Login = () => {
       .post(BASE_URL + "/auth/admin_login", userCredentials)
       .then((res) => {
         console.log(res);
-        setUserUX((prev) => ({ ...prev, submitLoading: false }));
-        authContext.login(res.data.email, res.data.role);
-        navigate("/admin");
+        setUserUX((prev) => ({ ...prev, loading: false }));
+        authContext.login(res.data.token, res.data.role, res.data.college);
+        navigate(`/${res.data.role.toLowerCase()}`);
       })
       .catch((error) => {
         setUserUX({
-          submitLoading: false,
+          loading: false,
           error: true,
           errorMsg:
             error.response.status === 400
@@ -84,7 +84,7 @@ export const Login = () => {
             />
           </div>
           <div className="login_form_button">
-            {userUX.submitLoading ? (
+            {userUX.loading ? (
               <FormButton type="loading" />
             ) : (
               <button>{t(`common.login`)}</button>

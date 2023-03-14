@@ -23,6 +23,9 @@ export const AcademicLevels = () => {
   const { t } = useTranslation();
   const { programId } = useParams();
   const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -31,7 +34,7 @@ export const AcademicLevels = () => {
     }));
     // GET request to get all levels of a specific program and display in the table
     axios
-      .get(ADMIN_URL + `/programs/${programId}/levels`)
+      .get(ADMIN_URL + `/programs/${programId}/levels`, config)
       .then((res) => {
         setUserUX((prev) => ({
           ...prev,
@@ -74,7 +77,7 @@ export const AcademicLevels = () => {
     };
     // POST request to add a new academic level to the database
     axios
-      .post(ADMIN_URL + `/programs/${programId}/levels`, acadmicLevel)
+      .post(ADMIN_URL + `/programs/${programId}/levels`, acadmicLevel, config)
       .then((res) => {
         console.log(res.data);
         setUserUX((prev) => ({

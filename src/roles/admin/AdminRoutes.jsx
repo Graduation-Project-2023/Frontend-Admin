@@ -11,6 +11,7 @@ import { StudySchedulesRoutes } from "./schedules/StudySchedulesRoutes";
 import { NotFound } from "../../pages/NotFound";
 import { CoursesRoutes } from "./courses/CoursesRoutes";
 import { DepartmentsRoutes } from "./departments/DepartmentsRoutes";
+import { ProfessorsRoutes } from "./professors/ProfessorsRoutes";
 
 export function AdminRoutes() {
   return (
@@ -21,6 +22,7 @@ export function AdminRoutes() {
         <Route path="student_data/*" element={<StudentDataRoutes />} />
         <Route path="courses/*" element={<CoursesRoutes />} />
         <Route path="departments/*" element={<DepartmentsRoutes />} />
+        <Route path="control_system/*" element={<ProfessorsRoutes />} />
         <Route path="academic_programs" element={<AcademicPorgramsPortal />} />
         <Route path="academic_programs/add" element={<AddAcademicProgram />} />
         <Route
@@ -30,6 +32,7 @@ export function AdminRoutes() {
         <Route path="study_schedules/*" element={<StudySchedulesRoutes />} />
         <Route path="registeration" element={<RegisterationPortal />} />
         <Route path="registeration/*" element={<RegisterationRoutes />} />
+
         <Route
           path="exams"
           element={
@@ -62,14 +65,7 @@ export function AdminRoutes() {
             </h1>
           }
         />
-        <Route
-          path="control_system"
-          element={
-            <h1 className="text-center alert alert-info m-5" role="alert">
-              FUTURE WORK
-            </h1>
-          }
-        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

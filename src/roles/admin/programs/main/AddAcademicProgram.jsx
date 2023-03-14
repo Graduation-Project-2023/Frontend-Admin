@@ -20,19 +20,22 @@ export const AddAcademicProgram = () => {
   const [newProgram, setNewProgram] = useState({});
   const [creditHours, setCreditHours] = useState(false);
   const [summerSemester, setSummerSemester] = useState(false);
-  const authContext = useAuth();
-  const { t } = useTranslation();
   const [userUX, setUserUX] = useState({
     form: { loading: false, error: false, errorMsg: "" },
     siderbar: { loading: false, error: false, errorMsg: "" },
   });
+  const authContext = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
 
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, siderbar: { loading: true } }));
     // GET request to get all programs to display it in the sidebar
     axios
-      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`)
+      .get(ADMIN_URL + `/programs?college_id=${authContext.college.id}`, config)
       .then((res) => {
         setUserUX((prev) => ({ ...prev, siderbar: { loading: false } }));
         setProrgramsData(res.data);
@@ -89,7 +92,7 @@ export const AddAcademicProgram = () => {
     const program = { ...newProgram, collegeId: authContext.college.id };
     // POST request to create a new program
     axios
-      .post(ADMIN_URL + `/programs`, program)
+      .post(ADMIN_URL + `/programs`, program, config)
       .then((res) => {
         setUserUX((prev) => ({
           ...prev,

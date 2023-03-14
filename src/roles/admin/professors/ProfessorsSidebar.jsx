@@ -6,8 +6,8 @@ import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 
-export const DepartmentsSidebar = () => {
-  const [departments, setDepartments] = useState([]);
+export const ProfessorsSidebar = () => {
+  const [professors, setProfessors] = useState([]);
   const [userUX, setUserUX] = useState({
     loading: false,
     error: false,
@@ -18,25 +18,25 @@ export const DepartmentsSidebar = () => {
   const location = useLocation();
   const showOptions =
     location.pathname.split("/").pop() !== "add" &&
-    location.pathname.split("/").pop() !== "departments";
+    location.pathname.split("/").pop() !== "control_system";
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, loading: true }));
-    // GET request to get all college departments to display it in the sidebar
+    // GET request to get all college professors to display it in the sidebar
     axios
       .get(
-        ADMIN_URL + `/departments?college_id=${authContext.college.id}`,
+        ADMIN_URL + `/professor?college_id=${authContext.college.id}`,
         config
       )
       .then((res) => {
-        setDepartments(res.data);
+        setProfessors(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
         console.log(error);
-        setUserUX({ loading: false, error: true, errorMsg: "error" });
+        setUserUX({ loading: false, error: true, errorMsg: "erirrr" });
       });
 
     // eslint-disable-next-line
@@ -46,17 +46,15 @@ export const DepartmentsSidebar = () => {
     <Sidebar
       options={
         showOptions && (
-          <Link to={"/admin/departments/add"}>
-            <button className="coursesSidebarBtn">
-              {t("departments.add")}
-            </button>
+          <Link to={"/admin/control_system/add"}>
+            <button className="coursesSidebarBtn">{t("professor.add")}</button>
           </Link>
         )
       }
-      sideData={departments.map((obj) => ({ ...obj, path: obj.id }))}
-      sidebarTitle={"departments.sidebar"}
+      sideData={professors.map((obj) => ({ ...obj, path: obj.id }))}
+      sidebarTitle={"professor.employees"}
       searchable={true}
-      inputPlaceholder={"departments.name"}
+      inputPlaceholder={"professor.search"}
       backendData={true}
       activeNav={true}
       userUX={userUX}

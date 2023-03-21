@@ -27,7 +27,7 @@ export const ProfessorsSidebar = () => {
     // GET request to get all college professors to display it in the sidebar
     axios
       .get(
-        ADMIN_URL + `/professor?college_id=${authContext.college.id}`,
+        ADMIN_URL + `/professor/all/${authContext.college.id}`,
         config
       )
       .then((res) => {

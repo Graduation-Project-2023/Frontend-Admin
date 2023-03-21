@@ -63,6 +63,7 @@ export const StudentDataPortal = () => {
     axios
       .get(ADMIN_URL + `/student?college_id=${authContext.college}`, config)
       .then((res) => {
+        console.log(res);
         setStudentData(res.data);
         setStudents(res.data);
         setFilteredStudents(res.data);
@@ -189,6 +190,8 @@ export const StudentDataPortal = () => {
         ...updatedData,
         ...dates,
       };
+      delete newUpdatedData.email;
+      delete newUpdatedData.password;
       if (Object.keys(updatedData).length === 0) {
         setUserUX((prev) => ({
           ...prev,
@@ -202,6 +205,7 @@ export const StudentDataPortal = () => {
         return;
       }
       // PUT request to update the current student data
+      console.log(newUpdatedData);
       axios
         .put(ADMIN_URL + `/student/${studentId}`, newUpdatedData, config)
         .then((res) => {

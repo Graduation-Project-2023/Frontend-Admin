@@ -1,6 +1,22 @@
 export const ProfessorsFormData = [
   {
+    id: 0,
+    title: "login.email",
+    req: true,
+    name: "email",
+    type: "email",
+    row: true,
+  },
+  {
     id: 1,
+    title: "login.password",
+    req: true,
+    name: "password",
+    type: "password",
+    row: true,
+  },
+  {
+    id: 2,
     title: "common.ar_name",
     name: "arabicName",
     req: true,
@@ -8,7 +24,7 @@ export const ProfessorsFormData = [
     row: true,
   },
   {
-    id: 2,
+    id: 3,
     title: "common.eng_name",
     name: "englishName",
     req: true,
@@ -16,7 +32,7 @@ export const ProfessorsFormData = [
     row: true,
   },
   {
-    id: 3,
+    id: 4,
     title: "professor.department",
     name: "department",
     req: true,
@@ -24,11 +40,11 @@ export const ProfessorsFormData = [
     row: true,
     department: true,
   },
-  {
-    id: 4,
-    title: "professor.title",
-    name: "title",
-    type: "text",
-    row: true,
-  },
+  // {
+  //   id: 5,
+  //   title: "professor.title",
+  //   name: "title",
+  //   type: "text",
+  //   row: true,
+  // },
 ];

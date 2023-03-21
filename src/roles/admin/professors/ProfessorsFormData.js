@@ -34,17 +34,31 @@ export const ProfessorsFormData = [
   {
     id: 4,
     title: "professor.department",
-    name: "department",
+    name: "departmentId",
     req: true,
     type: "text",
     row: true,
-    department: true,
   },
-  // {
-  //   id: 5,
-  //   title: "professor.title",
-  //   name: "title",
-  //   type: "text",
-  //   row: true,
-  // },
+  {
+    id: 5,
+    splitRow: [
+      {
+        id: 1,
+        title: "professor.position",
+        name: "position",
+        req: true,
+        options: [
+          { id: 0, title: "professor.permenant", value: "PERMENANT" },
+          { id: 1, title: "professor.delegated", value: "DELEGATED" },
+        ],
+      },
+      {
+        id: 2,
+        title: "professor.title",
+        name: "title",
+        type: "text",
+        req: true,
+      },
+    ],
+  },
 ];

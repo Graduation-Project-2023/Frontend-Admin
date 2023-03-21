@@ -30,40 +30,6 @@ export const ProfessorsPortal = () => {
   };
 
   useEffect(() => {
-    if (professorId !== "add" && professorId !== undefined) {
-      // GET request to get college professor by it's id
-      setUserUX((prev) => ({
-        ...prev,
-        formData: { loading: true, error: false, errorMsg: "" },
-      }));
-      axios
-        .get(ADMIN_URL + `/professor/${professorId}`, config)
-        .then((res) => {
-          console.log(res);
-          setProfessorData(res.data);
-          setUserUX((prev) => ({
-            ...prev,
-            formData: { loading: false, error: false, errorMsg: "" },
-          }));
-        })
-        .catch((error) => {
-          console.log(error);
-          setUserUX((prev) => ({
-            ...prev,
-            formData: {
-              loading: false,
-              error: true,
-              errorMsg: "error in professor data",
-            },
-          }));
-        });
-    } else {
-      setProfessorData([]);
-    }
-    // eslint-disable-next-line
-  }, [professorId]);
-
-  useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
       departments: { loading: true, error: false, errorMsg: "" },
@@ -95,6 +61,43 @@ export const ProfessorsPortal = () => {
     // eslint-disable-next-line
   }, [authContext.college.id]);
 
+  useEffect(() => {
+    if (professorId !== "add" && professorId !== undefined) {
+      // GET request to get college professor by it's id
+      setUserUX((prev) => ({
+        ...prev,
+        formData: { loading: true, error: false, errorMsg: "" },
+      }));
+      axios
+        .get(ADMIN_URL + `/professor/${professorId}`, config)
+        .then((res) => {
+          console.log(res);
+          setProfessorData(res.data);
+          setProfDep(
+            departments.find((item) => item.id === res.data.departmentId)
+          );
+          setUserUX((prev) => ({
+            ...prev,
+            formData: { loading: false, error: false, errorMsg: "" },
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            formData: {
+              loading: false,
+              error: true,
+              errorMsg: "error in professor data",
+            },
+          }));
+        });
+    } else {
+      setProfessorData([]);
+    }
+    // eslint-disable-next-line
+  }, [professorId]);
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
@@ -112,7 +115,7 @@ export const ProfessorsPortal = () => {
     const newProfessor = {
       ...professorData,
       collegeId: authContext.college.id,
-      department: profDep.id,
+      departmentId: profDep.id,
     };
     setUserUX((prev) => ({
       ...prev,
@@ -242,7 +245,7 @@ export const ProfessorsPortal = () => {
           ) : (
             <>
               {ProfessorsFormData.map((data) => {
-                if (data.name === "department") {
+                if (data.name === "departmentId") {
                   return (
                     <div className="col-lg-12 mb-4" key={data.id}>
                       <label className="form-label">{t(data.title)}</label>

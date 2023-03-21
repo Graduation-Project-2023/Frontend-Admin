@@ -48,8 +48,8 @@ export const ProfessorsFormData = [
         name: "position",
         req: true,
         options: [
-          { id: 0, title: "professor.permenant", value: "PERMENANT" },
-          { id: 1, title: "professor.delegated", value: "DELEGATED" },
+          { id: 0, title: "professor.permenant", value: "permenant" },
+          { id: 1, title: "professor.delegated", value: "delegated" },
         ],
       },
       {

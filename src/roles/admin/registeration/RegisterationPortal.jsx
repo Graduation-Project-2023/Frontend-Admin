@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
-import { useParams } from "react-router-dom";
 import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
 
@@ -21,7 +20,6 @@ export const RegisterationPortal = () => {
     levels: { loading: false, error: false, errorMsg: "" },
   });
   const { t } = useTranslation();
-  const { programId } = useParams();
   const authContext = useAuth();
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
@@ -97,7 +95,9 @@ export const RegisterationPortal = () => {
             alwaysOpen
             className="collapseSection"
           >
-            {levels.length > 0 ? (
+            {levels.length > 0 &&
+            !userUX.levels.error &&
+            !userUX.students.error ? (
               levels.map((level) => {
                 return (
                   <RegisterationAccordion

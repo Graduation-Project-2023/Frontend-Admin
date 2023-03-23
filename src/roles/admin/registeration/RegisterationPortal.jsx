@@ -1,60 +1,91 @@
-import { Accordion } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import styles from "./RegisterationPortal.module.scss";
-import { NoData } from "../../../components/UX/NoData";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { ADMIN_URL } from "../../../shared/API";
+import axios from "axios";
+
+// Reusable Components
+import { Accordion } from "react-bootstrap";
+import { RegisterationAccordion } from "./RegisterationAccordion";
+import { NoData } from "../../../components/UX/NoData";
+
+// TO DELETE AFTER TESTING
+import { STUDENTS } from "./TestingStudents";
 
 export const RegisterationPortal = () => {
+  const [students, setStudents] = useState([]);
+  const [levels, setLevels] = useState([]);
+  const [userUX, setUserUX] = useState({
+    students: { loading: false, error: false, errorMsg: "" },
+    levels: { loading: false, error: false, errorMsg: "" },
+  });
   const { t } = useTranslation();
-  const [student, setStudent] = useState([]);
   const { programId } = useParams();
   const authContext = useAuth();
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
-  const [userUX, setUserUX] = useState({
-    loading: false,
-    error: false,
-    errorMsg: "",
-  });
-  const [levels, setLevels] = useState([]);
 
   useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      levels: { ...prev.levels, loading: true },
+    }));
+    // GET request to get levels by program id
     axios
-      .get(ADMIN_URL + `/programs/${programId}/levels`, config)
-      .then((res) => {
-        setLevels(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    setUserUX((prev) => ({ ...prev, loading: true }));
-    axios
-      .get(ADMIN_URL + `/student/program/${authContext.program.id}`, config)
-
+      .get(ADMIN_URL + `/programs/${authContext.program.id}/levels`, config)
       .then((res) => {
         console.log(res);
-        setStudent(res.data);
-        setUserUX((prev) => ({ ...prev, loading: false }));
+        setLevels(res.data);
+        setUserUX((prev) => ({
+          ...prev,
+          levels: { ...prev.levels, loading: false },
+        }));
       })
       .catch((error) => {
         console.log(error);
         setUserUX((prev) => ({
-          loading: false,
-          error: true,
-          errorMsg: "erorr getting students",
+          ...prev,
+          levels: {
+            loading: false,
+            error: true,
+            errorMsg: "error getting levels",
+          },
         }));
       });
     // eslint-disable-next-line
-  }, []);
+  }, [authContext.program.id, authContext.college.id]);
+
+  useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      students: { ...prev.students, loading: true },
+    }));
+    // GET request to get students by program id
+    axios
+      .get(ADMIN_URL + `/student/program/${authContext.program.id}`, config)
+      .then((res) => {
+        console.log(res);
+        setStudents(STUDENTS);
+        setUserUX((prev) => ({
+          ...prev,
+          students: { ...prev.students, loading: false },
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          students: {
+            loading: false,
+            error: true,
+            errorMsg: "error getting students",
+          },
+        }));
+      });
+    // eslint-disable-next-line
+  }, [authContext.program.id, authContext.college.id]);
 
   return (
     <div className="container">
@@ -67,73 +98,15 @@ export const RegisterationPortal = () => {
             className="collapseSection"
           >
             {levels.length > 0 ? (
-              levels.map((item) => {
+              levels.map((level) => {
                 return (
-                  <Accordion.Item eventKey={item.id} key={item.id}>
-                    <Accordion.Header>{item.englishName}</Accordion.Header>
-                    <Accordion.Body>
-                      <div className="registerationContainer-body">
-                        <div
-                          className={`registerationContainer-menu ${styles.studentList}`}
-                        >
-                          <h3>{t(`registeration.menu`)}</h3>
-                          <div
-                            className={`registerationContainer-menu-search ${styles.studentList_search}`}
-                          >
-                            <input
-                              type="text"
-                              placeholder={t("registeration.search")}
-                            />
-                          </div>
-
-                          {student.length > 0 ? (
-                            <div className="registerationContainer-menu-list">
-                              {student.map((item) => (
-                                <li key={item.id}>{item.title}</li>
-                              ))}
-                            </div>
-                          ) : (
-                            <NoData />
-                          )}
-                        </div>
-                        <div className="registerationContainer-form">
-                          <h3>{t(`registeration.form`)}</h3>
-                          <form>
-                            <div className="registerationContainer-form-inputs">
-                              <div className="row mb-4">
-                                <label className="col-sm-4 col-form-label">
-                                  {t(`registeration.advisor`)}
-                                </label>
-                                <div className="col-sm-8">
-                                  <input className="form-control" />
-                                </div>
-                              </div>
-                              <div className="row mb-4">
-                                <label className="col-sm-4 col-form-label">
-                                  {t(`registeration.number`)}
-                                </label>
-                                <div className="col-sm-8">
-                                  <input className="form-control" disabled />
-                                </div>
-                              </div>
-                            </div>
-                            <button
-                              type="submit"
-                              className="form-card-button form-card-button-save"
-                            >
-                              {t(`common.save`)}
-                            </button>
-                            <button
-                              type="reset"
-                              className="form-card-button form-card-button-cancel"
-                            >
-                              {t(`common.cancel`)}
-                            </button>
-                          </form>
-                        </div>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
+                  <RegisterationAccordion
+                    students={students.filter(
+                      (stud) => stud.levelId === level.id
+                    )}
+                    level={level}
+                    key={level.id}
+                  />
                 );
               })
             ) : (

@@ -1,80 +1,60 @@
-import React from "react";
 import { Accordion } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import styles from "./RegisterationPortal.module.scss";
 import { NoData } from "../../../components/UX/NoData";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../../hooks/useAuth";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { ADMIN_URL } from "../../../shared/API";
 
 export const RegisterationPortal = () => {
   const { t } = useTranslation();
+  const [student, setStudent] = useState([]);
+  const { programId } = useParams();
+  const authContext = useAuth();
+  const config = {
+    headers: { Authorization: `Bearer ${authContext.token}` },
+  };
+  const [userUX, setUserUX] = useState({
+    loading: false,
+    error: false,
+    errorMsg: "",
+  });
+  const [levels, setLevels] = useState([]);
 
-  const Levels = [
-    {
-      id: 1,
-      title: "Level 1",
-    },
-    {
-      id: 2,
-      title: "Level 2",
-    },
-    {
-      id: 3,
-      title: "Level 3",
-    },
-    {
-      id: 4,
-      title: "Level 4",
-    },
-  ];
-  const student = [
-    {
-      id: 1,
-      title: "bob",
-    },
-    {
-      id: 2,
-      title: "john",
-    },
-    {
-      id: 3,
-      title: "layla",
-    },
-    {
-      id: 4,
-      title: "yasmeen",
-    },
-    {
-      id: 5,
-      title: "malak",
-    },
-    {
-      id: 6,
-      title: "malak",
-    },
-    {
-      id: 7,
-      title: "malak",
-    },
-    {
-      id: 8,
-      title: "malak",
-    },
-    {
-      id: 9,
-      title: "malak",
-    },
-    {
-      id: 10,
-      title: "malak",
-    },
-    {
-      id: 11,
-      title: "malak",
-    },
-    {
-      id: 12,
-      title: "malak",
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get(ADMIN_URL + `/programs/${programId}/levels`, config)
+      .then((res) => {
+        setLevels(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    setUserUX((prev) => ({ ...prev, loading: true }));
+    axios
+      .get(ADMIN_URL + `/student/program/${authContext.program.id}`, config)
+
+      .then((res) => {
+        console.log(res);
+        setStudent(res.data);
+        setUserUX((prev) => ({ ...prev, loading: false }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserUX((prev) => ({
+          loading: false,
+          error: true,
+          errorMsg: "erorr getting students",
+        }));
+      });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="container">
@@ -86,11 +66,11 @@ export const RegisterationPortal = () => {
             alwaysOpen
             className="collapseSection"
           >
-            {Levels.length > 0 ? (
-              Levels.map((item) => {
+            {levels.length > 0 ? (
+              levels.map((item) => {
                 return (
                   <Accordion.Item eventKey={item.id} key={item.id}>
-                    <Accordion.Header>{item.title}</Accordion.Header>
+                    <Accordion.Header>{item.englishName}</Accordion.Header>
                     <Accordion.Body>
                       <div className="registerationContainer-body">
                         <div

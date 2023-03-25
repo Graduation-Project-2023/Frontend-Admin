@@ -1,27 +1,31 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../../../hooks/useAuth";
 import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
+import { RegisterationFormData } from "./RegisterationFormData";
+
+// Resuable Components
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import { FormCard } from "../../../components/forms/FormCard";
 import { FormInput } from "../../../components/forms/FormInput";
-import { useAuth } from "../../../hooks/useAuth";
-import { RegisterationFormData } from "./RegisterationFormData";
-import { useParams } from "react-router-dom";
+
 export const StudentRegisteration = () => {
-  const { t } = useTranslation();
-  const student_id = useParams;
   const [students, setStudents] = useState([]);
   const [studentData, setStudentData] = useState([]);
   const [userUX, setUserUX] = useState({
     list: { loading: false, error: false, errorMsg: "" },
     studentData: { loading: false, error: false, errorMsg: "" },
   });
+  const { t } = useTranslation();
+  const { regStudentId } = useParams();
   const authContext = useAuth();
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
+
   useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
@@ -47,14 +51,16 @@ export const StudentRegisteration = () => {
       });
     // eslint-disable-next-line
   }, [authContext.program.id, authContext.college.id]);
+
   useEffect(() => {
+    console.log(regStudentId);
     setUserUX((prev) => ({
       ...prev,
       studentData: { ...prev.studentData, loading: true },
     }));
     // GET request to get student data by student id
     axios
-      .get(ADMIN_URL + `/student/${student_id}`, config)
+      .get(ADMIN_URL + `/student/${regStudentId}`, config)
       .then((res) => {
         console.log(res);
         setStudentData(res.data);

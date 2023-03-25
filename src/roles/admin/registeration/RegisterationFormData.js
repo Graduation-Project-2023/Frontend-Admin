@@ -24,7 +24,7 @@ export const RegisterationFormData = [
         id: 1,
         title: "common.schoolSeat",
         name: "seatId",
-        type: "text",
+        type: "number",
         req: true,
       },
       {

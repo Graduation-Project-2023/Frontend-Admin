@@ -32,7 +32,7 @@ export function AdminRoutes() {
         <Route path="study_schedules/*" element={<StudySchedulesRoutes />} />
         <Route path="registeration" element={<RegisterationPortal />} />
         <Route
-          path="registeration/student/:studentId"
+          path="registeration/student/:regStudentId"
           element={<StudentRegisteration />}
         />
 

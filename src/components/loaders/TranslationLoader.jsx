@@ -1,35 +1,14 @@
+import { Spinner } from "react-bootstrap";
+
 export const TranslationLoader = () => {
   return (
     <div className="skeleLoader">
       <div className="skeleLoader-nav"></div>
-
-      <div className="skeleLoader-wrapper">
-        <div className="skeleLoader-cont">
-          <div className="skeleLoader-spinner"></div>
-        </div>
-
-        <div className="skeleLoader-list">
-          <header>
-            <span>
-              <div className="skeleLoader-load"></div>
-            </span>
-          </header>
-          <span>
-            <div className="skeleLoader-load"></div>
-          </span>
-          <span>
-            <div className="skeleLoader-load"></div>
-          </span>
-          <span>
-            <div className="skeleLoader-load"></div>
-          </span>
-          <span>
-            <div className="skeleLoader-load"></div>
-          </span>
-          <span>
-            <div className="skeleLoader-load"></div>
-          </span>
-        </div>
+      <div className="skeleLoader-cont">
+        <Spinner
+          animation="grow"
+          style={{ color: "#76a6e0", width: "80px", height: "80px" }}
+        />
       </div>
     </div>
   );

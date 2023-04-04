@@ -38,8 +38,20 @@ export const Login = () => {
       .then((res) => {
         console.log(res);
         setUserUX((prev) => ({ ...prev, loading: false }));
-        authContext.login(res.data.token, res.data.role, res.data.college);
-        navigate(`/${res.data.role.toLowerCase()}`);
+        if (
+          res.data.role === "ADMIN" ||
+          res.data.role === "SUPER" ||
+          res.data.role === "STAFF"
+        ) {
+          authContext.login(res.data.token, res.data.role, res.data.college);
+          navigate(`/${res.data.role.toLowerCase()}`);
+        } else {
+          setUserUX({
+            loading: false,
+            error: true,
+            errorMsg: t("common.invalidCred"),
+          });
+        }
       })
       .catch((error) => {
         setUserUX({

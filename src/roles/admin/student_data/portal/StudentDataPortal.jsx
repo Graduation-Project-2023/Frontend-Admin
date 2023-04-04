@@ -14,6 +14,7 @@ import { Accordion } from "react-bootstrap";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { FormInput } from "../../../../components/forms/FormInput";
 import { NoData } from "../../../../components/UX/NoData";
+import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
 
 export const StudentDataPortal = () => {
   const authContext = useAuth();
@@ -325,7 +326,7 @@ export const StudentDataPortal = () => {
           </div>
           {filteredStudents.length === 0 ? (
             userUX.list.loading ? (
-              "loading"
+              <SpinnerLoader size={"60px"} heigth={"250px"} />
             ) : userUX.list.error ? (
               userUX.list.errorMsg
             ) : studentData.length === 0 ? (
@@ -407,14 +408,18 @@ export const StudentDataPortal = () => {
               <button
                 type="submit"
                 className="form-card-button form-card-button-save"
+                disabled={userUX.form.submit || userUX.form.delete}
               >
-                {" "}
-                {userUX.form.submit ? "Loading..." : `${t(`common.save`)}`}
+                {userUX.form.submit ? (
+                  <span className="loader"></span>
+                ) : (
+                  `${t(`common.save`)}`
+                )}
               </button>
               <button
                 type="reset"
                 className="form-card-button form-card-button-cancel"
-                disabled={userUX.form.submit}
+                disabled={userUX.form.submit || userUX.form.delete}
               >
                 {t(`common.cancel`)}
               </button>
@@ -422,8 +427,13 @@ export const StudentDataPortal = () => {
                 <button
                   className="form-card-button form-card-button-delete"
                   onClick={handleStudentDelete}
+                  disabled={userUX.form.submit || userUX.form.delete}
                 >
-                  {userUX.form.delete ? "Loading..." : t(`common.delete`)}
+                  {userUX.form.delete ? (
+                    <span className="loader"></span>
+                  ) : (
+                    t(`common.delete`)
+                  )}
                 </button>
               )}
             </Accordion>

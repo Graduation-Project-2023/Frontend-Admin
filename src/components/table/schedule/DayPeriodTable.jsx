@@ -120,7 +120,11 @@ export const DayPeriodTable = (props) => {
                             onClick={(event) => {
                               props.occupiedCellClick(cellFilter[0]);
                             }}
-                            className={styles.filled_cell}
+                            className={
+                              props.readOnly
+                                ? styles.filled_cell_read
+                                : styles.filled_cell
+                            }
                             colSpan={
                               cellFilter[0].endPeriod -
                               cellFilter[0].startPeriod +
@@ -160,7 +164,11 @@ export const DayPeriodTable = (props) => {
                               return (
                                 <div
                                   key={item.id}
-                                  className={styles.filled_cell}
+                                  className={
+                                    props.readOnly
+                                      ? styles.filled_cell_read
+                                      : styles.filled_cell
+                                  }
                                   style={{
                                     borderBottom: "1px solid black",
                                   }}
@@ -191,7 +199,7 @@ export const DayPeriodTable = (props) => {
                                 day: item.day,
                               });
                             }}
-                            className={styles.empty_cell}
+                            className={props.readOnly ? "" : styles.empty_cell}
                           ></td>
                         );
                       }

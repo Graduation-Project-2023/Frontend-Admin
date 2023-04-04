@@ -230,16 +230,18 @@ export const CoursesPortal = () => {
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {userUX.loading
-              ? "loading..."
-              : courseCode !== "add" && courseCode !== undefined
-              ? t(`common.save`)
-              : t(`common.add`)}
+            {userUX.form.loading ? (
+              <span className="loader"></span>
+            ) : courseCode !== "add" && courseCode !== undefined ? (
+              t(`common.save`)
+            ) : (
+              t(`common.add`)
+            )}
           </button>
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"
-            disabled={userUX.loading}
+            disabled={userUX.form.loading || userUX.form.delete}
           >
             {t(`common.cancel`)}
           </button>
@@ -248,8 +250,13 @@ export const CoursesPortal = () => {
             <button
               className="form-card-button form-card-button-delete"
               onClick={handleCourseDelete}
+              disabled={userUX.form.loading || userUX.form.delete}
             >
-              {userUX.delete ? "loading..." : t(`common.delete`)}
+              {userUX.form.delete ? (
+                <span className="loader"></span>
+              ) : (
+                t(`common.delete`)
+              )}
             </button>
           )}
         </form>

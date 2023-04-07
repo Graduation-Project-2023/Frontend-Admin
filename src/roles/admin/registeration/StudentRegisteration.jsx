@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
+import styles from "./RegisterationPortal.module.scss";
+import i18next from "i18next";
+import { Link } from "react-router-dom";
 
 // Resuable Components
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
@@ -12,9 +15,13 @@ import { FormCard } from "../../../components/forms/FormCard";
 import { FormInput } from "../../../components/forms/FormInput";
 import { DayPeriodTable } from "../../../components/table/schedule/DayPeriodTable";
 import { RegisterationFormData } from "./RegisterationFormData";
+import { Dropdown } from "react-bootstrap";
+import { Table } from "../../../components/table/Table";
 
 export const StudentRegisteration = () => {
   const [courses, setCourses] = useState([]);
+  const [availableClasses, setAvailableClasses] = useState([]);
+  const [levels, setLevels] = useState([]);
   const [students, setStudents] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [studentData, setStudentData] = useState([]);
@@ -37,6 +44,66 @@ export const StudentRegisteration = () => {
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
+  useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      courses: { loading: true, error: false, errorMsg: "" },
+    }));
+    // GET request to get available classes for student to add to schedule
+    axios
+      .get(
+        ADMIN_URL +
+          `/available_classes?studentId=${authContext.id}&semesterId=decc46ba-7d4b-11ed-a1eb-0242ac120002`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setAvailableClasses(res.data);
+        setUserUX((prev) => ({
+          ...prev,
+          courses: { loading: false, error: false, errorMsg: "" },
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+        setUserUX((prev) => ({
+          ...prev,
+          courses: {
+            loading: false,
+            error: true,
+            errorMsg: "error in classes",
+          },
+        }));
+      });
+  }, [authContext.id]);
+  useEffect(() => {
+    setUserUX((prev) => ({
+      ...prev,
+      levels: { ...prev.levels, loading: true },
+    }));
+    // GET request to get levels by program id
+    axios
+      .get(ADMIN_URL + `/programs/${authContext.program.id}/levels`, config)
+      .then((res) => {
+        console.log(res);
+        setLevels(res.data);
+        setUserUX((prev) => ({
+          ...prev,
+          levels: { ...prev.levels, loading: false },
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserUX((prev) => ({
+          ...prev,
+          levels: {
+            loading: false,
+            error: true,
+            errorMsg: "error getting levels",
+          },
+        }));
+      });
+    // eslint-disable-next-line
+  }, [authContext.program.id, authContext.college.id]);
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -348,6 +415,28 @@ export const StudentRegisteration = () => {
         backendData={true}
         activeNav={true}
         userUX={userUX.list}
+        options={
+          <Dropdown className="sidebarBtn" autoClose={true}>
+            <Dropdown.Toggle id="dropdown-autoclose-true">
+              {i18next.language === "en" ? "Level" : "المستوى"}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {userUX.loading && <Dropdown.Item>Loading...</Dropdown.Item>}
+              {levels.map((item) => {
+                return (
+                  <Dropdown.Item className="sidebarBtn-list" key={item.id}>
+                    <Link>
+                      {i18next.language === "en"
+                        ? item.englishName
+                        : item.arabicName}
+                    </Link>
+                  </Dropdown.Item>
+                );
+              })}
+            </Dropdown.Menu>
+          </Dropdown>
+        }
       />
       <SidebarContainer>
         <FormCard cardTitle={"adminNavbarkeys.registeration"}>
@@ -363,14 +452,31 @@ export const StudentRegisteration = () => {
             );
           })}
         </FormCard>
-        <DayPeriodTable
-          cellsSetter={handleCellsSetter}
-          tableData={tableData}
-          saveTableData={saveTableData}
-          occupiedCellClick={() => {}}
-          emptyCellClick={() => {}}
-          readOnly={true}
+        <Table
+          tableTitle={"levels.table"}
+          headerItems={[
+            { id: 1, title: t(`courses.name`) },
+            { id: 2, title: t(`courses.code`) },
+            { id: 3, title: t(`common.day`) },
+            { id: 4, title: t(`table.start`) },
+            { id: 5, title: t(`table.end`) },
+            { id: 6, title: t(`table.doctor`) },
+            { id: 7, title: t(`table.hall`) },
+            { id: 8, title: t(`courses.failure`) },
+          ]}
+          rowItems={availableClasses}
+          userUX={userUX.table}
         />
+        <div className={styles.tableCont}>
+          <DayPeriodTable
+            cellsSetter={handleCellsSetter}
+            tableData={tableData}
+            saveTableData={saveTableData}
+            occupiedCellClick={() => {}}
+            emptyCellClick={() => {}}
+            readOnly={true}
+          />
+        </div>
       </SidebarContainer>
     </>
   );

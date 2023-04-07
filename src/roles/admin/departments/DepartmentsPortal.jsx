@@ -68,6 +68,12 @@ export const DepartmentsPortal = () => {
         .then((res) => {
           console.log(res);
           setDepartmentData(res.data);
+          if (res.data.programs) {
+            const departmentPrograms = res.data.programs.map((item) => item.id);
+            setDepPrograms(
+              programs.filter((item) => departmentPrograms.includes(item.id))
+            );
+          }
           setUserUX((prev) => ({
             ...prev,
             formData: { loading: false, error: false, errorMsg: "" },

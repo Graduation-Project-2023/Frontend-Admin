@@ -9,9 +9,12 @@ export const PrerequisiteTable = (props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    console.log("props.rowItems", props.rowItems);
     setTableData(props.rowItems);
   }, [props.rowItems]);
+
+  if (tableData.length === 0) {
+    return null;
+  }
 
   return (
     <div className="collapsetable">

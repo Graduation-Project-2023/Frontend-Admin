@@ -262,7 +262,8 @@
     "groups": "Number of Groups",
     "preTable": "Prerequisite Courses Table",
     "supervisor": "Supervisor",
-    "hasGroups": "Has Groups?"
+    "hasGroups": "Has Groups?",
+    "failure": "Failure "
   },
   "departments": {
     "name": "Department Name",
@@ -321,7 +322,9 @@
     "hasNoGroup": "This course has no groups",
     "selectSubject": "Select a Subject",
     "selectStartPeriod": "Select a Start Period",
-    "selectSubjectAndType": "Select a subject and it's class type"
+    "selectSubjectAndType": "Select a subject and it's class type",
+    "doctor": "Doctor",
+    "hall": "Hall"
   },
   "button": {
     "edit": "Edit",

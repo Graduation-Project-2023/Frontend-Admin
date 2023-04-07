@@ -267,7 +267,8 @@
     "groups": "عدد المجموعات",
     "preTable": "جدول المتطلبات السابقة",
     "supervisor": "اسم المشرف",
-    "hasGroups": "لديها مجموعات؟"
+    "hasGroups": "لديها مجموعات؟",
+    "failure": "عدد مرات الرسوب"
   },
   "departments": {
     "name": "اسم القسم",
@@ -328,7 +329,9 @@
     "hasNoGroup": "لا يوجد مجموعة",
     "selectSubject": "اختر المقرر",
     "selectStartPeriod": "اختر فترة البداية",
-    "selectSubjectAndType": "اختر المقرر ونوع الدراسة"
+    "selectSubjectAndType": "اختر المقرر ونوع الدراسة",
+    "doctor": "دكتور",
+    "hall": "قاعة"
   },
   "button": {
     "edit": "تعديل",

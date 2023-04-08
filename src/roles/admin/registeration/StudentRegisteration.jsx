@@ -17,6 +17,7 @@ import { DayPeriodTable } from "../../../components/table/schedule/DayPeriodTabl
 import { RegisterationFormData } from "./RegisterationFormData";
 import { Dropdown } from "react-bootstrap";
 import { Table } from "../../../components/table/Table";
+import { CoursesTable } from "../../../components/table/CoursesTable";
 
 export const StudentRegisteration = () => {
   const [courses, setCourses] = useState([]);
@@ -452,7 +453,7 @@ export const StudentRegisteration = () => {
             );
           })}
         </FormCard>
-        <Table
+        <CoursesTable
           tableTitle={"levels.table"}
           headerItems={[
             { id: 1, title: t(`courses.name`) },
@@ -464,7 +465,6 @@ export const StudentRegisteration = () => {
             { id: 7, title: t(`table.hall`) },
             { id: 8, title: t(`courses.failure`) },
           ]}
-          rowItems={availableClasses}
           userUX={userUX.table}
         />
         <div className={styles.tableCont}>

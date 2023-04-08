@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
 import styles from "./RegisterationPortal.module.scss";
 import i18next from "i18next";
-import { Link } from "react-router-dom";
 
 // Resuable Components
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
@@ -16,12 +15,10 @@ import { FormInput } from "../../../components/forms/FormInput";
 import { DayPeriodTable } from "../../../components/table/schedule/DayPeriodTable";
 import { RegisterationFormData } from "./RegisterationFormData";
 import { Dropdown } from "react-bootstrap";
-import { Table } from "../../../components/table/Table";
 import { CoursesTable } from "../../../components/table/CoursesTable";
 
 export const StudentRegisteration = () => {
   const [courses, setCourses] = useState([]);
-  const [availableClasses, setAvailableClasses] = useState([]);
   const [levels, setLevels] = useState([]);
   const [students, setStudents] = useState([]);
   const [tableData, setTableData] = useState([]);
@@ -45,37 +42,7 @@ export const StudentRegisteration = () => {
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
-  useEffect(() => {
-    setUserUX((prev) => ({
-      ...prev,
-      courses: { loading: true, error: false, errorMsg: "" },
-    }));
-    // GET request to get available classes for student to add to schedule
-    axios
-      .get(
-        ADMIN_URL +
-          `/available_classes?studentId=${authContext.id}&semesterId=decc46ba-7d4b-11ed-a1eb-0242ac120002`
-      )
-      .then((res) => {
-        console.log(res.data);
-        setAvailableClasses(res.data);
-        setUserUX((prev) => ({
-          ...prev,
-          courses: { loading: false, error: false, errorMsg: "" },
-        }));
-      })
-      .catch((err) => {
-        console.log(err);
-        setUserUX((prev) => ({
-          ...prev,
-          courses: {
-            loading: false,
-            error: true,
-            errorMsg: "error in classes",
-          },
-        }));
-      });
-  }, [authContext.id]);
+
   useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
@@ -456,16 +423,19 @@ export const StudentRegisteration = () => {
         <CoursesTable
           tableTitle={"levels.table"}
           headerItems={[
-            { id: 1, title: t(`courses.name`) },
-            { id: 2, title: t(`courses.code`) },
-            { id: 3, title: t(`common.day`) },
-            { id: 4, title: t(`table.start`) },
-            { id: 5, title: t(`table.end`) },
-            { id: 6, title: t(`table.doctor`) },
-            { id: 7, title: t(`table.hall`) },
-            { id: 8, title: t(`courses.failure`) },
+            { id: 1, title: t(`courses.name`), name: "name" },
+            { id: 2, title: t(`common.day`), name: "day" },
+            { id: 3, title: t(`table.start`), name: "startPeriod" },
+            { id: 4, title: t(`table.end`), name: "endPeriod" },
+            { id: 5, title: t(`table.doctor`), name: "professor" },
+            { id: 6, title: t(`table.hall`), name: "place" },
           ]}
-          userUX={userUX.table}
+          courses={courses}
+          courseInstances={courseInstancesIds}
+          levels={levels}
+          userUX={userUX.courses}
+          addCourseToTable={addCourseToTable}
+          removeCourseFromTable={removeCourseFromTable}
         />
         <div className={styles.tableCont}>
           <DayPeriodTable

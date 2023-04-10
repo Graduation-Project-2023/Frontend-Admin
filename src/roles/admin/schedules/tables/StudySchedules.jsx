@@ -9,6 +9,7 @@ import i18next from "i18next";
 // Reusable Components
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { Alert } from "react-bootstrap";
+import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
 
 export const StudySchedules = () => {
   const [levels, setLevels] = useState([]);
@@ -115,9 +116,11 @@ export const StudySchedules = () => {
         <>
           <div className="portal-body">
             <h5 className="portal-title">{t("levels.table")}</h5>
-            <div className="portal-list">
-              {!userUX.list.loading &&
-                levels.map((item) => {
+            {userUX.list.loading ? (
+              <SpinnerLoader size={"80px"} heigth={"200px"} />
+            ) : (
+              <div className="portal-list">
+                {levels.map((item) => {
                   return (
                     <li
                       key={item.id}
@@ -131,7 +134,8 @@ export const StudySchedules = () => {
                     </li>
                   );
                 })}
-            </div>
+              </div>
+            )}
           </div>
           {userUX.level.error && (
             <Alert variant="danger" className="m-5">

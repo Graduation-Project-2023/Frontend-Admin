@@ -363,6 +363,9 @@
     "add": "اضافة موظف جديد",
     "formhead": "بيانات الموظف",
     "search": "البحث باسم الموظف",
-    "department_search": "البحث بالقسم"
+    "department_search": "البحث بالقسم",
+    "position": "التعيين",
+    "delegated": "مندوب",
+    "permenant": "دائم"
   }
 }

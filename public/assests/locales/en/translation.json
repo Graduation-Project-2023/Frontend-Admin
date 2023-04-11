@@ -223,7 +223,8 @@
     "equivalent": "Equivalent Grade",
     "formhead": "Grades",
     "tablehead": "Grades Table",
-    "max": "Maximum Grade"
+    "max": "Maximum Grade",
+    "mark": "Enter Marks "
   },
   "courses": {
     "name": "Course Name",

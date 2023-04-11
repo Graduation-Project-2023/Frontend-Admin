@@ -6,12 +6,17 @@ import styles from "./DayPeriodTable.module.scss";
 
 export const DayPeriodTable = (props) => {
   const [tableData, setTableData] = useState(props.tableData);
+  const [userUX, setUserUX] = useState(props.userUX);
   const [cells, setCells] = useState({ occupied: [], available: [] });
   const { t } = useTranslation();
 
   useEffect(() => {
     setTableData(props.tableData);
   }, [props.tableData]);
+
+  useEffect(() => {
+    setUserUX(props.userUX);
+  }, [props.userUX]);
 
   useEffect(() => {
     const occupiedCells = [];
@@ -217,12 +222,14 @@ export const DayPeriodTable = (props) => {
         <button
           type="submit"
           className="form-card-button form-card-button-save"
+          disabled={userUX.loading}
         >
-          {t(`common.save`)}
+          {userUX.loading ? <span className="loader"></span> : t(`common.save`)}
         </button>
         <button
           type="reset"
           className="form-card-button form-card-button-cancel"
+          disabled={userUX.loading}
         >
           {t(`common.cancel`)}
         </button>

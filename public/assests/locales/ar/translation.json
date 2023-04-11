@@ -81,7 +81,8 @@
     "editCourse": "تعديل المقرر",
     "coursesNotReg": "المقررات الغير مسجلة",
     "enterValue": "ادخل القيمة...",
-    "invalidCred": "اسم المستخدم او كلمة المرور غير صحيحة"
+    "invalidCred": "اسم المستخدم او كلمة المرور غير صحيحة",
+    "add/delete": "اضافة/حذف"
   },
   "popup": {
     "success": "تمت العملية بنجاح",
@@ -363,6 +364,9 @@
     "add": "اضافة موظف جديد",
     "formhead": "بيانات الموظف",
     "search": "البحث باسم الموظف",
-    "department_search": "البحث بالقسم"
+    "department_search": "البحث بالقسم",
+    "position": "التعيين",
+    "delegated": "مندوب",
+    "permenant": "دائم"
   }
 }

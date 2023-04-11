@@ -120,7 +120,7 @@ export const ModalPopup = (props) => {
               {props.message.icon}
             </div>
             <h4 className="popup-msg-title">{t(props.message.title)}</h4>
-            <h5 className="popup-msg-text">{props.message.text}</h5>
+            <h5 className="popup-msg-text">{t(props.message.text)}</h5>
             <button
               className={`form-card-button ${
                 props.error

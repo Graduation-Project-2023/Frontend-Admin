@@ -356,6 +356,9 @@
     "add": "Add New Employee",
     "formhead": "Employee Data",
     "search": "Search with employee name",
-    "department_search": "Search with department name"
+    "department_search": "Search with department name",
+    "position": "Designation",
+    "delegated": "Delegated",
+    "permenant": "Permenant"
   }
 }

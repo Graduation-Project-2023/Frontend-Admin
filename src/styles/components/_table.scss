@@ -3,6 +3,7 @@
   border-radius: 10px;
   padding: 2rem;
   margin: 2rem;
+
   & h3 {
     color: $Grey3;
     @include font(2.5rem, 3rem);
@@ -15,18 +16,21 @@
   }
   & table {
     table-layout: auto;
+    thead {
+      background-color: rgba(204, 204, 204, 0.23);
+    }
 
     .table-container {
       &-header {
         text-align: center;
-        color: $Grey3;
-        @include font(1.4rem, 1.8rem);
+        color: #3d7dca;
+        @include font(1.2rem, 1.4rem);
         border-top: 1px solid $White5;
         padding: 1.5rem !important;
       }
       &-items {
         text-align: center;
-        color: $Black2;
+        color: #858d97;
         @include font(1rem, 1.3rem);
         padding: 1.5rem !important;
         &-button {
@@ -40,4 +44,7 @@
       }
     }
   }
+}
+.table-bordered > :not(caption) > * {
+  border-width: 1px !important;
 }

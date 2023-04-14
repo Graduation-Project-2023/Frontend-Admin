@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { RiDeleteBackLine } from "react-icons/ri";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import i18next from "i18next";
 
 export const CoursesTable = (props) => {
@@ -111,8 +112,7 @@ export const CoursesTable = (props) => {
                                   }
                                 />
                               ) : (
-                                // CHANGE ICON TO ADD ICON
-                                <RiDeleteBackLine
+                                <AiOutlinePlusCircle
                                   color="#D65050"
                                   className="table-container-items-icon"
                                   onClick={() =>

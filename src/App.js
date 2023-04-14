@@ -37,7 +37,7 @@ function App() {
         <Route path="table" element={<TableSkeletonLoader />} />
 
         {/* Staff Routes (Private) */}
-        <Route element={<LoginRoute allowedRoles={"STAFF"} />}>
+        <Route element={<LoginRoute allowedRoles={"ADMIN" || "STAFF"} />}>
           <Route path="staff/*" element={<StaffRoutes />} />
         </Route>
 

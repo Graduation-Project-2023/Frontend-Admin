@@ -1,4 +1,5 @@
 export const CourseworkHeaderItems = [
+  { id: 0, title: "" },
   { id: 1, title: "studentsData.code" },
   { id: 2, title: "studentsData.name" },
   { id: 3, title: "courses.class" },
@@ -24,9 +25,9 @@ export const GPAData = [
 ];
 
 export const CourseworkStudents = [
-  { id: 1, code: 1, name: "ahmed", classWork: 0, finalExam: 0 },
-  { id: 2, code: 2, name: "mohamed", classWork: 0, finalExam: 0 },
-  { id: 3, code: 3, name: "ali", classWork: "30", finalExam: "60" },
-  { id: 4, code: 4, name: "khaled", classWork: 0, finalExam: 0 },
-  { id: 5, code: 5, name: "mohamed", classWork: 0, finalExam: 0 },
+  { id: 123123, code: 321231, name: "ahmed", classWork: 0, finalExam: 0 },
+  { id: 2456, code: 12342, name: "mohamed", classWork: 0, finalExam: 0 },
+  { id: 32301, code: 1233, name: "ali", classWork: "30", finalExam: "60" },
+  { id: 4213, code: 4543, name: "khaled", classWork: 0, finalExam: 0 },
+  { id: 512354, code: 5123, name: "mohamed", classWork: 0, finalExam: 0 },
 ];

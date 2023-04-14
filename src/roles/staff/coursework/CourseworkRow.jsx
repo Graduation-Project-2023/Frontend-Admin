@@ -76,9 +76,10 @@ export const CourseworkRow = (props) => {
 
   return (
     <tr>
+      <td className="table-container-items">{props.order}</td>
       <td className="table-container-items">{studentData.code}</td>
       <td className="table-container-items">{studentData.name}</td>
-      <td>
+      <td className="table-container-items">
         <input
           className="form-control"
           type="number"
@@ -87,7 +88,7 @@ export const CourseworkRow = (props) => {
           onChange={handleRowChange}
         />
       </td>
-      <td>
+      <td className="table-container-items">
         <input
           className="form-control"
           type="number"
@@ -97,16 +98,7 @@ export const CourseworkRow = (props) => {
           onChange={handleRowChange}
         />
       </td>
-      <td className="table-container-items">
-        <input
-          className="form-control"
-          type="number"
-          name="maxGrade"
-          value={grade ? grade : 0}
-          readOnly
-          disabled
-        />
-      </td>
+      <td className="table-container-items">{grade ? grade : 0}</td>
       <td className="table-container-items">{studentData.grade}</td>
       <td className="table-container-items">{studentData.gpa}</td>
     </tr>

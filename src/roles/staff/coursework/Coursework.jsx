@@ -121,8 +121,12 @@ export const Coursework = () => {
         userUX={userUX.list}
       />
       <SidebarContainer>
-        <FormCard cardTitle={"physics"} button={"print"}>
+        <FormCard>
           <div className="table-container">
+            <div className="table-container-main-header">
+              <h1>title</h1>
+              <button>print button</button>
+            </div>
             <table className="table table-bordered">
               <thead className="thead-light">
                 <tr>
@@ -136,8 +140,14 @@ export const Coursework = () => {
                 </tr>
               </thead>
               <tbody>
-                {CourseworkStudents.map((item) => {
-                  return <CourseworkRow student={item} key={item.id} />;
+                {CourseworkStudents.map((item, index) => {
+                  return (
+                    <CourseworkRow
+                      student={item}
+                      key={item.id}
+                      order={index + 1}
+                    />
+                  );
                 })}
               </tbody>
             </table>

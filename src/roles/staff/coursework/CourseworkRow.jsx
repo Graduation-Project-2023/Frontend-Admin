@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { GPAData } from "./CourseworkData";
+import i18next from "i18next";
 
 export const CourseworkRow = (props) => {
   const [studentData, setStudentData] = useState(props.student);
@@ -78,7 +79,11 @@ export const CourseworkRow = (props) => {
     <tr>
       <td className="table-container-items">{props.order}</td>
       <td className="table-container-items">{studentData.code}</td>
-      <td className="table-container-items">{studentData.name}</td>
+      <td className="table-container-items">
+        {i18next.language === "en"
+          ? studentData.englishName
+          : studentData.arabicName}
+      </td>
       <td className="table-container-items">
         <input
           className="form-control"

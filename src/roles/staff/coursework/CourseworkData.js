@@ -24,10 +24,17 @@ export const GPAData = [
   { id: 12, grade: "F", gpaFrom: 0, gpaTo: 0.3 },
 ];
 
+// Testing
 export const CourseworkStudents = [
-  { id: 123123, code: 321231, name: "ahmed", classWork: 0, finalExam: 0 },
-  { id: 2456, code: 12342, name: "mohamed", classWork: 0, finalExam: 0 },
-  { id: 32301, code: 1233, name: "ali", classWork: "30", finalExam: "60" },
-  { id: 4213, code: 4543, name: "khaled", classWork: 0, finalExam: 0 },
-  { id: 512354, code: 5123, name: "mohamed", classWork: 0, finalExam: 0 },
+  { id: 123123, code: 321231, arabicName: "ahmed", classWork: 0, finalExam: 0 },
+  { id: 2456, code: 12342, arabicName: "mohamed", classWork: 0, finalExam: 0 },
+  {
+    id: 32301,
+    code: 1233,
+    arabicName: "ali",
+    classWork: "30",
+    finalExam: "60",
+  },
+  { id: 4213, code: 4543, arabicName: "khaled", classWork: 0, finalExam: 0 },
+  { id: 512354, code: 5123, arabicName: "mohamed", classWork: 0, finalExam: 0 },
 ];

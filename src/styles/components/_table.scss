@@ -3,6 +3,32 @@
   border-radius: 10px;
   padding: 2rem;
   margin: 2rem;
+  &-mainHeader {
+    border: 1px solid #dee2e6;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2rem 2rem 1rem;
+
+    & h1 {
+      color: #3d7dca;
+      @include font(2.5rem, 3rem);
+    }
+    & button {
+      border-radius: 2px;
+      margin-bottom: 1rem;
+      @include font(1.3rem, 1.5rem);
+      transition-duration: 0.4s;
+
+      @include colorandback(#3d7dca, white);
+      border: 1px solid #3d7dca;
+      border-radius: 2px;
+
+      &:hover {
+        @include colorandback(black, rgba(66, 66, 197, 0.753));
+      }
+    }
+  }
 
   & h3 {
     color: $Grey3;
@@ -30,6 +56,7 @@
       }
       &-items {
         text-align: center;
+        vertical-align: middle;
         color: #858d97;
         @include font(1rem, 1.3rem);
         padding: 1.5rem !important;

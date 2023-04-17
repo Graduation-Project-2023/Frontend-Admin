@@ -123,7 +123,7 @@ export const Coursework = () => {
       <SidebarContainer>
         <FormCard>
           <div className="table-container">
-            <div className="table-container-main-header">
+            <div className="table-container-mainHeader">
               <h1>title</h1>
               <button>print button</button>
             </div>

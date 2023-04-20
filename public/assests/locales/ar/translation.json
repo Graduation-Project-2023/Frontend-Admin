@@ -138,7 +138,10 @@
     "absence": "غياب الطلاب",
     "courses": "بيانات المقررات",
     "supervision": "الاشراف على النظام",
-    "control": "نظام التحكم"
+    "control": "نظام التحكم",
+    "mcq": "بنك الاسئلة والاختبارات",
+    "students_info": "كشوفات وبيانات الطلاب",
+    "coursework": "اعمال السنة والامتحانات"
   },
   "adminNavbarkeys": {
     "student": "الطلاب",
@@ -153,7 +156,10 @@
     "courses": "المقررات",
     "choose": "اختر المقرر الدراسي",
     "supervision": "الاشراف",
-    "control": "التحكم"
+    "control": "التحكم",
+    "mcq": "بنك الاسئلة",
+    "students_info": "كشوفات الطلاب",
+    "coursework": "اعمال السنة"
   },
   "levelHours": {
     "tabletitle": "جدول العبئ الدراسي",
@@ -371,5 +377,11 @@
     "position": "التعيين",
     "delegated": "مندوب",
     "permenant": "دائم"
+  },
+  "staffNavbar": {
+    "banks": "بيانات بنك الاسئلة",
+    "view_bank": "عرض بنك الاسئلة",
+    "quiz": "انشاء الاختبارات",
+    "add_questions": "اضافة اسئلة الي البنك"
   }
 }

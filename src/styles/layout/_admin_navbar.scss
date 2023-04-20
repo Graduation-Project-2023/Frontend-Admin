@@ -11,6 +11,10 @@
     gap: 20px;
     width: 100%;
 
+    &-staff {
+      gap: 60px;
+    }
+
     & li {
       display: inline;
       @include font(1.2rem, 1.4rem);

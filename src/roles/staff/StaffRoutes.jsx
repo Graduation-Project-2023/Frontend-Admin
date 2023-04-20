@@ -5,6 +5,7 @@ import { StaffSchedule } from "./schedule/StaffSchedule";
 import { NotFound } from "../../pages/NotFound";
 import { Coursework } from "./coursework/Coursework";
 import { StaffStudents } from "./students/StaffStudents";
+import { McqRoutes } from "./mcq/McqRoutes";
 
 export function StaffRoutes() {
   return (
@@ -15,6 +16,7 @@ export function StaffRoutes() {
         <Route path="schedule" element={<StaffSchedule />} />
         <Route path="coursework" element={<Coursework />} />
         <Route path="students_info" element={<StaffStudents />} />
+        <Route path="mcq/*" element={<McqRoutes />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

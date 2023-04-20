@@ -19,8 +19,14 @@ const StaffNavbarData = [
     keyword: "adminNavbarkeys.coursework",
     path: "coursework",
   },
+  {
+    id: "4",
+    title: "adminNavbar.mcq",
+    keyword: "adminNavbarkeys.mcq",
+    path: "mcq",
+  },
 ];
 
 export const StaffNavbar = () => {
-  return <HeaderNavbar data={StaffNavbarData} />;
+  return <HeaderNavbar data={StaffNavbarData} staff={true} />;
 };

@@ -363,5 +363,11 @@
     "position": "Designation",
     "delegated": "Delegated",
     "permenant": "Permenant"
+  },
+  "staffNavbar": {
+    "banks": "MCQ Banks",
+    "view_bank": "View MCQ Bank",
+    "quiz": "Create Quizzes",
+    "add_questions": "Add Questions to MCQ Bank"
   }
 }

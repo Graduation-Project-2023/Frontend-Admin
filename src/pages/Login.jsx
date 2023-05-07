@@ -21,7 +21,14 @@ export const Login = () => {
 
   useEffect(() => {
     if (authContext.isLoggedIn) {
-      navigate(`/${authContext.role.toLowerCase()}`);
+      if (authContext.role === "ADMIN" || authContext.role === "SUPER") {
+        navigate("/admin");
+      } else if (
+        authContext.role === "PROFESSOR" ||
+        authContext.role === "STAFF"
+      ) {
+        navigate("/staff");
+      }
     }
     //eslint-disable-next-line
   }, [authContext.isLoggedIn]);
@@ -41,10 +48,23 @@ export const Login = () => {
         if (
           res.data.role === "ADMIN" ||
           res.data.role === "SUPER" ||
+          res.data.role === "PROFESSOR" ||
           res.data.role === "STAFF"
         ) {
-          authContext.login(res.data.token, res.data.role, res.data.college);
-          navigate(`/${res.data.role.toLowerCase()}`);
+          authContext.login(
+            res.data.id,
+            res.data.token,
+            res.data.role,
+            res.data.college
+          );
+          if (res.data.role === "ADMIN" || res.data.role === "SUPER") {
+            navigate("/admin");
+          } else if (
+            res.data.role === "PROFESSOR" ||
+            res.data.role === "STAFF"
+          ) {
+            navigate("/staff");
+          }
         } else {
           setUserUX({
             loading: false,

@@ -30,43 +30,6 @@ export const ProfessorsPortal = () => {
   };
 
   useEffect(() => {
-    if (professorId !== "add" && professorId !== undefined) {
-      // GET request to get college professor by it's id
-      setUserUX((prev) => ({
-        ...prev,
-        formData: { loading: true, error: false, errorMsg: "" },
-      }));
-      axios
-        .get(
-          ADMIN_URL + `/professor?college_id=${authContext.college.id}`,
-          config
-        )
-        .then((res) => {
-          console.log(res);
-          setProfessorData(res.data);
-          setUserUX((prev) => ({
-            ...prev,
-            formData: { loading: false, error: false, errorMsg: "" },
-          }));
-        })
-        .catch((error) => {
-          console.log(error);
-          setUserUX((prev) => ({
-            ...prev,
-            formData: {
-              loading: false,
-              error: true,
-              errorMsg: "error in professor data",
-            },
-          }));
-        });
-    } else {
-      setProfessorData([]);
-    }
-    // eslint-disable-next-line
-  }, [professorId]);
-
-  useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
       departments: { loading: true, error: false, errorMsg: "" },
@@ -98,6 +61,43 @@ export const ProfessorsPortal = () => {
     // eslint-disable-next-line
   }, [authContext.college.id]);
 
+  useEffect(() => {
+    if (professorId !== "add" && professorId !== undefined) {
+      // GET request to get college professor by it's id
+      setUserUX((prev) => ({
+        ...prev,
+        formData: { loading: true, error: false, errorMsg: "" },
+      }));
+      axios
+        .get(ADMIN_URL + `/professor/${professorId}`, config)
+        .then((res) => {
+          console.log(res);
+          setProfessorData(res.data);
+          setProfDep(
+            departments.find((item) => item.id === res.data.departmentId)
+          );
+          setUserUX((prev) => ({
+            ...prev,
+            formData: { loading: false, error: false, errorMsg: "" },
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            formData: {
+              loading: false,
+              error: true,
+              errorMsg: "error in professor data",
+            },
+          }));
+        });
+    } else {
+      setProfessorData([]);
+    }
+    // eslint-disable-next-line
+  }, [professorId]);
+
   const handleEditFormChange = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
@@ -114,8 +114,8 @@ export const ProfessorsPortal = () => {
     e.preventDefault();
     const newProfessor = {
       ...professorData,
-      id: professorData.id.replace(/\s/g, ""),
       collegeId: authContext.college.id,
+      departmentId: profDep.id,
     };
     setUserUX((prev) => ({
       ...prev,
@@ -137,7 +137,7 @@ export const ProfessorsPortal = () => {
           )
           .then((res) => {
             setProfessorData(res.data);
-            navigate("/admin/professors");
+            navigate("/admin/control_system");
             setUserUX((prev) => ({
               ...prev,
               form: {
@@ -190,6 +190,7 @@ export const ProfessorsPortal = () => {
   };
 
   const handleDepartmentSelection = (item) => {
+    console.log(item);
     setProfDep(item);
   };
 
@@ -244,13 +245,13 @@ export const ProfessorsPortal = () => {
           ) : (
             <>
               {ProfessorsFormData.map((data) => {
-                if (data.name === "department") {
+                if (data.name === "departmentId") {
                   return (
-                    <div className="col-lg-12 mb-4">
+                    <div className="col-lg-12 mb-4" key={data.id}>
                       <label className="form-label">{t(data.title)}</label>
                       <DropdownSearch
                         listData={{
-                          type: "departmentWithCode",
+                          type: "tableSelectCourse",
                           data: departments,
                         }}
                         dropDownTitle={profDep}
@@ -261,19 +262,11 @@ export const ProfessorsPortal = () => {
                     </div>
                   );
                 } else if (
-                  data.name === "id" &&
+                  (data.name === "email" || data.name === "password") &&
                   professorId !== "add" &&
                   professorId !== undefined
                 ) {
-                  return (
-                    <FormInput
-                      inputData={{ ...data, disabled: true }}
-                      handleEditFormChange={handleEditFormChange}
-                      valueData={professorData}
-                      key={data.id}
-                      loading={userUX.formData.loading}
-                    />
-                  );
+                  return null;
                 } else {
                   return (
                     <FormInput
@@ -292,17 +285,20 @@ export const ProfessorsPortal = () => {
           <button
             type="submit"
             className="form-card-button form-card-button-save"
+            disabled={userUX.form.loading || userUX.form.delete}
           >
-            {userUX.loading
-              ? "loading..."
-              : professorId !== "add" && professorId !== undefined
-              ? t(`common.save`)
-              : t(`common.add`)}
+            {userUX.form.loading ? (
+              <span className="loader"></span>
+            ) : professorId !== "add" && professorId !== undefined ? (
+              t(`common.save`)
+            ) : (
+              t(`common.add`)
+            )}
           </button>
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"
-            disabled={userUX.loading}
+            disabled={userUX.form.loading || userUX.form.delete}
           >
             {t(`common.cancel`)}
           </button>
@@ -311,8 +307,13 @@ export const ProfessorsPortal = () => {
             <button
               className="form-card-button form-card-button-delete"
               onClick={handleProfessorDelete}
+              disabled={userUX.form.loading || userUX.form.delete}
             >
-              {userUX.delete ? "loading..." : t(`common.delete`)}
+              {userUX.form.delete ? (
+                <span className="loader"></span>
+              ) : (
+                t(`common.delete`)
+              )}
             </button>
           )}
         </form>

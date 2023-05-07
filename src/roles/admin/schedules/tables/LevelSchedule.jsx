@@ -15,6 +15,7 @@ import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { TablePopup } from "./TablePopup";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import { MdErrorOutline } from "react-icons/md";
+import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
 
 export const LevelSchedule = () => {
   const [tableId, setTableId] = useState(null);
@@ -423,6 +424,7 @@ export const LevelSchedule = () => {
         emptyCellClick={emptyCellClick}
         occupiedCellClick={occupiedCellClick}
         saveTableData={saveTableData}
+        userUX={userUX.form}
       />
       {showModal.add.state && (
         <TablePopup
@@ -489,6 +491,9 @@ export const LevelSchedule = () => {
           error={true}
           closeModal={closeFormSubmitModal}
         />
+      )}
+      {(userUX.levelTableCreate.loading || userUX.table.loading) && (
+        <SpinnerLoader overlay={true} />
       )}
     </FormNavbarContainer>
   );

@@ -6,7 +6,13 @@ export const HeaderNavbar = (props) => {
   const { t } = useTranslation();
   return (
     <nav className="header-navbar">
-      <ul className="header-navbar-list">
+      <ul
+        className={
+          props.staff
+            ? "header-navbar-list header-navbar-list-staff"
+            : "header-navbar-list"
+        }
+      >
         {navData.map((item) => {
           return (
             <li key={item.id}>

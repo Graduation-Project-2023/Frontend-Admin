@@ -3,6 +3,27 @@
   border-radius: 10px;
   padding: 2rem;
   margin: 2rem;
+  &-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  &-btn {
+    margin: 1rem;
+    padding: 0.5rem;
+    border-radius: 2px;
+    min-width: 5rem;
+    @include font(1.3rem, 1.5rem);
+    transition-duration: 0.4s;
+
+    @include colorandback(#3d7dca, white);
+    border: 1px solid #3d7dca;
+    border-radius: 2px;
+
+    &:hover {
+      @include colorandback(black, rgba(66, 66, 197, 0.753));
+    }
+  }
 
   & form {
     border-top: 1px solid $White5;
@@ -21,7 +42,7 @@
   }
 
   & h3 {
-    color: $Grey3;
+    color: #3d7dca;
     @include font(2.5rem, 3rem);
     padding: 0rem 0 1rem 0;
   }

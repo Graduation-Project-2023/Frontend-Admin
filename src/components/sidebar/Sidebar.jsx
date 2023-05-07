@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
 import i18next from "i18next";
+
+// Reusable Components
 import { NoData } from "../UX/NoData";
 import { NoSearch } from "../UX/NoSearch";
+import { SpinnerLoader } from "../loaders/SpinnerLoader";
 
 export const Sidebar = (props) => {
   const sidebarData = props.sideData;
@@ -57,7 +60,7 @@ export const Sidebar = (props) => {
       <ul className="sidebar-list">
         {filteredMenu.length === 0 ? (
           userUX.loading ? (
-            <h1>list is loading</h1>
+            <SpinnerLoader size={"60px"} heigth={"300px"} />
           ) : userUX.error ? (
             <h1>{userUX.errorMsg}</h1>
           ) : sidebarData.length === 0 ? (

@@ -41,7 +41,7 @@
     "time": "Time",
     "search": "Search..",
     "continue": "Continue",
-    "drag": "Drag and drop the new students CSV file",
+    "drag": "Drag and drop the CSV file",
     "click": "or Click here to select the file",
     "gender": "Gender",
     "gender_male": "Male",
@@ -81,7 +81,8 @@
     "editCourse": "Edit Course",
     "coursesNotReg": "Courses Not Registered",
     "enterValue": "Enter a Value..",
-    "invalidCred": "Invalid Credentials"
+    "invalidCred": "Invalid Credentials",
+    "total": "Total"
   },
   "popup": {
     "success": "Success!",
@@ -223,7 +224,8 @@
     "equivalent": "Equivalent Grade",
     "formhead": "Grades",
     "tablehead": "Grades Table",
-    "max": "Maximum Grade"
+    "max": "Maximum Grade",
+    "mark": "Enter Marks "
   },
   "courses": {
     "name": "Course Name",
@@ -262,7 +264,8 @@
     "groups": "Number of Groups",
     "preTable": "Prerequisite Courses Table",
     "supervisor": "Supervisor",
-    "hasGroups": "Has Groups?"
+    "hasGroups": "Has Groups?",
+    "failure": "Failure "
   },
   "departments": {
     "name": "Department Name",
@@ -303,6 +306,8 @@
     "data": "Students Data",
     "number": "Number of Students",
     "add": "Students Enrollment",
+    "name": "Student Name",
+    "code": "Student Code",
     "error": {
       "notCSV": "The file must be in CSV form",
       "moreThanOne": "You can only upload one file at a time"
@@ -321,7 +326,9 @@
     "hasNoGroup": "This course has no groups",
     "selectSubject": "Select a Subject",
     "selectStartPeriod": "Select a Start Period",
-    "selectSubjectAndType": "Select a subject and it's class type"
+    "selectSubjectAndType": "Select a subject and it's class type",
+    "doctor": "Doctor",
+    "hall": "Hall"
   },
   "button": {
     "edit": "Edit",
@@ -352,6 +359,25 @@
     "add": "Add New Employee",
     "formhead": "Employee Data",
     "search": "Search with employee name",
-    "department_search": "Search with department name"
+    "department_search": "Search with department name",
+    "position": "Designation",
+    "delegated": "Delegated",
+    "permenant": "Permenant"
+  },
+  "staffNavbar": {
+    "banks": "MCQ Banks",
+    "view_bank": "View Bank",
+    "quiz": "Create Quizzes",
+    "add_questions": "Add Questions"
+  },
+  "mcq": {
+    "answer": "Answer",
+    "questionSearch": "Search by question..",
+    "bankSearch": "Search by bank name..",
+    "banks": "MCQ Banks",
+    "questionHolder": "Write a question...",
+    "writeOption": "Write an option...",
+    "addOption": "Add Option",
+    "addToBank": "Add Question to Bank"
   }
 }

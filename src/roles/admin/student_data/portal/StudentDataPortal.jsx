@@ -14,6 +14,7 @@ import { Accordion } from "react-bootstrap";
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { FormInput } from "../../../../components/forms/FormInput";
 import { NoData } from "../../../../components/UX/NoData";
+import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
 
 export const StudentDataPortal = () => {
   const authContext = useAuth();
@@ -63,6 +64,7 @@ export const StudentDataPortal = () => {
     axios
       .get(ADMIN_URL + `/student?college_id=${authContext.college}`, config)
       .then((res) => {
+        console.log(res);
         setStudentData(res.data);
         setStudents(res.data);
         setFilteredStudents(res.data);
@@ -189,6 +191,8 @@ export const StudentDataPortal = () => {
         ...updatedData,
         ...dates,
       };
+      delete newUpdatedData.email;
+      delete newUpdatedData.password;
       if (Object.keys(updatedData).length === 0) {
         setUserUX((prev) => ({
           ...prev,
@@ -202,6 +206,7 @@ export const StudentDataPortal = () => {
         return;
       }
       // PUT request to update the current student data
+      console.log(newUpdatedData);
       axios
         .put(ADMIN_URL + `/student/${studentId}`, newUpdatedData, config)
         .then((res) => {
@@ -321,7 +326,7 @@ export const StudentDataPortal = () => {
           </div>
           {filteredStudents.length === 0 ? (
             userUX.list.loading ? (
-              "loading"
+              <SpinnerLoader size={"60px"} heigth={"250px"} />
             ) : userUX.list.error ? (
               userUX.list.errorMsg
             ) : studentData.length === 0 ? (
@@ -403,14 +408,18 @@ export const StudentDataPortal = () => {
               <button
                 type="submit"
                 className="form-card-button form-card-button-save"
+                disabled={userUX.form.submit || userUX.form.delete}
               >
-                {" "}
-                {userUX.form.submit ? "Loading..." : `${t(`common.save`)}`}
+                {userUX.form.submit ? (
+                  <span className="loader"></span>
+                ) : (
+                  `${t(`common.save`)}`
+                )}
               </button>
               <button
                 type="reset"
                 className="form-card-button form-card-button-cancel"
-                disabled={userUX.form.submit}
+                disabled={userUX.form.submit || userUX.form.delete}
               >
                 {t(`common.cancel`)}
               </button>
@@ -418,8 +427,13 @@ export const StudentDataPortal = () => {
                 <button
                   className="form-card-button form-card-button-delete"
                   onClick={handleStudentDelete}
+                  disabled={userUX.form.submit || userUX.form.delete}
                 >
-                  {userUX.form.delete ? "Loading..." : t(`common.delete`)}
+                  {userUX.form.delete ? (
+                    <span className="loader"></span>
+                  ) : (
+                    t(`common.delete`)
+                  )}
                 </button>
               )}
             </Accordion>

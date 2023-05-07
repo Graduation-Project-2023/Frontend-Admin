@@ -10,11 +10,9 @@ export const LoadingInput = (props) => {
 
   if (row) {
     return (
-      <div className="col-lg-12 mb-4 ">
+      <div className="col-lg-12 mb-4">
         <label className="form-label">{label}</label>
-
-        <div className="form-control loadingForm ">
-          {" "}
+        <div className="form-control loadingForm">
           <div className="loadingForm-shimmer"></div>
         </div>
       </div>
@@ -27,7 +25,6 @@ export const LoadingInput = (props) => {
             <div className="col-lg-6 mb-4" key={item.id}>
               <label className="form-label">{item.label}</label>
               <div className="form-control loadingForm ">
-                {" "}
                 <div className="loadingForm-shimmer"></div>
               </div>
             </div>

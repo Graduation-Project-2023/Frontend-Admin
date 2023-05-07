@@ -68,6 +68,12 @@ export const DepartmentsPortal = () => {
         .then((res) => {
           console.log(res);
           setDepartmentData(res.data);
+          if (res.data.programs) {
+            const departmentPrograms = res.data.programs.map((item) => item.id);
+            setDepPrograms(
+              programs.filter((item) => departmentPrograms.includes(item.id))
+            );
+          }
           setUserUX((prev) => ({
             ...prev,
             formData: { loading: false, error: false, errorMsg: "" },
@@ -260,17 +266,20 @@ export const DepartmentsPortal = () => {
           <button
             type="submit"
             className="form-card-button form-card-button-save"
+            disabled={userUX.form.loading || userUX.form.delete}
           >
-            {userUX.loading
-              ? "loading..."
-              : departmentCode !== "add" && departmentCode !== undefined
-              ? t(`common.save`)
-              : t(`common.add`)}
+            {userUX.loading ? (
+              <span className="loader"></span>
+            ) : departmentCode !== "add" && departmentCode !== undefined ? (
+              t(`common.save`)
+            ) : (
+              t(`common.add`)
+            )}
           </button>
           <button
             type="reset"
             className="form-card-button form-card-button-cancel"
-            disabled={userUX.loading}
+            disabled={userUX.form.loading || userUX.form.delete}
           >
             {t(`common.cancel`)}
           </button>
@@ -279,8 +288,13 @@ export const DepartmentsPortal = () => {
             <button
               className="form-card-button form-card-button-delete"
               onClick={handleDepartmentDelete}
+              disabled={userUX.form.loading || userUX.form.delete}
             >
-              {userUX.delete ? "loading..." : t(`common.delete`)}
+              {userUX.form.delete ? (
+                <span className="loader"></span>
+              ) : (
+                t(`common.delete`)
+              )}
             </button>
           )}
         </form>

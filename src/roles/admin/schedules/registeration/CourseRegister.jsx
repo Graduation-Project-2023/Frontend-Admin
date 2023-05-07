@@ -410,11 +410,13 @@ export const CourseRegister = (props) => {
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {userUX.submitLoading
-              ? "loading"
-              : currentLocation === "add"
-              ? t(`common.add`)
-              : t(`common.save`)}
+            {userUX.submitLoading ? (
+              <span className="loader"></span>
+            ) : currentLocation === "add" ? (
+              t(`common.add`)
+            ) : (
+              t(`common.save`)
+            )}
           </button>
           <button
             type="reset"

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+
+// Reusable Components
 import { NoData } from "../UX/NoData";
 import { NoSearch } from "../UX/NoSearch";
+import { SpinnerLoader } from "../loaders/SpinnerLoader";
 
 // Component Props:
 // title: string
@@ -77,7 +80,7 @@ export const SearchContainer = (props) => {
         {props.fixedFirstList?.state && props.fixedFirstList?.children}
 
         {userUX.loading ? (
-          <div>list with search loading component</div>
+          <SpinnerLoader size={"80px"} heigth={"250px"} />
         ) : (
           <div className="portal-list">
             {filteredList.length === 0

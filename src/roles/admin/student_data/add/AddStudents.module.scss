@@ -17,13 +17,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  text-align: center;
   height: 400px;
   border: 2px dashed $Blue3;
   border-radius: 10px;
+  &_square {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    &_customFileInput {
+      border: 1px solid #3d7dca;
+      display: inline-block;
+      margin: 0 10px;
+      padding: 6px 12px;
+      color: #3d7dca;
+      @include font(1.3rem, 1.5rem);
+      cursor: pointer;
+      & input[type="file"] {
+        display: none !important;
+      }
+      &:hover {
+        @include colorandback(black, rgba(66, 66, 197, 0.753));
+      }
+    }
 
-  &_text {
-    color: rgb(97, 95, 95);
+    &_text {
+      color: rgb(97, 95, 95);
+    }
   }
 
   &_icon {

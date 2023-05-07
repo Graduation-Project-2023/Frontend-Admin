@@ -103,22 +103,21 @@ export const AddToBank = () => {
         choicesConverted[key] = choices[i];
       }
 
+      const backendData = {
+        bankId: bankId,
+        question: questionRef.current.value,
+        choices: choicesConverted,
+        answer: answers,
+        addedBy: authContext.id,
+      };
+
+      console.log(backendData);
       setUserUX((prev) => ({
         ...prev,
         addQuestion: { loading: true, error: false, errorMsg: "" },
       }));
       axios
-        .post(
-          ADMIN_URL + `/question`,
-          {
-            bankId: bankId,
-            question: questionRef.current.value,
-            choices: choicesConverted,
-            answer: answers,
-            addedBy: authContext.user.id,
-          },
-          config
-        )
+        .post(ADMIN_URL + `/question`, backendData, config)
         .then((res) => {
           console.log(res);
           setUserUX((prev) => ({
@@ -244,13 +243,6 @@ export const AddToBank = () => {
             </div>
           )}
         </div>
-        <button
-          onClick={() => {
-            console.log(choices);
-          }}
-        >
-          log
-        </button>
       </div>
     </FormNavbarContainer>
   );

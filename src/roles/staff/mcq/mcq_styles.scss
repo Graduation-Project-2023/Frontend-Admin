@@ -1,0 +1,139 @@
+.mcq-cont {
+  border-radius: 15px;
+
+  &-search {
+    width: 90%;
+    margin: 0px auto;
+
+    & input {
+      width: 100%;
+    }
+  }
+}
+.quest-card {
+  position: relative;
+  background-color: #f7f8fc;
+  height: auto;
+  width: 90%;
+  margin: 15px auto;
+  padding: 15px 20px;
+  border-radius: 7px;
+  text-align: left;
+  border: 1px solid #d9d9d9;
+
+  & h4 {
+    direction: ltr;
+    margin-bottom: 20px;
+  }
+
+  & ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+.quest-num,
+.quest-ans {
+  position: absolute;
+  right: 0;
+}
+
+.quest-num {
+  top: 0;
+  background-color: #6892c4;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  color: white;
+  font-weight: 400;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.quest-ans {
+  bottom: 0;
+  margin: 10px;
+}
+
+.new-quest {
+  background-color: #f7f8fc;
+  height: auto;
+  width: 90%;
+  margin: auto;
+  border-radius: 7px;
+  text-align: left;
+  border: 1px solid #d9d9d9;
+  border-left: 6px solid #3d7dca;
+  direction: ltr;
+
+  &-input,
+  &-answers {
+    padding: 15px 20px 0px 20px;
+    direction: ltr;
+  }
+
+  &-input {
+    & input {
+      background-color: transparent;
+      border: none;
+      border-style: none;
+      border-bottom: 2px solid black;
+      padding: 10px;
+      width: 70%;
+      height: 50px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &-answers {
+    direction: ltr;
+    width: 72%;
+
+    & input[type="checkbox"] {
+      padding: 10px;
+      width: 20px;
+      height: 20px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+    & button {
+      background-color: #3d7dca;
+      color: white;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      //   border: none;
+      //   border-radius: 15px;
+      //   padding: 5px 20px;
+      //   font-size: 15px;
+      //   margin: 10px 10px 10px 0px;
+    }
+  }
+
+  &-footer {
+    border-top: 0.5px solid black;
+    direction: ltr;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+
+    & button {
+      background-color: #3d7dca;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 5px 20px;
+      font-size: 15px;
+    }
+  }
+}

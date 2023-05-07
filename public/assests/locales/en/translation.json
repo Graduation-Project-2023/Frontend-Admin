@@ -366,8 +366,18 @@
   },
   "staffNavbar": {
     "banks": "MCQ Banks",
-    "view_bank": "View MCQ Bank",
+    "view_bank": "View Bank",
     "quiz": "Create Quizzes",
-    "add_questions": "Add Questions to MCQ Bank"
+    "add_questions": "Add Questions"
+  },
+  "mcq": {
+    "answer": "Answer",
+    "questionSearch": "Search by question..",
+    "bankSearch": "Search by bank name..",
+    "banks": "MCQ Banks",
+    "questionHolder": "Write a question...",
+    "writeOption": "Write an option...",
+    "addOption": "Add Option",
+    "addToBank": "Add Question to Bank"
   }
 }

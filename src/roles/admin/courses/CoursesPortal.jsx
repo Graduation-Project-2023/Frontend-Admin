@@ -10,13 +10,16 @@ import { CoursesFormData } from "./CoursesFormData";
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../components/forms/FormCard";
 import { FormInput } from "../../../components/forms/FormInput";
+import { ModalPopup } from "../../../components/popups/ModalPopup";
+import { BsFillPersonCheckFill } from "react-icons/bs";
 
 export const CoursesPortal = () => {
   const [courseData, setCourseData] = useState([]);
   const [userUX, setUserUX] = useState({
-    form: { loading: false, delete: false, error: false, errorMsg: "" },
-    formData: { loading: false, error: false, errorMsg: "" },
+    form: { loading: false, delete: false, error: false },
+    formData: { loading: false, error: false },
   });
+  const [modal, setModal] = useState(false);
   const { t } = useTranslation();
   const { courseCode } = useParams();
   const navigate = useNavigate();
@@ -30,7 +33,7 @@ export const CoursesPortal = () => {
       // GET request to get college course by it's id
       setUserUX((prev) => ({
         ...prev,
-        formData: { loading: true, error: false, errorMsg: "" },
+        formData: { loading: true, error: false },
       }));
       axios
         .get(ADMIN_URL + `/courses/${courseCode}`, config)
@@ -39,7 +42,7 @@ export const CoursesPortal = () => {
           setCourseData(res.data);
           setUserUX((prev) => ({
             ...prev,
-            formData: { loading: false, error: false, errorMsg: "" },
+            formData: { loading: false, error: false },
           }));
         })
         .catch((error) => {
@@ -49,7 +52,6 @@ export const CoursesPortal = () => {
             formData: {
               loading: false,
               error: true,
-              errorMsg: "error in course",
             },
           }));
         });
@@ -84,7 +86,6 @@ export const CoursesPortal = () => {
         loading: true,
         delete: false,
         error: false,
-        errorMsg: "",
       },
     }));
     // Condition to check whether it's adding a new course or updating the current
@@ -94,14 +95,13 @@ export const CoursesPortal = () => {
           .put(ADMIN_URL + `/courses/${newCourse.id}`, newCourse, config)
           .then((res) => {
             setCourseData(res.data);
-            navigate("/admin/courses");
+            setModal(true);
             setUserUX((prev) => ({
               ...prev,
               form: {
                 loading: false,
                 delete: false,
                 error: false,
-                errorMsg: "",
               },
             }));
           })
@@ -113,7 +113,6 @@ export const CoursesPortal = () => {
                 loading: false,
                 delete: false,
                 error: true,
-                errorMsg: "error in submitting",
               },
             }));
           })
@@ -128,7 +127,6 @@ export const CoursesPortal = () => {
                 loading: false,
                 delete: false,
                 error: false,
-                errorMsg: "",
               },
             }));
           })
@@ -140,7 +138,6 @@ export const CoursesPortal = () => {
                 loading: false,
                 delete: false,
                 error: true,
-                errorMsg: "error in submitting",
               },
             }));
           });
@@ -161,7 +158,7 @@ export const CoursesPortal = () => {
       .delete(ADMIN_URL + `/courses/${courseData.id}`, config)
       .then((res) => {
         console.log(res);
-        navigate("/admin/courses");
+        setModal(true);
         setUserUX((prev) => ({
           ...prev,
           form: {
@@ -178,15 +175,25 @@ export const CoursesPortal = () => {
             ...prev.form,
             delete: false,
             error: true,
-            errorMsg: "error in deleting",
           },
         }));
       });
   };
 
+  const closeModal = () => {
+    navigate("/admin/courses");
+    setModal(false);
+  };
+
   return (
     <SidebarContainer>
-      <FormCard cardTitle={"courses.formhead"}>
+      <FormCard
+        cardTitle={
+          courseCode === undefined || courseCode === "add"
+            ? "courses.add"
+            : "courses.formheadSingular"
+        }
+      >
         <form
           onSubmit={(event) => {
             handleFormSubmit(event);
@@ -259,7 +266,25 @@ export const CoursesPortal = () => {
               )}
             </button>
           )}
+          {(userUX.form.error || userUX.formData.error) && (
+            <div className="alert alert-danger" role="alert">
+              {t("error.common")}
+            </div>
+          )}
         </form>
+        {modal && (
+          <ModalPopup
+            message={{
+              state: true,
+              icon: <BsFillPersonCheckFill />,
+              title: "popup.success",
+              text: "popup.message_success",
+              button: "common.save",
+              handleClick: closeModal,
+            }}
+            closeModal={closeModal}
+          />
+        )}
       </FormCard>
     </SidebarContainer>
   );

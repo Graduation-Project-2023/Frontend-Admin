@@ -199,40 +199,33 @@ export const CoursesPortal = () => {
             handleFormSubmit(event);
           }}
         >
-          {userUX.loading ? (
-            "loading..."
-          ) : (
-            <>
-              {CoursesFormData.map((data) => {
-                if (
-                  data.name === "id" &&
-                  courseCode !== "add" &&
-                  courseCode !== undefined
-                ) {
-                  return (
-                    <FormInput
-                      inputData={{ ...data, disabled: true }}
-                      handleEditFormChange={handleEditFormChange}
-                      valueData={courseData}
-                      key={data.id}
-                      loading={userUX.formData.loading}
-                    />
-                  );
-                } else {
-                  return (
-                    <FormInput
-                      inputData={data}
-                      handleEditFormChange={handleEditFormChange}
-                      valueData={courseData}
-                      key={data.id}
-                      loading={userUX.formData.loading}
-                    />
-                  );
-                }
-              })}
-            </>
-          )}
-
+          {CoursesFormData.map((data) => {
+            if (
+              data.name === "id" &&
+              courseCode !== "add" &&
+              courseCode !== undefined
+            ) {
+              return (
+                <FormInput
+                  inputData={{ ...data, disabled: true }}
+                  handleEditFormChange={handleEditFormChange}
+                  valueData={courseData}
+                  key={data.id}
+                  loading={userUX.formData.loading}
+                />
+              );
+            } else {
+              return (
+                <FormInput
+                  inputData={data}
+                  handleEditFormChange={handleEditFormChange}
+                  valueData={courseData}
+                  key={data.id}
+                  loading={userUX.formData.loading}
+                />
+              );
+            }
+          })}
           <button
             type="submit"
             className="form-card-button form-card-button-save"

@@ -1,0 +1,40 @@
+export const CollegesFormData = [
+  {
+    id: 1,
+    title: "common.ar_name",
+    name: "arabicName",
+    req: true,
+    type: "text",
+    row: true,
+  },
+  {
+    id: 2,
+    title: "common.eng_name",
+    name: "englishName",
+    req: true,
+    type: "text",
+    row: true,
+  },
+  {
+    id: 3,
+    title: "courses.code",
+    name: "id",
+    req: true,
+    type: "text",
+    row: true,
+  },
+  {
+    id: 4,
+    title: "courses.ar_des",
+    name: "arabicDescription",
+    type: "textarea",
+    row: true,
+  },
+  {
+    id: 5,
+    title: "courses.eng_des",
+    name: "englishDescription",
+    type: "textarea",
+    row: true,
+  },
+];

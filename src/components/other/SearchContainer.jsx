@@ -64,7 +64,7 @@ export const SearchContainer = (props) => {
         <h5 className="portal-title">{t(props.title)}</h5>
       )}
 
-      {!userUX.loading && listData.length !== 0 && (
+      {!userUX.loading && listData.length !== 0 && !userUX.error && (
         <div className="portal-search">
           <input
             type="text"

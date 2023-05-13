@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import Dropdown from "react-bootstrap/Dropdown";
+import { SpinnerLoader } from "../loaders/SpinnerLoader";
 
 // Component Props:
 // listData: object {type: string ,data: array of objects}
@@ -68,11 +69,13 @@ export const DropdownSearch = (props) => {
         <ul className="progCourses_menu_searchList">
           {listData.data.length === 0 ? (
             userUX.loading ? (
-              <h1>loading</h1>
-            ) : userUX.error ? (
-              <h1>{userUX.errorMsg}</h1>
+              <SpinnerLoader size={"80px"} heigth={"250px"} />
             ) : (
-              <h1>list is empty</h1>
+              userUX.error && (
+                <h5 className="d-flex justify-content-center portal-title">
+                  {t(userUX.errorMsg)}
+                </h5>
+              )
             )
           ) : (
             filteredMenu.map((item) => {

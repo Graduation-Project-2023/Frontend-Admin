@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import { ADMIN_URL } from "../../../shared/API";
 import styles from "../../admin/registeration/RegisterationPortal.module.scss";
@@ -33,13 +32,13 @@ export const StaffSchedule = () => {
       day: "WEDNESDAY",
     },
   ]);
+  // eslint-disable-next-line
   const [cells, setCells] = useState({ occupied: [], available: [] });
   const [userUX, setUserUX] = useState({
     loading: false,
     error: false,
     errorMsg: "",
   });
-  const { t } = useTranslation();
   const authContext = useAuth();
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
@@ -81,37 +80,6 @@ export const StaffSchedule = () => {
         available: availableCells,
       };
     });
-  };
-
-  const findCellAvailable = (classes) => {
-    let cellOccupied = false;
-    classes.forEach((item) => {
-      const dayAvailableCells = cells.available.filter(
-        (cell) => cell.day === item.day
-      );
-      let classHrs = +item.endPeriod - +item.startPeriod + 1;
-      for (let i = 0; i < classHrs; i++) {
-        const cellFound = dayAvailableCells.some(
-          (cell) => cell.period === +item.startPeriod + i
-        );
-        if (!cellFound) {
-          cellOccupied = true;
-          break;
-        }
-      }
-    });
-    if (cellOccupied) {
-      setUserUX((prev) => ({
-        ...prev,
-        table: {
-          error: true,
-          errorMsg: "cell already occupied",
-        },
-      }));
-      return false;
-    } else {
-      return true;
-    }
   };
 
   return (

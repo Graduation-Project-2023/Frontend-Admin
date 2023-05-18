@@ -82,7 +82,9 @@
     "coursesNotReg": "Courses Not Registered",
     "enterValue": "Enter a Value..",
     "invalidCred": "Invalid Credentials",
-    "total": "Total"
+    "total": "Total",
+    "print": "Print",
+    "notes": "Notes"
   },
   "popup": {
     "success": "Success!",
@@ -363,7 +365,10 @@
     "department_search": "Search with department name",
     "position": "Designation",
     "delegated": "Delegated",
-    "permenant": "Permenant"
+    "permenant": "Permenant",
+    "grades": "Grades Sheet",
+    "studentList": "Students Sheets",
+    "course": "Course Sheet"
   },
   "staffNavbar": {
     "banks": "MCQ Banks",

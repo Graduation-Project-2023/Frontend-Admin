@@ -15,7 +15,9 @@ export function StaffRoutes() {
         <Route path="" element={<StaffPortal />} />
         <Route path="schedule" element={<StaffSchedule />} />
         <Route path="coursework" element={<Coursework />} />
+        <Route path="coursework/:courseId" element={<Coursework />} />
         <Route path="students_info" element={<StaffStudents />} />
+        <Route path="students_info/:courseId" element={<StaffStudents />} />
         <Route path="mcq/*" element={<McqRoutes />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

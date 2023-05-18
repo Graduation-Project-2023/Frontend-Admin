@@ -83,7 +83,9 @@
     "enterValue": "ادخل القيمة...",
     "invalidCred": "اسم المستخدم او كلمة المرور غير صحيحة",
     "add/delete": "اضافة/حذف",
-    "total": "المجموع"
+    "total": "المجموع",
+    "print": "طباعة",
+    "notes": "ملاحظات"
   },
   "popup": {
     "success": "تمت العملية بنجاح",
@@ -377,7 +379,10 @@
     "department_search": "البحث بالقسم",
     "position": "التعيين",
     "delegated": "مندوب",
-    "permenant": "دائم"
+    "permenant": "دائم",
+    "grades": "كشف الدرجات",
+    "studentList": "كشوفات الطلاب",
+    "course": "كشف المقرر"
   },
   "staffNavbar": {
     "banks": "بيانات بنك الاسئلة",

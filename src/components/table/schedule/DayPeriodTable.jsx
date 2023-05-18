@@ -151,6 +151,7 @@ export const DayPeriodTable = (props) => {
                                   ? "Professor Name"
                                   : "اسم الدكتور"}
                               </span>
+                              {" - "}
                               <span>
                                 {i18next.language === "en" ? "Place" : "المكان"}
                               </span>
@@ -219,20 +220,28 @@ export const DayPeriodTable = (props) => {
             </table>
           </div>
         </div>
-        <button
-          type="submit"
-          className="form-card-button form-card-button-save"
-          disabled={userUX.loading}
-        >
-          {userUX.loading ? <span className="loader"></span> : t(`common.save`)}
-        </button>
-        <button
-          type="reset"
-          className="form-card-button form-card-button-cancel"
-          disabled={userUX.loading}
-        >
-          {t(`common.cancel`)}
-        </button>
+        {props.noButtons ? null : (
+          <>
+            <button
+              type="submit"
+              className="form-card-button form-card-button-save"
+              disabled={userUX.loading}
+            >
+              {userUX.loading ? (
+                <span className="loader"></span>
+              ) : (
+                t(`common.save`)
+              )}
+            </button>
+            <button
+              type="reset"
+              className="form-card-button form-card-button-cancel"
+              disabled={userUX.loading}
+            >
+              {t(`common.cancel`)}
+            </button>
+          </>
+        )}
       </form>
     </div>
   );

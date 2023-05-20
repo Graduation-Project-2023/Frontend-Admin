@@ -1,6 +1,17 @@
 .mcq-cont {
   border-radius: 15px;
 
+  &-header {
+    color: #3d7dca;
+    @include font(2.5rem, 3rem);
+    padding: 0rem 0 1rem 0;
+  }
+  & form {
+    border-top: 1px solid $White5;
+    border-bottom: 1px solid $White5;
+    padding: 2rem;
+    margin: 2rem;
+  }
   &-search {
     width: 90%;
     margin: 0px auto;

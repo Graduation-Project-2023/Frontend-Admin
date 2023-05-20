@@ -5,6 +5,7 @@ import { Banks } from "./bank/Banks";
 import { CreateQuiz } from "./quiz/CreateQuiz";
 import { AddToBank } from "./add_questions/AddToBank";
 import { NotFound } from "../../../pages/NotFound";
+import { QuizPortal } from "./quiz/QuizPortal";
 
 export function McqRoutes() {
   return (
@@ -27,8 +28,11 @@ export function McqRoutes() {
         <Route path="bank" element={<ViewBank />} />
         <Route path="bank/:bankId" element={<ViewBank />} />
         <Route path="banks" element={<Banks />} />
+        <Route path="banks/add" element={<Banks />} />
         <Route path="banks/:bankId" element={<Banks />} />
-        <Route path="quiz" element={<CreateQuiz />} />
+        <Route path="quiz" element={<QuizPortal />} />
+        <Route path="quiz/:bankId" element={<QuizPortal />} />
+        <Route path="quiz/:bankId/create" element={<CreateQuiz />} />
         <Route path="add_questions" element={<AddToBank />} />
         <Route path="add_questions/:bankId" element={<AddToBank />} />
         <Route path="*" element={<NotFound />} />

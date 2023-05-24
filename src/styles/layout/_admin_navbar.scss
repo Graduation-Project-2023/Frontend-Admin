@@ -49,6 +49,11 @@
   padding: 1rem;
   display: grid;
   grid-template-columns: 150px auto 150px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
 
   &-item {
     @include flex(center, center, "");

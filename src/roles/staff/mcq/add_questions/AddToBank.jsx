@@ -9,7 +9,9 @@ import styles from "../../../admin/student_data/portal/StudentDataPortal.module.
 // Reusable Components
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { BsTrash } from "react-icons/bs";
+import { TiDelete } from "react-icons/ti";
 import { BanksSidebar } from "../components/BanksSidebar";
+import { set } from "react-hook-form";
 
 export const AddToBank = () => {
   const [choices, setChoices] = useState([]);
@@ -28,15 +30,26 @@ export const AddToBank = () => {
   };
 
   const addChoice = () => {
-    if (newOptionRef.current.value !== "") {
+    if (newOptionRef.current.value.trim().length !== 0) {
       setChoices([...choices, newOptionRef.current.value]);
       newOptionRef.current.value = "";
     }
   };
 
   const addQuestion = () => {
-    if (questionRef === "" || choices.length === 0 || answers.length === 0) {
-      console.log("wrong");
+    if (
+      questionRef.current.value.trim().length === 0 ||
+      choices.length === 0 ||
+      answers.length === 0
+    ) {
+      setUserUX((prev) => ({
+        ...prev,
+        addQuestion: {
+          loading: false,
+          error: true,
+          errorMsg: "Empty Question or Choices or No Answers Selected",
+        },
+      }));
     } else {
       const choicesConverted = {};
       for (let i = 0; i < choices.length; i++) {
@@ -108,37 +121,53 @@ export const AddToBank = () => {
                 {choices.length !== 0 &&
                   choices.map((item, index) => (
                     <div key={index}>
-                      <input
-                        type="checkbox"
-                        value={item}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setAnswers([...answers, e.target.value]);
-                          } else {
-                            setAnswers(answers.filter((el) => el !== item));
-                          }
-                        }}
-                      />
-                      <label htmlFor="track">{item}</label>
+                      <div className="new-quest-answers-choice">
+                        <div>
+                          <input
+                            type="radio"
+                            value={item}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setAnswers([...answers, e.target.value]);
+                              } else {
+                                setAnswers(answers.filter((el) => el !== item));
+                              }
+                            }}
+                          />
+
+                          <label htmlFor="track">{item}</label>
+                        </div>
+                        <div>
+                          <TiDelete
+                            style={{
+                              fontSize: "20px",
+                              cursor: "pointer",
+                              color: "red",
+                            }}
+                            onClick={(e) => {
+                              setChoices(choices.filter((el) => el !== item));
+                            }}
+                          />
+                        </div>
+                      </div>
                       <br />
                     </div>
                   ))}
-                <div className="input-group mb-3">
+                <div className="input-group mt-1 mb-3 ">
+                  <button
+                    className="btn btn-outline-secondary  "
+                    type="button"
+                    onClick={addChoice}
+                  >
+                    {t("mcq.addOption")}
+                  </button>
+
                   <input
                     type="text"
                     className="form-control"
                     placeholder={t("mcq.writeOption")}
                     ref={newOptionRef}
                   />
-                  <div className="input-group-append">
-                    <button
-                      className="btn btn-outline-secondary"
-                      type="button"
-                      onClick={addChoice}
-                    >
-                      {t("mcq.addOption")}
-                    </button>
-                  </div>
                 </div>
               </div>
               <div className="new-quest-footer">
@@ -149,6 +178,9 @@ export const AddToBank = () => {
                 />
               </div>
             </div>
+          )}
+          {userUX.addQuestion.error && (
+            <p className="text-danger">{userUX.addQuestion.errorMsg}</p>
           )}
         </div>
       </div>

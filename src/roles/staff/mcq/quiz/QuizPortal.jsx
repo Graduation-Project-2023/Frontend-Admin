@@ -101,13 +101,16 @@ export const QuizPortal = () => {
                   }}
                 />
               </div>
-              <button
-                onClick={() => {
-                  navigate("create");
-                }}
-              >
-                create a new quiz
-              </button>
+              <div className="d-grid">
+                <button
+                  onClick={() => {
+                    navigate("create");
+                  }}
+                  className="btn btn-outline-primary mt-3"
+                >
+                  create a new quiz
+                </button>
+              </div>
               {filteredQuizzes.map((item, index) => (
                 <Accordion
                   defaultActiveKey="0"
@@ -128,7 +131,9 @@ export const QuizPortal = () => {
                             ? item.englishName
                             : item.arabicName}
                         </Accordion.Header>
-                        {/* <ViewQuiz quizId={whatever}/> */}
+                        <Accordion.Body>
+                          {/* <ViewQuiz quizId={whatever}/> */}
+                        </Accordion.Body>
                       </Accordion.Item>
                     );
                   })}

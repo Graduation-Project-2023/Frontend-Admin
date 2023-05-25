@@ -88,7 +88,7 @@ export const AddStudents = () => {
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
-            <div className={styles.dashform_icon}>
+            <div className={styles.dashform_icon} style={{ width: "80%" }}>
               <TbFileUpload />
             </div>
             <h4 className={styles.dashform_text}>{t("common.drag")}</h4>

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { StaffPortal } from "./StaffPortal";
+import { StaffPortal } from "./portal/StaffPortal";
 import { StaffNavbar } from "./StaffNavbar";
 import { StaffSchedule } from "./schedule/StaffSchedule";
 import { NotFound } from "../../pages/NotFound";

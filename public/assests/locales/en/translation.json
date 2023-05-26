@@ -405,6 +405,7 @@
     "noQuestions": "This quiz has no questions",
     "addQuiz": "Add New Quiz",
     "quizzess": "Quizzes",
-    "quizQuestions": "Quiz Questions"
+    "quizQuestions": "Quiz Questions",
+    "noQuizzes": "This bank has no quizzes"
   }
 }

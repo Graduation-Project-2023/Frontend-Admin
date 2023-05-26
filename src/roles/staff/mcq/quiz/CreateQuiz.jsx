@@ -24,6 +24,7 @@ export const CreateQuiz = () => {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [updates, setUpdates] = useState({ data: false, questions: false });
   const [searchValue, setSearchValue] = useState("");
   const [userUX, setUserUX] = useState({
     info: { loading: false, error: false, errorMsg: "" },
@@ -115,6 +116,9 @@ export const CreateQuiz = () => {
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
+    if (quizId !== "add" && quizId !== undefined) {
+      setUpdates((prev) => ({ ...prev, data: true }));
+    }
     const fieldName = event.target.getAttribute("name");
     let fieldValue = event.target.value;
     if (event.target.type === "number") {
@@ -135,11 +139,50 @@ export const CreateQuiz = () => {
         error: false,
       },
     }));
-    // Condition to check whether it's adding a new bank or updating the current
-    quizId !== "add" && quizId !== undefined
-      ? // PUT request to update the current MCQ bank
+    const newQuizInfo = {
+      ...quizInfo,
+      questions: selectedQuestions,
+    };
+    console.log(newQuizInfo);
+    // Condition to check whether it's adding a new quiz or updating the current
+    if (quizId !== "add" && quizId !== undefined) {
+      // PUT request to update the current quiz
+      if (updates.data) {
         axios
-          .put(ADMIN_URL + `/bank/${quizId}`, quizInfo, config)
+          .put(ADMIN_URL + `/sheet/${quizId}`, newQuizInfo, config)
+          .then((res) => {
+            setQuizInfo(res.data);
+            if (!updates.questions) {
+              setModal(true);
+              setUserUX((prev) => ({
+                ...prev,
+                form: {
+                  loading: false,
+                  delete: false,
+                  error: false,
+                },
+              }));
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            setUserUX((prev) => ({
+              ...prev,
+              form: {
+                loading: false,
+                delete: false,
+                error: true,
+              },
+            }));
+          });
+      }
+      if (updates.questions && !userUX.form.error) {
+        axios
+          .put(
+            ADMIN_URL + `/sheet/add`,
+            { questionId: selectedQuestions, sheetId: quizId },
+            config
+          )
           .then((res) => {
             setQuizInfo(res.data);
             setModal(true);
@@ -162,32 +205,56 @@ export const CreateQuiz = () => {
                 error: true,
               },
             }));
-          })
-      : // POST request to create a new MCQ bank
-        axios
-          .post(ADMIN_URL + `/bank`, quizInfo, config)
-          .then((res) => {
-            console.log(res);
-            setUserUX((prev) => ({
-              ...prev,
-              form: {
-                loading: false,
-                delete: false,
-                error: false,
-              },
-            }));
-          })
-          .catch((error) => {
-            console.log(error);
-            setUserUX((prev) => ({
-              ...prev,
-              form: {
-                loading: false,
-                delete: false,
-                error: true,
-              },
-            }));
           });
+      }
+    } else {
+      // POST request to create a new quiz
+      axios
+        .post(ADMIN_URL + `/sheet`, newQuizInfo, config)
+        .then((res) => {
+          console.log(res);
+          axios
+            .post(
+              ADMIN_URL + `/sheet/add`,
+              { questionId: selectedQuestions, sheetId: res.data.id },
+              config
+            )
+            .then((res) => {
+              console.log(res);
+              setModal(true);
+              setUserUX((prev) => ({
+                ...prev,
+                form: {
+                  loading: false,
+                  delete: false,
+                  error: false,
+                },
+              }));
+            })
+            .catch((error) => {
+              console.log(error);
+              setUserUX((prev) => ({
+                ...prev,
+                form: {
+                  loading: false,
+                  delete: false,
+                  error: true,
+                },
+              }));
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            form: {
+              loading: false,
+              delete: false,
+              error: true,
+            },
+          }));
+        });
+    }
   };
 
   useEffect(() => {
@@ -237,7 +304,7 @@ export const CreateQuiz = () => {
   };
 
   const closeModal = () => {
-    navigate("/staff/mcq/banks");
+    navigate(`/staff/mcq/quiz/${bankId}`);
     setModal(false);
   };
 
@@ -316,14 +383,21 @@ export const CreateQuiz = () => {
                             handleQuestionSelection={() => {
                               if (selectedQuestions.includes(item.id)) {
                                 setSelectedQuestions((prev) =>
-
                                   prev.filter((id) => id !== item.id)
                                 );
+                                setUpdates((prev) => ({
+                                  ...prev,
+                                  questions: true,
+                                }));
                               } else {
                                 setSelectedQuestions((prev) => [
                                   ...prev,
                                   item.id,
                                 ]);
+                                setUpdates((prev) => ({
+                                  ...prev,
+                                  questions: true,
+                                }));
                               }
                             }}
                           />

@@ -146,12 +146,15 @@ export const DayPeriodTable = (props) => {
                                   ? cellFilter[0].englishName
                                   : cellFilter[0].arabicName}
                               </h6>
-                              <span>
-                                {i18next.language === "en"
-                                  ? "Professor Name"
-                                  : "اسم الدكتور"}
-                              </span>
-                              {" - "}
+                              {!props.prof && (
+                                <span>
+                                  {i18next.language === "en"
+                                    ? "Professor Name"
+                                    : "اسم الدكتور"}
+                                  {" - "}
+                                </span>
+                              )}
+
                               <span>
                                 {i18next.language === "en" ? "Place" : "المكان"}
                               </span>

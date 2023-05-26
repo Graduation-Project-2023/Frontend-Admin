@@ -12,6 +12,7 @@ import { BanksSidebar } from "../components/BanksSidebar";
 import { ViewQuiz } from "./ViewQuiz";
 import { Accordion } from "react-bootstrap";
 import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
+import { Alert } from "react-bootstrap";
 
 export const QuizPortal = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -48,7 +49,7 @@ export const QuizPortal = () => {
             quizzes: {
               loading: false,
               error: res.data.length === 0 ? true : false,
-              errorMsg: res.data.length === 0 ? "The bank is empty." : "",
+              errorMsg: res.data.length === 0 ? "mcq.noQuizzes" : "",
             },
           }));
         })
@@ -59,7 +60,7 @@ export const QuizPortal = () => {
             quizzes: {
               loading: false,
               error: true,
-              errorMsg: "Error fetching bank MCQ...",
+              errorMsg: "error.common",
             },
           }));
         });
@@ -112,7 +113,7 @@ export const QuizPortal = () => {
               {userUX.quizzes.loading ? (
                 <SpinnerLoader size={"60px"} heigth={"250px"} />
               ) : userUX.quizzes.error ? (
-                "error"
+                <Alert variant="danger">{t(userUX.quizzes.errorMsg)}</Alert>
               ) : (
                 filteredQuizzes.map((item) => (
                   <Accordion

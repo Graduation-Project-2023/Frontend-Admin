@@ -407,5 +407,15 @@
     "quizzess": "Quizzes",
     "quizQuestions": "Quiz Questions",
     "noQuizzes": "This bank has no quizzes"
+  },
+  "staff": {
+    "welcome1": "Welome to our University",
+    "welcome2": "We Look forward to serving you better",
+    "welcome3": "Suez Canal University welcomes you with open arms to be part of our strong team!",
+    "transcript": "Student Transcripts",
+    "grades": "Students Grades",
+    "schedule": "Academic Schedule",
+    "bank": "Question Bank"
   }
+
 }

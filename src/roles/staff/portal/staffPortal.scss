@@ -1,20 +1,27 @@
 .staffcont {
   margin-top: 2rem;
   border-radius: 1rem;
-  height: 90vh;
-  width: 100%;
   display: flex;
   flex-direction: column;
-
-  &-upperhalf {
+  &-upperhalf{
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: auto;
-    min-height: 40%;
+    background: #76A6E099;
+    height: 17rem;
+    &-img{
+      position: relative;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      & img{
+        height: 100%;
+      }
+    }
     &-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -110%);
       width: 50%;
       padding-top: 6%;
       text-align: center;
@@ -32,11 +39,38 @@
       }
     }
   }
+
+  // &-upperhalf {
+  //   border-top-left-radius: 1rem;
+  //   border-top-right-radius: 1rem;
+  //   background-repeat: no-repeat;
+  //   background-size: contain;
+  //   width: 100%;
+  //   height: auto;
+  //   min-height: 40%;
+  //   &-text {
+  //     width: 50%;
+  //     padding-top: 6%;
+  //     text-align: center;
+  //     color: white;
+  //     & h1 {
+  //       font-size: 3vw;
+  //     }
+  //     & h2 {
+  //       margin-top: 2%;
+  //       font-size: 2vw;
+  //     }
+  //     & h3 {
+  //       margin-top: 6%;
+  //       font-size: 1vw;
+  //     }
+  //   }
+  // }
   &-lowerhalf {
-    border: 0px solid #76a6e0;
     background: white;
-    height: 200px;
-    padding: 2% 5%;
+    height: 17rem;
+    max-height: 50%;
+    padding: 10% 5%;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     display: flex;
@@ -45,17 +79,18 @@
     &-card {
       background: #76a6e0;
       color: white;
-      box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 2rem;
+      box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 4rem;
       border-radius: 1rem;
       padding: 2%;
-      height: 90%;
       width: 20%;
+      height: 12rem;
+      max-height: 250px;
       display: flex;
       justify-content: center;
       text-align: center;
       flex-direction: column;
       & h5 {
-        padding-top: 10%;
+        padding-top: 15%;
         font-size: 1.2vw;
         transform: translateY(0px);
         transition: all 0.5s;
@@ -71,4 +106,47 @@
       }
     }
   }
+}
+
+
+@media (max-width: 1000px) {
+.staffcont{
+  &-upperhalf{
+    height: 10rem;
+    &-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -170%);
+    }
+  }
+  &-lowerhalf{
+    height: 10rem;
+    &-card{
+      height: 7rem;
+      max-height: 150px;
+    }
+  }
+}
+}
+
+@media (max-width: 500px) {
+.staffcont{
+  &-upperhalf{
+    height: 7rem;
+    &-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -240%);
+    }
+  }
+  &-lowerhalf{
+    height: 7rem;
+    &-card{
+      height: 5rem;
+      max-height: 150px;
+    }
+  }
+}
 }

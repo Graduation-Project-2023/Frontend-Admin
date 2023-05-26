@@ -32,7 +32,8 @@ export function McqRoutes() {
         <Route path="banks/:bankId" element={<Banks />} />
         <Route path="quiz" element={<QuizPortal />} />
         <Route path="quiz/:bankId" element={<QuizPortal />} />
-        <Route path="quiz/:bankId/create" element={<CreateQuiz />} />
+        <Route path="quiz/:bankId/add" element={<CreateQuiz />} />
+        <Route path="quiz/:bankId/:quizId" element={<CreateQuiz />} />
         <Route path="add_questions" element={<AddToBank />} />
         <Route path="add_questions/:bankId" element={<AddToBank />} />
         <Route path="*" element={<NotFound />} />

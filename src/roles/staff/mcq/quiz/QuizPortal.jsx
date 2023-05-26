@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ADMIN_URL } from "../../../../shared/API";
 import { useAuth } from "../../../../hooks/useAuth";
-import i18next from "i18next";
 import axios from "axios";
 import styles from "../../../admin/student_data/portal/StudentDataPortal.module.scss";
 
@@ -11,14 +10,13 @@ import styles from "../../../admin/student_data/portal/StudentDataPortal.module.
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { BanksSidebar } from "../components/BanksSidebar";
 import { ViewQuiz } from "./ViewQuiz";
-import { NoData } from "../../../../components/UX/NoData";
 import { Accordion } from "react-bootstrap";
+import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
 
 export const QuizPortal = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [filteredQuizzes, setFilteredQuizzes] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  // eslint-disable-next-line
   const [userUX, setUserUX] = useState({
     quizzes: { loading: false, error: false, errorMsg: "" },
   });
@@ -38,9 +36,9 @@ export const QuizPortal = () => {
         ...prev,
         quizzes: { loading: true, error: false, errorMsg: "" },
       }));
-      // GET request to get all MCQ quizzes in a specific bank
+      // GET request to get all quizzes in a specific bank
       axios
-        .get(ADMIN_URL + `/question/${bankId}/all`, config)
+        .get(ADMIN_URL + `/sheet/${bankId}/all`, config)
         .then((res) => {
           console.log(res);
           setQuizzes(res.data);
@@ -72,8 +70,10 @@ export const QuizPortal = () => {
 
   useEffect(() => {
     setFilteredQuizzes(
-      quizzes.filter((item) =>
-        item.question?.toLowerCase().includes(searchValue.toLowerCase())
+      quizzes.filter(
+        (item) =>
+          item.englishName?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          item.arabicName?.toLowerCase().includes(searchValue.toLowerCase())
       )
     );
     // eslint-disable-next-line
@@ -90,55 +90,46 @@ export const QuizPortal = () => {
             </h1>
           ) : (
             <>
-              <div className="mcq-cont-search">
+              <div className="mcq-cont-search search-add">
                 <input
                   type="text"
-                  placeholder={t("mcq.questionSearch")}
+                  placeholder={t("mcq.quizSearch")}
                   value={searchValue}
                   className="form-control"
                   onChange={(e) => {
                     setSearchValue(e.target.value);
                   }}
                 />
-              </div>
-              <div className="d-grid">
                 <button
                   onClick={() => {
-                    navigate("create");
+                    navigate("add");
                   }}
-                  className="btn btn-outline-primary mt-3"
+                  className="btn btn-outline-primary"
                 >
-                  create a new quiz
+                  {t("mcq.addQuiz")}
                 </button>
               </div>
-              {filteredQuizzes.map((item, index) => (
-                <Accordion
-                  defaultActiveKey="0"
-                  alwaysOpen
-                  className="collapseSection"
-                  key={item.id}
-                >
-                  {quizzes?.length === 0 && <NoData />}
-                  {quizzes?.map((item) => {
-                    return (
-                      <Accordion.Item
-                        eventKey={quizzes?.length === 1 ? "0" : `${item.id}`}
-                        key={item.id}
-                      >
-                        <Accordion.Header>
-                          {item.level}&nbsp;-&nbsp;
-                          {i18next.language === "en"
-                            ? item.englishName
-                            : item.arabicName}
-                        </Accordion.Header>
-                        <Accordion.Body>
-                          {/* <ViewQuiz quizId={whatever}/> */}
-                        </Accordion.Body>
-                      </Accordion.Item>
-                    );
-                  })}
-                </Accordion>
-              ))}
+              {userUX.quizzes.loading ? (
+                <SpinnerLoader size={"60px"} heigth={"250px"} />
+              ) : userUX.quizzes.error ? (
+                "error"
+              ) : (
+                filteredQuizzes.map((item) => (
+                  <Accordion
+                    defaultActiveKey="0"
+                    alwaysOpen
+                    className="collapseSection"
+                    key={item.id}
+                  >
+                    <Accordion.Item
+                      eventKey={quizzes?.length === 1 ? "0" : `${item.id}`}
+                      key={item.id}
+                    >
+                      <ViewQuiz quiz={item} />
+                    </Accordion.Item>
+                  </Accordion>
+                ))
+              )}
             </>
           )}
         </div>

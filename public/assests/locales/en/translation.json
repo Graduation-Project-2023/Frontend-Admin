@@ -84,7 +84,10 @@
     "invalidCred": "Invalid Credentials",
     "total": "Total",
     "print": "Print",
-    "notes": "Notes"
+    "notes": "Notes",
+    "description": "Description",
+    "totalMarks": "Total Marks",
+    "givenTime": "Given Time"
   },
   "popup": {
     "success": "Success!",
@@ -394,6 +397,14 @@
     "code": "Bank Code",
     "addBank": "Add New Bank",
     "editBank": "Edit Bank",
-    "selectBank": "Please select a bank..."
+    "selectBank": "Please select a bank...",
+    "deleteQuiz": "Delete Quiz",
+    "editQuiz": "Edit Quiz",
+    "newQuiz": "New Quiz",
+    "quizSearch": "Search by quiz name..",
+    "noQuestions": "This quiz has no questions",
+    "addQuiz": "Add New Quiz",
+    "quizzess": "Quizzes",
+    "quizQuestions": "Quiz Questions"
   }
 }

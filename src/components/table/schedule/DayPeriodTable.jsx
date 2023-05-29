@@ -102,6 +102,7 @@ export const DayPeriodTable = (props) => {
               </thead>
 
               <tbody>
+                {userUX.loading }
                 {ScheduleTableBody.map((item) => {
                   const backendTableFiltered = tableData.filter(
                     (day) => item.day === day.day

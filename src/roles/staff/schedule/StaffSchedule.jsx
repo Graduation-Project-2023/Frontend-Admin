@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import { ADMIN_URL } from "../../../shared/API";
 import styles from "../../admin/registeration/RegisterationPortal.module.scss";
@@ -6,9 +7,12 @@ import axios from "axios";
 
 // Resuable Components
 import { DayPeriodTable } from "../../../components/table/schedule/DayPeriodTable";
+import { SpinnerLoader } from "../../../components/loaders/SpinnerLoader";
+import { Alert } from "react-bootstrap";
 
 export const StaffSchedule = () => {
   const [tableData, setTableData] = useState([]);
+  const { t } = useTranslation();
   // eslint-disable-next-line
   const [cells, setCells] = useState({ occupied: [], available: [] });
   const [userUX, setUserUX] = useState({
@@ -43,7 +47,7 @@ export const StaffSchedule = () => {
       })
       .catch((error) => {
         console.log(error);
-        setUserUX({ loading: false, error: true, errorMsg: "error" });
+        setUserUX({ loading: false, error: true, errorMsg: "error.common" });
       });
 
     // eslint-disable-next-line
@@ -61,18 +65,28 @@ export const StaffSchedule = () => {
 
   return (
     <div className="container">
-      <div className={styles.tableCont} style={{ width: "100%" }}>
-        <DayPeriodTable
-          cellsSetter={handleCellsSetter}
-          tableData={tableData}
-          saveTableData={() => {}}
-          occupiedCellClick={() => {}}
-          emptyCellClick={() => {}}
-          readOnly={true}
-          userUX={userUX}
-          noButtons={true}
-          prof={true}
-        />
+      <div className="portal-body">
+        <h5 className="portal-title">{t("staff.schedule")}</h5>{" "}
+        <hr className="mb-3" />
+        <div className={styles.tableCont} style={{ width: "100%" }}>
+          {userUX.loading ? (
+            <SpinnerLoader size={"80px"} heigth={"250px"} />
+          ) : userUX.error ? (
+            <Alert variant="danger">{t(userUX.errorMsg)}</Alert>
+          ) : (
+            <DayPeriodTable
+              cellsSetter={handleCellsSetter}
+              tableData={tableData}
+              saveTableData={() => {}}
+              occupiedCellClick={() => {}}
+              emptyCellClick={() => {}}
+              readOnly={true}
+              userUX={userUX}
+              noButtons={true}
+              prof={true}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

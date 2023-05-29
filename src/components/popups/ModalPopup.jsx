@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { AiOutlineClose } from "react-icons/ai";
+import { SpinnerLoader } from "../loaders/SpinnerLoader";
+import { Alert } from "react-bootstrap";
 import i18next from "i18next";
 import Modal from "react-bootstrap/Modal";
 
@@ -86,9 +88,9 @@ export const ModalPopup = (props) => {
         {props.list?.state &&
           (filteredData.length === 0 ? (
             props.error.state ? (
-              <h1>there is an error</h1>
+              <Alert variant="danger">{t("error.common")}</Alert>
             ) : (
-              <h1>list loading</h1>
+              <SpinnerLoader size={"80px"} heigth={"250px"} />
             )
           ) : (
             <div className="popup-list">

@@ -165,9 +165,7 @@ export const Header = () => {
                     {t("header.changeCollege")}
                   </DropdownItem>
                 )}
-                <DropdownItem onClick={handleLogout}>
-                  {t("header.changeTerm")}
-                </DropdownItem>
+                <DropdownItem>{t("header.changeTerm")}</DropdownItem>
                 <DropdownItem onClick={handleLogout}>
                   {t("common.logout")}
                 </DropdownItem>

@@ -11,9 +11,12 @@ import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../components/forms/FormCard";
 import { FormInput } from "../../../components/forms/FormInput";
 import { DropdownSearch } from "../../../components/forms/DropdownSearch";
+import { ModalPopup } from "../../../components/popups/ModalPopup";
+import { BsFillPersonCheckFill } from "react-icons/bs";
 
 export const ProfessorsPortal = () => {
   const [professorData, setProfessorData] = useState([]);
+  const [modal, setModal] = useState(false);
   const [departments, setDepartments] = useState([]);
   const [profDep, setProfDep] = useState({});
   const [userUX, setUserUX] = useState({
@@ -137,7 +140,7 @@ export const ProfessorsPortal = () => {
           )
           .then((res) => {
             setProfessorData(res.data);
-            navigate("/admin/control_system");
+            setModal(true);
             setUserUX((prev) => ({
               ...prev,
               form: {
@@ -209,7 +212,7 @@ export const ProfessorsPortal = () => {
       .delete(ADMIN_URL + `/professor/${professorData.id}`, config)
       .then((res) => {
         console.log(res);
-        navigate("/admin/control_system");
+        setModal(true);
         setUserUX((prev) => ({
           ...prev,
           form: {
@@ -232,6 +235,11 @@ export const ProfessorsPortal = () => {
       });
   };
 
+  const closeModal = () => {
+    navigate("/admin/control_system");
+    setModal(false);
+  };
+
   return (
     <SidebarContainer>
       <FormCard cardTitle={"professor.formhead"}>
@@ -240,48 +248,41 @@ export const ProfessorsPortal = () => {
             handleFormSubmit(event);
           }}
         >
-          {userUX.loading ? (
-            "loading..."
-          ) : (
-            <>
-              {ProfessorsFormData.map((data) => {
-                if (data.name === "departmentId") {
-                  return (
-                    <div className="col-lg-12 mb-4" key={data.id}>
-                      <label className="form-label">{t(data.title)}</label>
-                      <DropdownSearch
-                        listData={{
-                          type: "tableSelectCourse",
-                          data: departments,
-                        }}
-                        dropDownTitle={profDep}
-                        inputPlaceholder={"professor.department_search"}
-                        handleListClick={handleDepartmentSelection}
-                        userUX={userUX.departments}
-                      />
-                    </div>
-                  );
-                } else if (
-                  (data.name === "email" || data.name === "password") &&
-                  professorId !== "add" &&
-                  professorId !== undefined
-                ) {
-                  return null;
-                } else {
-                  return (
-                    <FormInput
-                      inputData={data}
-                      handleEditFormChange={handleEditFormChange}
-                      valueData={professorData}
-                      key={data.id}
-                      loading={userUX.formData.loading}
-                    />
-                  );
-                }
-              })}
-            </>
-          )}
-
+          {ProfessorsFormData.map((data) => {
+            if (data.name === "departmentId") {
+              return (
+                <div className="col-lg-12 mb-4" key={data.id}>
+                  <label className="form-label">{t(data.title)}</label>
+                  <DropdownSearch
+                    listData={{
+                      type: "tableSelectCourse",
+                      data: departments,
+                    }}
+                    dropDownTitle={profDep}
+                    inputPlaceholder={"professor.department_search"}
+                    handleListClick={handleDepartmentSelection}
+                    userUX={userUX.departments}
+                  />
+                </div>
+              );
+            } else if (
+              (data.name === "email" || data.name === "password") &&
+              professorId !== "add" &&
+              professorId !== undefined
+            ) {
+              return null;
+            } else {
+              return (
+                <FormInput
+                  inputData={data}
+                  handleEditFormChange={handleEditFormChange}
+                  valueData={professorData}
+                  key={data.id}
+                  loading={userUX.formData.loading}
+                />
+              );
+            }
+          })}
           <button
             type="submit"
             className="form-card-button form-card-button-save"
@@ -317,6 +318,19 @@ export const ProfessorsPortal = () => {
             </button>
           )}
         </form>
+        {modal && (
+          <ModalPopup
+            message={{
+              state: true,
+              icon: <BsFillPersonCheckFill />,
+              title: "popup.success",
+              text: "popup.message_success",
+              button: "common.save",
+              handleClick: closeModal,
+            }}
+            closeModal={closeModal}
+          />
+        )}
       </FormCard>
     </SidebarContainer>
   );

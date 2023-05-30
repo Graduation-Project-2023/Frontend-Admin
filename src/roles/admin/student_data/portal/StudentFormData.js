@@ -45,7 +45,7 @@ export const StudentFormData = [
       {
         id: 6,
         title: "common.schoolSeat",
-        name: "SeatId",
+        name: "seatId",
         type: "number",
         row: true,
       },
@@ -316,10 +316,10 @@ export const StudentFormData = [
     ],
     male: true,
   },
-  {
-    id: 5,
-    title: "studentsData.section6",
-    formData: [],
-    addStudent: true,
-  },
+  // {
+  //   id: 5,
+  //   title: "studentsData.section6",
+  //   formData: [],
+  //   addStudent: true,
+  // },
 ];

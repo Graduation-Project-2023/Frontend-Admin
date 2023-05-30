@@ -8,6 +8,7 @@ import axios from "axios";
 import { Accordion } from "react-bootstrap";
 import { RegisterationAccordion } from "./RegisterationAccordion";
 import { NoData } from "../../../components/UX/NoData";
+import { SpinnerLoader } from "../../../components/loaders/SpinnerLoader";
 
 // TO DELETE AFTER TESTING
 import { STUDENTS } from "./TestingStudents";
@@ -109,6 +110,8 @@ export const RegisterationPortal = () => {
                   />
                 );
               })
+            ) : userUX.levels.loading || userUX.students.loading ? (
+              <SpinnerLoader size={"80px"} heigth={"250px"} />
             ) : (
               <NoData />
             )}

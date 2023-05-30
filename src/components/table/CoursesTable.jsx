@@ -32,12 +32,18 @@ export const CoursesTable = (props) => {
     <div className="table-container">
       <div className="table-container-register">
         <h5>{t(props.tableTitle)}</h5>
-
-        {/* STYLE THE LEVEL BUTTONS */}
         <div>
           {levels.map((level) => {
             return (
-              <button onClick={() => setTableLevel(level.id)} key={level.id}>
+              <button
+                onClick={() => setTableLevel(level.id)}
+                key={level.id}
+                className={
+                  level.id === tableLevel
+                    ? "table-container-register-btn-active"
+                    : ""
+                }
+              >
                 {level.level}
               </button>
             );
@@ -73,7 +79,6 @@ export const CoursesTable = (props) => {
                     .map((item) => {
                       if (item.classes.length === 0) return null;
                       else {
-                        console.log(item.classes[0]);
                         return (
                           <tr key={item.classes[0].id}>
                             {props.headerItems.map((heading) => {

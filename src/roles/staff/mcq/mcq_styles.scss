@@ -1,6 +1,17 @@
 .mcq-cont {
   border-radius: 15px;
 
+  &-header {
+    color: #3d7dca;
+    @include font(2.5rem, 3rem);
+    padding: 0rem 0 1rem 0;
+  }
+  & form {
+    border-top: 1px solid $White5;
+    border-bottom: 1px solid $White5;
+    padding: 2rem;
+    margin: 2rem;
+  }
   &-search {
     width: 90%;
     margin: 0px auto;
@@ -73,6 +84,15 @@
   &-answers {
     padding: 15px 20px 0px 20px;
     direction: ltr;
+    @include font(1.9rem, 2.3rem);
+    & label {
+      margin: 0 1rem;
+      @include font(1.4rem, 1.7rem);
+    }
+    &-choice {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   &-input {
@@ -135,5 +155,28 @@
       padding: 5px 20px;
       font-size: 15px;
     }
+  }
+}
+.search-add {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 0;
+  margin-bottom: 2rem;
+
+  & input {
+    width: 100%;
+  }
+
+  & button {
+    width: 100%;
+  }
+}
+
+.question-check {
+  & input {
+    margin-top: 0 !important;
   }
 }

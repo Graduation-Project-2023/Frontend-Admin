@@ -445,6 +445,7 @@ export const StudentRegisteration = () => {
             occupiedCellClick={() => {}}
             emptyCellClick={() => {}}
             readOnly={true}
+            userUX={userUX.table}
           />
         </div>
       </SidebarContainer>

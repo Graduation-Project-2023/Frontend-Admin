@@ -82,7 +82,12 @@
     "coursesNotReg": "Courses Not Registered",
     "enterValue": "Enter a Value..",
     "invalidCred": "Invalid Credentials",
-    "total": "Total"
+    "total": "Total",
+    "print": "Print",
+    "notes": "Notes",
+    "description": "Description",
+    "totalMarks": "Total Marks",
+    "givenTime": "Given Time"
   },
   "popup": {
     "success": "Success!",
@@ -137,7 +142,10 @@
     "absence": "Students Absence",
     "courses": "Courses Data",
     "supervision": "System Supervision",
-    "control": "Control System"
+    "control": "Control System",
+    "mcq": "MCQ Banks and Quizzes",
+    "students_info": "Students Information and Lists",
+    "coursework": "Coursework and Exams"
   },
   "adminNavbarkeys": {
     "student": "Students",
@@ -152,7 +160,10 @@
     "courses": "Courses",
     "choose": "Choose academic course",
     "supervision": "Supervision",
-    "control": "Control"
+    "control": "Control",
+    "mcq": "MCQ Banks",
+    "students_info": "Students Information",
+    "coursework": "Coursework"
   },
   "levelHours": {
     "tabletitle": "Academic Load Table",
@@ -363,7 +374,10 @@
     "department_search": "Search with department name",
     "position": "Designation",
     "delegated": "Delegated",
-    "permenant": "Permenant"
+    "permenant": "Permenant",
+    "grades": "Grades Sheet",
+    "studentList": "Students Sheets",
+    "course": "Course Sheet"
   },
   "staffNavbar": {
     "banks": "MCQ Banks",
@@ -379,6 +393,29 @@
     "questionHolder": "Write a question...",
     "writeOption": "Write an option...",
     "addOption": "Add Option",
-    "addToBank": "Add Question to Bank"
+    "addToBank": "Add Question to Bank",
+    "code": "Bank Code",
+    "addBank": "Add New Bank",
+    "editBank": "Edit Bank",
+    "selectBank": "Please select a bank...",
+    "deleteQuiz": "Delete Quiz",
+    "editQuiz": "Edit Quiz",
+    "newQuiz": "New Quiz",
+    "quizSearch": "Search by quiz name..",
+    "noQuestions": "This quiz has no questions",
+    "addQuiz": "Add New Quiz",
+    "quizzes": "Quizzes",
+    "quizQuestions": "Quiz Questions",
+    "noQuizzes": "This bank has no quizzes"
+  },
+  "staff": {
+    "welcome1": "Welome to our University",
+    "welcome2": "We Look forward to serving you better",
+    "welcome3": "Suez Canal University welcomes you with open arms to be part of our strong team!",
+    "transcript": "Student Transcripts",
+    "grades": "Students Grades",
+    "schedule": "Academic Schedule",
+    "bank": "Question Bank"
   }
+
 }

@@ -3,6 +3,34 @@
   border-radius: 10px;
   padding: 2rem;
   margin: 2rem;
+  &-register {
+    border: 1px solid #dee2e6;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & button {
+      border: 1px solid #bbbdc0;
+      border-radius: 2px;
+      margin: 0 0.5rem;
+      padding: 0.4rem 0.9rem;
+      @include font(1.3rem, 1.5rem);
+      transition-duration: 0.4s;
+
+      @include colorandback(#858d97, white);
+
+      &:hover {
+        @include colorandback(black, #a39a9a);
+      }
+    }
+
+    &-btn-active {
+      background-color: #a39a9a !important;
+      color: black !important;
+    }
+  }
   &-mainHeader {
     border: 1px solid #dee2e6;
     display: flex;
@@ -30,10 +58,14 @@
     }
   }
 
+  & h5 {
+    color: #3d7dca;
+    @include font(2.5rem, 3rem);
+  }
   & h3 {
     color: $Grey3;
     @include font(2.5rem, 3rem);
-    padding: 0rem 0 3rem 0;
+    padding-bottom: 3rem;
   }
   & h4 {
     font: normal "Inter";

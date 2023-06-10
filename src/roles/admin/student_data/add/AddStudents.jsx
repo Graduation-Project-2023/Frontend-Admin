@@ -11,6 +11,7 @@ import { ModalPopup } from "../../../../components/popups/ModalPopup";
 import { TbFileUpload } from "react-icons/tb";
 import { MdErrorOutline } from "react-icons/md";
 import { BsFillPersonCheckFill } from "react-icons/bs";
+import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
 
 export const AddStudents = () => {
   const [userUX, setUserUX] = useState({
@@ -70,7 +71,7 @@ export const AddStudents = () => {
               loading: false,
               success: false,
               error: true,
-              errorMsg: "uploadingerror",
+              errorMsg: "error.common",
             });
           });
       }
@@ -81,12 +82,13 @@ export const AddStudents = () => {
     <FormNavbarContainer>
       <div className={styles.addform}>
         {userUX.loading ? (
-          <h1>loading </h1>
+          <SpinnerLoader size={"80px"} heigth={"250px"} />
         ) : (
           <div
             className={styles.dashform}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            style={{ width: "80%" }}
           >
             <div className={styles.dashform_icon}>
               <TbFileUpload />

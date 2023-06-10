@@ -93,7 +93,7 @@ export const FormInput = (props) => {
                   required={inputData.req}
                   onChange={props.handleEditFormChange}
                   value={valueData[item.name] || ""}
-                  disabled={item.disabled}
+                  disabled={item.disabled || inputData.disabled}
                 >
                   {item.options.map((option) => {
                     return (
@@ -111,7 +111,7 @@ export const FormInput = (props) => {
                   className="form-control"
                   onChange={props.handleEditFormChange}
                   value={valueData[item.name] || ""}
-                  disabled={item.disabled}
+                  disabled={item.disabled || inputData.disabled}
                 />
               ) : (
                 <input
@@ -121,7 +121,7 @@ export const FormInput = (props) => {
                   className="form-control"
                   onChange={props.handleEditFormChange}
                   value={valueData[item.name] || ""}
-                  disabled={item.disabled}
+                  disabled={item.disabled || inputData.disabled}
                 />
               )}
             </div>

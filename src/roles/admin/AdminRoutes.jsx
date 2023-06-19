@@ -7,11 +7,11 @@ import { AcademicProgramsRoutes } from "./programs/AcademicProgramsRoutes";
 import { StudentDataRoutes } from "./student_data/StudentDataRoutes";
 import { RegisterationPortal } from "./registeration/RegisterationPortal";
 import { StudySchedulesRoutes } from "./schedules/StudySchedulesRoutes";
-import { NotFound } from "../../pages/NotFound";
 import { CoursesRoutes } from "./courses/CoursesRoutes";
 import { DepartmentsRoutes } from "./departments/DepartmentsRoutes";
 import { ProfessorsRoutes } from "./professors/ProfessorsRoutes";
 import { StudentRegisteration } from "./registeration/StudentRegisteration";
+import { NotFound } from "../../pages/NotFound";
 
 export function AdminRoutes() {
   return (

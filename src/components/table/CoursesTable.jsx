@@ -17,6 +17,7 @@ export const CoursesTable = (props) => {
   const levels = props.levels;
 
   useEffect(() => {
+    console.log(props.courses);
     setCourses(props.courses);
   }, [props.courses]);
 
@@ -84,7 +85,10 @@ export const CoursesTable = (props) => {
                             {props.headerItems.map((heading) => {
                               if (heading.name === "name") {
                                 return (
-                                  <td key={heading.id}>
+                                  <td
+                                    key={heading.id}
+                                    style={{ textAlign: "center" }}
+                                  >
                                     {i18next.language === "en"
                                       ? item.classes[0]["englishName"]
                                       : item.classes[0]["arabicName"]}
@@ -92,7 +96,10 @@ export const CoursesTable = (props) => {
                                 );
                               } else if (heading.name === "day") {
                                 return (
-                                  <td key={heading.id}>
+                                  <td
+                                    key={heading.id}
+                                    style={{ textAlign: "center" }}
+                                  >
                                     {t(
                                       `week.${item.classes[0][
                                         "day"
@@ -102,13 +109,16 @@ export const CoursesTable = (props) => {
                                 );
                               } else {
                                 return (
-                                  <td key={heading.id}>
+                                  <td
+                                    key={heading.id}
+                                    style={{ textAlign: "center" }}
+                                  >
                                     {item.classes[0][heading.name]}
                                   </td>
                                 );
                               }
                             })}
-                            <td>
+                            <td style={{ textAlign: "center" }}>
                               {courseInstancesIds.includes(
                                 item.classes[0].courseInstanceId
                               ) ? (
@@ -121,7 +131,7 @@ export const CoursesTable = (props) => {
                                 />
                               ) : (
                                 <AiOutlinePlusCircle
-                                  color="#D65050"
+                                  color="blue"
                                   className="table-container-items-icon"
                                   onClick={() =>
                                     props.addCourseToTable(item.classes)

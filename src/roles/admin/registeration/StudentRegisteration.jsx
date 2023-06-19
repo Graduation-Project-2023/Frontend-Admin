@@ -6,6 +6,7 @@ import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
 import styles from "./RegisterationPortal.module.scss";
 import i18next from "i18next";
+import { STUDENTS } from "./TestingStudents";
 
 // Resuable Components
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
@@ -50,7 +51,10 @@ export const StudentRegisteration = () => {
     }));
     // GET request to get levels by program id
     axios
-      .get(ADMIN_URL + `/programs/${authContext.program.id}/levels`, config)
+      .get(
+        ADMIN_URL + `/programs/6e7441c6-168e-4a1b-9b1e-a191914d44e0/levels`,
+        config
+      )
       .then((res) => {
         console.log(res);
         setLevels(res.data);
@@ -83,7 +87,7 @@ export const StudentRegisteration = () => {
       .get(ADMIN_URL + `/student/program/${authContext.program.id}`, config)
       .then((res) => {
         console.log(res);
-        setStudents(res.data);
+        setStudents(STUDENTS);
         setUserUX((prev) => ({
           ...prev,
           list: { ...prev.list, loading: false },

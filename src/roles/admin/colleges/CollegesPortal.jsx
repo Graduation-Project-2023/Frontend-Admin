@@ -4,7 +4,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { ADMIN_URL } from "../../../shared/API";
 import axios from "axios";
-import { CoursesFormData } from "./CollegesFormData";
+import { CollegesFormData } from "./CollegesFormData";
 
 // Resuable Components
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
@@ -199,7 +199,7 @@ export const CollegesPortal = () => {
             handleFormSubmit(event);
           }}
         >
-          {CoursesFormData.map((data) => {
+          {CollegesFormData.map((data) => {
             if (
               data.name === "id" &&
               courseCode !== "add" &&

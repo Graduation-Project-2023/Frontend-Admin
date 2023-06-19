@@ -48,10 +48,11 @@ export const StaffStudents = () => {
 
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, list: { ...prev.list, loading: true } }));
-    // GET request to get all college courses to display it in the sidebar
+    // GET request to get all professor courses to display it in the sidebar
     axios
       .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`, config)
       .then((res) => {
+        console.log(res.data);
         setCourses(res.data);
         setUserUX((prev) => ({
           ...prev,

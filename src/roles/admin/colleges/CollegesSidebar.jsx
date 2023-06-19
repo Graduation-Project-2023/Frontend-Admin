@@ -7,7 +7,7 @@ import axios from "axios";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 
 export const CollegesSidebar = () => {
-  const [courses, setCourses] = useState([]);
+  const [colleges, setColleges] = useState([]);
   const [userUX, setUserUX] = useState({
     loading: false,
     error: false,
@@ -28,7 +28,7 @@ export const CollegesSidebar = () => {
     axios
       .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`, config)
       .then((res) => {
-        setCourses(res.data);
+        setColleges(res.data);
         setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
@@ -43,15 +43,15 @@ export const CollegesSidebar = () => {
     <Sidebar
       options={
         showOptions && (
-          <Link to={"/admin/courses/add"}>
-            <button className="coursesSidebarBtn">{t("courses.add")}</button>
+          <Link to={"/admin/colleges/add"}>
+            <button className="coursesSidebarBtn">{t("college.add")}</button>
           </Link>
         )
       }
-      sideData={courses.map((obj) => ({ ...obj, path: obj.id }))}
-      sidebarTitle={"courses.sidebar"}
+      sideData={colleges.map((obj) => ({ ...obj, path: obj.id }))}
+      sidebarTitle={"college.sidebar"}
       searchable={true}
-      inputPlaceholder={"courses.name"}
+      inputPlaceholder={"college.name"}
       backendData={true}
       activeNav={true}
       userUX={userUX}

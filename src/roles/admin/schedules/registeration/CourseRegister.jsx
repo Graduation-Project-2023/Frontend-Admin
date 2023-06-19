@@ -10,15 +10,12 @@ import { CourseRegisterData } from "./CourseRegisterData";
 // Reusable Components
 import { CoursesSidebar } from "./CoursesSidebar";
 import { FormInput } from "../../../../components/forms/FormInput";
-// eslint-disable-next-line
-import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
+
 
 export const CourseRegister = (props) => {
   const [programCourses, setProgramCourses] = useState([]);
   const [registeredCourses, setRegisteredCourses] = useState([]);
   const [courseData, setCourseData] = useState({});
-  // eslint-disable-next-line
-  const [profData, setProfData] = useState({ englishName: "", arabicName: "" });
   const [levels, setLevels] = useState([]);
   const [lectureGrps, setLectureGrps] = useState(false);
   const [userUX, setUserUX] = useState({
@@ -377,22 +374,11 @@ export const CourseRegister = (props) => {
                         {t(`courses.supervisor`)}
                       </label>
                       <select className="form-select" name="lectureGroups">
-                        <option value={"FALSE"}>{t(`hhhhhh`)}</option>
-                        <option value={"TRUE"}>{t(`hhhhhhh`)}</option>
+                        <option value={"FALSE"}>{t(`د/احمد مصطفى`)}</option>
+                        <option value={"TRUE"}>{t(`د/محمد مصطفى`)}</option>
                       </select>
                     </div>
                   </div>
-                  //  <div className="row" key={data.id}>
-                  //    <div className="col-lg-12 mb-4">
-                  //      <label className="form-label">{t(`esm el moshrf`)}</label>
-                  //      <DropdownSearch
-                  //        name={profData}
-                  //        menuData={[]}
-                  //        label={"esm moshrf el mada"}
-                  //        inputPlaceholder={"ektb esm el moshrf"}
-                  //      />
-                  //    </div>
-                  // </div>
                 );
               } else {
                 return (

@@ -39,32 +39,6 @@
     }
   }
 
-  // &-upperhalf {
-  //   border-top-left-radius: 1rem;
-  //   border-top-right-radius: 1rem;
-  //   background-repeat: no-repeat;
-  //   background-size: contain;
-  //   width: 100%;
-  //   height: auto;
-  //   min-height: 40%;
-  //   &-text {
-  //     width: 50%;
-  //     padding-top: 6%;
-  //     text-align: center;
-  //     color: white;
-  //     & h1 {
-  //       font-size: 3vw;
-  //     }
-  //     & h2 {
-  //       margin-top: 2%;
-  //       font-size: 2vw;
-  //     }
-  //     & h3 {
-  //       margin-top: 6%;
-  //       font-size: 1vw;
-  //     }
-  //   }
-  // }
   &-lowerhalf {
     background: white;
     height: 17rem;
@@ -147,4 +121,8 @@
       }
     }
   }
+}
+
+.staffcont-lowerhalf-card:hover {
+  cursor: pointer;
 }

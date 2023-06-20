@@ -85,16 +85,37 @@ export const StaffStudents = () => {
     console.log(item);
     navigate(`${item.id}`);
   };
-
   const handlePrint = () => {
     const printArea = printAreaRef.current;
     if (printArea) {
       const printContents = printArea.innerHTML;
       const originalContents = document.body.innerHTML;
+      const stylesheets = Array.from(document.styleSheets);
 
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
+      const printWindow = window.open("", "_blank", "width=1000,height=800");
+      printWindow.document.open();
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print</title>
+            ${stylesheets
+              .map((sheet) => `<link rel="stylesheet" href="${sheet.href}" />`)
+              .join("")}
+            <style>
+              ${Array.from(document.getElementsByTagName("style"))
+                .map((style) => style.innerHTML)
+                .join("")}
+            </style>
+          </head>
+          <body>${printContents}</body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+      printWindow.onafterprint = () => {
+        printWindow.close();
+        document.body.innerHTML = originalContents;
+      };
     }
   };
 

@@ -94,7 +94,12 @@ export const BanksSidebar = (props) => {
           <NoSearch />
         )
       ) : (
-        <div className={styles.studentBody_students_list}>
+        <div
+          className={styles.studentBody_students_list}
+          style={{
+            overflowY: "scroll !important",
+          }}
+        >
           {filteredBanks.map((item) => (
             <li key={item.id}>
               <NavLink

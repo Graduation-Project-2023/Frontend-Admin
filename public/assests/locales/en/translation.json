@@ -406,7 +406,10 @@
     "addQuiz": "Add New Quiz",
     "quizzes": "Quizzes",
     "quizQuestions": "Quiz Questions",
-    "noQuizzes": "This bank has no quizzes"
+    "noQuizzes": "This bank has no quizzes",
+    "mcq": "Multiple Choice Questions",
+    "trueOrFalse": "True or False",
+    "questType": "Question Type"
   },
   "staff": {
     "welcome1": "Welome to our University",
@@ -417,5 +420,4 @@
     "schedule": "Academic Schedule",
     "bank": "Question Bank"
   }
-
 }

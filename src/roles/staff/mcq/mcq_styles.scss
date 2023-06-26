@@ -75,15 +75,12 @@
   width: 90%;
   margin: auto;
   border-radius: 7px;
-  text-align: left;
   border: 1px solid #d9d9d9;
   border-left: 6px solid #3d7dca;
-  direction: ltr;
 
   &-input,
   &-answers {
-    padding: 15px 20px 0px 20px;
-    direction: ltr;
+    padding: 15px 20px 15px 20px;
     @include font(1.9rem, 2.3rem);
     & label {
       margin: 0 1rem;
@@ -112,7 +109,6 @@
   }
 
   &-answers {
-    direction: ltr;
     width: 72%;
 
     & input[type="checkbox"] {
@@ -129,12 +125,6 @@
       color: white;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-
-      //   border: none;
-      //   border-radius: 15px;
-      //   padding: 5px 20px;
-      //   font-size: 15px;
-      //   margin: 10px 10px 10px 0px;
     }
   }
 
@@ -179,4 +169,15 @@
   & input {
     margin-top: 0 !important;
   }
+}
+
+.new-quest-choose {
+  background-color: #f7f8fc;
+  height: auto;
+  width: 90%;
+  margin: auto;
+  border-radius: 7px;
+  border: 1px solid #d9d9d9;
+  border-left: 6px solid #3d7dca;
+  padding: 15px 20px;
 }

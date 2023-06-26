@@ -9,6 +9,7 @@ import axios from "axios";
 import { DayPeriodTable } from "../../../components/table/schedule/DayPeriodTable";
 import { SpinnerLoader } from "../../../components/loaders/SpinnerLoader";
 import { Alert } from "react-bootstrap";
+import { ScheduleData } from "../StaffData";
 
 export const StaffSchedule = () => {
   const [tableData, setTableData] = useState([]);
@@ -41,7 +42,7 @@ export const StaffSchedule = () => {
         if (res.data === null) {
           setTableData([]);
         } else {
-          setTableData(res.data.courses.classes);
+          setTableData(ScheduleData);
         }
         setUserUX({ loading: false, error: false, errorMsg: "" });
       })

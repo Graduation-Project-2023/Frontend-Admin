@@ -7,6 +7,7 @@ export const CourseworkRow = (props) => {
   const [grade, setGrade] = useState(
     +studentData.classWork + +studentData.finalExam
   );
+  // eslint-disable-next-line
   const [userUX, setUserUX] = useState({
     error: false,
     errorMsg: "",
@@ -78,7 +79,7 @@ export const CourseworkRow = (props) => {
   return (
     <tr>
       <td className="table-container-items">{props.order}</td>
-      <td className="table-container-items">{studentData.code}</td>
+      <td className="table-container-items">{studentData.studentId}</td>
       <td className="table-container-items">
         {i18next.language === "en"
           ? studentData.englishName

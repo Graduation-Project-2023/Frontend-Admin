@@ -11,15 +11,7 @@ import { SearchContainer } from "../../../components/other/SearchContainer";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../components/forms/FormCard";
-
-// testing
-const CourseworkStudents = [
-  { id: 123123, code: 321231, arabicName: "ahmed" },
-  { id: 2456, code: 12342, arabicName: "mohamed" },
-  { id: 32301, code: 1233, arabicName: "ali" },
-  { id: 4213, code: 4543, arabicName: "khaled" },
-  { id: 512354, code: 5123, arabicName: "mohamed" },
-];
+import { StaffCourses, StaffStudentsData } from "../StaffData";
 
 export const StaffStudents = () => {
   const [courses, setCourses] = useState([]);
@@ -27,6 +19,7 @@ export const StaffStudents = () => {
     englishName: "",
     arabicName: "",
   });
+  const [students, setStudents] = useState([]);
   const [userUX, setUserUX] = useState({
     list: { loading: false, error: false, errorMsg: "" },
     students: { loading: false, success: false, error: false, errorMsg: "" },
@@ -43,8 +36,18 @@ export const StaffStudents = () => {
     { id: 0, title: "" },
     { id: 1, title: "studentsData.code" },
     { id: 2, title: "studentsData.name" },
+    { id: 4, title: "studentsData.attendance" },
     { id: 3, title: "common.notes" },
   ];
+
+  useEffect(() => {
+    if (courseId) {
+      const courseStudents = StaffStudentsData.filter(
+        (student) => student.courseId === courseId
+      );
+      setStudents(courseStudents[0].students);
+    }
+  }, [courseId]);
 
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, list: { ...prev.list, loading: true } }));
@@ -53,7 +56,7 @@ export const StaffStudents = () => {
       .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`, config)
       .then((res) => {
         console.log(res.data);
-        setCourses(res.data);
+        setCourses(StaffCourses);
         setUserUX((prev) => ({
           ...prev,
           list: { ...prev.list, loading: false },
@@ -172,15 +175,27 @@ export const StaffStudents = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {CourseworkStudents.map((item, index) => {
+                    {students.map((item, index) => {
                       return (
-                        <tr key={item.id}>
+                        <tr key={index}>
                           <td className="table-container-items">{index + 1}</td>
-                          <td className="table-container-items">{item.code}</td>
+                          <td className="table-container-items">
+                            {item.studentId}
+                          </td>
                           <td className="table-container-items">
                             {i18next.language === "en"
                               ? item.englishName
                               : item.arabicName}
+                          </td>
+                          <td className="table-container-items">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              checked={item.attendance}
+                              style={{
+                                cursor: "pointer",
+                              }}
+                            />
                           </td>
                           <td className="table-container-items">
                             {item.notes}
@@ -190,6 +205,9 @@ export const StaffStudents = () => {
                     })}
                   </tbody>
                 </table>
+                <button className="form-card-button form-card-button-save m-0">
+                  {t(`common.save`)}
+                </button>
               </div>
             </FormCard>
           </div>

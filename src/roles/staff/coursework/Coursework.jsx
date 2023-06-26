@@ -16,11 +16,13 @@ import { TbFileUpload } from "react-icons/tb";
 import { MdErrorOutline } from "react-icons/md";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import { ModalPopup } from "../../../components/popups/ModalPopup";
-import { CourseworkHeaderItems, CourseworkStudents } from "./CourseworkData";
+import { CourseworkHeaderItems } from "./CourseworkData";
 import { CourseworkRow } from "./CourseworkRow";
+import { StaffCourses, StaffStudentsData } from "../StaffData";
 
 export const Coursework = () => {
   const [courses, setCourses] = useState([]);
+  const [students, setStudents] = useState([]);
   const [userUX, setUserUX] = useState({
     list: { loading: false, error: false, errorMsg: "" },
     add: { loading: false, success: false, error: false, errorMsg: "" },
@@ -37,6 +39,15 @@ export const Coursework = () => {
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
+
+  useEffect(() => {
+    if (courseId) {
+      const courseStudents = StaffStudentsData.filter(
+        (student) => student.courseId === courseId
+      );
+      setStudents(courseStudents[0].students);
+    }
+  }, [courseId]);
 
   const handleDragOver = (event) => {
     event.stopPropagation();
@@ -102,7 +113,8 @@ export const Coursework = () => {
     axios
       .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`, config)
       .then((res) => {
-        setCourses(res.data);
+        console.log(res);
+        setCourses(StaffCourses);
         setUserUX((prev) => ({
           ...prev,
           list: { ...prev.list, loading: false },
@@ -222,17 +234,20 @@ export const Coursework = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {CourseworkStudents.map((item, index) => {
+                    {students.map((item, index) => {
                       return (
                         <CourseworkRow
                           student={item}
-                          key={item.id}
+                          key={index}
                           order={index + 1}
                         />
                       );
                     })}
                   </tbody>
                 </table>
+                <button className="form-card-button form-card-button-save m-0">
+                  {t(`common.save`)}
+                </button>
               </div>
             </FormCard>
           </div>

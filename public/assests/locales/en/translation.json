@@ -320,6 +320,7 @@
     "add": "Students Enrollment",
     "name": "Student Name",
     "code": "Student Code",
+    "attendance": "Attendance",
     "error": {
       "notCSV": "The file must be in CSV form",
       "moreThanOne": "You can only upload one file at a time"

@@ -10,6 +10,8 @@ import styles from "../../../admin/student_data/portal/StudentDataPortal.module.
 import { FormNavbarContainer } from "../../../../components/other/FormNavbarContainer";
 import { QuestionCard } from "../components/QuestionCard";
 import { BanksSidebar } from "../components/BanksSidebar";
+import { Backdrop } from "../../../../components/loaders/Backdrop";
+import { Alert } from "react-bootstrap";
 
 export const ViewBank = () => {
   const [questions, setQuestions] = useState([]);
@@ -46,7 +48,7 @@ export const ViewBank = () => {
             questions: {
               loading: false,
               error: res.data.length === 0 ? true : false,
-              errorMsg: res.data.length === 0 ? "The bank is empty." : "",
+              errorMsg: res.data.length === 0 ? "mcq.noQuestions" : "",
             },
           }));
         })
@@ -57,7 +59,7 @@ export const ViewBank = () => {
             questions: {
               loading: false,
               error: true,
-              errorMsg: "Error fetching bank MCQ...",
+              errorMsg: "error.common",
             },
           }));
         });
@@ -76,39 +78,53 @@ export const ViewBank = () => {
   }, [searchValue]);
 
   return (
-    <FormNavbarContainer>
-      <div className={styles.studentBody}>
-        <BanksSidebar bankId={bankId} navRoute={"/staff/mcq/bank/"} />
+    <>
+      {userUX.questions.loading && <Backdrop />}
+      <FormNavbarContainer>
+        <div className={styles.studentBody}>
+          <BanksSidebar bankId={bankId} navRoute={"/staff/mcq/bank/"} />
 
-        <div className="mcq-cont">
-          {bankId === undefined ? (
-            <h1 className="text-center alert alert-info m-5" role="alert">
-              {t("mcq.selectBank")}
-            </h1>
-          ) : (
-            <>
-              <div className="mcq-cont-search">
-                <input
-                  type="text"
-                  placeholder={t("mcq.questionSearch")}
-                  value={searchValue}
-                  className="form-control"
-                  onChange={(e) => {
-                    setSearchValue(e.target.value);
-                  }}
-                />
-              </div>
-              {filteredQuestions.map((item, index) => (
-                <QuestionCard
-                  key={item.id}
-                  question={item}
-                  questionNumber={index}
-                />
-              ))}
-            </>
-          )}
+          <div className="mcq-cont">
+            {bankId === undefined ? (
+              <h1 className="text-center alert alert-info " role="alert">
+                {t("mcq.selectBank")}
+              </h1>
+            ) : (
+              <>
+                <div className="mcq-cont-search">
+                  <input
+                    type="text"
+                    placeholder={t("mcq.questionSearch")}
+                    value={searchValue}
+                    className="form-control"
+                    onChange={(e) => {
+                      setSearchValue(e.target.value);
+                    }}
+                  />
+                </div>
+                {userUX.questions.error && (
+                  <Alert
+                    variant="danger"
+                    style={{
+                      width: "90%",
+                      margin: "20px auto",
+                    }}
+                  >
+                    {t(userUX.questions.errorMsg)}
+                  </Alert>
+                )}
+                {filteredQuestions.map((item, index) => (
+                  <QuestionCard
+                    key={item.id}
+                    question={item}
+                    questionNumber={index}
+                  />
+                ))}
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    </FormNavbarContainer>
+      </FormNavbarContainer>
+    </>
   );
 };

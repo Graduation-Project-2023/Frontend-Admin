@@ -11,10 +11,13 @@ import { FormNavbarContainer } from "../../../../components/other/FormNavbarCont
 import { BsTrash } from "react-icons/bs";
 import { TiDelete } from "react-icons/ti";
 import { BanksSidebar } from "../components/BanksSidebar";
+import { ModalPopup } from "../../../../components/popups/ModalPopup";
+import { BsFillPersonCheckFill } from "react-icons/bs";
 
 export const AddToBank = () => {
   const [choices, setChoices] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const [modal, setModal] = useState(false);
   const [questType, setQuestType] = useState("mcq");
   const [userUX, setUserUX] = useState({
     addQuestion: { loading: false, error: false, errorMsg: "" },
@@ -37,17 +40,16 @@ export const AddToBank = () => {
 
   const addQuestion = () => {
     if (
-      (questionRef.current.value.trim().length === 0 ||
-        choices.length === 0 ||
-        answers.length === 0) &&
-      questType === "mcq"
+      questionRef.current.value.trim().length === 0 ||
+      choices.length === 0 ||
+      answers.length === 0
     ) {
       setUserUX((prev) => ({
         ...prev,
         addQuestion: {
           loading: false,
           error: true,
-          errorMsg: "Empty Question or Choices or No Answers Selected",
+          errorMsg: "mcq.error",
         },
       }));
     } else {
@@ -61,7 +63,7 @@ export const AddToBank = () => {
         bankId: bankId,
         question: questionRef.current.value,
         choices: choicesConverted,
-        answer: questType === "mcq" ? answers : ["True", "False"],
+        answer: answers,
         addedBy: authContext.id,
       };
 
@@ -78,6 +80,7 @@ export const AddToBank = () => {
             ...prev,
             addQuestion: { loading: false, error: false, errorMsg: "" },
           }));
+          setModal(true);
           deleteQuestion();
         })
         .catch((error) => {
@@ -87,7 +90,7 @@ export const AddToBank = () => {
             addQuestion: {
               loading: false,
               error: true,
-              errorMsg: "Error submitting question",
+              errorMsg: "error.common",
             },
           }));
         });
@@ -99,13 +102,27 @@ export const AddToBank = () => {
     questionRef.current.value = "";
   };
 
+  const handleQuestionType = (e) => {
+    setQuestType(e.target.value);
+    if (e.target.value === "tof") {
+      setChoices(["True", "False"]);
+    } else {
+      setChoices([]);
+    }
+    setAnswers([]);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
   return (
     <FormNavbarContainer>
       <div className={styles.studentBody}>
         <BanksSidebar bankId={bankId} navRoute={"/staff/mcq/add_questions/"} />
         <div className="mcq-cont">
           {bankId === undefined ? (
-            <h1 className="text-center alert alert-info m-5" role="alert">
+            <h1 className="text-center alert alert-info" role="alert">
               {t("mcq.selectBank")}
             </h1>
           ) : (
@@ -115,9 +132,7 @@ export const AddToBank = () => {
                 <select
                   className="form-select"
                   onChange={(e) => {
-                    setQuestType(e.target.value);
-                    setChoices([]);
-                    setAnswers([]);
+                    handleQuestionType(e);
                   }}
                   value={questType}
                 >
@@ -154,57 +169,56 @@ export const AddToBank = () => {
                     ref={questionRef}
                   />
                 </div>
-                {questType === "mcq" && (
-                  <div
-                    className="new-quest-answers"
-                    style={
-                      i18n.language === "ar"
-                        ? {
-                            direction: "rtl",
-                            textAlign: "right",
-                          }
-                        : {}
-                    }
-                  >
-                    {choices.length !== 0 &&
-                      choices.map((item, index) => (
-                        <div key={index}>
-                          <div className="new-quest-answers-choice">
-                            <div>
-                              <input
-                                type="radio"
-                                value={item}
-                                onChange={(e) => {
-                                  if (e.target.checked) {
-                                    setAnswers([...answers, e.target.value]);
-                                  } else {
-                                    setAnswers(
-                                      answers.filter((el) => el !== item)
-                                    );
-                                  }
-                                }}
-                              />
 
-                              <label htmlFor="track">{item}</label>
-                            </div>
-                            <div>
-                              <TiDelete
-                                style={{
-                                  fontSize: "20px",
-                                  cursor: "pointer",
-                                  color: "red",
-                                }}
-                                onClick={(e) => {
-                                  setChoices(
-                                    choices.filter((el) => el !== item)
+                <div
+                  className="new-quest-answers"
+                  style={
+                    i18n.language === "ar"
+                      ? {
+                          direction: "rtl",
+                          textAlign: "right",
+                        }
+                      : {}
+                  }
+                >
+                  {choices.length !== 0 &&
+                    choices.map((item, index) => (
+                      <div key={index}>
+                        <div className="new-quest-answers-choice">
+                          <div>
+                            <input
+                              type="radio"
+                              value={item}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setAnswers([...answers, e.target.value]);
+                                } else {
+                                  setAnswers(
+                                    answers.filter((el) => el !== item)
                                   );
-                                }}
-                              />
-                            </div>
+                                }
+                              }}
+                            />
+
+                            <label htmlFor="track">{item}</label>
                           </div>
-                          <br />
+                          <div>
+                            <TiDelete
+                              style={{
+                                fontSize: "20px",
+                                cursor: "pointer",
+                                color: "red",
+                              }}
+                              onClick={(e) => {
+                                setChoices(choices.filter((el) => el !== item));
+                              }}
+                            />
+                          </div>
                         </div>
-                      ))}
+                        <br />
+                      </div>
+                    ))}
+                  {questType === "mcq" && (
                     <div className="input-group mt-1 mb-3">
                       <button
                         className="btn btn-outline-secondary  "
@@ -221,8 +235,8 @@ export const AddToBank = () => {
                         ref={newOptionRef}
                       />
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 <div
                   className="new-quest-footer"
@@ -232,7 +246,31 @@ export const AddToBank = () => {
                       : {}
                   }
                 >
-                  <button onClick={addQuestion}>{t("mcq.addToBank")}</button>
+                  <button
+                    onClick={addQuestion}
+                    disabled={userUX.addQuestion.loading}
+                  >
+                    {userUX.addQuestion.loading ? (
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{
+                          width: "137px",
+                          height: "22.5px",
+                        }}
+                      >
+                        <div
+                          className="spinner-border text-light"
+                          role="status"
+                          style={{
+                            width: "20px",
+                            height: "20px",
+                          }}
+                        ></div>
+                      </div>
+                    ) : (
+                      t("mcq.addToBank")
+                    )}
+                  </button>
 
                   <BsTrash
                     style={{ fontSize: "20px", cursor: "pointer" }}
@@ -249,10 +287,23 @@ export const AddToBank = () => {
                 margin: "10px 5%",
               }}
             >
-              {userUX.addQuestion.errorMsg}
+              {t(userUX.addQuestion.errorMsg)}
             </p>
           )}
         </div>
+        {modal && (
+          <ModalPopup
+            message={{
+              state: true,
+              icon: <BsFillPersonCheckFill />,
+              title: "popup.success",
+              text: "popup.message_success",
+              button: "common.save",
+              handleClick: closeModal,
+            }}
+            closeModal={closeModal}
+          />
+        )}
       </div>
     </FormNavbarContainer>
   );

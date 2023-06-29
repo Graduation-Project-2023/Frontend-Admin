@@ -410,7 +410,8 @@
     "noQuizzes": "This bank has no quizzes",
     "mcq": "Multiple Choice Questions",
     "trueOrFalse": "True or False",
-    "questType": "Question Type"
+    "questType": "Question Type",
+    "error": "Please make sure there is a question, choices and at least one answer selected..."
   },
   "staff": {
     "welcome1": "Welome to our University",

@@ -419,6 +419,13 @@
     "transcript": "Student Transcripts",
     "grades": "Students Grades",
     "schedule": "Academic Schedule",
-    "bank": "Question Bank"
+    "bank": "Question Bank",
+    "chat": "Chat",
+    "navChat": "Announcements and Chats"
+  },
+  "chat": {
+    "searchName": "Search by name...",
+    "placeholder": "Type a message...",
+    "sending": "Sending..."
   }
 }

@@ -155,17 +155,24 @@ export const Header = () => {
               <Dropdown.Toggle>
                 <CgProfile size={30} />
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu
+                style={{
+                  textAlign: "center",
+                }}
+              >
                 <DropdownItem>{t("header.profile")}</DropdownItem>
+                <Dropdown.Divider />
                 <DropdownItem onClick={getPrograms}>
                   {t("header.changeProgram")}
                 </DropdownItem>
+                <Dropdown.Divider />
                 {authContext.role === "SUPER" && (
                   <DropdownItem onClick={getColleges}>
                     {t("header.changeCollege")}
                   </DropdownItem>
                 )}
-                <DropdownItem>{t("header.changeTerm")}</DropdownItem>
+                <DropdownItem>{t("header.changeTerm")}</DropdownItem>{" "}
+                <Dropdown.Divider />
                 <DropdownItem onClick={handleLogout}>
                   {t("common.logout")}
                 </DropdownItem>
@@ -181,31 +188,36 @@ export const Header = () => {
             : authContext.college?.arabicName}
         </div>
         <div className="main-header-item">
-          {authContext.isLoggedIn && (
-            <Dropdown>
-              <Dropdown.Toggle>
-                <BiWorld size={30} />
-              </Dropdown.Toggle>
+          <Dropdown>
+            <Dropdown.Toggle>
+              <BiWorld size={30} />
+            </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item>{t("common.language")}</Dropdown.Item>
-                {languages.map(({ code, name }) => (
-                  <Dropdown.Item key={code}>
-                    <span
-                      className={classNames("dropdown-item", {
-                        disabled: i18next.language === code,
-                      })}
-                      onClick={() => {
-                        i18next.changeLanguage(code);
-                      }}
-                    >
-                      {name}
-                    </span>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          )}
+            <Dropdown.Menu>
+              <Dropdown.ItemText
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                {t("common.language")}
+              </Dropdown.ItemText>
+              <Dropdown.Divider />
+              {languages.map(({ code, name }) => (
+                <Dropdown.Item key={code}>
+                  <span
+                    className={classNames("dropdown-item", {
+                      disabled: i18next.language === code,
+                    })}
+                    onClick={() => {
+                      i18next.changeLanguage(code);
+                    }}
+                  >
+                    {name}
+                  </span>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </nav>
       {/* Change College Modal */}

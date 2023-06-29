@@ -18,7 +18,7 @@ export function StudySchedulesRoutes() {
             locationIndex: "study_schedules",
           },
           { id: 1, title: "adminNavbar.schedule", path: "tables" },
-          { id: 2, title: "adminNavbarkeys.period", path: "table_period" },
+          // { id: 2, title: "adminNavbarkeys.period", path: "table_period" },
         ]}
       />
       <Routes>

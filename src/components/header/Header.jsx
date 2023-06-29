@@ -27,10 +27,8 @@ const languages = [
 ];
 
 export const Header = () => {
-  const [colleges, setColleges] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [userUX, setUserUX] = useState({
-    colleges: { loading: false, error: false, errorMsg: "" },
     programs: { loading: false, error: false, errorMsg: "" },
     logout: { loading: false, error: false, errorMsg: "" },
   });
@@ -75,37 +73,6 @@ export const Header = () => {
             loading: false,
             error: true,
             errorMsg: error.response.data.message,
-          },
-        }));
-        console.log(error);
-      });
-  };
-
-  const getColleges = () => {
-    setUserUX((prev) => ({
-      ...prev,
-      colleges: { loading: true, error: false, errorMsg: "" },
-    }));
-    setShowModal({ colleges: true, programs: false });
-
-    axios
-      .get(ADMIN_URL + "/colleges", config)
-      .then((res) => {
-        console.log(res.data);
-        setUserUX((prev) => ({
-          ...prev,
-          colleges: { loading: false, error: false, errorMsg: "" },
-        }));
-        setColleges(res.data);
-        setShowModal((prev) => ({ ...prev, colleges: true }));
-      })
-      .catch((error) => {
-        setUserUX((prev) => ({
-          ...prev,
-          colleges: {
-            loading: false,
-            error: true,
-            errorMsg: "colleges error",
           },
         }));
         console.log(error);
@@ -161,17 +128,17 @@ export const Header = () => {
                 }}
               >
                 <DropdownItem>{t("header.profile")}</DropdownItem>
-                <Dropdown.Divider />
-                <DropdownItem onClick={getPrograms}>
-                  {t("header.changeProgram")}
-                </DropdownItem>
-                <Dropdown.Divider />
-                {authContext.role === "SUPER" && (
-                  <DropdownItem onClick={getColleges}>
-                    {t("header.changeCollege")}
-                  </DropdownItem>
+                {authContext.role !== "PROFESSOR" && (
+                  <>
+                    <Dropdown.Divider />
+                    <DropdownItem onClick={getPrograms}>
+                      {t("header.changeProgram")}
+                    </DropdownItem>
+                    <Dropdown.Divider />
+                    <DropdownItem>{t("header.changeTerm")}</DropdownItem>
+                  </>
                 )}
-                <DropdownItem>{t("header.changeTerm")}</DropdownItem>{" "}
+
                 <Dropdown.Divider />
                 <DropdownItem onClick={handleLogout}>
                   {t("common.logout")}
@@ -220,26 +187,6 @@ export const Header = () => {
           </Dropdown>
         </div>
       </nav>
-      {/* Change College Modal */}
-      {showModal.colleges && (
-        <ModalPopup
-          error={{
-            state: userUX.colleges.error,
-            message: userUX.colleges.errorMsg,
-          }}
-          contextValue={"COLLEGE"}
-          title={"header.changeCollege"}
-          searchable={true}
-          list={{
-            state: true,
-            data: colleges,
-            path: "admin/academic_programs",
-          }}
-          closeModal={() => {
-            setShowModal({ colleges: false, programs: false });
-          }}
-        />
-      )}
       {/* Change Program Modal */}
       {showModal.programs && (
         <ModalPopup

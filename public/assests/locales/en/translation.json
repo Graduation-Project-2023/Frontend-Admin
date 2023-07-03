@@ -87,7 +87,10 @@
     "notes": "Notes",
     "description": "Description",
     "totalMarks": "Total Marks",
-    "givenTime": "Given Time"
+    "givenTime": "Given Time",
+    "studentEmails": "Student Emails",
+    "searchByEmail": "Search by Email",
+    "close": "Close"
   },
   "popup": {
     "success": "Success!",
@@ -145,7 +148,8 @@
     "control": "Control System",
     "mcq": "MCQ Banks and Quizzes",
     "students_info": "Students Information and Lists",
-    "coursework": "Coursework and Exams"
+    "coursework": "Coursework and Exams",
+    "payment": "Academic Payments"
   },
   "adminNavbarkeys": {
     "student": "Students",
@@ -163,7 +167,8 @@
     "control": "Control",
     "mcq": "MCQ Banks",
     "students_info": "Students Information",
-    "coursework": "Coursework"
+    "coursework": "Coursework",
+    "payment": "Payments"
   },
   "levelHours": {
     "tabletitle": "Academic Load Table",
@@ -428,5 +433,52 @@
     "searchName": "Search by name...",
     "placeholder": "Type a message...",
     "sending": "Sending..."
+  },
+  "payment": {
+    "transactionId": "Transaction ID",
+    "date": "Date",
+    "amount": "Amount",
+    "orderId": "Order ID",
+    "status": "Status",
+    "isRefunded": "Refunded",
+    "isVoid": "Voided",
+    "refund": "Refund",
+    "void": "Void",
+    "refundMsg": "Are you sure you want to refund this transaction?",
+    "voidMsg": "Are you sure you want to void this transaction?",
+    "studentEmail": "Student Email",
+    "transactionDetails": "Transaction Details",
+    "billingData": "Billing Data",
+    "created_at": "Created At",
+    "type": "Type",
+    "subType": "Card Type",
+    "cardType": "Card Type",
+    "source": "Source",
+    "success": "Success",
+    "secure": "3D Secure",
+    "routingBank": "Routing Bank",
+    "cardHolderBank": "Card Holder Bank",
+    "isStandalone": "Standalone",
+    "true": "Yes",
+    "false": "No",
+    "id": "Billing ID",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "street": "Street",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
+    "email": "Email",
+    "phone_number": "Phone Number",
+    "postal_code": "Postal Code",
+    "ip_address": "IP Address",
+    "extra_description": "Extra Description",
+    "transaction_id": "Transaction ID",
+    "building": "Building",
+    "floor": "Floor",
+    "apartment": "Apartment",
+    "NA": "Not Specified",
+    "null": "Not Available",
+    "card": "Card"
   }
 }

@@ -12,6 +12,7 @@ import { DepartmentsRoutes } from "./departments/DepartmentsRoutes";
 import { ProfessorsRoutes } from "./professors/ProfessorsRoutes";
 import { StudentRegisteration } from "./registeration/StudentRegisteration";
 import { NotFound } from "../../pages/NotFound";
+import { PaymentPortal } from "./payments/PaymentPortal";
 
 export function AdminRoutes() {
   return (
@@ -22,6 +23,7 @@ export function AdminRoutes() {
         <Route path="student_data/*" element={<StudentDataRoutes />} />
         <Route path="courses/*" element={<CoursesRoutes />} />
         <Route path="departments/*" element={<DepartmentsRoutes />} />
+        <Route path="payments/*" element={<PaymentPortal />} />
         <Route path="control_system/*" element={<ProfessorsRoutes />} />
         <Route path="academic_programs" element={<AcademicPorgramsPortal />} />
         <Route path="academic_programs/add" element={<AddAcademicProgram />} />

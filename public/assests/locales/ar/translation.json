@@ -88,7 +88,10 @@
     "notes": "ملاحظات",
     "description": "الوصف",
     "totalMarks": "اجمالي الدرجات",
-    "givenTime": "الوقت المحدد"
+    "givenTime": "الوقت المحدد",
+    "studentEmails": "البريد الالكتروني للطلاب",
+    "searchByEmail": "بحث بالبريد الالكتروني",
+    "close": "غلق"
   },
   "popup": {
     "success": "تمت العملية بنجاح",
@@ -146,7 +149,8 @@
     "control": "نظام التحكم",
     "mcq": "بنك الاسئلة والاختبارات",
     "students_info": "كشوفات وبيانات الطلاب",
-    "coursework": "اعمال السنة والامتحانات"
+    "coursework": "اعمال السنة والامتحانات",
+    "payment": "المصروفات الدراسية"
   },
   "adminNavbarkeys": {
     "student": "الطلاب",
@@ -164,7 +168,8 @@
     "control": "التحكم",
     "mcq": "بنك الاسئلة",
     "students_info": "كشوفات الطلاب",
-    "coursework": "اعمال السنة"
+    "coursework": "اعمال السنة",
+    "payment": "المصروفات"
   },
   "levelHours": {
     "tabletitle": "جدول العبئ الدراسي",
@@ -436,5 +441,52 @@
     "searchName": "البحث باسم المستخدم",
     "placeholder": "اكتب رسالتك هنا",
     "sending": "جاري ارسال الرسالة..."
+  },
+  "payment": {
+    "transactionId": "رقم العملية",
+    "date": "التاريخ",
+    "amount": "المبلغ",
+    "orderId": "رقم الطلب",
+    "status": "الحالة",
+    "isRefunded": "تم الاسترجاع",
+    "isVoid": "تم الغاء العملية",
+    "refund": "استرجاع",
+    "void": "الغاء",
+    "refundMsg": "هل انت متأكد من استرجاع هذه العملية؟",
+    "voidMsg": "هل انت متأكد من الغاء هذه العملية؟",
+    "studentEmail": "البريد الالكتروني للطالب",
+    "transactionDetails": "تفاصيل العملية",
+    "billingData": "بيانات الفاتورة",
+    "created_at": "تاريخ العملية",
+    "type": "نوع العملية",
+    "subType": "نوع العملية الفرعي",
+    "cardType": "نوع البطاقة",
+    "source": "المصدر",
+    "success": "تمت العملية بنجاح",
+    "secure": "تم التحقق من البطاقة",
+    "routingBank": "بنك التوجيه",
+    "cardHolderBank": "بنك حامل البطاقة",
+    "isStandalone": "عملية مستقلة",
+    "true": "نعم",
+    "false": "لا",
+    "id": "رقم العملية",
+    "first_name": "الاسم الاول",
+    "last_name": "الاسم الاخير",
+    "street": "الشارع",
+    "city": "المدينة",
+    "state": "المحافظة",
+    "country": "الدولة",
+    "email": "البريد الالكترونى",
+    "phone_number": "رقم الهاتف",
+    "postal_code": "الرقم البريدي",
+    "ip_address": "عنوان IP",
+    "extra_description": "وصف اضافي",
+    "transaction_id": "رقم العملية",
+    "building": "المبنى",
+    "floor": "الدور",
+    "apartment": "الشقة",
+    "NA": "غير محدد",
+    "null": "غير متوفر",
+    "card": "بطاقة"
   }
 }

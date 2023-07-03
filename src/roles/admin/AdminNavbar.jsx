@@ -43,11 +43,17 @@ const AdminNavbarData = [
     keyword: "adminNavbarkeys.control",
     path: "control_system",
   },
+  // {
+  //   id: "7",
+  //   title: "adminNavbar.exams",
+  //   keyword: "adminNavbarkeys.exams",
+  //   path: "exams",
+  // },
   {
-    id: "7",
-    title: "adminNavbar.exams",
-    keyword: "adminNavbarkeys.exams",
-    path: "exams",
+    id: "12",
+    title: "adminNavbar.payment",
+    keyword: "adminNavbarkeys.payment",
+    path: "payments",
   },
   {
     id: "8",
@@ -55,19 +61,18 @@ const AdminNavbarData = [
     keyword: "adminNavbarkeys.results",
     path: "results",
   },
-
   {
     id: "9",
     title: "adminNavbar.absence",
     keyword: "adminNavbarkeys.absence",
     path: "absence",
   },
-  {
-    id: "10",
-    title: "adminNavbar.supervision",
-    keyword: "adminNavbarkeys.supervision",
-    path: "supervision",
-  },
+  // {
+  //   id: "10",
+  //   title: "adminNavbar.supervision",
+  //   keyword: "adminNavbarkeys.supervision",
+  //   path: "supervision",
+  // },
 ];
 
 export const AdminNavbar = () => {

@@ -282,7 +282,8 @@
     "preTable": "Prerequisite Courses Table",
     "supervisor": "Supervisor",
     "hasGroups": "Has Groups?",
-    "failure": "Failure "
+    "failure": "Failure",
+    "midterm": "Midterm"
   },
   "departments": {
     "name": "Department Name",
@@ -368,7 +369,8 @@
     "lecturesLeft": "Number of lectures left to add: ",
     "sectionsLeft": "Number of sections left to add: ",
     "labsLeft": "Number of labs left to add: ",
-    "sectionError": "An error has occurred adding this course section/lab to the table, please add the correct number of sections/labs"
+    "sectionError": "An error has occurred adding this course section/lab to the table, please add the correct number of sections/labs",
+    "noStudents": "There are no students in this course"
   },
   "professor": {
     "department": "Department",

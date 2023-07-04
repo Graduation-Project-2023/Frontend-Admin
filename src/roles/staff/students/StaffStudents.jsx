@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ADMIN_URL } from "../../../shared/API";
+import { STAFF_URL } from "../../../shared/API";
 import axios from "axios";
 import i18next from "i18next";
 
@@ -11,7 +11,8 @@ import { SearchContainer } from "../../../components/other/SearchContainer";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import { SidebarContainer } from "../../../components/sidebar/SidebarContainer";
 import { FormCard } from "../../../components/forms/FormCard";
-import { StaffCourses, StaffStudentsData } from "../StaffData";
+import { SpinnerLoader } from "../../../components/loaders/SpinnerLoader";
+import { Alert } from "react-bootstrap";
 
 export const StaffStudents = () => {
   const [courses, setCourses] = useState([]);
@@ -42,21 +43,52 @@ export const StaffStudents = () => {
 
   useEffect(() => {
     if (courseId) {
-      const courseStudents = StaffStudentsData.filter(
-        (student) => student.courseId === courseId
-      );
-      setStudents(courseStudents[0].students);
+      setUserUX((prev) => ({
+        ...prev,
+        students: { ...prev.students, loading: true },
+      }));
+      // GET request to get all students registered in courses to display it
+      axios
+        .get(STAFF_URL + `/courses/${courseId}/students`, config)
+        .then((res) => {
+          console.log(res);
+          setStudents(
+            res.data.map((item) => {
+              const studentData = item.student;
+              return {
+                ...studentData,
+                notes: "",
+              };
+            })
+          );
+          setUserUX((prev) => ({
+            ...prev,
+            students: { ...prev.students, loading: false },
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            students: { loading: false, error: true, errorMsg: "error.common" },
+          }));
+        });
     }
+    // eslint-disable-next-line
   }, [courseId]);
 
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, list: { ...prev.list, loading: true } }));
     // GET request to get all professor courses to display it in the sidebar
     axios
-      .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`, config)
+      .get(
+        STAFF_URL +
+          `/courses/semester/decc46ba-7d4b-11ed-a1eb-0242ac120002/professor/${authContext.id}`,
+        config
+      )
       .then((res) => {
-        console.log(res.data);
-        setCourses(StaffCourses);
+        console.log(res);
+        setCourses(res.data);
         setUserUX((prev) => ({
           ...prev,
           list: { ...prev.list, loading: false },
@@ -66,12 +98,12 @@ export const StaffStudents = () => {
         console.log(error);
         setUserUX((prev) => ({
           ...prev,
-          list: { loading: false, error: true, errorMsg: "erorrr" },
+          list: { loading: false, error: true, errorMsg: "error.common" },
         }));
       });
 
     // eslint-disable-next-line
-  }, [authContext.college.id]);
+  }, [authContext.id]);
 
   useEffect(() => {
     if (courseId && courses.length !== 0) {
@@ -85,9 +117,9 @@ export const StaffStudents = () => {
   }, [courseId, courses]);
 
   const handleCourseSelect = (item) => {
-    console.log(item);
     navigate(`${item.id}`);
   };
+
   const handlePrint = () => {
     const printArea = printAreaRef.current;
     if (printArea) {
@@ -152,63 +184,74 @@ export const StaffStudents = () => {
         <SidebarContainer>
           <div ref={printAreaRef}>
             <FormCard>
-              <div className="table-container">
-                <div className="table-container-mainHeader">
-                  <h1>
-                    {t("professor.course")}
-                    {i18next.language === "en"
-                      ? ` - ${currCourse.englishName || ""}`
-                      : ` - ${currCourse.arabicName || ""}`}
-                  </h1>
-                  <button onClick={handlePrint}>{t("common.print")}</button>
-                </div>
-                <table className="table table-bordered">
-                  <thead className="thead-light">
-                    <tr>
-                      {HeaderItems.map((item) => {
+              {userUX.students.loading ? (
+                <SpinnerLoader size={100} />
+              ) : userUX.students.error || students.length === 0 ? (
+                <Alert variant="danger">
+                  {students.length === 0
+                    ? t("error.noStudents")
+                    : t("error.common")}
+                </Alert>
+              ) : (
+                <div className="table-container">
+                  <div className="table-container-mainHeader">
+                    <h1>
+                      {t("professor.course")}
+                      {i18next.language === "en"
+                        ? ` - ${currCourse.englishName || ""}`
+                        : ` - ${currCourse.arabicName || ""}`}
+                    </h1>
+                    <button onClick={handlePrint}>{t("common.print")}</button>
+                  </div>
+                  <table className="table table-bordered">
+                    <thead className="thead-light">
+                      <tr>
+                        {HeaderItems.map((item) => {
+                          return (
+                            <th
+                              key={item.id}
+                              className="table-container-header"
+                            >
+                              {t(item.title)}
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {students.map((item, index) => {
                         return (
-                          <th key={item.id} className="table-container-header">
-                            {t(item.title)}
-                          </th>
+                          <tr key={index}>
+                            <td className="table-container-items">
+                              {index + 1}
+                            </td>
+                            <td className="table-container-items">
+                              {item.nationalId}
+                            </td>
+                            <td className="table-container-items">
+                              {i18next.language === "en"
+                                ? item.englishName
+                                : item.arabicName}
+                            </td>
+                            <td className="table-container-items">
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                style={{
+                                  cursor: "pointer",
+                                }}
+                              />
+                            </td>
+                            <td className="table-container-items">
+                              {item.notes}
+                            </td>
+                          </tr>
                         );
                       })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {students.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td className="table-container-items">{index + 1}</td>
-                          <td className="table-container-items">
-                            {item.studentId}
-                          </td>
-                          <td className="table-container-items">
-                            {i18next.language === "en"
-                              ? item.englishName
-                              : item.arabicName}
-                          </td>
-                          <td className="table-container-items">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              checked={item.attendance}
-                              style={{
-                                cursor: "pointer",
-                              }}
-                            />
-                          </td>
-                          <td className="table-container-items">
-                            {item.notes}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-                <button className="form-card-button form-card-button-save m-0">
-                  {t(`common.save`)}
-                </button>
-              </div>
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </FormCard>
           </div>
         </SidebarContainer>

@@ -5,42 +5,54 @@ import i18next from "i18next";
 export const CourseworkRow = (props) => {
   const [studentData, setStudentData] = useState(props.student);
   const [grade, setGrade] = useState(
-    +studentData.classWork + +studentData.finalExam
+    +studentData.classworkScore +
+      +studentData.finalScore +
+      +studentData.midtermScore
   );
   // eslint-disable-next-line
   const [userUX, setUserUX] = useState({
     error: false,
     errorMsg: "",
   });
-  const classWorkRef = useRef();
-  const finalExamRef = useRef();
+  const midtermScoreRef = useRef();
+  const classworkScoreRef = useRef();
+  const finalScoreRef = useRef();
 
   useEffect(() => {
-    classWorkRef.current.value = props.student.classWork;
-    finalExamRef.current.value = props.student.finalExam;
+    classworkScoreRef.current.value = props.student.classworkScore;
+    finalScoreRef.current.value = props.student.finalScore;
+    midtermScoreRef.current.value = props.student.midtermScore;
     // eslint-disable-next-line
   }, []);
 
   const handleRowChange = (event) => {
     event.preventDefault();
-    const classWork = +classWorkRef.current.value;
-    const finalExam = +finalExamRef.current.value;
+    const classWork = +classworkScoreRef.current.value;
+    const finalExam = +finalScoreRef.current.value;
+    const midTerm = +midtermScoreRef.current.value;
 
-    if (classWork + finalExam > 100 || classWork < 0 || finalExam < 0) {
+    if (
+      midTerm + classWork + finalExam > 100 ||
+      classWork < 0 ||
+      finalExam < 0 ||
+      midTerm < 0
+    ) {
       setUserUX({
         error: true,
         errorMsg: "sum of grades must be equal to the max grade",
       });
       setStudentData({
         ...studentData,
-        classWork: classWork,
-        finalExam: finalExam,
-        totalGrade: classWork + finalExam,
+        classworkScore: classWork,
+        finalScore: finalExam,
+        midtermScore: midTerm,
+        totalGrade: classWork + finalExam + midTerm,
         grade: "",
         gpa: "",
       });
-      classWorkRef.current.value = "";
-      finalExamRef.current.value = "";
+      classworkScoreRef.current.value = "";
+      finalScoreRef.current.value = "";
+      midtermScoreRef.current.value = "";
       setGrade(0);
       return;
     } else {
@@ -49,7 +61,7 @@ export const CourseworkRow = (props) => {
         errorMsg: "",
       });
       // Function to calculate the GPA from GPAData
-      const totalGrade = classWork + finalExam;
+      const totalGrade = classWork + finalExam + midTerm;
       let gpaRange = null;
       for (let i = 0; i < GPAData.length; i++) {
         const range = GPAData[i];
@@ -66,8 +78,9 @@ export const CourseworkRow = (props) => {
       }
       setStudentData({
         ...studentData,
-        classWork: classWork,
-        finalExam: finalExam,
+        classworkScore: classWork,
+        finalScore: finalExam,
+        midtermScore: midTerm,
         totalGrade: totalGrade,
         grade: gpaRange.grade,
         gpa: (4 * totalGrade) / 100,
@@ -79,7 +92,7 @@ export const CourseworkRow = (props) => {
   return (
     <tr>
       <td className="table-container-items">{props.order}</td>
-      <td className="table-container-items">{studentData.studentId}</td>
+      <td className="table-container-items">{studentData.nationalId}</td>
       <td className="table-container-items">
         {i18next.language === "en"
           ? studentData.englishName
@@ -89,19 +102,40 @@ export const CourseworkRow = (props) => {
         <input
           className="form-control"
           type="number"
-          name="classWork"
-          ref={classWorkRef ? classWorkRef : 0}
+          name="classworkScore"
+          ref={classworkScoreRef ? classworkScoreRef : 0}
           onChange={handleRowChange}
+          style={{
+            width: "60px",
+            margin: "auto",
+          }}
         />
       </td>
       <td className="table-container-items">
         <input
           className="form-control"
           type="number"
-          name="finalExam"
-          ref={finalExamRef ? finalExamRef : 0}
+          name="midtermScore"
+          ref={midtermScoreRef ? midtermScoreRef : 0}
+          onChange={handleRowChange}
+          style={{
+            width: "60px",
+            margin: "auto",
+          }}
+        />
+      </td>
+      <td className="table-container-items">
+        <input
+          className="form-control"
+          type="number"
+          name="finalScore"
+          ref={finalScoreRef ? finalScoreRef : 0}
           required
           onChange={handleRowChange}
+          style={{
+            width: "60px",
+            margin: "auto",
+          }}
         />
       </td>
       <td className="table-container-items">{grade ? grade : 0}</td>

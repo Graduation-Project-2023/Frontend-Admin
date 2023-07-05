@@ -60,13 +60,14 @@ export const PaymentDetails = ({ payment, handleVoidRefund }) => {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center">
-        <h3>
-          {t("payment.transactionId")} {payment.id}
+      {/* <hr /> */}
+      <div className="d-flex justify-content-between align-items-center" id="dfj">
+        <h3 className="dfj_h3">
+          {t("payment.transactionId")} <span className="payid">({payment.id})</span>
         </h3>
-        <div>
+        <div className="dfj_buttons">
           <button
-            className="btn btn-primary"
+            className="btn btn-primary" id="dfj_btn1"
             onClick={() => {
               setModal({
                 state: true,
@@ -77,7 +78,7 @@ export const PaymentDetails = ({ payment, handleVoidRefund }) => {
             {t("payment.void")}
           </button>
           <button
-            className="btn btn-danger"
+            className="btn btn-danger" id="dfj_btn2"
             onClick={() => {
               setModal({
                 state: true,
@@ -87,15 +88,15 @@ export const PaymentDetails = ({ payment, handleVoidRefund }) => {
           >
             {t("payment.refund")}
           </button>
-          <button className="btn btn-danger" onClick={handleVoidRefund}>
+          <button className="btn btn-danger" id="dfj_btn3" onClick={handleVoidRefund}>
             <AiOutlineClose />
           </button>
         </div>
       </div>
       <div>
-        <Nav variant="underline" defaultActiveKey="transaction">
+        <Nav variant="underline" defaultActiveKey="transaction" className="navpaydet"> 
           <Nav.Item>
-            <Nav.Link
+            <Nav.Link className="navpaydet_link"
               eventKey="transaction"
               onClick={() => {
                 setDetails(true);
@@ -116,7 +117,7 @@ export const PaymentDetails = ({ payment, handleVoidRefund }) => {
           </Nav.Item>
         </Nav>
       </div>
-      <div>
+      <div className="pd">
         {details ? (
           <PaymentData data={payment} />
         ) : (

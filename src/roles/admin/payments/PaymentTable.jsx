@@ -36,7 +36,7 @@ export const PaymentTable = ({ payments, handleTransactionSelection }) => {
   }
 
   return (
-    <table className="table table-striped">
+    <table className="table table-striped" id="tts">
       <thead>
         <tr>
           <th scope="col">{t("payment.transactionId")}</th>

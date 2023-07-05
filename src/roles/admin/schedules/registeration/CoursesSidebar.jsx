@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { Accordion } from "react-bootstrap";
 import { NoData } from "../../../../components/UX/NoData";
+import { SpinnerLoader } from "../../../../components/loaders/SpinnerLoader";
 
 // Component Props:
 // userUX: object {loading, error, errorMsg}
@@ -84,9 +85,8 @@ export const CoursesSidebar = (props) => {
                       ? item.englishName || ""
                       : item.arabicName || ""}{" "}
                   </Accordion.Header>
-                  {userUX.error && "error"}
                   {userUX.loading ? (
-                    <h1>loading</h1>
+                    <SpinnerLoader />
                   ) : (
                     <Accordion.Body
                       className="registerationContainer-menu-list"

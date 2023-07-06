@@ -26,7 +26,7 @@ export const EmailSearch = ({
   }, [searchValue]);
 
   return (
-    <Dropdown className="progCourses paymentSearch" autoClose={true}>
+    <Dropdown className="progCourses paymentSearch" id="pps" autoClose={true}>
       <Dropdown.Toggle id="dropdown-autoclose-true">
         {dropDownTitle || t("common.studentEmails")}
       </Dropdown.Toggle>

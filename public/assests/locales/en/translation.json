@@ -370,7 +370,8 @@
     "sectionsLeft": "Number of sections left to add: ",
     "labsLeft": "Number of labs left to add: ",
     "sectionError": "An error has occurred adding this course section/lab to the table, please add the correct number of sections/labs",
-    "noStudents": "There are no students in this course"
+    "noStudents": "There are no students in this course",
+    "noMessages": "There are no messages to show"
   },
   "professor": {
     "department": "Department",
@@ -434,7 +435,8 @@
   "chat": {
     "searchName": "Search by name...",
     "placeholder": "Type a message...",
-    "sending": "Sending..."
+    "sending": "Sending...",
+    "selectChat": "Select a chat to start messaging"
   },
   "payment": {
     "transactionId": "Transaction ID",

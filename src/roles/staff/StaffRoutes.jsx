@@ -1,4 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+// import { useEffect } from "react";
+// import { getIo } from "../../shared/Socket";
+
+// Components
 import { StaffPortal } from "./portal/StaffPortal";
 import { StaffNavbar } from "./StaffNavbar";
 import { StaffSchedule } from "./schedule/StaffSchedule";
@@ -9,9 +13,23 @@ import { McqRoutes } from "./mcq/McqRoutes";
 import { StaffChat } from "./staff_chat/StaffChat";
 
 export function StaffRoutes() {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const urlParts = pathname.split("/");
+  const lastPart = urlParts[urlParts.length - 1];
+
+  // useEffect(() => {
+  //   const socket = getIo();
+  //   socket.emit("subscribe");
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
+
   return (
     <>
-      <StaffNavbar />
+      {lastPart !== "staff" && <StaffNavbar />}
       <Routes>
         <Route path="" element={<StaffPortal />} />
         <Route path="schedule" element={<StaffSchedule />} />

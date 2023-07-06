@@ -16,95 +16,119 @@ import {
   TypingIndicator,
   ConversationHeader,
 } from "@chatscope/chat-ui-kit-react";
+import { Alert } from "react-bootstrap";
 import studentIcon from "../../shared/images/profile.png";
 import professorIcon from "../../shared/images/professor.jpg";
 
-export const Chat = (props) => {
+export const Chat = ({
+  students,
+  messages,
+  sidebarUX,
+  chatUX,
+  sendMessage,
+}) => {
   const { t, i18n } = useTranslation();
   const [messageInputValue, setMessageInputValue] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "user",
-      direction: "outgoing",
+  // const [messages, setMessages] = useState([
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "user",
+  //     direction: "outgoing",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "user",
+  //     direction: "outgoing",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "user",
+  //     direction: "outgoing",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "professor",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "user",
+  //     direction: "outgoing",
+  //   },
+  //   {
+  //     message: t("assistant.message"),
+  //     sentTime: "just now",
+  //     sender: "user",
+  //     direction: "outgoing",
+  //   },
+  // ]);
+  const [userUX, setUserUX] = useState({
+    siderbar: sidebarUX,
+    chat: chatUX,
+    submit: {
+      loading: false,
+      error: false,
     },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "user",
-      direction: "outgoing",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "user",
-      direction: "outgoing",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "professor",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "user",
-      direction: "outgoing",
-    },
-    {
-      message: t("assistant.message"),
-      sentTime: "just now",
-      sender: "user",
-      direction: "outgoing",
-    },
-  ]);
-  const [typing, setTyping] = useState(false);
-  const [currChat, setCurrChat] = useState("");
-  const [professors, setProfessors] = useState([]);
+  });
+  const [currChat, setCurrChat] = useState({});
 
   return (
     <div>
+      {!currChat.id && (
+        <Alert
+          variant="info"
+          style={{
+            width: "90%",
+            margin: "20px auto",
+          }}
+        >
+          {t("chat.selectChat")}
+        </Alert>
+      )}
       <MainContainer
         responsive
         style={{
@@ -122,43 +146,48 @@ export const Chat = (props) => {
         >
           <Search placeholder={t("chat.searchName")} />
           <ConversationList>
-            <Conversation name="Lilly">
-              <Avatar src={professorIcon} name="Lilly" status="available" />
-            </Conversation>
-            <Conversation name="Joe">
-              <Avatar src={professorIcon} name="Joe" status="dnd" />
-            </Conversation>
-
-            <Conversation name="Emily" unreadCnt={3}>
-              <Avatar src={professorIcon} name="Emily" status="available" />
-            </Conversation>
-
-            <Conversation name="Kai" unreadDot>
-              <Avatar src={professorIcon} name="Kai" status="unavailable" />
-            </Conversation>
-
-            <Conversation name="Akane">
-              <Avatar src={professorIcon} name="Akane" status="eager" />
-            </Conversation>
-
-            <Conversation name="Eliot">
-              <Avatar src={professorIcon} name="Eliot" status="away" />
-            </Conversation>
-
-            <Conversation name="Zoe">
-              <Avatar src={professorIcon} name="Zoe" status="dnd" />
-            </Conversation>
-
-            <Conversation name="Patrik">
-              <Avatar src={professorIcon} name="Patrik" status="invisible" />
-            </Conversation>
+            {students.map((student) => {
+              return (
+                <Conversation
+                  name={
+                    i18n.language === "en"
+                      ? student.englishName
+                      : student.arabicName
+                  }
+                  key={student.id}
+                  onClick={() => {
+                    setCurrChat({
+                      id: student.id,
+                      englishName: student.englishName,
+                      arabicName: student.arabicName,
+                    });
+                  }}
+                  active={currChat.id === student.id}
+                >
+                  <Avatar
+                    src={studentIcon}
+                    name={student.name}
+                    status={student.status}
+                  />
+                </Conversation>
+              );
+            })}
           </ConversationList>
         </Sidebar>
 
         <ChatContainer>
           <ConversationHeader>
             <ConversationHeader.Back />
-            <Avatar src={studentIcon} name="Zoe" />
+            {currChat.id && (
+              <Avatar
+                src={studentIcon}
+                name={
+                  i18n.language === "en"
+                    ? currChat.englishName
+                    : currChat.arabicName
+                }
+              />
+            )}
             <ConversationHeader.Content>
               <span
                 style={{
@@ -168,16 +197,13 @@ export const Chat = (props) => {
                   margin: "0 10px",
                 }}
               >
-                {t("dr.name")}
-              </span>{" "}
+                {i18n.language === "en"
+                  ? currChat.englishName
+                  : currChat.arabicName}
+              </span>
             </ConversationHeader.Content>
           </ConversationHeader>
-          <MessageList
-            scrollBehavior="smooth"
-            typingIndicator={
-              typing ? <TypingIndicator content={t("chat.sending")} /> : null
-            }
-          >
+          <MessageList scrollBehavior="smooth">
             {messages.map((message, i) => {
               return (
                 <Message
@@ -203,7 +229,11 @@ export const Chat = (props) => {
             placeholder={t("chat.placeholder")}
             value={messageInputValue}
             onChange={(val) => setMessageInputValue(val)}
+            onSend={(val) => {
+              sendMessage(val, currChat.id);
+            }}
             attachButton={false}
+            disabled={!currChat.id}
           />
         </ChatContainer>
       </MainContainer>

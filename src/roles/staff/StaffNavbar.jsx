@@ -1,12 +1,12 @@
 import { HeaderNavbar } from "../../components/header/HeaderNavbar";
 
 const StaffNavbarData = [
-  {
-    id: "0",
-    title: "staff.navChat",
-    keyword: "staff.chat",
-    path: "chat",
-  },
+  // {
+  //   id: "0",
+  //   title: "staff.navChat",
+  //   keyword: "staff.chat",
+  //   path: "chat",
+  // },
   {
     id: "1",
     title: "adminNavbar.schedule",

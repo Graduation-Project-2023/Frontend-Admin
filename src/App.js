@@ -18,7 +18,6 @@ import { Header } from "./components/header/Header";
 import { AdminRoutes } from "./roles/admin/AdminRoutes";
 import { StaffRoutes } from "./roles/staff/StaffRoutes";
 import { TableSkeletonLoader } from "./components/loaders/TableSkeletonLoader";
-import { StaffPortal } from "./roles/staff/portal/StaffPortal";
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -34,7 +33,6 @@ function App() {
         <Route path="forgetpwd" element={<ForgetPwd />} />
         <Route path="resetpwd/:token" element={<ResetPwd />} />
         <Route path="table" element={<TableSkeletonLoader />} />
-        <Route path="staff" element={<StaffPortal />} />
 
         {/* Staff Routes (Private) */}
         <Route element={<LoginRoute allowedRoles={"PROFESSOR" || "STAFF"} />}>

@@ -55,18 +55,18 @@ const AdminNavbarData = [
     keyword: "adminNavbarkeys.payment",
     path: "payments",
   },
-  {
-    id: "8",
-    title: "adminNavbar.results",
-    keyword: "adminNavbarkeys.results",
-    path: "results",
-  },
-  {
-    id: "9",
-    title: "adminNavbar.absence",
-    keyword: "adminNavbarkeys.absence",
-    path: "absence",
-  },
+  // {
+  //   id: "8",
+  //   title: "adminNavbar.results",
+  //   keyword: "adminNavbarkeys.results",
+  //   path: "results",
+  // },
+  // {
+  //   id: "9",
+  //   title: "adminNavbar.absence",
+  //   keyword: "adminNavbarkeys.absence",
+  //   path: "absence",
+  // },
   // {
   //   id: "10",
   //   title: "adminNavbar.supervision",

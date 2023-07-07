@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // Components
@@ -29,6 +29,11 @@ export const Chat = ({
   const { t, i18n } = useTranslation();
   const [messageInputValue, setMessageInputValue] = useState("");
   const [currChat, setCurrChat] = useState({});
+  const msgListRef = useRef();
+
+  useEffect(() => {
+    msgListRef.current.scrollToBottom("auto");
+  }, [messages]);
 
   return (
     <div>
@@ -117,7 +122,7 @@ export const Chat = ({
               </span>
             </ConversationHeader.Content>
           </ConversationHeader>
-          <MessageList scrollBehavior="smooth">
+          <MessageList scrollBehavior="smooth" ref={msgListRef}>
             {currChat.id &&
               messages
                 ?.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))

@@ -15,11 +15,11 @@ export const StaffPortal = () => {
   let engimg = { transform: "rotateY(180deg)" };
 
   const tabs = [
-    // {
-    //   name: t(`staff.chat`),
-    //   icon: <IoChatbubblesOutline style={{ fontSize: "2vw" }} />,
-    //   link: "chat",
-    // },
+    {
+      name: t(`staff.chat`),
+      icon: <IoChatbubblesOutline style={{ fontSize: "2vw" }} />,
+      link: "chat",
+    },
     {
       name: t(`staff.bank`),
       icon: <FaBook style={{ fontSize: "2vw" }} />,

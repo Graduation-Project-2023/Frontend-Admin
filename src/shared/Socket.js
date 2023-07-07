@@ -1,12 +1,12 @@
 import { io } from "socket.io-client";
 
-const URL = "https://project-io.engineer/api/message";
+const URL = "https://project-io.engineer";
 
 let ioInstance = null;
 
 export const getIo = () => {
   if (!ioInstance) {
-    console.log("creating new socket instance");
+    console.log("Creating new socket instance");
     ioInstance = io(URL, { withCredentials: true });
   }
   return ioInstance;

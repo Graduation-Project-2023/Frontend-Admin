@@ -1,4 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+
+// Components
 import { StaffPortal } from "./portal/StaffPortal";
 import { StaffNavbar } from "./StaffNavbar";
 import { StaffSchedule } from "./schedule/StaffSchedule";
@@ -6,14 +8,21 @@ import { NotFound } from "../../pages/NotFound";
 import { Coursework } from "./coursework/Coursework";
 import { StaffStudents } from "./students/StaffStudents";
 import { McqRoutes } from "./mcq/McqRoutes";
+import { StaffChat } from "./staff_chat/StaffChat";
 
 export function StaffRoutes() {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const urlParts = pathname.split("/");
+  const lastPart = urlParts[urlParts.length - 1];
+
   return (
     <>
-      <StaffNavbar />
+      {lastPart !== "staff" && <StaffNavbar />}
       <Routes>
         <Route path="" element={<StaffPortal />} />
         <Route path="schedule" element={<StaffSchedule />} />
+        <Route path="chat" element={<StaffChat />} />
         <Route path="coursework" element={<Coursework />} />
         <Route path="coursework/:courseId" element={<Coursework />} />
         <Route path="students_info" element={<StaffStudents />} />

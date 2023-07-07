@@ -13,6 +13,7 @@ import { NoData } from "../../../../components/UX/NoData";
 export const CoursesRegPortal = () => {
   const [courses, setCourses] = useState([]);
   const [levels, setLevels] = useState([]);
+  const [professors, setProfessors] = useState([]);
   const [userUX, setUserUX] = useState({
     loading: false,
     error: false,
@@ -45,9 +46,25 @@ export const CoursesRegPortal = () => {
         });
       });
 
+    // Get request to get all program professors to display it in the menu
+    axios
+      .get(ADMIN_URL + `/professor/all/${authContext.college.id}`, config)
+      .then((res) => {
+        setProfessors(res.data);
+        setUserUX((prev) => ({ ...prev, loading: false }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserUX({
+          loading: false,
+          error: true,
+          errorMsg: "error.common",
+        });
+      });
+
     setLevels(authContext.program.levels);
     // eslint-disable-next-line
-  }, [authContext.program.id]);
+  }, [authContext.program.id, authContext.college.id]);
 
   return (
     <FormNavbarContainer>
@@ -61,6 +78,7 @@ export const CoursesRegPortal = () => {
       ) : (
         <CourseRegister
           programCourses={courses}
+          professors={professors}
           levels={levels}
           userUX={userUX}
         />

@@ -139,17 +139,12 @@ export const CreateQuiz = () => {
         error: false,
       },
     }));
-    const newQuizInfo = {
-      ...quizInfo,
-      questions: selectedQuestions,
-    };
-    console.log(newQuizInfo);
     // Condition to check whether it's adding a new quiz or updating the current
     if (quizId !== "add" && quizId !== undefined) {
       // PUT request to update the current quiz
       if (updates.data) {
         axios
-          .put(ADMIN_URL + `/sheet/${quizId}`, newQuizInfo, config)
+          .put(ADMIN_URL + `/sheet/${quizId}`, quizInfo, config)
           .then((res) => {
             setQuizInfo(res.data);
             if (!updates.questions) {
@@ -210,7 +205,11 @@ export const CreateQuiz = () => {
     } else {
       // POST request to create a new quiz
       axios
-        .post(ADMIN_URL + `/sheet`, newQuizInfo, config)
+        .post(
+          ADMIN_URL + `/sheet`,
+          { ...quizInfo, bankId: bankId, createdBy: authContext.id },
+          config
+        )
         .then((res) => {
           console.log(res);
           axios
@@ -411,6 +410,9 @@ export const CreateQuiz = () => {
             <button
               type="submit"
               className="form-card-button form-card-button-save"
+              style={{
+                margin: "10px 0px",
+              }}
             >
               {userUX.form.loading ? (
                 <span className="loader"></span>

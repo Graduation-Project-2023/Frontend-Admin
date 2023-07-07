@@ -86,7 +86,7 @@ export const QuizPortal = () => {
         <BanksSidebar bankId={bankId} navRoute={"/staff/mcq/quiz/"} />
         <div className="mcq-cont">
           {bankId === undefined ? (
-            <h1 className="text-center alert alert-info m-5" role="alert">
+            <h1 className="text-center alert alert-info" role="alert">
               {t("mcq.selectBank")}
             </h1>
           ) : (

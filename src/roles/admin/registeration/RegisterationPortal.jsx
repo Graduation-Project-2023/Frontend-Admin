@@ -89,7 +89,18 @@ export const RegisterationPortal = () => {
   return (
     <div className="container">
       <div className="registerationContainer">
-        <h1>{t(`registeration.formhead`)}</h1>
+        <h1
+          style={{
+            color: "#3d7dca",
+            fontFamily: "Inter",
+            fontStyle: "normal",
+            fontWeight: "400",
+            fontSize: "2.5rem",
+            lineHeight: "3rem",
+          }}
+        >
+          {t(`registeration.formhead`)}
+        </h1>
         <div className="collapseSectionCard">
           <Accordion
             defaultActiveKey={["0"]}

@@ -3,6 +3,7 @@ export const CourseworkHeaderItems = [
   { id: 1, title: "studentsData.code" },
   { id: 2, title: "studentsData.name" },
   { id: 3, title: "courses.class" },
+  { id: 8, title: "courses.midterm" },
   { id: 4, title: "courses.final" },
   { id: 5, title: "common.total" },
   { id: 6, title: "grades.grade" },

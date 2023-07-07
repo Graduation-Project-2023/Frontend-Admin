@@ -51,19 +51,23 @@ export const Login = () => {
           res.data.role === "PROFESSOR" ||
           res.data.role === "STAFF"
         ) {
-          authContext.login(
-            res.data.id,
-            res.data.token,
-            res.data.role,
-            res.data.college
-          );
-          if (res.data.role === "ADMIN" || res.data.role === "SUPER") {
-            navigate("/admin");
-          } else if (
-            res.data.role === "PROFESSOR" ||
-            res.data.role === "STAFF"
-          ) {
+          if (res.data.role === "PROFESSOR" || res.data.role === "STAFF") {
+            authContext.login(
+              res.data.professorId,
+              res.data.token,
+              res.data.role,
+              res.data.college,
+              res.data.id
+            );
             navigate("/staff");
+          } else if (res.data.role === "ADMIN" || res.data.role === "SUPER") {
+            authContext.login(
+              res.data.id,
+              res.data.token,
+              res.data.role,
+              res.data.college
+            );
+            navigate("/admin");
           }
         } else {
           setUserUX({

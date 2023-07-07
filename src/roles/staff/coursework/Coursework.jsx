@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ADMIN_URL } from "../../../shared/API";
+import { ADMIN_URL, STAFF_URL } from "../../../shared/API";
 import axios from "axios";
 import i18next from "i18next";
 import styles from "../../admin/student_data/add/AddStudents.module.scss";
@@ -18,7 +18,8 @@ import { BsFillPersonCheckFill } from "react-icons/bs";
 import { ModalPopup } from "../../../components/popups/ModalPopup";
 import { CourseworkHeaderItems } from "./CourseworkData";
 import { CourseworkRow } from "./CourseworkRow";
-import { StaffCourses, StaffStudentsData } from "../StaffData";
+import { Alert } from "react-bootstrap";
+import { SpinnerLoader } from "../../../components/loaders/SpinnerLoader";
 
 export const Coursework = () => {
   const [courses, setCourses] = useState([]);
@@ -26,6 +27,8 @@ export const Coursework = () => {
   const [userUX, setUserUX] = useState({
     list: { loading: false, error: false, errorMsg: "" },
     add: { loading: false, success: false, error: false, errorMsg: "" },
+    form: { loading: false, success: false, error: false, errorMsg: "" },
+    students: { loading: false, error: false, errorMsg: "" },
   });
   const [currCourse, setCurrCourse] = useState({
     arabicName: "",
@@ -42,11 +45,40 @@ export const Coursework = () => {
 
   useEffect(() => {
     if (courseId) {
-      const courseStudents = StaffStudentsData.filter(
-        (student) => student.courseId === courseId
-      );
-      setStudents(courseStudents[0].students);
+      setUserUX((prev) => ({
+        ...prev,
+        students: { ...prev.students, loading: true },
+      }));
+      // GET request to get all students registered in courses to display it
+      axios
+        .get(STAFF_URL + `/courses/${courseId}/students`, config)
+        .then((res) => {
+          console.log(res);
+          setStudents(
+            res.data.map((item) => {
+              const studentData = item.student;
+              return {
+                ...studentData,
+                classworkScore: item.classworkScore,
+                midtermScore: item.midtermScore,
+                finalScore: item.finalScore,
+              };
+            })
+          );
+          setUserUX((prev) => ({
+            ...prev,
+            students: { ...prev.students, loading: false },
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+          setUserUX((prev) => ({
+            ...prev,
+            students: { loading: false, error: true, errorMsg: "error.common" },
+          }));
+        });
     }
+    // eslint-disable-next-line
   }, [courseId]);
 
   const handleDragOver = (event) => {
@@ -109,12 +141,16 @@ export const Coursework = () => {
 
   useEffect(() => {
     setUserUX((prev) => ({ ...prev, list: { ...prev.list, loading: true } }));
-    // GET request to get all college courses to display it in the sidebar
+    // GET request to get all professor courses to display it in the sidebar
     axios
-      .get(ADMIN_URL + `/courses?college_id=${authContext.college.id}`, config)
+      .get(
+        STAFF_URL +
+          `/courses/semester/decc46ba-7d4b-11ed-a1eb-0242ac120002/professor/${authContext.id}`,
+        config
+      )
       .then((res) => {
         console.log(res);
-        setCourses(StaffCourses);
+        setCourses(res.data);
         setUserUX((prev) => ({
           ...prev,
           list: { ...prev.list, loading: false },
@@ -124,12 +160,12 @@ export const Coursework = () => {
         console.log(error);
         setUserUX((prev) => ({
           ...prev,
-          list: { loading: false, error: true, errorMsg: "erorrr" },
+          list: { loading: false, error: true, errorMsg: "error.common" },
         }));
       });
 
     // eslint-disable-next-line
-  }, [authContext.college.id]);
+  }, [authContext.id]);
 
   useEffect(() => {
     if (courseId && courses.length !== 0) {
@@ -181,6 +217,40 @@ export const Coursework = () => {
     }
   };
 
+  const handleStudentsSave = () => {
+    setUserUX((prev) => ({
+      ...prev,
+      form: { loading: true, error: false, success: false, errorMsg: "" },
+    }));
+    const studentsData = students.map((student) => ({
+      studentId: student.id,
+      classworkScore: +student.classworkScore,
+      midtermScore: +student.midtermScore,
+      finalScore: +student.finalScore,
+    }));
+    axios
+      .put(STAFF_URL + `/assign/${courseId}`, studentsData, config)
+      .then((res) => {
+        console.log(res);
+        setUserUX((prev) => ({
+          ...prev,
+          form: { ...prev.form, loading: false, success: true },
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+        setUserUX((prev) => ({
+          ...prev,
+          form: {
+            ...prev.form,
+            loading: false,
+            error: true,
+            errorMsg: "error.common",
+          },
+        }));
+      });
+  };
+
   if (courseId === undefined) {
     return (
       <div className="container">
@@ -211,66 +281,96 @@ export const Coursework = () => {
         <SidebarContainer>
           <div ref={printAreaRef}>
             <FormCard>
-              <div className="table-container">
-                <div className="table-container-mainHeader">
-                  <h1>
-                    {t("professor.grades")}
-                    {i18next.language === "en"
-                      ? ` - ${currCourse.englishName || ""}`
-                      : ` - ${currCourse.arabicName || ""}`}
-                  </h1>
-                  <button onClick={handlePrint}>{t("common.print")}</button>
-                </div>
-                <table className="table table-bordered">
-                  <thead className="thead-light">
-                    <tr>
-                      {CourseworkHeaderItems.map((item) => {
+              {userUX.students.loading ? (
+                <SpinnerLoader size={100} />
+              ) : userUX.students.error || students.length === 0 ? (
+                <Alert variant="danger">
+                  {students.length === 0
+                    ? t("error.noStudents")
+                    : t("error.common")}
+                </Alert>
+              ) : (
+                <div className="table-container">
+                  <div className="table-container-mainHeader">
+                    <h1>
+                      {t("professor.grades")}
+                      {i18next.language === "en"
+                        ? ` - ${currCourse.englishName || ""}`
+                        : ` - ${currCourse.arabicName || ""}`}
+                    </h1>
+                    <button onClick={handlePrint}>{t("common.print")}</button>
+                  </div>
+                  <table className="table table-bordered">
+                    <thead className="thead-light">
+                      <tr>
+                        {CourseworkHeaderItems.map((item) => {
+                          return (
+                            <th
+                              key={item.id}
+                              className="table-container-header"
+                            >
+                              {t(item.title)}
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {students.map((item, index) => {
                         return (
-                          <th key={item.id} className="table-container-header">
-                            {t(item.title)}
-                          </th>
+                          <CourseworkRow
+                            student={item}
+                            key={index}
+                            order={index + 1}
+                          />
                         );
                       })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {students.map((item, index) => {
-                      return (
-                        <CourseworkRow
-                          student={item}
-                          key={index}
-                          order={index + 1}
-                        />
-                      );
-                    })}
-                  </tbody>
-                </table>
-                <button className="form-card-button form-card-button-save m-0">
-                  {t(`common.save`)}
-                </button>
-              </div>
+                    </tbody>
+                  </table>
+                  <button
+                    className="form-card-button form-card-button-save m-0"
+                    onClick={handleStudentsSave}
+                    disabled={userUX.form.loading}
+                  >
+                    {userUX.form.loading ? (
+                      <span className="loader"></span>
+                    ) : (
+                      t(`common.save`)
+                    )}
+                  </button>
+                  {userUX.form.error && (
+                    <Alert variant="danger mt-3">{t("error.common")}</Alert>
+                  )}
+                </div>
+              )}
             </FormCard>
           </div>
-          <FormCard>
-            <div
-              className={styles.dashform}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-            >
-              <div className={styles.dashform_icon}>
-                <TbFileUpload />
+          {!(
+            students.length === 0 ||
+            userUX.students.loading ||
+            userUX.students.error
+          ) && (
+            <FormCard>
+              <div
+                className={styles.dashform}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+              >
+                <div className={styles.dashform_icon}>
+                  <TbFileUpload />
+                </div>
+                <div className={styles.dashform_square}>
+                  <h4 className={styles.dashform_square_text}>
+                    {t("common.drag")}
+                  </h4>
+                  <label className={styles.dashform_square_customFileInput}>
+                    <input type="file" />
+                    {t("common.click")}
+                  </label>
+                </div>
               </div>
-              <div className={styles.dashform_square}>
-                <h4 className={styles.dashform_square_text}>
-                  {t("common.drag")}
-                </h4>
-                <label className={styles.dashform_square_customFileInput}>
-                  <input type="file" />
-                  {t("common.click")}
-                </label>
-              </div>
-            </div>
-          </FormCard>
+            </FormCard>
+          )}
 
           {userUX.add.error && (
             <ModalPopup
@@ -294,7 +394,7 @@ export const Coursework = () => {
               }}
             />
           )}
-          {userUX.add.success && (
+          {(userUX.add.success || userUX.form.success) && (
             <ModalPopup
               message={{
                 state: true,
@@ -303,15 +403,17 @@ export const Coursework = () => {
                 text: "popup.message_success",
                 button: "common.save",
                 handleClick: () => {
-                  setUserUX((prev) => {
-                    return { ...prev, success: false };
-                  });
+                  setUserUX((prev) => ({
+                    ...prev,
+                    form: { ...prev.form, success: false },
+                  }));
                 },
               }}
               closeModal={() => {
-                setUserUX((prev) => {
-                  return { ...prev, success: false };
-                });
+                setUserUX((prev) => ({
+                  ...prev,
+                  form: { ...prev.form, success: false },
+                }));
               }}
             />
           )}

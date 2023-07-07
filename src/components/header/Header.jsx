@@ -27,10 +27,8 @@ const languages = [
 ];
 
 export const Header = () => {
-  const [colleges, setColleges] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [userUX, setUserUX] = useState({
-    colleges: { loading: false, error: false, errorMsg: "" },
     programs: { loading: false, error: false, errorMsg: "" },
     logout: { loading: false, error: false, errorMsg: "" },
   });
@@ -81,37 +79,6 @@ export const Header = () => {
       });
   };
 
-  const getColleges = () => {
-    setUserUX((prev) => ({
-      ...prev,
-      colleges: { loading: true, error: false, errorMsg: "" },
-    }));
-    setShowModal({ colleges: true, programs: false });
-
-    axios
-      .get(ADMIN_URL + "/colleges", config)
-      .then((res) => {
-        console.log(res.data);
-        setUserUX((prev) => ({
-          ...prev,
-          colleges: { loading: false, error: false, errorMsg: "" },
-        }));
-        setColleges(res.data);
-        setShowModal((prev) => ({ ...prev, colleges: true }));
-      })
-      .catch((error) => {
-        setUserUX((prev) => ({
-          ...prev,
-          colleges: {
-            loading: false,
-            error: true,
-            errorMsg: "colleges error",
-          },
-        }));
-        console.log(error);
-      });
-  };
-
   const getPrograms = () => {
     setUserUX((prev) => ({
       ...prev,
@@ -155,17 +122,24 @@ export const Header = () => {
               <Dropdown.Toggle>
                 <CgProfile size={30} />
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu
+                style={{
+                  textAlign: "center",
+                }}
+              >
                 <DropdownItem>{t("header.profile")}</DropdownItem>
-                <DropdownItem onClick={getPrograms}>
-                  {t("header.changeProgram")}
-                </DropdownItem>
-                {authContext.role === "SUPER" && (
-                  <DropdownItem onClick={getColleges}>
-                    {t("header.changeCollege")}
-                  </DropdownItem>
+                {authContext.role !== "PROFESSOR" && (
+                  <>
+                    <Dropdown.Divider />
+                    <DropdownItem onClick={getPrograms}>
+                      {t("header.changeProgram")}
+                    </DropdownItem>
+                    <Dropdown.Divider />
+                    <DropdownItem>{t("header.changeTerm")}</DropdownItem>
+                  </>
                 )}
-                <DropdownItem>{t("header.changeTerm")}</DropdownItem>
+
+                <Dropdown.Divider />
                 <DropdownItem onClick={handleLogout}>
                   {t("common.logout")}
                 </DropdownItem>
@@ -181,53 +155,38 @@ export const Header = () => {
             : authContext.college?.arabicName}
         </div>
         <div className="main-header-item">
-          {authContext.isLoggedIn && (
-            <Dropdown>
-              <Dropdown.Toggle>
-                <BiWorld size={30} />
-              </Dropdown.Toggle>
+          <Dropdown>
+            <Dropdown.Toggle>
+              <BiWorld size={30} />
+            </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item>{t("common.language")}</Dropdown.Item>
-                {languages.map(({ code, name }) => (
-                  <Dropdown.Item key={code}>
-                    <span
-                      className={classNames("dropdown-item", {
-                        disabled: i18next.language === code,
-                      })}
-                      onClick={() => {
-                        i18next.changeLanguage(code);
-                      }}
-                    >
-                      {name}
-                    </span>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          )}
+            <Dropdown.Menu>
+              <Dropdown.ItemText
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                {t("common.language")}
+              </Dropdown.ItemText>
+              <Dropdown.Divider />
+              {languages.map(({ code, name }) => (
+                <Dropdown.Item key={code}>
+                  <span
+                    className={classNames("dropdown-item", {
+                      disabled: i18next.language === code,
+                    })}
+                    onClick={() => {
+                      i18next.changeLanguage(code);
+                    }}
+                  >
+                    {name}
+                  </span>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </nav>
-      {/* Change College Modal */}
-      {showModal.colleges && (
-        <ModalPopup
-          error={{
-            state: userUX.colleges.error,
-            message: userUX.colleges.errorMsg,
-          }}
-          contextValue={"COLLEGE"}
-          title={"header.changeCollege"}
-          searchable={true}
-          list={{
-            state: true,
-            data: colleges,
-            path: "admin/academic_programs",
-          }}
-          closeModal={() => {
-            setShowModal({ colleges: false, programs: false });
-          }}
-        />
-      )}
       {/* Change Program Modal */}
       {showModal.programs && (
         <ModalPopup

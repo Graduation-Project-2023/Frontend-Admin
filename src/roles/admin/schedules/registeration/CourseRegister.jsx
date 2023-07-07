@@ -11,12 +11,12 @@ import { CourseRegisterData } from "./CourseRegisterData";
 import { CoursesSidebar } from "./CoursesSidebar";
 import { FormInput } from "../../../../components/forms/FormInput";
 
-
 export const CourseRegister = (props) => {
   const [programCourses, setProgramCourses] = useState([]);
   const [registeredCourses, setRegisteredCourses] = useState([]);
   const [courseData, setCourseData] = useState({});
   const [levels, setLevels] = useState([]);
+  const [professors, setProfessors] = useState([]);
   const [lectureGrps, setLectureGrps] = useState(false);
   const [userUX, setUserUX] = useState({
     progCourses: { loading: false, error: false, errorMsg: "" },
@@ -27,7 +27,7 @@ export const CourseRegister = (props) => {
   const authContext = useAuth();
   const { courseId } = useParams();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const currentLocation = location.pathname.split("/").at(-2);
   const Sidebars = [
@@ -41,6 +41,10 @@ export const CourseRegister = (props) => {
   useEffect(() => {
     setLevels(props.levels);
   }, [props.levels]);
+
+  useEffect(() => {
+    setProfessors(props.professors);
+  }, [props.professors]);
 
   useEffect(() => {
     setProgramCourses(props.programCourses);
@@ -191,12 +195,12 @@ export const CourseRegister = (props) => {
     if (currentLocation === "add") {
       course["programCourseId"] = courseData.id;
       delete course.id;
-      console.log(course);
       // POST request to add a new course to the current semester
       axios
         .post(
           ADMIN_URL +
-            `/course_instances/semesters/{{academic_semester_id}}/programs/${authContext.program.id}`,
+            `/course_instances/semesters/
+            decc46ba-7d4b-11ed-a1eb-0242ac120002/programs/${authContext.program.id}`,
           course,
           config
         )
@@ -373,9 +377,18 @@ export const CourseRegister = (props) => {
                       <label className="form-label">
                         {t(`courses.supervisor`)}
                       </label>
-                      <select className="form-select" name="lectureGroups">
-                        <option value={"FALSE"}>{t(`د/احمد مصطفى`)}</option>
-                        <option value={"TRUE"}>{t(`د/محمد مصطفى`)}</option>
+                      <select
+                        className="form-select"
+                        name="professorId"
+                        onChange={handleEditFormChange}
+                      >
+                        {professors.map((professor) => (
+                          <option key={professor.id} value={professor.id}>
+                            {i18n.language === "en"
+                              ? professor.englishName
+                              : professor.arabicName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -396,7 +409,7 @@ export const CourseRegister = (props) => {
             type="submit"
             className="form-card-button form-card-button-save"
           >
-            {userUX.submitLoading ? (
+            {userUX.form.submit ? (
               <span className="loader"></span>
             ) : currentLocation === "add" ? (
               t(`common.add`)
@@ -415,12 +428,11 @@ export const CourseRegister = (props) => {
               type="button"
               className="form-card-button form-card-button-delete"
               onClick={handleCourseDelete}
-              disabled={userUX.submitLoading}
+              disabled={userUX.form.delete}
             >
               {t(`common.delete`)}
             </button>
           )}
-          {userUX.totalHours && <div>TOTAL HOURS IS WRONG</div>}
         </form>
       </div>
     </div>

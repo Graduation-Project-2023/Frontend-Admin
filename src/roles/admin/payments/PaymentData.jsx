@@ -45,11 +45,11 @@ export const PaymentData = ({ billingData, data }) => {
   if (billingData) {
     return Object.entries(data.billing_data).map(([key, value]) => (
       <div key={key}>
-        <span>{t(`payment.${key}`)}: </span>
+        <div className="lol1">{t(`payment.${key}`)}:</div>
         {key === "created_at" ? (
           <span>{formatTimestamp(value, i18n.language)}</span>
         ) : (
-          <span>
+          <div className="lol2">
             {value === "true"
               ? t("payment.true")
               : value === "false"
@@ -59,16 +59,16 @@ export const PaymentData = ({ billingData, data }) => {
               : value === ""
               ? t("payment.null")
               : value}
-          </span>
+          </div>
         )}
       </div>
     ));
   } else
     return TransactionData.map((item) => (
-      <div key={item.id}>
-        <span>{t(item.label)}: </span>
+      <div className="lol" key={item.id}>
+        <div className="lol1">{t(item.label)}: </div>
 
-        <span>
+        <div className="lol2">  
           {item.time
             ? formatTimestamp(paymentData[item.name], i18n.language)
             : item.enum
@@ -76,7 +76,7 @@ export const PaymentData = ({ billingData, data }) => {
             : paymentData[item.name] === "-"
             ? t("payment.null")
             : paymentData[item.name]}
-        </span>
+        </div>
       </div>
     ));
 };

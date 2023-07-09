@@ -4,25 +4,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    // border: 2px solid #3d7dca !important;
+    background-color: transparent;
 }
 
-.progCourses button {
-    text-align: center !important;
-    color: #3d7dca;
-    // background-color: #F3F3F3;
-    background-color: transparent;
-    border: 2px solid #3d7dca !important;
-    padding: 1rem;
-    width: 100%;
-    border: none;
-    border-radius: 3px !important;
-    text-align: start;
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.4rem;
-    line-height: 1.3rem;
-}
+// .progCourses button {
+//     text-align: center !important;
+//     color: #3d7dca;
+//     // background-color: #F3F3F3;
+//     padding: 1rem;
+//     width: 100%;
+//     border: none;
+//     border-radius: 3px !important;
+//     text-align: start;
+//     font-family: "Inter";
+//     font-style: normal;
+//     font-weight: 400;
+//     font-size: 1.4rem;
+//     line-height: 1.3rem;
+// }
 
 .btn-primary {
     --bs-btn-hover-bg: #6b8eb9; 

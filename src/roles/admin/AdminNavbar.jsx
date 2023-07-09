@@ -50,17 +50,17 @@ const AdminNavbarData = [
   //   path: "exams",
   // },
   {
+    id: "8",
+    title: "adminNavbar.results",
+    keyword: "adminNavbarkeys.results",
+    path: "results",
+  },
+  {
     id: "12",
     title: "adminNavbar.payment",
     keyword: "adminNavbarkeys.payment",
     path: "payments",
   },
-  // {
-  //   id: "8",
-  //   title: "adminNavbar.results",
-  //   keyword: "adminNavbarkeys.results",
-  //   path: "results",
-  // },
   // {
   //   id: "9",
   //   title: "adminNavbar.absence",

@@ -35,15 +35,29 @@ export const StaffChat = () => {
   };
 
   useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to socket");
+    });
+
+    socket.emit("subscribe", "8dc2a88d-0353-4031-bac6-a01dd070fb75");
+
     socket.on("receive-message", (data) => {
       console.log("receive-message", data);
+      setMessages((prev) => [
+        ...prev,
+        {
+          message: data.text,
+          sender: "user",
+          direction: "outgoing",
+        },
+      ]);
     });
 
     return () => {
       socket.disconnect();
     };
     //eslint-disable-next-line
-  }, []);
+  }, [authContext.userId]);
 
   useEffect(() => {
     setUserUX((prev) => ({
@@ -64,11 +78,13 @@ export const StaffChat = () => {
         setMessages([
           ...res.data.messagesReceived?.map((message) => ({
             ...message,
+            message: message.text,
             sender: "user",
             direction: "outgoing",
           })),
           ...res.data.messagesSent?.map((message) => ({
             ...message,
+            message: message.text,
             sender: "professor",
           })),
         ]);
@@ -126,19 +142,21 @@ export const StaffChat = () => {
     // eslint-disable-next-line
   }, []);
 
-  const sendMessage = (message, studentId) => {
-    socket.emit(
-      "send-message",
+  const sendMessage = (text, studentId) => {
+    const message = {
+      receiverId: "c34fac0d-c0d2-464b-b8e5-b71873d8d484",
+      senderId: "8dc2a88d-0353-4031-bac6-a01dd070fb75",
+      text: text,
+    };
+    socket.emit("message-sent", message);
+    setMessages((prev) => [
+      ...prev,
       {
-        text: message,
-        senderId: authContext.id,
-        receiverId: studentId,
+        message: text,
+        sender: "professor",
+        createdAt: new Date(),
       },
-      (response) => {
-        console.log(response);
-      },
-      (error) => console.log(error)
-    );
+    ]);
   };
 
   return (

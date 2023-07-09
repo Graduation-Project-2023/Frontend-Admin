@@ -1,6 +1,4 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-// import { useEffect } from "react";
-// import { getIo } from "../../shared/Socket";
 
 // Components
 import { StaffPortal } from "./portal/StaffPortal";
@@ -17,15 +15,6 @@ export function StaffRoutes() {
   const pathname = location.pathname;
   const urlParts = pathname.split("/");
   const lastPart = urlParts[urlParts.length - 1];
-
-  // useEffect(() => {
-  //   const socket = getIo();
-  //   socket.emit("subscribe");
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   return (
     <>

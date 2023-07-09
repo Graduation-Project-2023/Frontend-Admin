@@ -56,7 +56,8 @@ export const Login = () => {
               res.data.professorId,
               res.data.token,
               res.data.role,
-              res.data.college
+              res.data.college,
+              res.data.id
             );
             navigate("/staff");
           } else if (res.data.role === "ADMIN" || res.data.role === "SUPER") {

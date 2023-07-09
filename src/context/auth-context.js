@@ -3,6 +3,7 @@ import cookies from "js-cookie";
 
 const AuthContext = createContext({
   id: "",
+  userId: "",
   token: "",
   isLoggedIn: false,
   role: "",
@@ -18,6 +19,7 @@ export const AuthContextProvider = (props) => {
   const storageToken = cookies.get("token");
   const storageRole = cookies.get("role");
   const storageId = cookies.get("id");
+  const storageUserId = cookies.get("userId");
   let storageCollege = {};
   if (cookies.get("college") !== undefined) {
     storageCollege = JSON.parse(cookies.get("college"));
@@ -28,16 +30,18 @@ export const AuthContextProvider = (props) => {
   }
   const [token, setToken] = useState(storageToken);
   const [role, setRole] = useState(storageRole);
+  const [userId, setUserId] = useState(storageUserId);
   const [id, setId] = useState(storageId);
   const [college, setCollege] = useState(storageCollege);
   const [program, setProgram] = useState(storageProgram);
 
   const userIsLoggedIn = !!token;
 
-  const loginHandler = (id, token, role, college) => {
+  const loginHandler = (id, token, role, college, userId) => {
     cookies.set("id", id);
     cookies.set("token", token);
     cookies.set("role", role);
+    cookies.set("userId", userId);
     if (college) {
       cookies.set("college", JSON.stringify(college));
     }
@@ -45,6 +49,7 @@ export const AuthContextProvider = (props) => {
     setRole(role);
     setToken(token);
     setCollege(college);
+    setUserId(userId);
   };
 
   const logoutHandler = () => {
@@ -53,6 +58,8 @@ export const AuthContextProvider = (props) => {
     cookies.remove("role");
     cookies.remove("college");
     cookies.remove("program");
+    cookies.remove("userId");
+    setUserId(null);
     setId(null);
     setRole(null);
     setToken(null);
@@ -72,6 +79,7 @@ export const AuthContextProvider = (props) => {
 
   const contextValue = {
     id: id,
+    userId: userId,
     token: token,
     isLoggedIn: userIsLoggedIn,
     role: role,

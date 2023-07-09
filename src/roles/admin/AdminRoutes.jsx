@@ -11,8 +11,9 @@ import { CoursesRoutes } from "./courses/CoursesRoutes";
 import { DepartmentsRoutes } from "./departments/DepartmentsRoutes";
 import { ProfessorsRoutes } from "./professors/ProfessorsRoutes";
 import { StudentRegisteration } from "./registeration/StudentRegisteration";
-import { NotFound } from "../../pages/NotFound";
 import { PaymentPortal } from "./payments/PaymentPortal";
+import { Results } from "./results/Results";
+import { NotFound } from "../../pages/NotFound";
 
 export function AdminRoutes() {
   return (
@@ -37,17 +38,10 @@ export function AdminRoutes() {
           path="registeration/student/:studentId"
           element={<StudentRegisteration />}
         />
-
+        <Route path="results" element={<Results />} />
+        <Route path="results/:courseId" element={<Results />} />
         <Route
           path="exams"
-          element={
-            <h1 className="text-center alert alert-info m-5" role="alert">
-              FUTURE WORK
-            </h1>
-          }
-        />
-        <Route
-          path="results"
           element={
             <h1 className="text-center alert alert-info m-5" role="alert">
               FUTURE WORK

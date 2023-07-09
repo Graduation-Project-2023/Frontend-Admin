@@ -135,7 +135,7 @@ export const PaymentPortal = () => {
             />
           )}
           {userUX.payments.loading ? (
-            <SpinnerLoader />
+            <SpinnerLoader size={100} />
           ) : userUX.payments.error ? (
             <Alert variant="error">{t(userUX.payments.errorMsg)}</Alert>
           ) : filteredPayments.length === 0 ? (

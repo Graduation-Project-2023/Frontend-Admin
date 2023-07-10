@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks/useAuth";
 import styles from "./ProgramCourses.module.scss";
@@ -13,8 +13,11 @@ import { FormCard } from "../../../../components/forms/FormCard";
 import { DropdownSearch } from "../../../../components/forms/DropdownSearch";
 import { PrerequisiteTable } from "../../../../components/table/PrerequisiteTable";
 import { CollapsibleTable } from "../../../../components/table/CollapsibleTable";
+import { ModalPopup } from "../../../../components/popups/ModalPopup";
+import { BsFillPersonCheckFill } from "react-icons/bs";
 
 export const ProgramCourses = () => {
+  const [modal, setModal] = useState(false)
   const [programCourseData, setProgramCourseData] = useState([]);
   const [course, setCourse] = useState({});
   const [preCourses, setPreCourses] = useState([]);
@@ -30,6 +33,7 @@ export const ProgramCourses = () => {
   const finalExamRef = useRef();
   // eslint-disable-next-line
   const addedToGpaRef = useRef();
+  const navigate = useNavigate()
   const maxGrade = 100;
   const [userUX, setUserUX] = useState({
     levelTable: { loading: false, error: false, errorMsg: "" },
@@ -42,6 +46,17 @@ export const ProgramCourses = () => {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
 
+  const closeModal = () => {
+    navigate(`/admin/academic_programs/${programId}/courses`);
+    setModal(false);
+    setProgramCourseData([])
+    setPreCourses([])
+    setCourse({})
+    classWorkRef.current = ""
+    finalExamRef.current = ""
+    midtermRef.current = ""
+  };
+  
   useEffect(() => {
     setUserUX((prev) => ({
       ...prev,
@@ -169,6 +184,7 @@ export const ProgramCourses = () => {
         )
         .then((res) => {
           console.log(res);
+          setModal(true)
           setProgramCourses((prev) => [...prev, res.data]);
           setUserUX((prev) => ({
             ...prev,
@@ -197,6 +213,7 @@ export const ProgramCourses = () => {
         )
         .then((res) => {
           console.log(res);
+          setModal(true)
           const newPorgramCourses = [...programCourses];
           const index = newPorgramCourses.findIndex(
             (obj) => obj.id === editRowId
@@ -577,6 +594,19 @@ export const ProgramCourses = () => {
           />
         );
       })}
+        {modal && (
+          <ModalPopup
+            message={{
+              state: true,
+              icon: <BsFillPersonCheckFill />,
+              title: "popup.success",
+              text: "popup.message_success",
+              button: "common.save",
+              handleClick: closeModal,
+            }}
+            closeModal={closeModal}
+          />
+        )}
     </SidebarContainer>
   );
 };

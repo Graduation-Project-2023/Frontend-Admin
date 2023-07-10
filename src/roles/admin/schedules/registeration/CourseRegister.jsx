@@ -10,6 +10,8 @@ import { CourseRegisterData } from "./CourseRegisterData";
 // Reusable Components
 import { CoursesSidebar } from "./CoursesSidebar";
 import { FormInput } from "../../../../components/forms/FormInput";
+import { ModalPopup } from "../../../../components/popups/ModalPopup";
+import { BsFillPersonCheckFill } from "react-icons/bs";
 
 export const CourseRegister = (props) => {
   const [programCourses, setProgramCourses] = useState([]);
@@ -37,7 +39,13 @@ export const CourseRegister = (props) => {
   const config = {
     headers: { Authorization: `Bearer ${authContext.token}` },
   };
-
+  const [modal, setModal] = useState(false)
+  const closeModal = () => {
+    navigate(`/admin/study_schedules/register_course`);
+    setModal(false);
+   
+  };
+  
   useEffect(() => {
     setLevels(props.levels);
   }, [props.levels]);
@@ -206,6 +214,7 @@ export const CourseRegister = (props) => {
         )
         .then((res) => {
           console.log(res);
+          setModal(true)
           setUserUX((prev) => ({
             ...prev,
             form: { ...prev.form, submit: false },
@@ -240,7 +249,7 @@ export const CourseRegister = (props) => {
             ...prev,
             form: { ...prev.form, submit: false },
           }));
-          // navigate("/admin/study_schedules/register_course");
+          setModal(true)
         })
         .catch((error) => {
           console.log(error);
@@ -434,6 +443,19 @@ export const CourseRegister = (props) => {
             </button>
           )}
         </form>
+        {modal && (
+          <ModalPopup
+            message={{
+              state: true,
+              icon: <BsFillPersonCheckFill />,
+              title: "popup.success",
+              text: "popup.message_success",
+              button: "common.save",
+              handleClick: closeModal,
+            }}
+            closeModal={closeModal}
+          />
+        )}
       </div>
     </div>
   );

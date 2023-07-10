@@ -31,7 +31,7 @@ export const ProgramsSidebar = () => {
         setUserUX((prev) => ({ ...prev, loading: false }));
       })
       .catch((error) => {
-        setUserUX({ loading: false, error: true, errorMsg: "errrr" });
+        setUserUX({ loading: false, error: true, errorMsg: "error.common" });
         console.log(error);
       });
     // eslint-disable-next-line

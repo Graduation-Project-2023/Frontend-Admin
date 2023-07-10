@@ -525,7 +525,7 @@ export const ProgramCourses = () => {
             disabled={userUX.form.submit}
           >
             {userUX.form.submit ? (
-              <h1>loading</h1>
+              <span className="loader"></span>
             ) : editRowId ? (
               t(`common.save`)
             ) : (

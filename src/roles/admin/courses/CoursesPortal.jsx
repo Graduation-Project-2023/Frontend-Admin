@@ -121,6 +121,7 @@ export const CoursesPortal = () => {
           .post(ADMIN_URL + `/courses`, newCourse, config)
           .then((res) => {
             console.log(res);
+            setModal(true);
             setUserUX((prev) => ({
               ...prev,
               form: {
@@ -183,6 +184,7 @@ export const CoursesPortal = () => {
   const closeModal = () => {
     navigate("/admin/courses");
     setModal(false);
+    setCourseData({})
   };
 
   return (

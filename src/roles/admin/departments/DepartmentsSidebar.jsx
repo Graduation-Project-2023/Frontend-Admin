@@ -36,7 +36,7 @@ export const DepartmentsSidebar = () => {
       })
       .catch((error) => {
         console.log(error);
-        setUserUX({ loading: false, error: true, errorMsg: "error" });
+        setUserUX({ loading: false, error: true, errorMsg: t("error.common") });
       });
 
     // eslint-disable-next-line

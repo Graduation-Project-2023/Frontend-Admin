@@ -33,7 +33,7 @@ export const CoursesSidebar = () => {
       })
       .catch((error) => {
         console.log(error);
-        setUserUX({ loading: false, error: true, errorMsg: "erirrr" });
+        setUserUX({ loading: false, error: true, errorMsg: t("error.common") });
       });
 
     // eslint-disable-next-line

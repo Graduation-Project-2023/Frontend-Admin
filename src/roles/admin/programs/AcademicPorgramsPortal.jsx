@@ -42,7 +42,7 @@ export const AcademicPorgramsPortal = () => {
           setUserUX({
             loading: false,
             error: true,
-            errorMsg: "there is an error",
+            errorMsg: t("error.common"),
           });
           console.log(error);
         });
